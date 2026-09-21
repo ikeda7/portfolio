@@ -31,16 +31,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
       {...bind}
       className="group border-line bg-panel hover:border-accent hover:glow-card relative flex h-full min-w-0 flex-col overflow-hidden rounded-[14px] border transition-all duration-300 hover:-translate-y-2 focus-within:-translate-y-2"
     >
-      {cover ? (
-        <img
-          src={cover}
-          alt={`Capa do projeto ${title}`}
-          className="border-line aspect-[16/10] w-full border-b object-cover"
-          loading="lazy"
-        />
-      ) : (
-        <VinylCover track={track} />
-      )}
+      <VinylCover track={track} cover={cover} title={title} />
 
       <div className="flex-1 p-[18px]">
         <h3 className="text-ink text-[17px] font-semibold tracking-[-0.01em]">{title}</h3>

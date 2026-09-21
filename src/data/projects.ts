@@ -1,3 +1,5 @@
+import capaInhouse from '@/assets/capa-inhouse-lol.webp'
+import capaX9 from '@/assets/capa-x9.webp'
 import type { Project } from '@/types/content'
 
 /**
@@ -35,7 +37,7 @@ export const projects: readonly Project[] = [
       'Gerenciador de partidas 5x5 com sorteio por funções, Fearless Draft em MD3 e importação automática de partidas pela Riot API.',
     tags: ['REACT', 'TYPESCRIPT', 'PRISMA'],
     href: 'https://inhouse-lol.vercel.app',
-    cover: null,
+    cover: capaInhouse,
   },
   {
     track: '04',
@@ -53,7 +55,7 @@ export const projects: readonly Project[] = [
       'Party game de dedução social para jogar com amigos em um único celular, passando o aparelho de mão em mão.',
     tags: ['REACT', 'VITE', 'TYPESCRIPT'],
     href: 'https://x9.dev.br',
-    cover: null,
+    cover: capaX9,
   },
   {
     track: '06',

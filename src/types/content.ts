@@ -45,8 +45,9 @@ export interface Project {
 export interface SocialChannel {
   readonly label: string
   readonly href: string | null
-  /** Nome do icone lucide-react usado no botao. */
-  readonly icon: 'github' | 'linkedin' | 'mail' | 'x'
+  /** Identificador mostrado abaixo do rotulo: "/ikeda7", "@ikedaz", o e-mail. */
+  readonly handle: string
+  readonly icon: 'github' | 'linkedin' | 'instagram' | 'mail'
 }
 
 export interface AboutStat {
