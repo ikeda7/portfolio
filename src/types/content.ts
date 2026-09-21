@@ -10,7 +10,12 @@
 export interface SkillChannel {
   /** Rotulo curto exibido no canal. */
   readonly label: string
-  /** 0–100. PLACEHOLDER enquanto o dono do portfolio nao definir o valor real. */
+  /**
+   * Altura do fader / comprimento da barra, de 0 a 100.
+   *
+   * E composicao visual — uma mesa que nao esta zerada — e NAO auto-avaliacao.
+   * Por isso o valor nunca aparece na tela nem e exposto a leitor de tela.
+   */
   readonly value: number
 }
 

@@ -1,59 +1,67 @@
 import type { Project } from '@/types/content'
 
 /**
- * Setlist de projetos.
+ * Setlist. Seis projetos escolhidos do currículo e do github.com/ikeda7,
+ * na ordem que conta a história: IA generativa primeiro, depois a
+ * engenharia que a sustenta.
  *
- * Regra de Ouro: os TÍTULOS vieram do planejamento do dono do portfólio.
- * Descrições, tags e links estão como placeholder visível até serem mapeados
- * do GitHub (github.com/ikeda7) e do currículo atualizado.
+ * `href` aponta para o que existe de mais útil — o site no ar quando há um,
+ * senão o repositório. LexTrack é trabalho de cliente em produção, sem
+ * repositório público.
  */
 export const projects: readonly Project[] = [
   {
     track: '01',
-    title: 'IA de Geração Musical (TCC)',
-    description: '[INSERIR DESCRIÇÃO — treinamento de modelos generativos de áudio em RTX local]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
+    title: 'Geração de Música com IA',
+    description:
+      'TCC: Transformer em PyTorch treinado sobre MAESTRO, POP909 e Groove MIDI. Gera MIDI multi-instrumental com filtragem por teoria musical.',
+    tags: ['PYTORCH', 'PYTHON', 'TRANSFORMER'],
+    href: 'https://github.com/ikeda7/music-ai-generator',
     cover: null,
   },
   {
     track: '02',
-    title: 'Análise Exploratória de Dados',
-    description: '[INSERIR DESCRIÇÃO — scripts Python/Jupyter de tratamento e visualização]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
+    title: 'LexTrack',
+    description:
+      'Gestão para escritório de advocacia previdenciário: controle de prazos, casos e prestação de contas. Em produção.',
+    tags: ['REACT', 'NODE.JS', 'POSTGRESQL'],
     href: null,
     cover: null,
   },
   {
     track: '03',
-    title: 'LexTrack',
-    description: '[INSERIR DESCRIÇÃO — plataforma cloud de gestão jurídica]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
+    title: 'Inhouse LoL',
+    description:
+      'Gerenciador de partidas 5x5 com sorteio por funções, Fearless Draft em MD3 e importação automática de partidas pela Riot API.',
+    tags: ['REACT', 'TYPESCRIPT', 'PRISMA'],
+    href: 'https://inhouse-lol.vercel.app',
     cover: null,
   },
   {
     track: '04',
-    title: 'VolleyControl',
-    description: '[INSERIR DESCRIÇÃO — app mobile/web em Flutter]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
+    title: 'Sports Control',
+    description:
+      'Gestão de rachão de vôlei: cadastro, check-in, sorteio equilibrado de times e placar ao vivo. Roda em Windows, Android e web.',
+    tags: ['FLUTTER', 'DART', 'DRIFT'],
+    href: 'https://sportscontrol.vercel.app',
     cover: null,
   },
   {
     track: '05',
-    title: 'x9-game',
-    description: '[INSERIR DESCRIÇÃO — multiplayer local single-device]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
+    title: 'X9 — Jogo do Impostor',
+    description:
+      'Party game de dedução social para jogar com amigos em um único celular, passando o aparelho de mão em mão.',
+    tags: ['REACT', 'VITE', 'TYPESCRIPT'],
+    href: 'https://x9.dev.br',
     cover: null,
   },
   {
     track: '06',
-    title: 'Flowers Two',
-    description: '[INSERIR DESCRIÇÃO — experimento criativo 3D interativo / 8-bit]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
+    title: 'Consolidação de PDFs',
+    description:
+      'Monta um PDF único a partir de uma planilha e de certificados emitidos em lote, preservando os selos de assinatura digital (gov.br/ICP-Brasil).',
+    tags: ['NODE.JS', 'JAVASCRIPT', 'AUTOMAÇÃO'],
+    href: 'https://github.com/ikeda7/merge-pdf',
     cover: null,
   },
 ]

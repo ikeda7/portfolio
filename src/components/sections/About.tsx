@@ -62,6 +62,10 @@ export function About() {
             <img
               src={about.photo.src}
               alt={about.photo.alt}
+              width={720}
+              height={720}
+              loading="lazy"
+              decoding="async"
               className="border-line glow-photo relative aspect-square w-full rounded-2xl border object-cover"
             />
           ) : (
