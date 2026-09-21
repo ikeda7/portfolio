@@ -28,18 +28,35 @@ export interface SkillPanel {
   readonly channels: readonly SkillChannel[]
 }
 
+/** Uma linha da capa de terminal. */
+export interface TerminalLine {
+  readonly kind: 'path' | 'comment' | 'command' | 'flag'
+  readonly text: string
+}
+
+/**
+ * A arte da capa. Sempre existe uma — o card nunca fica com buraco.
+ *
+ * - `shot`: print do site no ar. So para projeto que tem interface publica.
+ * - `terminal`: comandos REAIS do README do repositorio. Para projeto de
+ *   linha de comando, o terminal e a interface — nao e ilustracao.
+ * - `sleeve`: capa tipografica, para quando nao ha nada publico que mostrar.
+ */
+export type ProjectCover =
+  | { readonly kind: 'shot'; readonly src: string }
+  | { readonly kind: 'terminal'; readonly lines: readonly TerminalLine[] }
+  | { readonly kind: 'sleeve' }
+
 export interface Project {
   /** Numero da "faixa" exibido na capa (01…06). */
   readonly track: string
   readonly title: string
-  /** Descricao curta. Placeholder ate vir do GitHub/curriculo. */
   readonly description: string
   /** Tecnologias exibidas como tags. */
   readonly tags: readonly string[]
-  /** URL real do repositorio ou case. `null` => card renderiza estado pendente. */
+  /** URL do repositorio ou do site no ar. `null` => card sem link. */
   readonly href: string | null
-  /** Caminho da capa 16:10. `null` => renderiza a capa de vinil em CSS. */
-  readonly cover: string | null
+  readonly cover: ProjectCover
 }
 
 export interface SocialChannel {
