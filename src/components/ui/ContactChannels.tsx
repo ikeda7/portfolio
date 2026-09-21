@@ -17,7 +17,7 @@ const ITEM_CLASS =
 export function ContactChannels() {
   return (
     <Panel title="Canais" code="OUT">
-      <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(140px,100%),1fr))] gap-2.5 p-3.5">
+      <ul className="grid grid-cols-2 gap-2.5 p-3.5">
         {socialChannels.map((channel) => (
           <li key={channel.label}>
             <a
@@ -29,7 +29,7 @@ export function ContactChannels() {
             >
               <span aria-hidden="true" className="bg-accent glow-led size-2 rounded-full" />
               <span className="text-ink font-mono text-[11px] uppercase">{channel.label}</span>
-              <span className="text-ink-faint w-full truncate font-mono text-[10px] tracking-[0.04em]">
+              <span className="text-ink-faint w-full font-mono text-[10px] leading-tight tracking-[0.04em] break-all">
                 {channel.handle}
               </span>
             </a>

@@ -1,7 +1,7 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
-import { EASE_OUT, VIEWPORT } from '@/lib/motion'
+import { RULE_TRANSITION, VIEWPORT } from '@/lib/motion'
 
 interface SectionHeadingProps {
   /** Numero da seção, ex.: "01". */
@@ -28,7 +28,7 @@ export function SectionHeading({ index, label }: SectionHeadingProps) {
         initial={prefersReducedMotion ? undefined : { scaleX: 0 }}
         whileInView={prefersReducedMotion ? undefined : { scaleX: 1 }}
         viewport={VIEWPORT}
-        transition={{ duration: 0.8, ease: EASE_OUT }}
+        transition={RULE_TRANSITION}
       />
     </div>
   )

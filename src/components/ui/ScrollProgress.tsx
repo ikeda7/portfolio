@@ -11,7 +11,7 @@ import * as m from 'motion/react-m'
 export function ScrollProgress() {
   const prefersReducedMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 })
+  const scaleX = useSpring(scrollYProgress, { stiffness: 90, damping: 28, mass: 0.4 })
 
   if (prefersReducedMotion) return null
 
