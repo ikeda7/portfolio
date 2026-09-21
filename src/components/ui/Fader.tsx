@@ -10,64 +10,54 @@ interface FaderProps extends SkillChannel {
 }
 
 /**
- * Canal vertical da mesa de som: trilho, preenchimento e knob.
+ * Canal vertical da mesa de som.
  *
- * Ao entrar na tela o fader sobe de 0 até o valor, escalonado pelo índice —
+ * O trilho, o preenchimento e o knob são decoração: a altura é composição
+ * visual, não nota. Quem lê com leitor de tela recebe só o rótulo, que é a
+ * informação de verdade.
+ *
+ * Ao entrar na tela o fader sobe de 0 até a posição, escalonado pelo índice —
  * a mesa "se ajusta" canal a canal, da esquerda para a direita.
  */
 export function Fader({ label, value, index }: FaderProps) {
   const prefersReducedMotion = useReducedMotion()
   const fill = `${value}%`
 
-  const animation = prefersReducedMotion
-    ? {}
-    : {
-        initial: { height: '0%' },
-        whileInView: { height: fill },
-        viewport: VIEWPORT,
-        transition: { duration: 0.9, ease: EASE_OUT, delay: index * STAGGER_STEP },
-      }
-
-  const knobAnimation = prefersReducedMotion
-    ? {}
-    : {
-        initial: { bottom: '0%' },
-        whileInView: { bottom: fill },
-        viewport: VIEWPORT,
-        transition: { duration: 0.9, ease: EASE_OUT, delay: index * STAGGER_STEP },
-      }
+  const transition = { duration: 0.9, ease: EASE_OUT, delay: index * STAGGER_STEP }
 
   return (
-    <div
-      className="flex min-w-0 flex-1 flex-col items-center gap-[10px]"
-      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- <meter> nativo nao e estilizavel o bastante para o design
-      role="meter"
-      aria-valuenow={value}
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-label={label}
-    >
-      <span className="text-ink-faint font-mono text-[10px]">{value}</span>
-
-      <div className="border-line bg-panel-2 relative h-[150px] w-2 rounded-full border">
+    <div className="flex min-w-0 flex-1 flex-col items-center gap-[10px]">
+      <div
+        aria-hidden="true"
+        className="border-line bg-panel-2 relative h-[150px] w-2 rounded-full border"
+      >
         <m.span
-          aria-hidden="true"
           className="fill-vertical absolute inset-x-0 bottom-0 rounded-full"
           style={prefersReducedMotion ? { height: fill } : undefined}
-          {...animation}
+          {...(prefersReducedMotion
+            ? {}
+            : {
+                initial: { height: '0%' },
+                whileInView: { height: fill },
+                viewport: VIEWPORT,
+                transition,
+              })}
         />
         <m.span
-          aria-hidden="true"
           className="bg-knob border-knob-line glow-knob absolute left-1/2 h-3 w-[26px] -translate-x-1/2 translate-y-1/2 rounded-[3px] border"
           style={prefersReducedMotion ? { bottom: fill } : undefined}
-          {...knobAnimation}
+          {...(prefersReducedMotion
+            ? {}
+            : {
+                initial: { bottom: '0%' },
+                whileInView: { bottom: fill },
+                viewport: VIEWPORT,
+                transition,
+              })}
         />
       </div>
 
-      <span
-        aria-hidden="true"
-        className="text-ink-faint h-[78px] overflow-hidden font-mono text-[10px] tracking-[0.1em] uppercase [writing-mode:vertical-rl] [transform:rotate(180deg)]"
-      >
+      <span className="text-ink-muted h-[86px] overflow-hidden font-mono text-[10px] tracking-[0.1em] uppercase [transform:rotate(180deg)] [writing-mode:vertical-rl]">
         {label}
       </span>
     </div>

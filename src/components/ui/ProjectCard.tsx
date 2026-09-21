@@ -8,8 +8,16 @@ import type { Project } from '@/types/content'
 /**
  * Card de projeto no formato "capa de vinil / painel de plugin".
  *
- * Além do hover de elevação do design aprovado, um brilho roxo acompanha o
- * cursor dentro do card — sem inércia, para colar no ponteiro.
+ * O link usa o padrão *stretched link*: o `::after` do `<a>` cobre o card
+ * inteiro, então a área clicável é o card todo em vez dos ~17px de altura do
+ * texto "Abrir" — que ficava abaixo do mínimo de 24x24 da WCAG 2.5.8. O DOM
+ * continua com um único link, rotulado com o nome do projeto.
+ *
+ * A ordem das camadas importa e é frágil: o `::after` se ancora no ancestral
+ * posicionado mais próximo, então o miolo do card NÃO pode ser `relative` —
+ * senão a área clicável encolhe para o tamanho dele. Por isso o brilho vai por
+ * último no DOM (pinta acima do conteúdo em fluxo, com `pointer-events-none`)
+ * e o `::after` sobe para z-20, acima do brilho.
  */
 export function ProjectCard({ track, title, description, tags, href, cover }: Project) {
   const { bind, background } = usePointerGlow<HTMLElement>({
@@ -21,28 +29,11 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
   return (
     <article
       {...bind}
-      className="group border-line bg-panel hover:border-accent hover:glow-card relative flex h-full min-w-0 flex-col overflow-hidden rounded-[14px] border transition-all duration-300 hover:-translate-y-2"
+      className="group border-line bg-panel hover:border-accent hover:glow-card relative flex h-full min-w-0 flex-col overflow-hidden rounded-[14px] border transition-all duration-300 hover:-translate-y-2 focus-within:-translate-y-2"
     >
-      {background && (
-        <m.div
-          aria-hidden="true"
-          style={{ background }}
-          className="pointer-events-none absolute inset-0 z-10"
-        />
-      )}
+      <VinylCover track={track} cover={cover} title={title} />
 
-      {cover ? (
-        <img
-          src={cover}
-          alt={`Capa do projeto ${title}`}
-          className="border-line aspect-[16/10] w-full border-b object-cover"
-          loading="lazy"
-        />
-      ) : (
-        <VinylCover track={track} />
-      )}
-
-      <div className="relative z-10 flex-1 p-[18px]">
+      <div className="flex-1 p-[18px]">
         <h3 className="text-ink text-[17px] font-semibold tracking-[-0.01em]">{title}</h3>
         <p className="text-ink-muted mt-2 text-[13px] leading-[1.6]">{description}</p>
 
@@ -62,19 +53,27 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
             href={href}
             target="_blank"
             rel="noreferrer noopener"
-            className="text-ink-muted group-hover:text-accent-text mt-4 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3"
+            className="text-ink-muted group-hover:text-accent-text mt-4 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3 after:absolute after:inset-0 after:z-20 after:content-['']"
             aria-label={`Abrir o projeto ${title} em uma nova aba`}
           >
             Abrir
             <ArrowRight aria-hidden="true" className="size-3.5" />
           </a>
         ) : (
-          // Regra de Ouro: sem link real, nao inventamos destino — marcamos o pendente.
+          // Sem link publico — LexTrack e trabalho de cliente em producao.
           <span className="text-ink-faint mt-4 inline-flex font-mono text-[11px] tracking-[0.12em] uppercase">
-            [INSERIR LINK]
+            Em produção · sem repositório público
           </span>
         )}
       </div>
+
+      {background && (
+        <m.div
+          aria-hidden="true"
+          style={{ background }}
+          className="pointer-events-none absolute inset-0 z-10"
+        />
+      )}
     </article>
   )
 }

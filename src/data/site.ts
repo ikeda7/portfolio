@@ -1,8 +1,9 @@
+import retrato from '@/assets/lucas-ikeda.webp'
 import type { AboutStat } from '@/types/content'
 
 /**
- * Identidade e copy da pagina.
- * PENDENTE: todo texto marcado com `[INSERIR ...]` aguarda o curriculo atualizado.
+ * Conteúdo da página. Tudo aqui vem do currículo de Lucas Ikeda
+ * (Set/2026) ou do perfil github.com/ikeda7 — nada é inferido.
  */
 export const site = {
   brand: {
@@ -10,38 +11,39 @@ export const site = {
     lastName: 'Ikeda',
   },
   hero: {
-    statusLabel: 'Disponível para projetos',
+    statusLabel: 'Bauru – SP · Brasil',
     title: 'Lucas Ikeda',
-    subtitle: 'Engenheiro de IA & Desenvolvedor Fullstack',
-    description: 'Treinando modelos, extraindo dados e orquestrando soluções.',
+    subtitle: 'Desenvolvedor de Software · Implantação e IA Aplicada',
+    description:
+      'Sistemas ERP nas duas pontas, back-end e dados — e IA generativa aplicada para automatizar levantamento, documentação e testes.',
     primaryCta: { label: 'Ver projetos', href: '#projetos' },
     secondaryCta: { label: 'Falar comigo', href: '#contato' },
     waveform: {
       meta: 'Waveform · master',
       timecode: '00:00:00 / 00:03:24',
-      tags: ['PYTHON', 'REACT', 'IA & DADOS'],
+      tags: ['PYTHON', 'TYPESCRIPT', 'IA APLICADA'],
     },
   },
   about: {
-    heading: '[INSERIR TÍTULO DA SEÇÃO SOBRE]',
+    heading: 'Da engenharia de software para a IA aplicada',
     paragraphs: [
-      '[INSERIR PARÁGRAFO 1 — trajetória do desenvolvimento fullstack para IA e dados, a partir do currículo atualizado.]',
-      '[INSERIR PARÁGRAFO 2 — momento atual (implementação de IA, suporte, vibecoding) e a especialização em Engenharia de IA Aplicada na UniPDS.]',
+      'Sou bacharel em Ciência da Computação pela FCT-UNESP e pós-graduando em Engenharia de Software em IA Aplicada na UniPDS. Trabalho com sistemas ERP nas duas pontas: desenvolvi módulos em PHP, JavaScript e Oracle PL/SQL, e hoje atuo na implantação do ERP de uma operação de medicina diagnóstica — mapeamento de processos, levantamento de requisitos, parametrização, QA e sustentação.',
+      'Em back-end e dados uso Python, TypeScript, C#, PostgreSQL e Docker. Aplico IA generativa — engenharia de prompt, RAG e agentes — para automatizar levantamento, documentação e testes, e é nisso que a pós se aprofunda: LLMs, embeddings e vector databases, sistemas multiagente, MCP, fine-tuning e governança.',
     ],
     photo: {
-      /** PENDENTE: colocar a foto em src/assets/ e apontar o import aqui. */
-      src: null as string | null,
-      alt: 'Retrato de Lucas Ikeda',
+      src: retrato as string,
+      alt: 'Lucas Ikeda',
       placeholderLabel: 'Foto',
     },
   },
   contact: {
-    heading: '[INSERIR TÍTULO DA SEÇÃO CONTATO]',
-    description: '[INSERIR CHAMADA CURTA PARA CONTATO]',
+    heading: 'Vamos conversar',
+    description:
+      'Estou em Bauru – SP. Para falar sobre um projeto, uma vaga ou qualquer coisa que envolva software e IA, é só chamar por e-mail ou LinkedIn.',
   },
   footer: {
     left: '© 2026 Lucas Ikeda',
-    right: 'Dark Studio · Build 0.1.0',
+    right: 'Bauru – SP · Brasil',
   },
 } as const
 
@@ -52,11 +54,11 @@ export const navLinks = [
   { label: 'Contato', href: '#contato' },
 ] as const
 
-/** PENDENTE: números reais (anos de experiência, projetos entregues, etc.). */
+/** Números verificáveis no currículo — nada de métrica inventada. */
 export const aboutStats: readonly AboutStat[] = [
-  { value: '--', label: '[INSERIR MÉTRICA 1]' },
-  { value: '--', label: '[INSERIR MÉTRICA 2]' },
-  { value: '--', label: '[INSERIR MÉTRICA 3]' },
+  { value: '2026', label: 'Bacharel em CC · UNESP' },
+  { value: '6', label: 'Projetos publicados' },
+  { value: 'B2', label: 'Inglês · Linguaskill' },
 ]
 
 /**

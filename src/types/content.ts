@@ -10,7 +10,12 @@
 export interface SkillChannel {
   /** Rotulo curto exibido no canal. */
   readonly label: string
-  /** 0–100. PLACEHOLDER enquanto o dono do portfolio nao definir o valor real. */
+  /**
+   * Altura do fader / comprimento da barra, de 0 a 100.
+   *
+   * E composicao visual — uma mesa que nao esta zerada — e NAO auto-avaliacao.
+   * Por isso o valor nunca aparece na tela nem e exposto a leitor de tela.
+   */
   readonly value: number
 }
 
@@ -40,8 +45,9 @@ export interface Project {
 export interface SocialChannel {
   readonly label: string
   readonly href: string | null
-  /** Nome do icone lucide-react usado no botao. */
-  readonly icon: 'github' | 'linkedin' | 'mail' | 'x'
+  /** Identificador mostrado abaixo do rotulo: "/ikeda7", "@ikedaz", o e-mail. */
+  readonly handle: string
+  readonly icon: 'github' | 'linkedin' | 'instagram' | 'mail'
 }
 
 export interface AboutStat {
