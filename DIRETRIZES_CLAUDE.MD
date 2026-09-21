@@ -1,4 +1,4 @@
-# Diretrizes de Desenvolvimento do Portfólio
+7# Diretrizes de Desenvolvimento do Portfólio
 
 ## 1. Regra de Ouro (Sem Freestyle)
 

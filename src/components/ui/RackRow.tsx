@@ -1,7 +1,7 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
-import { EASE_OUT, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
+import { FILL_TRANSITION, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
 import type { SkillChannel } from '@/types/content'
 
 interface RackRowProps extends SkillChannel {
@@ -38,7 +38,7 @@ export function RackRow({ label, value, index }: RackRowProps) {
                 initial: { width: '0%' },
                 whileInView: { width: fill },
                 viewport: VIEWPORT,
-                transition: { duration: 0.9, ease: EASE_OUT, delay: index * STAGGER_STEP },
+                transition: { ...FILL_TRANSITION, delay: index * STAGGER_STEP },
               })}
         />
       </div>

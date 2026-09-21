@@ -1,7 +1,7 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
-import { EASE_OUT, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
+import { FILL_TRANSITION, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
 import type { SkillChannel } from '@/types/content'
 
 interface FaderProps extends SkillChannel {
@@ -23,7 +23,7 @@ export function Fader({ label, value, index }: FaderProps) {
   const prefersReducedMotion = useReducedMotion()
   const fill = `${value}%`
 
-  const transition = { duration: 0.9, ease: EASE_OUT, delay: index * STAGGER_STEP }
+  const transition = { ...FILL_TRANSITION, delay: index * STAGGER_STEP }
 
   return (
     <div className="flex min-w-0 flex-1 flex-col items-center gap-[10px]">
