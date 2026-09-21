@@ -98,6 +98,8 @@ apenas `.env.example` é versionado.
   placeholder visível (`[INSERIR …]`).
 - [`docs/design-reference/`](./docs/design-reference/) — protótipo e handoff do
   design aprovado (referência visual, não código de produção).
+- [`docs/PENDENCIAS.md`](./docs/PENDENCIAS.md) — o que falta, decisões tomadas e
+  como retomar de outra máquina. **Leia antes de continuar o trabalho.**
 
 ## Git Flow
 
