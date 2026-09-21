@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import * as m from 'motion/react-m'
 
-import { VinylCover } from '@/components/ui/VinylCover'
+import { ProjectCover } from '@/components/ui/ProjectCover'
 import { usePointerGlow } from '@/hooks/usePointerGlow'
 import type { Project } from '@/types/content'
 
@@ -31,7 +31,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
       {...bind}
       className="group border-line bg-panel hover:border-accent hover:glow-card relative flex h-full min-w-0 flex-col overflow-hidden rounded-[14px] border transition-all duration-300 hover:-translate-y-2 focus-within:-translate-y-2"
     >
-      <VinylCover track={track} cover={cover} title={title} />
+      <ProjectCover track={track} title={title} tags={tags} cover={cover} />
 
       <div className="flex-1 p-[18px]">
         <h3 className="text-ink text-[17px] font-semibold tracking-[-0.01em]">{title}</h3>
