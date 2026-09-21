@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { useReducedMotion } from 'motion/react'
+import * as m from 'motion/react-m'
 
 import { EASE_OUT, VIEWPORT } from '@/lib/motion'
 
@@ -21,7 +22,7 @@ export function SectionHeading({ index, label }: SectionHeadingProps) {
       <span className="text-accent-text font-mono text-[11px] tracking-[0.16em] uppercase">
         {index} / {label}
       </span>
-      <motion.span
+      <m.span
         aria-hidden="true"
         className="bg-line h-px flex-1 origin-left"
         initial={prefersReducedMotion ? undefined : { scaleX: 0 }}

@@ -11,7 +11,7 @@ processamento, capas de vinil nos cards de projeto).
 | Build | Vite 8 |
 | UI | React 19 + TypeScript 6 (strict) |
 | Estilo | Tailwind CSS 4 (`@tailwindcss/vite`, tokens em `@theme`) |
-| Animação | CSS/Tailwind; `motion` e `gsap` instalados para as fases seguintes |
+| Animação | CSS/Tailwind + `motion` via `LazyMotion` (bundle enxuto); `gsap` disponível |
 | Ícones | `lucide-react` |
 | Qualidade | oxlint + Prettier |
 
@@ -65,6 +65,23 @@ Outras regras do mesmo tipo:
 
 Auditado com contraste computado sobre o fundo efetivo de cada elemento, em
 página renderizada — não só sobre os tokens. Zero falhas AA.
+
+## Formulário de contato
+
+Envia via **EmailJS**, pela API REST direto com `fetch` ([`src/lib/contact.ts`](src/lib/contact.ts)) —
+uma requisição só, sem SDK no bundle. O template precisa aceitar `{{nome}}`,
+`{{email}}` e `{{mensagem}}`.
+
+Sem as variáveis preenchidas o formulário continua validando, mas avisa que o
+envio está desligado em vez de falhar em silêncio.
+
+**Antes de publicar:** configure a *allowlist de domínios* no painel do EmailJS.
+A chave pública vai no JavaScript que o visitante baixa — não há como escondê-la,
+e a allowlist é o que impede terceiros de gastarem sua cota.
+
+Contra bots, sem CAPTCHA: um campo-armadilha fora da tela e da ordem de tabulação,
+e um tempo mínimo entre carregar a página e enviar. Ambos falham para o lado de
+deixar o visitante real enviar.
 
 ## Variáveis de ambiente
 

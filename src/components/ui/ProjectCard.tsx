@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react'
-import { motion } from 'motion/react'
+import * as m from 'motion/react-m'
 
 import { VinylCover } from '@/components/ui/VinylCover'
 import { usePointerGlow } from '@/hooks/usePointerGlow'
@@ -24,7 +24,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
       className="group border-line bg-panel hover:border-accent hover:glow-card relative flex h-full min-w-0 flex-col overflow-hidden rounded-[14px] border transition-all duration-300 hover:-translate-y-2"
     >
       {background && (
-        <motion.div
+        <m.div
           aria-hidden="true"
           style={{ background }}
           className="pointer-events-none absolute inset-0 z-10"
