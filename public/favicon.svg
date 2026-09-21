@@ -2,7 +2,7 @@
   <!-- Fundo proprio: o icone funciona tanto em aba clara quanto escura. -->
   <rect width="32" height="32" rx="7" fill="#0D0D0D"/>
   <rect x="2.5" y="2.5" width="27" height="27" rx="5.5" fill="none" stroke="#262626"/>
-  <g fill="#BB4DFF">
+  <g fill="#4D8BFF">
     <!-- Tres barras de alturas diferentes: le como waveform ja a 16px. -->
     <rect x="7"  y="12" width="4" height="8"  rx="2"/>
     <rect x="14" y="7"  width="4" height="18" rx="2"/>

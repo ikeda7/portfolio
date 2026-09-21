@@ -54,10 +54,14 @@ export const navLinks = [
   { label: 'Contato', href: '#contato' },
 ] as const
 
-/** Números verificáveis no currículo — nada de métrica inventada. */
+/**
+ * Números verificáveis — currículo e perfil público do GitHub, conferidos em
+ * 21/09/2026. Os 35 repositórios incluem trabalhos de disciplina, então o
+ * número diz volume, não curadoria; os projetos escolhidos estão no Setlist.
+ */
 export const aboutStats: readonly AboutStat[] = [
-  { value: '2026', label: 'Bacharel em CC · UNESP' },
-  { value: '6', label: 'Projetos publicados' },
+  { value: '2026', label: 'Ciência da Computação' },
+  { value: '35', label: 'Repositórios públicos' },
   { value: 'B2', label: 'Inglês · Linguaskill' },
 ]
 
