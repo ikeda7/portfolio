@@ -12,7 +12,7 @@ const { hero } = site
  * Palco principal: pill de status, título, CTAs e painel de waveform.
  *
  * A entrada é escalonada na montagem (não no scroll — o hero já nasce visível)
- * e um brilho roxo persegue o cursor pela seção inteira.
+ * e um brilho de acento persegue o cursor pela seção inteira.
  */
 export function Hero() {
   const prefersReducedMotion = useReducedMotion()

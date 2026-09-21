@@ -1,8 +1,8 @@
 # Portfólio — Lucas Ikeda
 
-Landing page única com estética **Dark Studio & IA**: fundo carvão, acento roxo
-neon e metáforas de software de áudio (waveform, faders de mesa de som, rack de
-processamento, capas de vinil nos cards de projeto).
+Landing page única com estética **Dark Studio & IA**: fundo carvão, acento azul
+elétrico e metáforas de software de áudio (waveform, faders de mesa de som, rack
+de processamento, capas de vinil nos cards de projeto).
 
 ## Stack
 
@@ -37,7 +37,8 @@ src/
 │  ├─ sections/   Hero, About, Skills, Projects, Contact
 │  └─ ui/         primitivos reutilizáveis (Fader, RackRow, Waveform, …)
 ├─ data/          conteúdo da página (site, skills, projects, social)
-├─ hooks/         useActiveSection
+├─ hooks/         useActiveSection, usePointerGlow
+├─ lib/           motion (tempos e curvas), contact (envio do formulário)
 ├─ types/         contratos de conteúdo
 └─ index.css      tokens do tema + utilitários de glow
 ```
