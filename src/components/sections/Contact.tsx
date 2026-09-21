@@ -1,5 +1,6 @@
 import { ContactChannels } from '@/components/ui/ContactChannels'
 import { ContactForm } from '@/components/ui/ContactForm'
+import { Reveal } from '@/components/ui/Reveal'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { site } from '@/data/site'
 
@@ -16,7 +17,7 @@ export function Contact() {
       <SectionHeading index="04" label="Contato" />
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-start gap-14">
-        <div>
+        <Reveal>
           <h2
             id="contato-title"
             className="text-[clamp(26px,3.4vw,38px)] leading-[1.12] font-semibold tracking-[-0.03em]"
@@ -30,9 +31,11 @@ export function Contact() {
           <div className="mt-8">
             <ContactChannels />
           </div>
-        </div>
+        </Reveal>
 
-        <ContactForm />
+        <Reveal delay={0.14}>
+          <ContactForm />
+        </Reveal>
       </div>
     </section>
   )

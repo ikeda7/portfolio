@@ -1,7 +1,27 @@
+import { motion, useReducedMotion } from 'motion/react'
+
+import { EASE_OUT, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
 import type { SkillChannel } from '@/types/content'
 
+interface RackRowProps extends SkillChannel {
+  /** Posição da linha no rack — define o atraso do preenchimento em cadeia. */
+  readonly index: number
+}
+
 /** Linha horizontal do rack: rótulo, barra iluminada e valor. */
-export function RackRow({ label, value }: SkillChannel) {
+export function RackRow({ label, value, index }: RackRowProps) {
+  const prefersReducedMotion = useReducedMotion()
+  const fill = `${value}%`
+
+  const animation = prefersReducedMotion
+    ? { style: { width: fill } }
+    : {
+        initial: { width: '0%' },
+        whileInView: { width: fill },
+        viewport: VIEWPORT,
+        transition: { duration: 0.9, ease: EASE_OUT, delay: index * STAGGER_STEP },
+      }
+
   return (
     <div className="flex items-center gap-3">
       <span className="text-ink w-24 flex-none truncate font-mono text-[11px] uppercase">
@@ -17,10 +37,10 @@ export function RackRow({ label, value }: SkillChannel) {
         aria-valuemax={100}
         aria-label={label}
       >
-        <span
+        <motion.span
           aria-hidden="true"
           className="fill-horizontal glow-bar block h-full rounded-full"
-          style={{ width: `${value}%` }}
+          {...animation}
         />
       </div>
 

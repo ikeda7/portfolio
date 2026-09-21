@@ -1,9 +1,10 @@
+import { ScrollProgress } from '@/components/ui/ScrollProgress'
 import { useActiveSection } from '@/hooks/useActiveSection'
 import { navLinks, site } from '@/data/site'
 
 const SECTION_IDS = navLinks.map((link) => link.href.slice(1))
 
-/** Header sticky com blur, marca e navegação por âncora. */
+/** Header sticky com blur, marca, navegação por âncora e playhead de scroll. */
 export function Header() {
   const activeId = useActiveSection(SECTION_IDS)
 
@@ -29,7 +30,7 @@ export function Header() {
                   <a
                     href={link.href}
                     aria-current={isActive ? 'true' : undefined}
-                    className={`hover:bg-panel-2 hover:text-ink block rounded-md px-3 py-2 font-mono text-[11px] tracking-[0.1em] uppercase transition-all duration-300 ${
+                    className={`hover:bg-panel-2 hover:text-ink relative block rounded-md px-3 py-2 font-mono text-[11px] tracking-[0.1em] uppercase transition-all duration-300 ${
                       isActive ? 'text-accent' : 'text-ink-muted'
                     }`}
                   >
@@ -41,6 +42,8 @@ export function Header() {
           </ul>
         </nav>
       </div>
+
+      <ScrollProgress />
     </header>
   )
 }

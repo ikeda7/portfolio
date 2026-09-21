@@ -1,12 +1,36 @@
 import { ArrowRight } from 'lucide-react'
+import { motion } from 'motion/react'
 
 import { VinylCover } from '@/components/ui/VinylCover'
+import { usePointerGlow } from '@/hooks/usePointerGlow'
 import type { Project } from '@/types/content'
 
-/** Card de projeto no formato "capa de vinil / painel de plugin". */
+/**
+ * Card de projeto no formato "capa de vinil / painel de plugin".
+ *
+ * Além do hover de elevação do design aprovado, um brilho roxo acompanha o
+ * cursor dentro do card — sem inércia, para colar no ponteiro.
+ */
 export function ProjectCard({ track, title, description, tags, href, cover }: Project) {
+  const { bind, background } = usePointerGlow<HTMLElement>({
+    size: 260,
+    alpha: 0.16,
+    smooth: false,
+  })
+
   return (
-    <article className="group border-line bg-panel hover:border-accent hover:glow-card min-w-0 overflow-hidden rounded-[14px] border transition-all duration-300 hover:-translate-y-2">
+    <article
+      {...bind}
+      className="group border-line bg-panel hover:border-accent hover:glow-card relative flex h-full min-w-0 flex-col overflow-hidden rounded-[14px] border transition-all duration-300 hover:-translate-y-2"
+    >
+      {background && (
+        <motion.div
+          aria-hidden="true"
+          style={{ background }}
+          className="pointer-events-none absolute inset-0 z-10"
+        />
+      )}
+
       {cover ? (
         <img
           src={cover}
@@ -18,7 +42,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
         <VinylCover track={track} />
       )}
 
-      <div className="p-[18px]">
+      <div className="relative z-10 flex-1 p-[18px]">
         <h3 className="text-ink text-[17px] font-semibold tracking-[-0.01em]">{title}</h3>
         <p className="text-ink-muted mt-2 text-[13px] leading-[1.6]">{description}</p>
 

@@ -1,9 +1,15 @@
+import { motion, useReducedMotion } from 'motion/react'
+
 import { ProjectCard } from '@/components/ui/ProjectCard'
+import { RevealItem } from '@/components/ui/Reveal'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { projects } from '@/data/projects'
+import { VIEWPORT, staggerVariants } from '@/lib/motion'
 
-/** Setlist: grid responsivo de cards de projeto. */
+/** Setlist: grid responsivo de cards, revelados em cadeia. */
 export function Projects() {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <section
       id="projetos"
@@ -15,11 +21,19 @@ export function Projects() {
         Projetos
       </h2>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5">
+      <motion.div
+        className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5"
+        initial={prefersReducedMotion ? undefined : 'hidden'}
+        whileInView={prefersReducedMotion ? undefined : 'visible'}
+        viewport={VIEWPORT}
+        variants={staggerVariants}
+      >
         {projects.map((project) => (
-          <ProjectCard key={project.track} {...project} />
+          <RevealItem key={project.track} className="h-full">
+            <ProjectCard {...project} />
+          </RevealItem>
         ))}
-      </div>
+      </motion.div>
     </section>
   )
 }
