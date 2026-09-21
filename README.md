@@ -6,14 +6,14 @@ processamento, capas de vinil nos cards de projeto).
 
 ## Stack
 
-| Camada | Ferramenta |
-|---|---|
-| Build | Vite 8 |
-| UI | React 19 + TypeScript 6 (strict) |
-| Estilo | Tailwind CSS 4 (`@tailwindcss/vite`, tokens em `@theme`) |
-| Animação | CSS/Tailwind + `motion` via `LazyMotion` (bundle enxuto); `gsap` disponível |
-| Ícones | `lucide-react` |
-| Qualidade | oxlint + Prettier |
+| Camada    | Ferramenta                                                                  |
+| --------- | --------------------------------------------------------------------------- |
+| Build     | Vite 8                                                                      |
+| UI        | React 19 + TypeScript 6 (strict)                                            |
+| Estilo    | Tailwind CSS 4 (`@tailwindcss/vite`, tokens em `@theme`)                    |
+| Animação  | CSS/Tailwind + `motion` via `LazyMotion` (bundle enxuto); `gsap` disponível |
+| Ícones    | `lucide-react`                                                              |
+| Qualidade | oxlint + Prettier                                                           |
 
 ## Scripts
 
@@ -46,14 +46,14 @@ Todo o conteúdo vive em `src/data/` — nenhum texto fica hardcoded no JSX.
 
 ## Cores: `accent` vs `accent-text`
 
-O roxo neon do design (`#9D00FF`) atinge **3.59:1** sobre o fundo carvão — passa
+O azul de acento (`#0059FF`) atinge **3.58:1** sobre o fundo carvão — passa
 como componente de UI (mín. 3:1), mas **reprova como texto** (mín. 4.5:1). Por isso
 o acento é dois tokens:
 
-| Token | Valor | Usar em |
-|---|---|---|
-| `--color-accent` | `#9D00FF` | preenchimento, glow, borda, LED, fundo de botão |
-| `--color-accent-text` | `#BB4DFF` | qualquer **texto** em acento (4.66:1 no pior fundo) |
+| Token                 | Valor     | Usar em                                             |
+| --------------------- | --------- | --------------------------------------------------- |
+| `--color-accent`      | `#0059FF` | preenchimento, glow, borda, LED, fundo de botão     |
+| `--color-accent-text` | `#4D8BFF` | qualquer **texto** em acento (5.35:1 no pior fundo) |
 
 Outras regras do mesmo tipo:
 
@@ -61,6 +61,9 @@ Outras regras do mesmo tipo:
   afordância do controle — os campos do formulário — use `--color-line-strong`.
 - Texto sobre o botão de acento é **branco** (5.42:1). O `#0D0D0D` do protótipo
   dava 3.59:1.
+- O matiz (219°) foi amostrado da camiseta da foto da seção Sobre. A cor crua
+  do tecido (`#072C6F`) dá 1.48:1 e sumiria no fundo — o token é o mesmo matiz,
+  clareado até passar.
 - Nada de texto abaixo de 10px.
 
 Auditado com contraste computado sobre o fundo efetivo de cada elemento, em
@@ -75,7 +78,7 @@ uma requisição só, sem SDK no bundle. O template precisa aceitar `{{nome}}`,
 Sem as variáveis preenchidas o formulário continua validando, mas avisa que o
 envio está desligado em vez de falhar em silêncio.
 
-**Antes de publicar:** configure a *allowlist de domínios* no painel do EmailJS.
+**Antes de publicar:** configure a _allowlist de domínios_ no painel do EmailJS.
 A chave pública vai no JavaScript que o visitante baixa — não há como escondê-la,
 e a allowlist é o que impede terceiros de gastarem sua cota.
 

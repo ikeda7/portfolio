@@ -17,12 +17,14 @@
   --color-ink-muted: #a3a3a3;
   /* 5.04:1 no pior fundo (--panel-2). O #787878 do prototipo dava 3.94:1. */
   --color-ink-faint: #8a8a8a;
-  /* Acento para PREENCHIMENTO, glow, borda e LED — 3.4:1+, suficiente para
-     componente nao-textual. NAO usar como cor de texto. */
-  --color-accent: #9d00ff;
-  /* Acento para TEXTO — 4.66:1 no pior fundo. Mesmo matiz, so mais claro. */
-  --color-accent-text: #bb4dff;
-  --color-accent-2: #8a2be2;
+  /* Acento para PREENCHIMENTO, glow, borda e LED — 3.2:1+, suficiente para
+     componente nao-textual. NAO usar como cor de texto.
+     Matiz 219, amostrado da camiseta da foto da secao Sobre (#072C6F, que
+     sozinho da 1.48:1 e sumiria no carvao — mesma cor, mais clara). */
+  --color-accent: #0059ff;
+  /* Acento para TEXTO — 5.35:1 no pior fundo. Mesmo matiz, so mais claro. */
+  --color-accent-text: #4d8bff;
+  --color-accent-2: #2e6de0;
   --color-knob: #2a2a2a;
   --color-knob-line: #3a3a3a;
 
@@ -77,8 +79,8 @@
 /* Trocar a cor de acento = trocar apenas as duas variaveis abaixo.     */
 /* ------------------------------------------------------------------ */
 :root {
-  --accent-rgb: 157 0 255;
-  --accent-2-rgb: 138 43 226;
+  --accent-rgb: 0 89 255;
+  --accent-2-rgb: 46 109 224;
 }
 
 @utility glow-cta {
