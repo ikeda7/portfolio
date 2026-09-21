@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { useReducedMotion } from 'motion/react'
+import * as m from 'motion/react-m'
 
 import { Fader } from '@/components/ui/Fader'
 import { Panel } from '@/components/ui/Panel'
@@ -41,7 +42,7 @@ export function Skills() {
                 <RackRow key={channel.label} index={index} {...channel} />
               ))}
 
-              <motion.ul
+              <m.ul
                 className="border-line mt-1 flex flex-wrap gap-1.5 border-t pt-3.5"
                 initial={prefersReducedMotion ? undefined : 'hidden'}
                 whileInView={prefersReducedMotion ? undefined : 'visible'}
@@ -49,15 +50,15 @@ export function Skills() {
                 variants={staggerVariants}
               >
                 {skillTags.map((tag) => (
-                  <motion.li
+                  <m.li
                     key={tag}
                     variants={prefersReducedMotion ? undefined : revealVariants}
                     className="border-line bg-panel-2 text-ink-faint hover:border-accent hover:text-ink rounded border px-2.5 py-1.5 font-mono text-[10px] tracking-[0.1em] uppercase transition-all duration-300"
                   >
                     {tag}
-                  </motion.li>
+                  </m.li>
                 ))}
-              </motion.ul>
+              </m.ul>
             </div>
           </Panel>
         </Reveal>

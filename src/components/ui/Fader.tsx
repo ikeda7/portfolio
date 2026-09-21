@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { useReducedMotion } from 'motion/react'
+import * as m from 'motion/react-m'
 
 import { EASE_OUT, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
 import type { SkillChannel } from '@/types/content'
@@ -49,13 +50,13 @@ export function Fader({ label, value, index }: FaderProps) {
       <span className="text-ink-faint font-mono text-[10px]">{value}</span>
 
       <div className="border-line bg-panel-2 relative h-[150px] w-2 rounded-full border">
-        <motion.span
+        <m.span
           aria-hidden="true"
           className="fill-vertical absolute inset-x-0 bottom-0 rounded-full"
           style={prefersReducedMotion ? { height: fill } : undefined}
           {...animation}
         />
-        <motion.span
+        <m.span
           aria-hidden="true"
           className="bg-knob border-knob-line glow-knob absolute left-1/2 h-3 w-[26px] -translate-x-1/2 translate-y-1/2 rounded-[3px] border"
           style={prefersReducedMotion ? { bottom: fill } : undefined}

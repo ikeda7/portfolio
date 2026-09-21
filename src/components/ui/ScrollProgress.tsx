@@ -1,4 +1,5 @@
-import { motion, useReducedMotion, useScroll, useSpring } from 'motion/react'
+import { useReducedMotion, useScroll, useSpring } from 'motion/react'
+import * as m from 'motion/react-m'
 
 /**
  * Playhead: linha de acento na base do header que avança conforme a página
@@ -15,7 +16,7 @@ export function ScrollProgress() {
   if (prefersReducedMotion) return null
 
   return (
-    <motion.div
+    <m.div
       aria-hidden="true"
       style={{ scaleX }}
       className="bg-accent glow-bar absolute inset-x-0 bottom-0 h-px origin-left"

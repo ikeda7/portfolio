@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { useReducedMotion } from 'motion/react'
+import * as m from 'motion/react-m'
 import type { ReactNode } from 'react'
 
 import { REVEAL_TRANSITION, VIEWPORT, revealVariants } from '@/lib/motion'
@@ -25,7 +26,7 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
   }
 
   return (
-    <motion.div
+    <m.div
       className={className}
       initial="hidden"
       whileInView="visible"
@@ -34,7 +35,7 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
       transition={{ ...REVEAL_TRANSITION, delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -50,8 +51,8 @@ export function RevealItem({ children, className }: Omit<RevealProps, 'delay'>) 
   }
 
   return (
-    <motion.div className={className} variants={revealVariants}>
+    <m.div className={className} variants={revealVariants}>
       {children}
-    </motion.div>
+    </m.div>
   )
 }

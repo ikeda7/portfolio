@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { useReducedMotion } from 'motion/react'
+import * as m from 'motion/react-m'
 
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { RevealItem } from '@/components/ui/Reveal'
@@ -21,7 +22,7 @@ export function Projects() {
         Projetos
       </h2>
 
-      <motion.div
+      <m.div
         className="grid grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-5"
         initial={prefersReducedMotion ? undefined : 'hidden'}
         whileInView={prefersReducedMotion ? undefined : 'visible'}
@@ -33,7 +34,7 @@ export function Projects() {
             <ProjectCard {...project} />
           </RevealItem>
         ))}
-      </motion.div>
+      </m.div>
     </section>
   )
 }

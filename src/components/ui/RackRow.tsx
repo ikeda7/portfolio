@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { useReducedMotion } from 'motion/react'
+import * as m from 'motion/react-m'
 
 import { EASE_OUT, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
 import type { SkillChannel } from '@/types/content'
@@ -37,7 +38,7 @@ export function RackRow({ label, value, index }: RackRowProps) {
         aria-valuemax={100}
         aria-label={label}
       >
-        <motion.span
+        <m.span
           aria-hidden="true"
           className="fill-horizontal glow-bar block h-full rounded-full"
           {...animation}

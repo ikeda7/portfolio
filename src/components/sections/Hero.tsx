@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { useReducedMotion } from 'motion/react'
+import * as m from 'motion/react-m'
 
 import { Waveform } from '@/components/ui/Waveform'
 import { site } from '@/data/site'
@@ -30,50 +31,50 @@ export function Hero() {
       />
 
       {background && (
-        <motion.div
+        <m.div
           aria-hidden="true"
           style={{ background }}
           className="pointer-events-none absolute inset-0"
         />
       )}
 
-      <motion.div
+      <m.div
         className="relative mx-auto flex w-full max-w-[1200px] flex-col items-center text-center"
         initial={prefersReducedMotion ? undefined : 'hidden'}
         animate={prefersReducedMotion ? undefined : 'visible'}
         variants={staggerVariants}
       >
-        <motion.p
+        <m.p
           variants={revealVariants}
           className="border-line bg-panel text-ink-muted flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[11px] tracking-[0.12em] uppercase"
         >
           <span aria-hidden="true" className="bg-accent glow-led size-1.5 rounded-full" />
           {hero.statusLabel}
-        </motion.p>
+        </m.p>
 
-        <motion.h1
+        <m.h1
           variants={revealVariants}
           id="hero-title"
           className="mt-7 max-w-[900px] text-[clamp(40px,7vw,76px)] leading-[1.02] font-bold tracking-[-0.035em] text-balance"
         >
           {hero.title}
-        </motion.h1>
+        </m.h1>
 
-        <motion.p
+        <m.p
           variants={revealVariants}
           className="text-accent-text mt-[18px] font-mono text-[clamp(12px,1.6vw,15px)] tracking-[0.18em] uppercase"
         >
           {hero.subtitle}
-        </motion.p>
+        </m.p>
 
-        <motion.p
+        <m.p
           variants={revealVariants}
           className="text-ink-muted mt-[22px] max-w-[560px] text-base leading-[1.65] text-pretty"
         >
           {hero.description}
-        </motion.p>
+        </m.p>
 
-        <motion.div
+        <m.div
           variants={revealVariants}
           className="mt-10 flex flex-wrap items-center justify-center gap-3"
         >
@@ -89,9 +90,9 @@ export function Hero() {
           >
             {hero.secondaryCta.label}
           </a>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           className="w-full"
           initial={prefersReducedMotion ? undefined : 'hidden'}
           whileInView={prefersReducedMotion ? undefined : 'visible'}
@@ -104,8 +105,8 @@ export function Hero() {
             timecode={hero.waveform.timecode}
             tags={hero.waveform.tags}
           />
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </section>
   )
 }
