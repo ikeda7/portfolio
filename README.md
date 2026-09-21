@@ -44,6 +44,28 @@ src/
 
 Todo o conteúdo vive em `src/data/` — nenhum texto fica hardcoded no JSX.
 
+## Cores: `accent` vs `accent-text`
+
+O roxo neon do design (`#9D00FF`) atinge **3.59:1** sobre o fundo carvão — passa
+como componente de UI (mín. 3:1), mas **reprova como texto** (mín. 4.5:1). Por isso
+o acento é dois tokens:
+
+| Token | Valor | Usar em |
+|---|---|---|
+| `--color-accent` | `#9D00FF` | preenchimento, glow, borda, LED, fundo de botão |
+| `--color-accent-text` | `#BB4DFF` | qualquer **texto** em acento (4.66:1 no pior fundo) |
+
+Outras regras do mesmo tipo:
+
+- `--color-line` (`#262626`) é para divisor decorativo. Onde a borda é a **única**
+  afordância do controle — os campos do formulário — use `--color-line-strong`.
+- Texto sobre o botão de acento é **branco** (5.42:1). O `#0D0D0D` do protótipo
+  dava 3.59:1.
+- Nada de texto abaixo de 10px.
+
+Auditado com contraste computado sobre o fundo efetivo de cada elemento, em
+página renderizada — não só sobre os tokens. Zero falhas AA.
+
 ## Variáveis de ambiente
 
 Copie `.env.example` para `.env.local` e preencha. `.env*` está no `.gitignore`;

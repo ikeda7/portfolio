@@ -13,7 +13,7 @@ export default function App() {
     <>
       <a
         href="#conteudo"
-        className="bg-accent sr-only rounded-lg px-4 py-2 text-sm font-semibold text-[#0D0D0D] focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
+        className="bg-accent sr-only rounded-lg px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
       >
         Pular para o conteúdo
       </a>

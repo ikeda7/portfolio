@@ -18,7 +18,7 @@ export function SectionHeading({ index, label }: SectionHeadingProps) {
 
   return (
     <div className="mb-9 flex items-center gap-3">
-      <span className="font-mono text-[11px] tracking-[0.16em] text-accent uppercase">
+      <span className="text-accent-text font-mono text-[11px] tracking-[0.16em] uppercase">
         {index} / {label}
       </span>
       <motion.span

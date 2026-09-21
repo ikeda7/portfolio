@@ -38,7 +38,7 @@ export function Waveform({ meta, timecode, tags }: WaveformProps) {
             className={
               index === tags.length - 1
                 ? 'text-ink rounded border border-[rgb(var(--accent-rgb)/0.4)] bg-[rgb(var(--accent-rgb)/0.14)] px-[10px] py-[5px] font-mono text-[10px]'
-                : 'bg-panel-2 text-ink-faint rounded px-[10px] py-[5px] font-mono text-[10px]'
+                : 'bg-panel-2 text-ink-muted rounded px-[10px] py-[5px] font-mono text-[10px]'
             }
           >
             {tag}

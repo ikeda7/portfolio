@@ -41,7 +41,7 @@ export function Marquee({ items, duration = 38 }: MarqueeProps) {
             key={`${item}-${index}`}
             // A segunda cópia é puramente visual: some para leitores de tela.
             aria-hidden={index >= items.length ? 'true' : undefined}
-            className="text-ink-faint hover:text-accent flex shrink-0 items-center gap-10 font-mono text-[11px] tracking-[0.18em] whitespace-nowrap uppercase transition-colors duration-300"
+            className="text-ink-faint hover:text-accent-text flex shrink-0 items-center gap-10 font-mono text-[11px] tracking-[0.18em] whitespace-nowrap uppercase transition-colors duration-300"
           >
             {item}
             <span aria-hidden="true" className="bg-accent/40 size-1 rounded-full" />

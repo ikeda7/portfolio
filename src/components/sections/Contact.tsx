@@ -11,12 +11,12 @@ export function Contact() {
   return (
     <section
       id="contato"
-      className="mx-auto w-full max-w-[1200px] px-6 py-20"
+      className="mx-auto w-full max-w-[1200px] px-6 py-14 sm:py-20"
       aria-labelledby="contato-title"
     >
       <SectionHeading index="04" label="Contato" />
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-start gap-14">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-start gap-14">
         <Reveal>
           <h2
             id="contato-title"

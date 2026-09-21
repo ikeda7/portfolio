@@ -15,7 +15,7 @@ export function Skills() {
   return (
     <section
       id="habilidades"
-      className="mx-auto w-full max-w-[1200px] px-6 py-20"
+      className="mx-auto w-full max-w-[1200px] px-6 py-14 sm:py-20"
       aria-labelledby="habilidades-title"
     >
       <SectionHeading index="02" label="Stack" />
@@ -23,7 +23,7 @@ export function Skills() {
         Habilidades técnicas
       </h2>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-5">
         <Reveal className="h-full">
           <Panel title={faderPanel.title} code={faderPanel.code}>
             <div className="flex justify-between gap-2.5 px-[18px] py-[26px]">

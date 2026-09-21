@@ -21,12 +21,12 @@ export function Hero() {
     <section
       {...bind}
       id="top"
-      className="relative overflow-hidden px-6 pt-24 pb-28"
+      className="relative overflow-hidden px-6 pt-16 pb-20 sm:pt-24 sm:pb-28"
       aria-labelledby="hero-title"
     >
       <div
         aria-hidden="true"
-        className="animate-driftglow pointer-events-none absolute -top-[180px] left-1/2 h-[460px] w-[760px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgb(var(--accent-rgb)/0.22),rgb(13_13_13/0)_70%)] blur-[10px]"
+        className="animate-driftglow pointer-events-none absolute -top-[180px] left-1/2 h-[min(460px,60vw)] w-[min(760px,130%)] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgb(var(--accent-rgb)/0.22),rgb(13_13_13/0)_70%)] blur-[10px]"
       />
 
       {background && (
@@ -61,7 +61,7 @@ export function Hero() {
 
         <motion.p
           variants={revealVariants}
-          className="text-accent mt-[18px] font-mono text-[clamp(12px,1.6vw,15px)] tracking-[0.18em] uppercase"
+          className="text-accent-text mt-[18px] font-mono text-[clamp(12px,1.6vw,15px)] tracking-[0.18em] uppercase"
         >
           {hero.subtitle}
         </motion.p>
@@ -79,7 +79,7 @@ export function Hero() {
         >
           <a
             href={hero.primaryCta.href}
-            className="border-accent bg-accent hover:glow-cta rounded-lg border px-[26px] py-3.5 text-sm font-semibold text-[#0D0D0D] transition-all duration-300 hover:-translate-y-0.5"
+            className="border-accent bg-accent hover:glow-cta rounded-lg border px-[26px] py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
           >
             {hero.primaryCta.label}
           </a>

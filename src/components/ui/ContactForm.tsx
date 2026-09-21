@@ -15,7 +15,7 @@ const EMPTY_FORM: FormValues = { nome: '', email: '', mensagem: '' }
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const FIELD_CLASS =
-  'border-line focus:border-accent focus:glow-input w-full border-0 border-b bg-transparent px-0.5 py-2.5 text-[15px] outline-none transition-all duration-300'
+  'border-line-strong focus:border-accent focus:glow-input w-full border-0 border-b bg-transparent px-0.5 py-2.5 text-[15px] outline-none transition-all duration-300'
 
 const LABEL_CLASS = 'text-ink-faint font-mono text-[10px] tracking-[0.14em] uppercase'
 
@@ -118,14 +118,14 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={isSending}
-        className="border-accent bg-accent hover:glow-cta self-start rounded-lg border px-7 py-3.5 text-sm font-semibold text-[#0D0D0D] transition-all duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+        className="border-accent bg-accent hover:glow-cta self-start rounded-lg border px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSending ? 'Enviando…' : 'Enviar mensagem'}
       </button>
 
       <output
         aria-live="polite"
-        className={`font-mono text-[11px] ${status === 'ok' ? 'text-accent' : 'text-ink-faint'}`}
+        className={`font-mono text-[11px] ${status === 'ok' ? 'text-accent-text' : 'text-ink-faint'}`}
       >
         {message}
       </output>
