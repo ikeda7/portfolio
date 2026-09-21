@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#0D0D0D; --panel:#141414; --panel-2:#1A1A1A; --line:#262626;
+  --ink:#EDEDED; --ink-muted:#A3A3A3; --ink-faint:#787878;
+  --accent:#9D00FF; --accent-2:#8A2BE2;
+  --proj-cols:repeat(auto-fit,minmax(280px,1fr));
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+body{-webkit-font-smoothing:antialiased;font-family:'Space Grotesk',system-ui,sans-serif}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--accent)}
+input,textarea,button{font:inherit;color:inherit}
+@keyframes wavepulse{0%,100%{transform:scaleY(.25);opacity:.45}50%{transform:scaleY(1);opacity:1}}
+@keyframes driftglow{0%,100%{opacity:.35}50%{opacity:.7}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--bg);overflow-x:hidden">
+
+  <header style="position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);background:rgba(13,13,13,.82);borderBottom:1px solid var(--line)">
+    <div style="max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:8px">
+        <span style="font-weight:700;letter-spacing:-.02em;font-size:16px">Nome</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:.08em">/SOBRENOME</span>
+      </div>
+      <nav style="display:flex;gap:4px;flex-wrap:wrap">
+        <a href="#sobre" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);padding:8px 12px;border-radius:6px;transition:all .3s" style-hover="color:var(--ink);background:var(--panel-2)">Sobre</a>
+        <a href="#habilidades" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);padding:8px 12px;border-radius:6px;transition:all .3s" style-hover="color:var(--ink);background:var(--panel-2)">Stack</a>
+        <a href="#projetos" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);padding:8px 12px;border-radius:6px;transition:all .3s" style-hover="color:var(--ink);background:var(--panel-2)">Projetos</a>
+        <a href="#contato" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);padding:8px 12px;border-radius:6px;transition:all .3s" style-hover="color:var(--ink);background:var(--panel-2)">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <section style="position:relative;padding:96px 24px 112px;display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden">
+    <div style="position:absolute;top:-180px;left:50%;transform:translateX(-50%);width:760px;height:460px;background:radial-gradient(ellipse at center, rgba(157,0,255,.22), rgba(13,13,13,0) 70%);filter:blur(10px);animation:driftglow 7s ease-in-out infinite;pointerEvents:none"></div>
+
+    <div style="position:relative;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--ink-muted);text-transform:uppercase">
+      <span style="width:6px;height:6px;border-radius:999px;background:var(--accent);box-shadow:0 0 10px var(--accent)"></span>
+      Disponível para projetos
+    </div>
+
+    <h1 style="position:relative;margin:28px 0 0;font-size:clamp(40px,7vw,76px);line-height:1.02;font-weight:700;letter-spacing:-.035em;max-width:900px;text-wrap:balance">Título grande do<br>portfólio aqui</h1>
+
+    <h2 style="position:relative;margin:18px 0 0;font-family:'JetBrains Mono',monospace;font-size:clamp(12px,1.6vw,15px);font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)">Sua profissão · sua profissão</h2>
+
+    <p style="position:relative;margin:22px 0 0;max-width:560px;font-size:16px;line-height:1.65;color:var(--ink-muted);text-wrap:pretty">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim.</p>
+
+    <div style="position:relative;margin-top:40px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
+      <a href="#projetos" style="padding:14px 26px;border-radius:8px;background:var(--accent);color:#0D0D0D;font-weight:600;font-size:14px;letter-spacing:.01em;border:1px solid var(--accent);transition:all .3s;box-shadow:0 0 0 rgba(157,0,255,0)" style-hover="box-shadow:0 0 34px rgba(157,0,255,.75);transform:translateY(-2px);color:#0D0D0D">Ver projetos</a>
+      <a href="#contato" style="padding:14px 26px;border-radius:8px;background:transparent;color:var(--ink);font-weight:500;font-size:14px;border:1px solid var(--line);transition:all .3s" style-hover="border-color:var(--accent);color:var(--ink);box-shadow:0 0 22px rgba(157,0,255,.25)">Falar comigo</a>
+    </div>
+
+    <div style="position:relative;margin-top:72px;width:100%;max-width:880px;padding:22px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--panel),#101010);box-shadow:0 0 60px rgba(157,0,255,.12)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--ink-faint);text-transform:uppercase">
+        <span>Waveform · master</span><span>00:00:00 / 00:03:24</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:3px;height:120px">
+        <sc-for list="{{ waveBars }}" as="bar" hint-placeholder-count="48">
+          <div style="flex:1 1 0;min-width:0;height:{{ bar.h }};border-radius:999px;background:linear-gradient(180deg,var(--accent),rgba(138,43,226,.25));transform-origin:center;animation:wavepulse {{ bar.dur }} ease-in-out infinite;animation-delay:{{ bar.delay }}"></div>
+        </sc-for>
+      </div>
+      <div style="margin-top:14px;height:1px;background:var(--line)"></div>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;padding:5px 10px;border-radius:4px;background:var(--panel-2);color:var(--ink-muted)">LOREM</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;padding:5px 10px;border-radius:4px;background:var(--panel-2);color:var(--ink-muted)">IPSUM</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;padding:5px 10px;border-radius:4px;background:rgba(157,0,255,.14);color:var(--ink);border:1px solid rgba(157,0,255,.4)">DOLOR SIT</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre" style="max-width:1200px;margin:0 auto;padding:80px 24px;scroll-margin-top:80px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:36px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--accent)">01 / SOBRE</span>
+      <span style="flex:1;height:1px;background:var(--line)"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:center">
+      <div style="min-width:0">
+        <h3 style="margin:0 0 20px;font-size:clamp(26px,3.4vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:600">Uma frase sobre quem você é</h3>
+        <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:var(--ink-muted);text-wrap:pretty">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+        <p style="margin:0 0 28px;font-size:15px;line-height:1.75;color:var(--ink-muted);text-wrap:pretty">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px">
+          <div style="padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--panel)">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--accent)">00</div>
+            <div style="margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)">Rótulo</div>
+          </div>
+          <div style="padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--panel)">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--accent)">00</div>
+            <div style="margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)">Rótulo</div>
+          </div>
+          <div style="padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--panel)">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--accent)">00</div>
+            <div style="margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)">Rótulo</div>
+          </div>
+        </div>
+      </div>
+      <div style="position:relative;min-width:0">
+        <div style="position:absolute;inset:18px -18px -18px 18px;border-radius:16px;background:radial-gradient(circle at 70% 70%, rgba(157,0,255,.45), rgba(13,13,13,0) 70%);filter:blur(24px)"></div>
+        <div style="position:relative;aspect-ratio:1/1;border:1px solid var(--line);border-radius:16px;background:var(--panel);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;overflow:hidden;box-shadow:0 0 40px rgba(157,0,255,.18)">
+          <div style="width:64px;height:64px;border-radius:14px;border:1px solid rgba(157,0,255,.5);background:rgba(157,0,255,.12)"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)">Placeholder de foto</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="habilidades" style="max-width:1200px;margin:0 auto;padding:80px 24px;scroll-margin-top:80px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:36px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--accent)">02 / STACK</span>
+      <span style="flex:1;height:1px;background:var(--line)"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+
+      <div style="border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:var(--panel-2)">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)">IA &amp; Dados</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint)">CH 01–05</span>
+        </div>
+        <div style="padding:26px 18px;display:flex;gap:10px;justify-content:space-between">
+          <sc-for list="{{ fadersIa }}" as="f" hint-placeholder-count="5">
+            <div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:10px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint)">{{ f.value }}</div>
+              <div style="position:relative;width:8px;height:150px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line)">
+                <div style="position:absolute;left:0;right:0;bottom:0;height:{{ f.fill }};border-radius:999px;background:linear-gradient(180deg,var(--accent),rgba(138,43,226,.4))"></div>
+                <div style="position:absolute;left:50%;bottom:{{ f.fill }};transform:translate(-50%,50%);width:26px;height:12px;border-radius:3px;background:#2A2A2A;border:1px solid #3A3A3A;box-shadow:0 0 12px rgba(157,0,255,.5)"></div>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);writing-mode:vertical-rl;transform:rotate(180deg);height:78px;overflow:hidden">{{ f.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:var(--panel-2)">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)">Engenharia de software</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint)">RACK A</span>
+        </div>
+        <div style="padding:22px 18px;display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ racks }}" as="r" hint-placeholder-count="5">
+            <div style="display:flex;align-items:center;gap:14px;min-width:0">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);width:96px;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.label }}</span>
+              <div style="flex:1;min-width:0;height:6px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line);overflow:hidden">
+                <div style="height:100%;width:{{ r.fill }};background:linear-gradient(90deg,rgba(138,43,226,.5),var(--accent));box-shadow:0 0 14px rgba(157,0,255,.6)"></div>
+              </div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint);width:34px;text-align:right;flex:none">{{ r.value }}</span>
+            </div>
+          </sc-for>
+          <div style="margin-top:6px;height:1px;background:var(--line)"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ tags }}" as="t" hint-placeholder-count="8">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;padding:6px 10px;border-radius:4px;background:var(--panel-2);border:1px solid var(--line);color:var(--ink-muted);transition:all .3s" style-hover="border-color:var(--accent);color:var(--ink)">{{ t }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos" style="max-width:1200px;margin:0 auto;padding:80px 24px;scroll-margin-top:80px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:36px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--accent)">03 / PROJETOS</span>
+      <span style="flex:1;height:1px;background:var(--line)"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:var(--proj-cols);gap:20px">
+      <sc-for list="{{ projetos }}" as="p" hint-placeholder-count="6">
+        <div style="min-width:0;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden;transition:all .3s;box-shadow:0 0 0 rgba(157,0,255,0)" style-hover="transform:translateY(-8px);border-color:var(--accent);box-shadow:0 18px 40px rgba(0,0,0,.5), 0 0 30px rgba(157,0,255,.28)">
+          <div style="position:relative;aspect-ratio:16/10;background:radial-gradient(circle at 50% 50%, #1E1E1E, #101010);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line)">
+            <div style="width:42%;aspect-ratio:1/1;border-radius:999px;border:1px solid #2E2E2E;background:conic-gradient(from 0deg,#151515,#1D1D1D,#141414,#1D1D1D,#151515);display:flex;align-items:center;justify-content:center">
+              <div style="width:22%;aspect-ratio:1/1;border-radius:999px;background:rgba(157,0,255,.35);border:1px solid rgba(157,0,255,.6);box-shadow:0 0 18px rgba(157,0,255,.5)"></div>
+            </div>
+            <span style="position:absolute;top:10px;left:12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--ink-faint)">{{ p.num }}</span>
+          </div>
+          <div style="padding:18px">
+            <h4 style="margin:0 0 8px;font-size:17px;font-weight:600;letter-spacing:-.01em">{{ p.titulo }}</h4>
+            <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ink-muted)">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+              <sc-for list="{{ p.tags }}" as="tg" hint-placeholder-count="3">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;padding:4px 8px;border-radius:4px;background:var(--panel-2);color:var(--ink-faint)">{{ tg }}</span>
+              </sc-for>
+            </div>
+            <a href="#projetos" style="display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);transition:all .3s" style-hover="color:var(--accent);gap:12px">Abrir →</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="contato" style="max-width:1200px;margin:0 auto;padding:80px 24px 120px;scroll-margin-top:80px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:36px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--accent)">04 / CONTATO</span>
+      <span style="flex:1;height:1px;background:var(--line)"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:start">
+      <div style="min-width:0">
+        <h3 style="margin:0 0 16px;font-size:clamp(26px,3.4vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:600">Vamos conversar</h3>
+        <p style="margin:0 0 32px;font-size:15px;line-height:1.7;color:var(--ink-muted);max-width:420px;text-wrap:pretty">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</p>
+        <div style="border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden">
+          <div style="padding:12px 16px;border-bottom:1px solid var(--line);background:var(--panel-2);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)">Canais</div>
+          <div style="padding:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px">
+            <sc-for list="{{ redes }}" as="s" hint-placeholder-count="4">
+              <a href="#contato" style="display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--line);border-radius:8px;background:#101010;transition:all .3s" style-hover="border-color:var(--accent);background:rgba(157,0,255,.08);color:var(--ink)">
+                <span style="width:8px;height:8px;border-radius:999px;background:var(--accent);box-shadow:0 0 10px var(--accent)"></span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)">{{ s }}</span>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="min-width:0;display:flex;flex-direction:column;gap:26px">
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)">Nome</span>
+          <input type="text" placeholder="Lorem ipsum" style="width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);padding:10px 2px;font-size:15px;outline:none;transition:all .3s" style-focus="border-bottom-color:var(--accent);box-shadow:0 10px 24px -18px var(--accent)">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)">E-mail</span>
+          <input type="email" placeholder="lorem@ipsum.com" style="width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);padding:10px 2px;font-size:15px;outline:none;transition:all .3s" style-focus="border-bottom-color:var(--accent);box-shadow:0 10px 24px -18px var(--accent)">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)">Mensagem</span>
+          <textarea rows="4" placeholder="Lorem ipsum dolor sit amet..." style="width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);padding:10px 2px;font-size:15px;outline:none;resize:vertical;transition:all .3s" style-focus="border-bottom-color:var(--accent);box-shadow:0 10px 24px -18px var(--accent)"></textarea>
+        </label>
+        <button type="button" style="align-self:flex-start;padding:14px 28px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#0D0D0D;font-weight:600;font-size:14px;cursor:pointer;transition:all .3s" style-hover="box-shadow:0 0 34px rgba(157,0,255,.75);transform:translateY(-2px)">Enviar mensagem</button>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid var(--line);padding:26px 24px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)">
+      <span>© 2026 — Nome Sobrenome</span>
+      <span>Lorem ipsum · dolor sit</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#9D00FF&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#9D00FF&quot;,&quot;#8A2BE2&quot;,&quot;#00E5FF&quot;,&quot;#FF3D71&quot;],&quot;section&quot;:&quot;Estética&quot;},&quot;projectColumns&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;2&quot;,&quot;3&quot;],&quot;section&quot;:&quot;Layout&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() { this.sync(); }
+  componentDidUpdate() { this.sync(); }
+  sync() {
+    const r = document.documentElement.style;
+    r.setProperty('--accent', this.props.accentColor ?? '#9D00FF');
+    const c = this.props.projectColumns ?? 'auto';
+    r.setProperty('--proj-cols', c === 'auto' ? 'repeat(auto-fit,minmax(280px,1fr))' : `repeat(${c},minmax(0,1fr))`);
+  }
+  renderVals() {
+    const heights = [22,38,54,30,66,82,48,70,90,58,34,74,96,62,44,80,52,68,88,40,26,58,76,92,64,36,50,84,70,46,32,60,86,54,28,72,94,42,56,78,38,66,48,90,60,34,44,24];
+    return {
+      waveBars: heights.map((h, i) => ({
+        h: h + '%',
+        dur: (1.6 + (i % 5) * 0.28).toFixed(2) + 's',
+        delay: ((i % 12) * 0.09).toFixed(2) + 's'
+      })),
+      fadersIa: [
+        { label: 'Lorem', value: '82', fill: '82%' },
+        { label: 'Ipsum', value: '64', fill: '64%' },
+        { label: 'Dolor', value: '91', fill: '91%' },
+        { label: 'Sit amet', value: '55', fill: '55%' },
+        { label: 'Consec', value: '73', fill: '73%' }
+      ],
+      racks: [
+        { label: 'Lorem', value: '88', fill: '88%' },
+        { label: 'Ipsum dolor', value: '76', fill: '76%' },
+        { label: 'Sit amet', value: '69', fill: '69%' },
+        { label: 'Consectetur', value: '81', fill: '81%' },
+        { label: 'Adipiscing', value: '58', fill: '58%' }
+      ],
+      tags: ['LOREM','IPSUM','DOLOR','SIT','AMET','CONSEC','ADIPISC','ELIT'],
+      projetos: [1,2,3,4,5,6].map(n => ({
+        num: String(n).padStart(2, '0'),
+        titulo: 'Nome do projeto ' + n,
+        tags: ['LOREM','IPSUM','DOLOR']
+      })),
+      redes: ['GitHub','LinkedIn','E-mail','X']
+    };
+  }
+}
+</script>
+</body>
+</html>

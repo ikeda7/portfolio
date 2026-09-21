@@ -1,0 +1,147 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ */
+/* Design tokens — tema "Dark Studio & IA"                            */
+/* Fonte da verdade: docs/design-reference/README.md                  */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-bg: #0d0d0d;
+  --color-panel: #141414;
+  --color-panel-2: #1a1a1a;
+  --color-panel-sunken: #101010;
+  --color-line: #262626;
+  --color-ink: #ededed;
+  --color-ink-muted: #a3a3a3;
+  --color-ink-faint: #787878;
+  --color-accent: #9d00ff;
+  --color-accent-2: #8a2be2;
+  --color-knob: #2a2a2a;
+  --color-knob-line: #3a3a3a;
+
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --animate-driftglow: driftglow 7s ease-in-out infinite;
+
+  @keyframes driftglow {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+}
+
+/*
+ * As barras da waveform recebem duration/delay individuais via style inline,
+ * entao nenhum utilitario `animate-*` referencia este keyframe — ele precisa
+ * viver fora do `@theme` para o Tailwind nao remove-lo do bundle.
+ */
+@keyframes wavepulse {
+  0%,
+  100% {
+    transform: scaleY(0.25);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Glows — todos derivados de --accent-rgb.                            */
+/* Trocar a cor de acento = trocar apenas as duas variaveis abaixo.     */
+/* ------------------------------------------------------------------ */
+:root {
+  --accent-rgb: 157 0 255;
+  --accent-2-rgb: 138 43 226;
+}
+
+@utility glow-cta {
+  box-shadow: 0 0 34px rgb(var(--accent-rgb) / 0.75);
+}
+
+@utility glow-soft {
+  box-shadow: 0 0 22px rgb(var(--accent-rgb) / 0.25);
+}
+
+@utility glow-card {
+  box-shadow:
+    0 18px 40px rgb(0 0 0 / 0.5),
+    0 0 30px rgb(var(--accent-rgb) / 0.28);
+}
+
+@utility glow-panel {
+  box-shadow: 0 0 60px rgb(var(--accent-rgb) / 0.12);
+}
+
+@utility glow-photo {
+  box-shadow: 0 0 40px rgb(var(--accent-rgb) / 0.18);
+}
+
+@utility glow-knob {
+  box-shadow: 0 0 12px rgb(var(--accent-rgb) / 0.5);
+}
+
+@utility glow-bar {
+  box-shadow: 0 0 14px rgb(var(--accent-rgb) / 0.6);
+}
+
+@utility glow-led {
+  box-shadow: 0 0 10px var(--color-accent);
+}
+
+@utility glow-input {
+  box-shadow: 0 10px 24px -18px var(--color-accent);
+}
+
+/* Preenchimentos em gradiente reaproveitados por faders, barras e waveform. */
+@utility fill-vertical {
+  background: linear-gradient(180deg, var(--color-accent), rgb(var(--accent-2-rgb) / 0.4));
+}
+
+@utility fill-horizontal {
+  background: linear-gradient(90deg, rgb(var(--accent-2-rgb) / 0.5), var(--color-accent));
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header sticky de 80px: garante que a ancora nao fique escondida. */
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+
+  ::selection {
+    background-color: rgb(var(--accent-rgb) / 0.3);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+/* Acessibilidade: desliga TODAS as animacoes e transicoes. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

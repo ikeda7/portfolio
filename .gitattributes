@@ -1,0 +1,15 @@
+# Normaliza as quebras de linha: LF no repositorio, nativo no working tree.
+* text=auto eol=lf
+
+# Binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ico binary
+
+# Nao contar o lockfile nem o pacote de design nas estatisticas de linguagem
+package-lock.json linguist-generated=true
+docs/design-reference/** linguist-vendored=true
