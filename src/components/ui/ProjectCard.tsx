@@ -50,7 +50,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
           {tags.map((tag) => (
             <li
               key={tag}
-              className="bg-panel-2 text-ink-faint rounded px-2 py-1 font-mono text-[9px] tracking-[0.12em]"
+              className="bg-panel-2 text-ink-faint rounded px-2 py-1 font-mono text-[10px] tracking-[0.12em]"
             >
               {tag}
             </li>
@@ -62,7 +62,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
             href={href}
             target="_blank"
             rel="noreferrer noopener"
-            className="text-ink-muted group-hover:text-accent mt-4 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3"
+            className="text-ink-muted group-hover:text-accent-text mt-4 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3"
             aria-label={`Abrir o projeto ${title} em uma nova aba`}
           >
             Abrir

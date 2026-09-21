@@ -13,7 +13,7 @@ export function Projects() {
   return (
     <section
       id="projetos"
-      className="mx-auto w-full max-w-[1200px] px-6 py-20"
+      className="mx-auto w-full max-w-[1200px] px-6 py-14 sm:py-20"
       aria-labelledby="projetos-title"
     >
       <SectionHeading index="03" label="Projetos" />
@@ -22,7 +22,7 @@ export function Projects() {
       </h2>
 
       <motion.div
-        className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5"
+        className="grid grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-5"
         initial={prefersReducedMotion ? undefined : 'hidden'}
         whileInView={prefersReducedMotion ? undefined : 'visible'}
         viewport={VIEWPORT}

@@ -9,12 +9,12 @@ export function About() {
   return (
     <section
       id="sobre"
-      className="mx-auto w-full max-w-[1200px] px-6 py-20"
+      className="mx-auto w-full max-w-[1200px] px-6 py-14 sm:py-20"
       aria-labelledby="sobre-title"
     >
       <SectionHeading index="01" label="Sobre" />
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-12">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-center gap-12">
         <Reveal>
           <h2
             id="sobre-title"
@@ -29,7 +29,7 @@ export function About() {
             </p>
           ))}
 
-          <dl className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-3">
+          <dl className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(min(120px,100%),1fr))] gap-3">
             {aboutStats.map((stat) => (
               <div
                 key={stat.label}
@@ -37,7 +37,7 @@ export function About() {
               >
                 <dt className="sr-only">{stat.label}</dt>
                 <dd>
-                  <span className="text-accent block font-mono text-2xl font-bold">
+                  <span className="text-accent-text block font-mono text-2xl font-bold">
                     {stat.value}
                   </span>
                   <span
