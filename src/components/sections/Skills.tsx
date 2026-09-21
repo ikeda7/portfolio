@@ -1,11 +1,17 @@
+import { motion, useReducedMotion } from 'motion/react'
+
 import { Fader } from '@/components/ui/Fader'
 import { Panel } from '@/components/ui/Panel'
 import { RackRow } from '@/components/ui/RackRow'
+import { Reveal } from '@/components/ui/Reveal'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { faderPanel, rackPanel, skillTags } from '@/data/skills'
+import { VIEWPORT, revealVariants, staggerVariants } from '@/lib/motion'
 
 /** Rack de processamento: mesa de som (IA & Dados) + rack (engenharia). */
 export function Skills() {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <section
       id="habilidades"
@@ -18,32 +24,43 @@ export function Skills() {
       </h2>
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
-        <Panel title={faderPanel.title} code={faderPanel.code}>
-          <div className="flex justify-between gap-2.5 px-[18px] py-[26px]">
-            {faderPanel.channels.map((channel) => (
-              <Fader key={channel.label} {...channel} />
-            ))}
-          </div>
-        </Panel>
-
-        <Panel title={rackPanel.title} code={rackPanel.code}>
-          <div className="flex flex-col gap-3.5 px-[18px] py-[22px]">
-            {rackPanel.channels.map((channel) => (
-              <RackRow key={channel.label} {...channel} />
-            ))}
-
-            <ul className="border-line mt-1 flex flex-wrap gap-1.5 border-t pt-3.5">
-              {skillTags.map((tag) => (
-                <li
-                  key={tag}
-                  className="border-line bg-panel-2 text-ink-faint hover:border-accent hover:text-ink rounded border px-2.5 py-1.5 font-mono text-[10px] tracking-[0.1em] uppercase transition-all duration-300"
-                >
-                  {tag}
-                </li>
+        <Reveal className="h-full">
+          <Panel title={faderPanel.title} code={faderPanel.code}>
+            <div className="flex justify-between gap-2.5 px-[18px] py-[26px]">
+              {faderPanel.channels.map((channel, index) => (
+                <Fader key={channel.label} index={index} {...channel} />
               ))}
-            </ul>
-          </div>
-        </Panel>
+            </div>
+          </Panel>
+        </Reveal>
+
+        <Reveal delay={0.12} className="h-full">
+          <Panel title={rackPanel.title} code={rackPanel.code}>
+            <div className="flex flex-col gap-3.5 px-[18px] py-[22px]">
+              {rackPanel.channels.map((channel, index) => (
+                <RackRow key={channel.label} index={index} {...channel} />
+              ))}
+
+              <motion.ul
+                className="border-line mt-1 flex flex-wrap gap-1.5 border-t pt-3.5"
+                initial={prefersReducedMotion ? undefined : 'hidden'}
+                whileInView={prefersReducedMotion ? undefined : 'visible'}
+                viewport={VIEWPORT}
+                variants={staggerVariants}
+              >
+                {skillTags.map((tag) => (
+                  <motion.li
+                    key={tag}
+                    variants={prefersReducedMotion ? undefined : revealVariants}
+                    className="border-line bg-panel-2 text-ink-faint hover:border-accent hover:text-ink rounded border px-2.5 py-1.5 font-mono text-[10px] tracking-[0.1em] uppercase transition-all duration-300"
+                  >
+                    {tag}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </div>
+          </Panel>
+        </Reveal>
       </div>
     </section>
   )

@@ -51,6 +51,19 @@
   }
 }
 
+/*
+ * Fita de tecnologias. A lista e renderizada duas vezes e transladamos -50%,
+ * entao o ponto final coincide exatamente com o inicial e o loop nao "pula".
+ */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Glows — todos derivados de --accent-rgb.                            */
 /* Trocar a cor de acento = trocar apenas as duas variaveis abaixo.     */

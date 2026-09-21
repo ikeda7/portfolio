@@ -1,3 +1,4 @@
+import { Reveal } from '@/components/ui/Reveal'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { aboutStats, site } from '@/data/site'
 
@@ -14,7 +15,7 @@ export function About() {
       <SectionHeading index="01" label="Sobre" />
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-12">
-        <div>
+        <Reveal>
           <h2
             id="sobre-title"
             className="text-[clamp(26px,3.4vw,38px)] leading-[1.12] font-semibold tracking-[-0.03em]"
@@ -30,7 +31,10 @@ export function About() {
 
           <dl className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-3">
             {aboutStats.map((stat) => (
-              <div key={stat.label} className="border-line bg-panel rounded-[10px] border p-4">
+              <div
+                key={stat.label}
+                className="border-line bg-panel hover:border-accent rounded-[10px] border p-4 transition-all duration-300"
+              >
                 <dt className="sr-only">{stat.label}</dt>
                 <dd>
                   <span className="text-accent block font-mono text-2xl font-bold">
@@ -46,9 +50,9 @@ export function About() {
               </div>
             ))}
           </dl>
-        </div>
+        </Reveal>
 
-        <div className="relative">
+        <Reveal delay={0.14} className="relative">
           <div
             aria-hidden="true"
             className="absolute inset-y-[18px] -right-[18px] left-[18px] rounded-2xl bg-[radial-gradient(circle_at_70%_70%,rgb(var(--accent-rgb)/0.45),transparent_70%)] blur-3xl"
@@ -72,7 +76,7 @@ export function About() {
               </span>
             </div>
           )}
-        </div>
+        </Reveal>
       </div>
     </section>
   )

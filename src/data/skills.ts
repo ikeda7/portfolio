@@ -47,3 +47,13 @@ export const skillTags: readonly string[] = [
   'ANGULAR',
   'ASP.NET',
 ]
+
+/**
+ * Fita de tecnologias exibida entre Habilidades e Projetos.
+ * Deriva dos painéis + tags para não duplicar a fonte da verdade.
+ */
+export const marqueeItems: readonly string[] = [
+  ...faderPanel.channels.map((channel) => channel.label),
+  ...rackPanel.channels.map((channel) => channel.label),
+  ...skillTags,
+]
