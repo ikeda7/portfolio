@@ -29,7 +29,7 @@ export function Skills() {
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-5">
         <Reveal className="h-full">
-          <Panel title={faderPanel.title} code={faderPanel.code}>
+          <Panel title={faderPanel.title} code={faderPanel.code} fill>
             <div className="flex flex-1 justify-between gap-2.5 px-[18px] py-[26px]">
               {faderPanel.channels.map((channel, index) => (
                 <Fader key={channel.label} index={index} {...channel} />
@@ -39,7 +39,7 @@ export function Skills() {
         </Reveal>
 
         <Reveal delay={0.12} className="h-full">
-          <Panel title={rackPanel.title} code={rackPanel.code}>
+          <Panel title={rackPanel.title} code={rackPanel.code} fill>
             <div className="flex flex-1 flex-col gap-3.5 px-[18px] py-[22px]">
               {rackPanel.channels.map((channel, index) => (
                 <RackRow key={channel.label} index={index} {...channel} />
@@ -68,7 +68,7 @@ export function Skills() {
       </div>
 
       <Reveal delay={0.24} className="mt-5 block">
-        <Panel title={formacaoPanel.title} code={formacaoPanel.code}>
+        <Panel title={formacaoPanel.title} code={formacaoPanel.code} fill>
           <PatchBay items={formacaoPanel.topics} />
         </Panel>
       </Reveal>
