@@ -37,12 +37,16 @@ conflito à toa.
 | 2º    | [#2](https://github.com/ikeda7/portfolio/pull/2) | `feature/revisao-secoes` | `develop` | Seções de tela cheia, container mais largo, 3º painel na Stack |
 | 3º    | [#3](https://github.com/ikeda7/portfolio/pull/3) | `feature/capas-projetos` | `#2`      | Capas de espectro nos 6 cards, Projetos em uma tela            |
 | 4º    | [#4](https://github.com/ikeda7/portfolio/pull/4) | `feature/social-preview` | `#3`      | `og:image` e metatags absolutas                                |
+| 5º    | —                                                | `feature/experiencia`    | `#4`      | Seção Experiência, nav rolável no mobile, correção do 9px      |
 
 Depois que o #2 mergear, o #3 vira automaticamente um PR contra `develop`
-(mesmo para o #4 depois do #3).
+(mesmo para o #4 depois do #3, e o #5 depois do #4).
+
+`docs/handoff-continuacao` é uma branch de integração que junta tudo isso —
+serve para ver o site completo sem esperar a pilha mergear, e é a base do
+`feature/experiencia`.
 
 **Branches antigas foram apagadas** (8 delas, todas já contidas em `develop`).
-As que existem hoje: `main`, `develop` e as quatro dos PRs.
 
 ---
 
@@ -51,29 +55,23 @@ As que existem hoje: `main`, `develop` e as quatro dos PRs.
 Verificado por CDP (Chrome headless), não no olho:
 
 - Zero overflow horizontal de **320 a 1920px**
-- No desktop, Hero / Sobre / Stack / Contato fecham **exatos na altura da
-  viewport**; Projetos fecha em 891px a 1440×900 (cabe sem rolar)
+- No desktop, Hero / Sobre / Experiência / Stack / Contato fecham **exatos na
+  altura da viewport**; Projetos fecha em 891px a 1440×900 (cabe sem rolar)
+- Zero falha de contraste WCAG AA e **zero texto abaixo de 10px**
+- Header em 97px no mobile e 62px a partir de `sm`, com os 5 links da nav em
+  uma linha só
 - `typecheck`, `lint`, `format:check` e `build` passam
-- Bundle: ~110 kB gzip
+- Bundle: ~112 kB gzip
+
+A seção **Experiência** entrou em 22/09 e preencheu o que era o item 1 desta
+lista: a carreira deixou de viver num parágrafo do Sobre. São 5 seções
+numeradas agora — Sobre 01, Experiência 02, Stack 03, Projetos 04, Contato 05.
 
 ---
 
 ## Pendências, em ordem de impacto
 
-### 1. Seção de Experiência profissional — BLOQUEADA, precisa de você
-
-**É o maior buraco do site.** Sua trajetória inteira — módulos ERP em PHP,
-JavaScript e Oracle PL/SQL, e a implantação atual do ERP na operação de
-medicina diagnóstica — está espremida em **um parágrafo** da seção Sobre.
-
-Um portfólio de quem busca posição, sem linha do tempo de trabalho, lê como
-incompleto porque está.
-
-**Para destravar:** o currículo, ou aqui mesmo: cargo, empresa, período e 2–3
-entregas por posição. A Regra de Ouro proíbe inventar nome de empresa ou data,
-e é exatamente o tipo de dado que não dá para inferir do GitHub.
-
-### 2. Credenciais do EmailJS — BLOQUEADA, precisa de você
+### 1. Credenciais do EmailJS — BLOQUEADA, precisa de você
 
 O código está pronto em [`src/lib/contact.ts`](../src/lib/contact.ts). Falta:
 
@@ -87,18 +85,18 @@ O código está pronto em [`src/lib/contact.ts`](../src/lib/contact.ts). Falta:
 Sem as variáveis o formulário valida normalmente e, ao enviar, aponta os canais
 ao lado. O motivo técnico vai para o console, não para a tela do visitante.
 
-### 3. `VITE_SITE_URL` no deploy — BLOQUEADA, precisa do domínio
+### 2. `VITE_SITE_URL` no deploy — BLOQUEADA, precisa do domínio
 
 Sem ela o build **remove** as tags de `og:image` e avisa. O card de
 compartilhamento não aparece no LinkedIn/WhatsApp até isso ser definido com o
 domínio real.
 
-### 4. Download do currículo — BLOQUEADA, precisa do PDF
+### 3. Download do currículo — BLOQUEADA, precisa do PDF
 
 Não existe link para currículo em lugar nenhum do site. Coloque o PDF em
 `public/` e me avise para eu ligar o botão no Hero e na seção Contato.
 
-### 5. `flowers2` no Setlist — decisão sua
+### 4. `flowers2` no Setlist — decisão sua
 
 O repositório **existe** (privado, TypeScript): "buquê de flores em 3D voxel
 montado por código — o arranjo é resolvido por simulação de encaixe, não
@@ -108,13 +106,13 @@ existia; o acesso via `gh` mostrou que sim.
 Para entrar no Setlist precisa de link público: tornar o repo público, publicar
 um deploy, ou deixar de fora. Hoje ele não aparece.
 
-### 6. Versão em inglês — decisão de escopo
+### 5. Versão em inglês — decisão de escopo
 
 Combinada, nunca começou. Decidir antes: só o texto traduzido, ou i18n de
 verdade com seletor e rota `/en`? O segundo caso muda a arquitetura — hoje é
 single page sem roteador.
 
-### 7. Polimento aberto (não bloqueado)
+### 6. Polimento aberto (não bloqueado)
 
 - **As 6 capas de espectro ficaram monótonas.** Quatro são dominadas por
   TypeScript, e o `merge-pdf` virou um retângulo azul sólido de 100%, que lê

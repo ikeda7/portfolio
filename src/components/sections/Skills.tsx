@@ -22,7 +22,7 @@ export function Skills() {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <Section id="habilidades" index="02" label="Stack">
+    <Section id="habilidades" index="03" label="Stack">
       <h2 id="habilidades-title" className="sr-only">
         Habilidades técnicas
       </h2>

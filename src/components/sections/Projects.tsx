@@ -12,7 +12,7 @@ export function Projects() {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <Section id="projetos" index="03" label="Projetos" fill={false}>
+    <Section id="projetos" index="04" label="Projetos" fill={false}>
       <h2 id="projetos-title" className="sr-only">
         Projetos
       </h2>
