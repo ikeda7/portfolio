@@ -42,9 +42,20 @@ export interface TerminalLine {
  *   linha de comando, o terminal e a interface — nao e ilustracao.
  * - `sleeve`: capa tipografica, para quando nao ha nada publico que mostrar.
  */
+export interface LanguageShare {
+  readonly label: string
+  /** Percentual real do repositorio, 0-100, medido pela API do GitHub. */
+  readonly share: number
+}
+
 export type ProjectCover =
   | { readonly kind: 'shot'; readonly src: string }
   | { readonly kind: 'terminal'; readonly lines: readonly TerminalLine[] }
+  | {
+      readonly kind: 'spectrum'
+      readonly repo: string
+      readonly languages: readonly LanguageShare[]
+    }
   | { readonly kind: 'sleeve' }
 
 export interface Project {

@@ -1,11 +1,11 @@
 import { SleeveCover } from '@/components/ui/SleeveCover'
+import { SpectrumCover } from '@/components/ui/SpectrumCover'
 import { TerminalCover } from '@/components/ui/TerminalCover'
 import type { ProjectCover as Cover } from '@/types/content'
 
 interface ProjectCoverProps {
   readonly track: string
   readonly title: string
-  readonly tags: readonly string[]
   readonly cover: Cover
 }
 
@@ -19,7 +19,7 @@ interface ProjectCoverProps {
  * A sleeve muda conforme o projeto tem o quê para mostrar: print do site,
  * terminal com os comandos reais, ou capa tipográfica.
  */
-export function ProjectCover({ track, title, tags, cover }: ProjectCoverProps) {
+export function ProjectCover({ track, title, cover }: ProjectCoverProps) {
   return (
     <div className="border-line bg-panel-sunken relative aspect-[16/10] overflow-hidden border-b">
       <div
@@ -44,7 +44,10 @@ export function ProjectCover({ track, title, tags, cover }: ProjectCoverProps) {
           />
         )}
         {cover.kind === 'terminal' && <TerminalCover lines={cover.lines} />}
-        {cover.kind === 'sleeve' && <SleeveCover track={track} title={title} tags={tags} />}
+        {cover.kind === 'spectrum' && (
+          <SpectrumCover repo={cover.repo} languages={cover.languages} />
+        )}
+        {cover.kind === 'sleeve' && <SleeveCover title={title} />}
       </div>
 
       <span

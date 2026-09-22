@@ -56,7 +56,20 @@ export const projects: readonly Project[] = [
       'Gestão de rachão de vôlei: cadastro, check-in, sorteio equilibrado de times e placar ao vivo. Roda em Windows, Android e web.',
     tags: ['FLUTTER', 'DART', 'DRIFT'],
     href: 'https://sportscontrol.vercel.app',
-    cover: { kind: 'sleeve' },
+    // Percentuais reais de github.com/ikeda7/sports-control, pela API de
+    // linguagens, medidos em 21/09/2026. Para atualizar:
+    // gh api repos/ikeda7/sports-control/languages
+    cover: {
+      kind: 'spectrum',
+      repo: '~/sports-control',
+      languages: [
+        { label: 'Dart', share: 87.0 },
+        { label: 'C++', share: 7.2 },
+        { label: 'CMake', share: 3.9 },
+        { label: 'Shell', share: 1.0 },
+        { label: 'HTML', share: 0.6 },
+      ],
+    },
   },
   {
     track: '05',
