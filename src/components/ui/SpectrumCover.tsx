@@ -9,8 +9,15 @@ interface SpectrumCoverProps {
 /** Altura mínima da barra, para que 0,6% apareça como traço em vez de sumir. */
 const MIN_BAR = 4
 
-/** Folga no topo: sem isso a barra dominante encosta no teto da capa. */
-const HEIGHT_SCALE = 0.88
+/**
+ * Altura reservada para o rotulo de porcentagem que fica acima de cada barra.
+ *
+ * Sem reservar, a coluna mais alta somava rotulo + barra e estourava o
+ * contêiner: o `justify-end` nao tinha para onde empurrar e a barra subia,
+ * saindo da linha de base das outras. Descontar aqui garante que toda barra
+ * termine no mesmo Y, seja ela de 0,6% ou de 99,3%.
+ */
+const ALTURA_ROTULO = 18
 
 /**
  * Analisador de espectro: a composição real de linguagens do repositório.
@@ -38,7 +45,9 @@ export function SpectrumCover({ repo, languages }: SpectrumCoverProps) {
             </span>
             <div
               className="fill-vertical w-full rounded-t-[3px]"
-              style={{ height: `${Math.max(language.share, MIN_BAR) * HEIGHT_SCALE}%` }}
+              style={{
+                height: `calc((100% - ${ALTURA_ROTULO}px) * ${Math.max(language.share, MIN_BAR) / 100})`,
+              }}
             />
           </div>
         ))}

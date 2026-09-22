@@ -60,7 +60,14 @@ export function Fader({ label, value, index }: FaderProps) {
 
       <BotaoTecnologia
         termo={label}
-        className="text-ink-muted hover:text-ink flex h-[86px] min-w-6 items-center justify-center overflow-hidden font-mono text-[10px] tracking-[0.1em] uppercase transition-colors duration-300 [transform:rotate(180deg)] [writing-mode:vertical-rl]"
+        className="text-ink-muted hover:text-ink flex h-[86px] min-w-6 items-center justify-end overflow-hidden font-mono text-[10px] tracking-[0.1em] uppercase transition-colors duration-300 [transform:rotate(180deg)] [writing-mode:vertical-rl]"
+        /*
+         * `justify-end` e nao `center`: em writing-mode vertical o eixo principal
+         * e o vertical, e com o rotate(180deg) o fim logico vira o topo visual.
+         * Centralizado, rotulo curto (RAG) e longo (EMBEDDINGS) terminavam em
+         * alturas diferentes e a fileira ficava irregular. Ancorado, todos
+         * mantem a mesma distancia do trilho do fader.
+         */
         classNameAtivo="text-accent-text"
       >
         {label}
