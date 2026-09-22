@@ -29,7 +29,7 @@ interface PointerGlow<T extends HTMLElement> {
 const SPRING = { stiffness: 60, damping: 20, mass: 0.6 }
 
 /**
- * Brilho roxo que acompanha o cursor dentro de um elemento.
+ * Brilho de acento que acompanha o cursor dentro de um elemento.
  *
  * O brilho vive em uma camada `absolute inset-0` própria, então nunca compete
  * com o hover dos filhos. Retorna `background: null` quando o visitante pede
