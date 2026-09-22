@@ -3,23 +3,26 @@ import * as m from 'motion/react-m'
 
 import { Fader } from '@/components/ui/Fader'
 import { Panel } from '@/components/ui/Panel'
+import { PatchBay } from '@/components/ui/PatchBay'
 import { RackRow } from '@/components/ui/RackRow'
 import { Reveal } from '@/components/ui/Reveal'
-import { SectionHeading } from '@/components/ui/SectionHeading'
-import { faderPanel, rackPanel, skillTags } from '@/data/skills'
+import { Section } from '@/components/ui/Section'
+import { faderPanel, formacaoPanel, rackPanel, skillTags } from '@/data/skills'
 import { VIEWPORT, revealVariants, staggerVariants } from '@/lib/motion'
 
-/** Rack de processamento: mesa de som (IA & Dados) + rack (engenharia). */
+/**
+ * Rack de processamento: mesa de som (IA & dados), rack (engenharia) e a
+ * bandeja de patch (o que a pós aprofunda).
+ *
+ * Os corpos dos painéis são `flex-1` para que os três cresçam até a altura da
+ * linha — sem isso a mesa ficava com um vão embaixo, porque os faders têm
+ * altura fixa e o rack ao lado é mais alto.
+ */
 export function Skills() {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <section
-      id="habilidades"
-      className="mx-auto w-full max-w-[1200px] px-6 py-14 sm:py-20"
-      aria-labelledby="habilidades-title"
-    >
-      <SectionHeading index="02" label="Stack" />
+    <Section id="habilidades" index="02" label="Stack">
       <h2 id="habilidades-title" className="sr-only">
         Habilidades técnicas
       </h2>
@@ -27,7 +30,7 @@ export function Skills() {
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-5">
         <Reveal className="h-full">
           <Panel title={faderPanel.title} code={faderPanel.code}>
-            <div className="flex justify-between gap-2.5 px-[18px] py-[26px]">
+            <div className="flex flex-1 justify-between gap-2.5 px-[18px] py-[26px]">
               {faderPanel.channels.map((channel, index) => (
                 <Fader key={channel.label} index={index} {...channel} />
               ))}
@@ -37,13 +40,13 @@ export function Skills() {
 
         <Reveal delay={0.12} className="h-full">
           <Panel title={rackPanel.title} code={rackPanel.code}>
-            <div className="flex flex-col gap-3.5 px-[18px] py-[22px]">
+            <div className="flex flex-1 flex-col gap-3.5 px-[18px] py-[22px]">
               {rackPanel.channels.map((channel, index) => (
                 <RackRow key={channel.label} index={index} {...channel} />
               ))}
 
               <m.ul
-                className="border-line mt-1 flex flex-wrap gap-1.5 border-t pt-3.5"
+                className="border-line mt-auto flex flex-wrap gap-1.5 border-t pt-3.5"
                 initial={prefersReducedMotion ? undefined : 'hidden'}
                 whileInView={prefersReducedMotion ? undefined : 'visible'}
                 viewport={VIEWPORT}
@@ -63,6 +66,12 @@ export function Skills() {
           </Panel>
         </Reveal>
       </div>
-    </section>
+
+      <Reveal delay={0.24} className="mt-5 block">
+        <Panel title={formacaoPanel.title} code={formacaoPanel.code}>
+          <PatchBay items={formacaoPanel.topics} />
+        </Panel>
+      </Reveal>
+    </Section>
   )
 }

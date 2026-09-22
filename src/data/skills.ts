@@ -59,3 +59,26 @@ export const marqueeItems: readonly string[] = [
   ...rackPanel.channels.map((channel) => channel.label),
   ...skillTags,
 ]
+
+/**
+ * Bandeja de patch — o que a pós em Engenharia de Software em IA Aplicada
+ * (UniPDS) aprofunda. Curso em andamento.
+ *
+ * Mesma fonte do segundo parágrafo da seção Sobre: a ementa do curso, não
+ * inferência. Estavam soltos no meio de um parágrafo, onde quem escaneia a
+ * página nunca ia ler — aqui viram conteúdo escaneável.
+ */
+export const formacaoPanel = {
+  id: 'formacao',
+  title: 'Pós · IA aplicada',
+  code: 'EM CURSO',
+  topics: [
+    'LLMs',
+    'Embeddings',
+    'Vector databases',
+    'Sistemas multiagente',
+    'MCP',
+    'Fine-tuning',
+    'Governança',
+  ],
+} as const

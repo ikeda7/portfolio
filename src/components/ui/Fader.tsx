@@ -26,10 +26,10 @@ export function Fader({ label, value, index }: FaderProps) {
   const transition = { ...FILL_TRANSITION, delay: index * STAGGER_STEP }
 
   return (
-    <div className="flex min-w-0 flex-1 flex-col items-center gap-[10px]">
+    <div className="flex min-w-0 flex-1 flex-col items-center gap-[10px] self-stretch">
       <div
         aria-hidden="true"
-        className="border-line bg-panel-2 relative h-[150px] w-2 rounded-full border"
+        className="border-line bg-panel-2 relative w-2 flex-1 rounded-full border"
       >
         <m.span
           className="fill-vertical absolute inset-x-0 bottom-0 rounded-full"

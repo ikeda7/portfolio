@@ -1,5 +1,5 @@
 import { Reveal } from '@/components/ui/Reveal'
-import { SectionHeading } from '@/components/ui/SectionHeading'
+import { Section } from '@/components/ui/Section'
 import { aboutStats, site } from '@/data/site'
 
 const { about } = site
@@ -7,13 +7,7 @@ const { about } = site
 /** Backstage: narrativa em duas colunas com stats e retrato. */
 export function About() {
   return (
-    <section
-      id="sobre"
-      className="mx-auto w-full max-w-[1200px] px-6 py-14 sm:py-20"
-      aria-labelledby="sobre-title"
-    >
-      <SectionHeading index="01" label="Sobre" />
-
+    <Section id="sobre" index="01" label="Sobre">
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-center gap-12">
         <Reveal>
           <h2
@@ -82,6 +76,6 @@ export function About() {
           )}
         </Reveal>
       </div>
-    </section>
+    </Section>
   )
 }

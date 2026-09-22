@@ -3,7 +3,7 @@ import * as m from 'motion/react-m'
 
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { RevealItem } from '@/components/ui/Reveal'
-import { SectionHeading } from '@/components/ui/SectionHeading'
+import { Section } from '@/components/ui/Section'
 import { projects } from '@/data/projects'
 import { VIEWPORT, staggerVariants } from '@/lib/motion'
 
@@ -12,18 +12,13 @@ export function Projects() {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <section
-      id="projetos"
-      className="mx-auto w-full max-w-[1200px] px-6 py-14 sm:py-20"
-      aria-labelledby="projetos-title"
-    >
-      <SectionHeading index="03" label="Projetos" />
+    <Section id="projetos" index="03" label="Projetos">
       <h2 id="projetos-title" className="sr-only">
         Projetos
       </h2>
 
       <m.div
-        className="grid grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-5"
+        className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         initial={prefersReducedMotion ? undefined : 'hidden'}
         whileInView={prefersReducedMotion ? undefined : 'visible'}
         viewport={VIEWPORT}
@@ -35,6 +30,6 @@ export function Projects() {
           </RevealItem>
         ))}
       </m.div>
-    </section>
+    </Section>
   )
 }
