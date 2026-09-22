@@ -53,15 +53,33 @@ export function About() {
           />
 
           {about.photo.src ? (
-            <img
-              src={about.photo.src}
-              alt={about.photo.alt}
-              width={720}
-              height={720}
-              loading="lazy"
-              decoding="async"
-              className="border-line glow-photo relative aspect-square w-full rounded-2xl border object-cover"
-            />
+            <div className="border-line glow-photo relative aspect-square w-full overflow-hidden rounded-2xl border">
+              <img
+                src={about.photo.src}
+                alt={about.photo.alt}
+                width={1000}
+                height={1000}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+
+              {/*
+                O retrato foi feito em fundo de estúdio quase branco. Sem
+                tratamento ele vira o objeto mais claro da página inteira: rouba
+                o olho do texto e apaga o glow de acento em volta, porque o
+                brilho da foto supera o do glow.
+
+                A vinheta escurece só a periferia e deixa o rosto intacto — o
+                quadrado se dissolve no carvão em vez de flutuar sobre ele. É
+                camada de CSS, não edição do arquivo: trocar a foto não exige
+                reprocessar nada.
+              */}
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_38%,transparent_30%,rgb(13_13_13/0.62)_100%)]"
+              />
+            </div>
           ) : (
             // Regra de Ouro: sem a foto real, mantemos o placeholder do design.
             <div className="border-line bg-panel glow-photo relative flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-2xl border">
