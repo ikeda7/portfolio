@@ -22,7 +22,7 @@ export function Hero() {
     <section
       {...bind}
       id="top"
-      className="relative overflow-hidden px-6 pt-16 pb-20 sm:pt-24 sm:pb-28"
+      className="relative flex min-h-[100svh] items-center overflow-hidden px-6 pt-24 pb-20"
       aria-labelledby="hero-title"
     >
       <div

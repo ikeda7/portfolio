@@ -1,7 +1,7 @@
 import { ContactChannels } from '@/components/ui/ContactChannels'
 import { ContactForm } from '@/components/ui/ContactForm'
 import { Reveal } from '@/components/ui/Reveal'
-import { SectionHeading } from '@/components/ui/SectionHeading'
+import { Section } from '@/components/ui/Section'
 import { site } from '@/data/site'
 
 const { contact } = site
@@ -9,13 +9,7 @@ const { contact } = site
 /** Booking: canais de contato + formulário. */
 export function Contact() {
   return (
-    <section
-      id="contato"
-      className="mx-auto w-full max-w-[1200px] px-6 py-14 sm:py-20"
-      aria-labelledby="contato-title"
-    >
-      <SectionHeading index="04" label="Contato" />
-
+    <Section id="contato" index="04" label="Contato">
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-start gap-14">
         <Reveal>
           <h2
@@ -37,6 +31,6 @@ export function Contact() {
           <ContactForm />
         </Reveal>
       </div>
-    </section>
+    </Section>
   )
 }
