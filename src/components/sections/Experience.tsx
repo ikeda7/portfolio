@@ -22,12 +22,12 @@ export function Experience() {
         Experiência profissional e formação
       </h2>
 
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
+      <div className="grid h-full items-stretch gap-12 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
         <Reveal>
           <Timeline entries={experience} />
         </Reveal>
 
-        <Reveal delay={0.14} className="flex flex-col gap-5 self-start">
+        <Reveal delay={0.14} className="flex h-full flex-col justify-between gap-5">
           <Panel title="Formação" code="EDU">
             <div className="px-[18px] py-[22px]">
               <Timeline entries={education} compact />

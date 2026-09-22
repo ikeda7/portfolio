@@ -1,3 +1,4 @@
+import capaFlowers2 from '@/assets/capa-flowers2.webp'
 import type { Project } from '@/types/content'
 
 /**
@@ -109,16 +110,18 @@ export const projects: readonly Project[] = [
   },
   {
     track: '06',
-    title: 'Consolidação de PDFs',
+    title: 'Flowers2',
     description:
-      'Monta um PDF único a partir de uma planilha e de certificados emitidos em lote, preservando os selos de assinatura digital (gov.br/ICP-Brasil).',
-    tags: ['NODE.JS', 'JAVASCRIPT', 'AUTOMAÇÃO'],
-    href: 'https://github.com/ikeda7/merge-pdf',
-    // Node puro, sem dependencia: uma barra so, e isso e o recado.
-    cover: {
-      kind: 'spectrum',
-      repo: '~/merge-pdf',
-      languages: [{ label: 'JavaScript', share: 100.0 }],
-    },
+      'Buquê de flores em 3D voxel montado por código: o arranjo é resolvido por simulação de encaixe, não posicionado a mão.',
+    tags: ['THREE.JS', 'TYPESCRIPT', '3D VOXEL'],
+    /*
+     * Sem link: o repositorio e privado e o deploy publico abre numa pagina
+     * dedicada a uma pessoa. O projeto entra pelo que ele demonstra — 3D em
+     * codigo — sem expor o destino. Para publicar, basta preencher `href`.
+     */
+    href: null,
+    // Print do render 3D em vez de espectro: 99,3% TypeScript viraria uma
+    // barra solida, e o que esse projeto tem para mostrar e justamente a arte.
+    cover: { kind: 'shot', src: capaFlowers2 },
   },
 ]
