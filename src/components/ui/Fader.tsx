@@ -1,6 +1,7 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
+import { BotaoTecnologia } from '@/components/ui/BotaoTecnologia'
 import { FILL_TRANSITION, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
 import type { SkillChannel } from '@/types/content'
 
@@ -57,9 +58,13 @@ export function Fader({ label, value, index }: FaderProps) {
         />
       </div>
 
-      <span className="text-ink-muted h-[86px] overflow-hidden font-mono text-[10px] tracking-[0.1em] uppercase [transform:rotate(180deg)] [writing-mode:vertical-rl]">
+      <BotaoTecnologia
+        termo={label}
+        className="text-ink-muted hover:text-ink flex h-[86px] min-w-6 items-center justify-center overflow-hidden font-mono text-[10px] tracking-[0.1em] uppercase transition-colors duration-300 [transform:rotate(180deg)] [writing-mode:vertical-rl]"
+        classNameAtivo="text-accent-text"
+      >
         {label}
-      </span>
+      </BotaoTecnologia>
     </div>
   )
 }

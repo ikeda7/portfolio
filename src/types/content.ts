@@ -23,8 +23,14 @@ export interface SkillPanel {
   readonly id: string
   /** Titulo do painel (cabecalho do rack). */
   readonly title: string
-  /** Codigo mono exibido a direita do cabecalho (estetica de equipamento). */
-  readonly code: string
+  /**
+   * Codigo mono exibido a direita do cabecalho (estetica de equipamento).
+   *
+   * Omitido, vira "CH 01–NN" contado a partir dos canais. Era cravado como
+   * string e ficou desatualizado assim que um canal entrou: dizia 05 com seis
+   * canais na tela. Numero que descreve uma lista deve sair da lista.
+   */
+  readonly code?: string
   readonly channels: readonly SkillChannel[]
 }
 

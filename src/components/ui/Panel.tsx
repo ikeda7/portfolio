@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 interface PanelProps {
   readonly title: string
   /** Código mono exibido à direita do cabeçalho (estética de equipamento). */
-  readonly code: string
+  readonly code: string | undefined
   /**
    * Esticar até a altura do irmão mais alto.
    *

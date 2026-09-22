@@ -1,6 +1,17 @@
 import type { SkillPanel } from '@/types/content'
 
 /**
+ * Codigo do cabecalho contado a partir dos canais: "CH 01–06".
+ *
+ * Estava cravado como string e ficou errado no instante em que um canal
+ * entrou — dizia 05 com seis na tela. Numero que descreve uma lista sai da
+ * lista.
+ */
+export function codigoDoPainel(painel: SkillPanel): string {
+  return painel.code ?? 'CH 01–' + String(painel.channels.length).padStart(2, '0')
+}
+
+/**
  * Rack de processamento. As tecnologias vêm da seção "Competências
  * técnicas" do currículo.
  *
@@ -10,15 +21,22 @@ import type { SkillPanel } from '@/types/content'
  * informa é o rótulo.
  */
 
-/** Painel A — mesa de som com faders verticais. */
+/**
+ * Painel A — mesa de som com faders verticais.
+ *
+ * Cobre a linha "IA aplicada" do curriculo inteira: engenharia de prompt, RAG,
+ * embeddings, agentes, PyTorch e APIs de LLM. "Embeddings" faltava — estava na
+ * competencia e nao na tela. Python fica como a linguagem que sustenta tudo
+ * isso; sem ela o painel nomearia tecnicas sem dizer em que sao feitas.
+ */
 export const faderPanel: SkillPanel = {
   id: 'ia-dados',
   title: 'IA aplicada & dados',
-  code: 'CH 01–05',
   channels: [
     { label: 'Python', value: 82 },
     { label: 'PyTorch', value: 64 },
     { label: 'RAG', value: 91 },
+    { label: 'Embeddings', value: 68 },
     { label: 'Agentes', value: 55 },
     { label: 'Prompt', value: 73 },
   ],
@@ -28,7 +46,6 @@ export const faderPanel: SkillPanel = {
 export const rackPanel: SkillPanel = {
   id: 'engenharia',
   title: 'Engenharia de software',
-  code: 'RACK A',
   channels: [
     { label: 'TypeScript', value: 88 },
     { label: 'React', value: 76 },

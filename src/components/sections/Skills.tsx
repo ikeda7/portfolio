@@ -1,13 +1,14 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
+import { BotaoTecnologia } from '@/components/ui/BotaoTecnologia'
 import { Fader } from '@/components/ui/Fader'
 import { Panel } from '@/components/ui/Panel'
 import { PatchBay } from '@/components/ui/PatchBay'
 import { RackRow } from '@/components/ui/RackRow'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
-import { faderPanel, formacaoPanel, rackPanel, skillTags } from '@/data/skills'
+import { codigoDoPainel, faderPanel, formacaoPanel, rackPanel, skillTags } from '@/data/skills'
 import { VIEWPORT, revealVariants, staggerVariants } from '@/lib/motion'
 
 /**
@@ -29,7 +30,7 @@ export function Skills() {
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-5">
         <Reveal className="h-full">
-          <Panel title={faderPanel.title} code={faderPanel.code} fill>
+          <Panel title={faderPanel.title} code={codigoDoPainel(faderPanel)} fill>
             <div className="flex flex-1 justify-between gap-2.5 px-[18px] py-[26px]">
               {faderPanel.channels.map((channel, index) => (
                 <Fader key={channel.label} index={index} {...channel} />
@@ -39,7 +40,7 @@ export function Skills() {
         </Reveal>
 
         <Reveal delay={0.12} className="h-full">
-          <Panel title={rackPanel.title} code={rackPanel.code} fill>
+          <Panel title={rackPanel.title} code={codigoDoPainel(rackPanel)} fill>
             <div className="flex flex-1 flex-col gap-3.5 px-[18px] py-[22px]">
               {rackPanel.channels.map((channel, index) => (
                 <RackRow key={channel.label} index={index} {...channel} />
@@ -53,12 +54,14 @@ export function Skills() {
                 variants={staggerVariants}
               >
                 {skillTags.map((tag) => (
-                  <m.li
-                    key={tag}
-                    variants={prefersReducedMotion ? undefined : revealVariants}
-                    className="border-line bg-panel-2 text-ink-faint hover:border-accent hover:text-ink rounded border px-2.5 py-1.5 font-mono text-[10px] tracking-[0.1em] uppercase transition-all duration-300"
-                  >
-                    {tag}
+                  <m.li key={tag} variants={prefersReducedMotion ? undefined : revealVariants}>
+                    <BotaoTecnologia
+                      termo={tag}
+                      className="border-line bg-panel-2 text-ink-faint hover:border-accent hover:text-ink block min-h-6 rounded border px-2.5 py-1.5 font-mono text-[10px] tracking-[0.1em] uppercase transition-all duration-300"
+                      classNameAtivo="border-accent text-accent-text bg-[rgb(var(--accent-rgb)/0.12)]"
+                    >
+                      {tag}
+                    </BotaoTecnologia>
                   </m.li>
                 ))}
               </m.ul>
