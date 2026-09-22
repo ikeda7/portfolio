@@ -15,6 +15,7 @@
  *
  * Variáveis:
  *   BROWSER_PATH   caminho do executável, se a busca automática falhar
+ *   BROWSER_FLAGS  flags extras, separadas por espaço (ex.: --no-sandbox no CI)
  *   AUDIT_URL      alvo (padrão http://localhost:4173/)
  */
 import { spawn } from 'node:child_process'
@@ -25,6 +26,14 @@ import path from 'node:path'
 
 const URL_ALVO = process.env.AUDIT_URL ?? 'http://localhost:4173/'
 const PORTA_CDP = 9222 + Math.floor(Math.random() * 400)
+
+/*
+ * Flags extras para ambiente onde o sandbox do Chrome nao sobe — container de
+ * CI rodando como root e o caso classico. Fica por variavel de ambiente de
+ * proposito: passar --no-sandbox fixo aqui enfraqueceria o navegador na
+ * maquina de quem desenvolve, para resolver um problema que so existe no CI.
+ */
+const FLAGS_EXTRAS = (process.env.BROWSER_FLAGS ?? '').split(' ').filter(Boolean)
 const LARGURAS = [320, 390, 768, 1280, 1920]
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -218,6 +227,7 @@ async function main() {
     `--remote-debugging-port=${PORTA_CDP}`,
     '--user-data-dir=' + perfil,
     '--window-size=1440,900',
+    ...FLAGS_EXTRAS,
     URL_ALVO,
   ])
 
