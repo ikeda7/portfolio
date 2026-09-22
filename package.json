@@ -12,7 +12,8 @@
     "lint:fix": "oxlint --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "og": "node scripts/og/render.mjs"
+    "og": "node scripts/og/render.mjs",
+    "auditar": "node scripts/auditoria/auditar.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",

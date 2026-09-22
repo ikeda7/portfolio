@@ -38,6 +38,8 @@ npm run lint          # oxlint (não é ESLint)
 npm run format        # prettier --write .
 npm run format:check
 npm run preview       # serve o build
+npm run auditar       # auditoria visual por CDP (precisa do preview no ar)
+npm run og            # regenera public/og.png
 ```
 
 **Não há runner de teste** (sem vitest/jest, sem script `test`). Não instale
@@ -53,6 +55,24 @@ npm run typecheck && npm run lint && npm run format:check && npm run build
 em todo PR e em todo push para `develop` e `main`, cada um como step nomeado —
 a aba de checks diz qual falhou sem precisar abrir o log. O CI é rede de
 segurança, não substituto: rodar local antes evita descobrir no PR.
+
+**Os quatro portões não veem a página.** Depois de mexer em layout, cor ou
+componente interativo, rode também:
+
+```bash
+npm run build
+npm run preview -- --port 4173 --strictPort   # noutro terminal
+npm run auditar
+```
+
+[`scripts/auditoria/auditar.mjs`](scripts/auditoria/auditar.mjs) dirige um
+Chrome ou Edge headless (sem dependência nova — `WebSocket` é global no Node 24) e mede contraste WCAG, texto abaixo de 10px, conteúdo cortado por
+`overflow`, interativo sem nome acessível, ordem de headings, alvo de toque
+abaixo de 24×24, overflow horizontal de 320 a 1920px, espaço morto nas seções e
+erro de console. Sai com código 1 se algo falhar.
+
+Cada checagem ali dentro pegou bug real neste repositório — painel com texto
+decepado, 40 rótulos em 9px, seção com 53% de ocupação. Nenhuma é teórica.
 
 ## Regra de Ouro
 
@@ -87,9 +107,22 @@ Camadas:
 - `components/sections/` — dona da `<section id>`, do container e do
   `aria-labelledby`.
 - `components/ui/` — primitivos sem conhecimento de conteúdo, tudo por props.
-- `hooks/` — `useActiveSection` (link ativo no header), `usePointerGlow`.
-- `lib/` — [motion.ts](src/lib/motion.ts) (tempos/curvas) e
-  [contact.ts](src/lib/contact.ts) (envio do formulário). Lógica sem JSX.
+- `hooks/` — `useActiveSection` (seção corrente, usada pelo header e pela régua),
+  `usePointerGlow` e
+  [useFocoTecnico](src/hooks/useFocoTecnico.tsx) (provider do foco técnico; é o
+  único `.tsx` de `hooks/`, porque um contexto precisa de JSX).
+- `lib/` — [motion.ts](src/lib/motion.ts) (tempos/curvas),
+  [contact.ts](src/lib/contact.ts) (envio do formulário) e
+  [foco.ts](src/lib/foco.ts) (normaliza rótulos para comparar "Node.js" com
+  "NODE.JS"). Lógica sem JSX.
+
+**Foco técnico.** Todo nome de tecnologia na Stack e na fita é um
+[`BotaoTecnologia`](src/components/ui/BotaoTecnologia.tsx): clicar acende o
+termo na página inteira — os cards de projeto que o usam ganham destaque, os
+outros recuam, a fita para e a seção Projetos diz quantos casaram. Se parece
+clicável, é clicável: foi por isso que os canais da waveform e os termos da
+Stack viraram botões de verdade.
+
 - Exports **nomeados** em todo lugar; `export default` só em `App.tsx`.
 
 Âncoras em pt-BR (`#sobre`, `#experiencia`, `#habilidades`, `#projetos`,
