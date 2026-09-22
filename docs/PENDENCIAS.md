@@ -1,7 +1,7 @@
 # Pendências — portfólio Lucas Ikeda
 
-Última atualização: **22/09/2026**. Este arquivo existe para retomar o trabalho
-de outra máquina.
+Última atualização: **22/09/2026** (fim do dia). Este arquivo existe para
+retomar o trabalho de outra máquina.
 
 Antes de mexer em qualquer coisa, leia nesta ordem:
 [`DIRETRIZES_CLAUDE.MD`](../DIRETRIZES_CLAUDE.MD) (a Regra de Ouro),
@@ -36,21 +36,46 @@ volta por PR com merge `--no-ff`. O CI roda os quatro portões em todo PR.
 Verificado por CDP (Chrome headless), não no olho:
 
 - Zero overflow horizontal de **320 a 1920px**
-- No desktop, Hero / Sobre / Experiência / Stack / Contato fecham **exatos na
-  altura da viewport**; Projetos fecha em 891px a 1440×900 (cabe sem rolar)
+- Nenhum espaço morto acima do limiar a 1440×900 nem a 1920×1080
 - Zero falha de contraste WCAG AA e **zero texto abaixo de 10px**
 - Header em 97px no mobile e 62px a partir de `sm`, com os 5 links da nav em
   uma linha só
 - `typecheck`, `lint`, `format:check` e `build` passam
-- Bundle: ~112 kB gzip
+- Bundle: ~113 kB gzip
+- **Zero PR aberto e zero branch órfã** — só `main` e `develop`, local e remoto.
+  O repositório está configurado para apagar a branch sozinho no merge, então
+  não volta a acumular.
 
 São 5 seções numeradas — Sobre 01, Experiência 02, Stack 03, Projetos 04,
 Contato 05 — e o CI roda os quatro portões em todo PR.
 
-Entrou em 22/09, fechando itens que estavam nesta lista: a seção **Experiência**
-(a carreira deixou de viver num parágrafo do Sobre), a **indicação de rolagem**
-no hero, o **rodapé** com navegação e canais, e o **timecode do hero**, que era
-a única coisa na tela sem fonte.
+### Rode a auditoria antes de mexer
+
+```bash
+npm run build
+npm run preview -- --port 4173 --strictPort   # noutro terminal
+npm run auditar
+```
+
+[`scripts/auditoria/auditar.mjs`](../scripts/auditoria/auditar.mjs) dirige um
+Chrome ou Edge headless e mede o que os quatro portões **não** veem: contraste,
+texto cortado, overflow horizontal, alvo de toque, espaço morto e erro de
+console. Não instala nada — o Node 24 tem `WebSocket` global. Se não achar o
+navegador, `BROWSER_PATH=/caminho npm run auditar`.
+
+Hoje ela fecha **limpa**. Cada checagem ali dentro já pegou bug real neste
+repositório; nenhuma é teórica.
+
+### O que entrou em 22/09
+
+- **Experiência** como seção própria — a carreira saiu do parágrafo do Sobre
+- **Foco técnico**: clicar num termo da Stack ou da fita acende ele na página
+  inteira; os projetos que usam ganham destaque, os outros recuam, e a seção
+  Projetos diz quantos casaram
+- Navegação da página inteira: régua lateral e botão de próxima seção
+- **Espaço morto eliminado** — o Contato ocupava 53% da altura a 1920×1080
+- Rodapé em grade, CI, indicação de rolagem, e o timecode do hero (a única
+  coisa na tela sem fonte) trocado por dado real
 
 ---
 
@@ -81,15 +106,33 @@ domínio real.
 Não existe link para currículo em lugar nenhum do site. Coloque o PDF em
 `public/` e me avise para eu ligar o botão no Hero e na seção Contato.
 
-### 4. `flowers2` no Setlist — decisão sua
+### 4. Link do `flowers2` — decisão sua
 
-O repositório **existe** (privado, TypeScript): "buquê de flores em 3D voxel
-montado por código — o arranjo é resolvido por simulação de encaixe, não
-posicionado a mão". A versão anterior deste documento dizia que ele não
-existia; o acesso via `gh` mostrou que sim.
+Ele **já está no Setlist**, na faixa 06, no lugar do `merge-pdf`. Entrou com o
+espectro real do repositório (99,3% TypeScript) e **sem link**.
 
-Para entrar no Setlist precisa de link público: tornar o repo público, publicar
-um deploy, ou deixar de fora. Hoje ele não aparece.
+Sem link porque o deploy público (`flowers2.dev`) redireciona para
+`/rebeca` — o título da página é "Flores para Rebeca ♥". É um presente pessoal,
+e mandar um recrutador para lá é decisão sua, não minha. O card entra pelo que
+o projeto demonstra (3D em código) sem expor o destino.
+
+Para publicar: preencher `href` em
+[`src/data/projects.ts`](../src/data/projects.ts). Ou tornar o repositório
+público e apontar para ele.
+
+### 4b. Dois canais a mais no Contato — precisa de você
+
+O painel **Canais** tem 4 (GitHub, LinkedIn, Instagram, e-mail) numa grade 2×2.
+Para fechar 6, só existem dois candidatos com lastro no currículo:
+
+- **Currículo em PDF** — depende do item 3 acima. É o que mais falta num
+  portfólio de quem busca posição.
+- **WhatsApp** — o telefone está no currículo. Ficou fora de propósito:
+  publicar número em site aberto é convite para spam, e um `wa.me` expõe o
+  número do mesmo jeito. Se aceitar o risco, entra.
+
+Qualquer outro canal (X, Lattes, telefone puro) não tem fonte — a Regra de Ouro
+proíbe inventar. Se quiser outro, me mande o link.
 
 ### 5. Versão em inglês — decisão de escopo
 
@@ -100,14 +143,27 @@ single page sem roteador.
 ### 6. Polimento aberto (não bloqueado)
 
 - **As 6 capas de espectro ficaram monótonas.** Quatro são dominadas por
-  TypeScript, e o `merge-pdf` virou um retângulo azul sólido de 100%, que lê
-  como barra de progresso. Foi decisão consciente (consistência acima de
-  variedade), mas vale rever com o olho. Os prints do Inhouse LoL e do X9
-  continuam em `src/assets/` e as variantes `shot` e `terminal` seguem no tipo
-  com componente pronto: **voltar um card é trocar a linha `cover`**.
+  TypeScript e o `flowers2` é 99,3% dele — vira um retângulo quase sólido, que
+  lê como barra de progresso. Foi decisão explícita (consistência acima de
+  variedade) e **reafirmada em 22/09**: cheguei a montar o `flowers2` com print
+  do render 3D e você pediu para voltar ao padrão. Fica registrado que a saída
+  existe: os prints do Inhouse LoL e do X9 seguem em `src/assets/`, e as
+  variantes `shot` e `terminal` continuam no tipo com componente pronto —
+  **voltar um card é trocar a linha `cover`**.
+- **Dois botões com a mesma palavra e sentidos diferentes.** Os canais da
+  waveform no hero (`PYTHON`, `TYPESCRIPT`, `IA APLICADA`) usam `aria-pressed`
+  e redesenham as barras; os termos da Stack usam `aria-pressed` e acendem a
+  tecnologia na página. Clicar em "TYPESCRIPT" faz coisas diferentes nos dois
+  lugares. Nunca incomodou na prática — são contextos visuais distintos — mas
+  se for unificar, o caminho é a waveform também setar o foco técnico.
+- **A régua lateral e o botão de próxima seção convivem.** Duas navegações
+  extras além do header. Medi e não atrapalham, mas se achar poluído, a régua
+  (`SectionNav`) é a que sai mais fácil: é um componente em `App.tsx`.
 - **Sem runner de teste.** Ausência deliberada desta fase; não instale sem
   alinhar. O CI roda os quatro portões, mas ninguém verifica comportamento
-  automaticamente — a auditoria por CDP é manual (ver abaixo).
+  automaticamente — `npm run auditar` é manual. Ligá-la no CI exigiria um
+  navegador no runner (`browser-actions/setup-chrome`) e subir o preview antes;
+  é meia hora de trabalho se um dia incomodar.
 - **`main` nunca recebeu `develop`.** Quando o site for publicar, é o passo que
   falta — e aí `VITE_SITE_URL` precisa estar definida, senão o `og:image` sai
   do HTML.
