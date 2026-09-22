@@ -7,9 +7,22 @@ Código, comentários, copy e ids de âncora são em **pt-BR** — mantenha o id
 
 ## Antes de tocar em qualquer coisa
 
-**`main` está desatualizada de propósito** — tem só o commit de setup. Todo o
-site vive em `develop`. Se o `git log` mostrar um commit só, você está na branch
-errada: `git checkout develop`.
+**Confira a branch antes de qualquer coisa.** `main` tem só o commit de setup, e
+`develop` está atrás de uma pilha de PRs abertos. O estado completo do site fica
+na branch do topo da pilha.
+
+```bash
+git log --oneline -1          # um commit so = branch errada
+git branch -r                 # ache a branch do topo
+```
+
+A ordem de merge dos PRs e o que cada um entrega estão em
+[docs/PENDENCIAS.md](docs/PENDENCIAS.md) — **leia antes de editar**, porque
+merge fora de ordem gera conflito à toa.
+
+Não rode `/init` aqui: este arquivo já existe e carrega sozinho no início da
+sessão. Rodar `/init` numa branch atrasada geraria um CLAUDE.md descrevendo um
+site que não existe mais.
 
 Leia nesta ordem: [DIRETRIZES_CLAUDE.MD](DIRETRIZES_CLAUDE.MD) (a Regra de Ouro),
 [docs/PENDENCIAS.md](docs/PENDENCIAS.md) (o que falta, o que está bloqueado e as
