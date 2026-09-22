@@ -1,6 +1,6 @@
 # Pendências — portfólio Lucas Ikeda
 
-Última atualização: **22/09/2026** (fim do dia). Este arquivo existe para
+Última atualização: **22/09/2026**, fim da noite. Este arquivo existe para
 retomar o trabalho de outra máquina.
 
 Antes de mexer em qualquer coisa, leia nesta ordem:
@@ -12,15 +12,17 @@ Antes de mexer em qualquer coisa, leia nesta ordem:
 ## Como retomar em outra máquina
 
 ```bash
-git clone https://github.com/ikeda7/portfolio
-cd portfolio
+# Se ja tiver clonado, o --prune e ESSENCIAL: sem ele o clone antigo nao
+# conhece as branches novas e ainda lista as que ja foram apagadas.
+git fetch --all --prune
 git checkout develop
+git pull --ff-only
 npm install
 npm run dev            # http://localhost:5173
 ```
 
-> **`develop` é o estado completo do site.** A pilha de PRs que existia em
-> 21–22/09 (#1 a #7) foi toda mergeada.
+> **`develop` é o estado completo do site.** Todos os PRs (#1 a #19) foram
+> mergeados. Nenhum PR aberto.
 >
 > **`main` continua com só o commit de setup, de propósito** — é espelho de
 > produção e só recebe `develop` quando o site for publicar. Quem abrir `main`
@@ -33,139 +35,106 @@ volta por PR com merge `--no-ff`. O CI roda os quatro portões em todo PR.
 
 ## Estado atual
 
-Verificado por CDP (Chrome headless), não no olho:
+`develop` tem tudo. O CI roda os quatro portoes **mais a auditoria visual** em
+todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
 
-- Zero overflow horizontal de **320 a 1920px**
-- Nenhum espaço morto acima do limiar a 1440×900 nem a 1920×1080
-- Zero falha de contraste WCAG AA e **zero texto abaixo de 10px**
-- Header em 97px no mobile e 62px a partir de `sm`, com os 5 links da nav em
-  uma linha só
-- `typecheck`, `lint`, `format:check` e `build` passam
-- Bundle: ~113 kB gzip
-- **Zero PR aberto e zero branch órfã** — só `main` e `develop`, local e remoto.
-  O repositório está configurado para apagar a branch sozinho no merge, então
-  não volta a acumular.
+- Zero overflow de 320 a 1920px, zero espaco morto, zero erro de console
+- Zero texto abaixo de **11px** (era 10px) e zero falha de contraste
+- Bundle ~113 kB gzip
 
-São 5 seções numeradas — Sobre 01, Experiência 02, Stack 03, Projetos 04,
-Contato 05 — e o CI roda os quatro portões em todo PR.
+### O que entrou em 22/09 (noite)
 
-### Rode a auditoria antes de mexer
-
-```bash
-npm run build
-npm run preview -- --port 4173 --strictPort   # noutro terminal
-npm run auditar
-```
-
-[`scripts/auditoria/auditar.mjs`](../scripts/auditoria/auditar.mjs) dirige um
-Chrome ou Edge headless e mede o que os quatro portões **não** veem: contraste,
-texto cortado, overflow horizontal, alvo de toque, espaço morto e erro de
-console. Não instala nada — o Node 24 tem `WebSocket` global. Se não achar o
-navegador, `BROWSER_PATH=/caminho npm run auditar`.
-
-Hoje ela fecha **limpa**. Cada checagem ali dentro já pegou bug real neste
-repositório; nenhuma é teórica.
-
-### O que entrou em 22/09
-
-- **Experiência** como seção própria — a carreira saiu do parágrafo do Sobre
-- **Foco técnico**: clicar num termo da Stack ou da fita acende ele na página
-  inteira; os projetos que usam ganham destaque, os outros recuam, e a seção
-  Projetos diz quantos casaram
-- Navegação da página inteira: régua lateral e botão de próxima seção
-- **Espaço morto eliminado** — o Contato ocupava 53% da altura a 1920×1080
-- Rodapé em grade, CI, indicação de rolagem, e o timecode do hero (a única
-  coisa na tela sem fonte) trocado por dado real
+- **Retrato novo** no Sobre, com vinheta em CSS: o fundo de estudio quase
+  branco virava o objeto mais claro da pagina e apagava o glow de acento
+- **Link do Flowers2** publicado (voce foi avisado que o destino e a pagina
+  "Flores para Rebeca ♥" e decidiu publicar)
+- **Auditoria visual no CI** — era manual, dependia de alguem lembrar
+- **Quatro desalinhamentos corrigidos**: buraco de ~330px no Contato, barra do
+  espectro fora da linha de base nos 6 cards, botao flutuante cobrindo texto de
+  card, e rotulos dos faders desencontrados
+- **Legibilidade**: `ink-faint` 5,04 -> 6,18, `accent-text` 5,97 -> 7,56, e as
+  21 ocorrencias de `text-[10px]` viraram `text-[11px]`
 
 ---
 
-## Pendências, em ordem de impacto
+## Pendencias, em ordem
 
-### 1. Credenciais do EmailJS — BLOQUEADA, precisa de você
+### 1. DEPLOY NA VERCEL — o proximo passo, e quase todo automatizavel
 
-O código está pronto em [`src/lib/contact.ts`](../src/lib/contact.ts). Falta:
+**Nao foi feito.** Combinado com o dono em 22/09: publicar primeiro na Vercel,
+dominio .br depois.
 
-1. Criar conta e template no EmailJS, aceitando `{{nome}}`, `{{email}}` e
-   `{{mensagem}}`.
-2. Copiar `.env.example` para `.env.local` e preencher as três `VITE_EMAILJS_*`.
-3. **Ligar a allowlist de domínios** (Account → Security). A chave pública vai
-   no JavaScript que o visitante baixa; a allowlist é o que impede terceiros de
-   gastarem sua cota.
+O acesso a Vercel funciona por MCP nesta sessao. Dados ja descobertos, para nao
+redescobrir amanha:
 
-Sem as variáveis o formulário valida normalmente e, ao enviar, aponta os canais
-ao lado. O motivo técnico vai para o console, não para a tela do visitante.
+|                   |                                                                       |
+| ----------------- | --------------------------------------------------------------------- |
+| Conta (accountId) | `team_dFIqik9gl4cwNS9RjHk1zdcU`                                       |
+| `list_teams`      | devolve vazio — e conta pessoal, use o accountId acima como `teamId`  |
+| Projetos ja la    | inhouse-lol, sportscontrol, lextrack, flowers2, x9-game, ikeda7-stats |
 
-### 2. `VITE_SITE_URL` no deploy — BLOQUEADA, precisa do domínio
+Ordem correta, e a ordem importa:
 
-Sem ela o build **remove** as tags de `og:image` e avisa. O card de
-compartilhamento não aparece no LinkedIn/WhatsApp até isso ser definido com o
-domínio real.
+1. **Mergear `develop` em `main` primeiro.** A Vercel publica a branch padrao
+   do repositorio, que e `main` — e `main` ainda tem so o commit de setup.
+   Criar o projeto antes disso publicaria um site vazio.
+2. Criar o projeto (`create_git_project`, repo `ikeda7/portfolio`, com o
+   `teamId` acima).
+3. Pegar a URL `*.vercel.app` que a Vercel devolver.
+4. Definir `VITE_SITE_URL` com essa URL e **redeployar** — sem ela o build
+   remove as tags de `og:image` e o link no LinkedIn fica sem card.
+5. Quando o dominio .br existir, trocar `VITE_SITE_URL` e redeployar de novo.
 
-### 3. Download do currículo — BLOQUEADA, precisa do PDF
+### 2. Curriculo em PDF — BLOQUEADA, precisa do arquivo
 
-Não existe link para currículo em lugar nenhum do site. Coloque o PDF em
-`public/` e me avise para eu ligar o botão no Hero e na seção Contato.
+Nao existe link para curriculo no site. Basta colocar o PDF em `public/` e
+avisar o nome. Destrava **duas** coisas: o botao de download e o 5o canal do
+painel Contato.
 
-### 4. Link do `flowers2` — RESOLVIDO em 22/09
+### 3. EmailJS — BLOQUEADA, precisa das 3 credenciais
 
-O card da faixa 06 agora **tem link**: aponta para `https://flowers2.dev`.
+O codigo esta pronto em `src/lib/contact.ts`. Em emailjs.com: criar conta,
+_Email Services_ -> Gmail (da o **Service ID**), _Email Templates_ com
+`{{nome}}`, `{{email}}` e `{{mensagem}}` (da o **Template ID**), e a
+**Public Key** em _Account_. Depois, ligar a **allowlist de dominios** em
+_Account -> Security_, senao qualquer um gasta a cota.
 
-O dono do portfolio foi avisado de que o deploy abre em "Flores para Rebeca ♥",
-uma pagina dedicada a uma pessoa, e decidiu publicar assim mesmo. O repositorio
-segue privado; o link vai para o site no ar, que e o que demonstra o 3D em
-codigo.
+As tres vao como variaveis de ambiente na Vercel, nao no codigo.
 
-Para voltar atras, e trocar `href` por `null` em
-[`src/data/projects.ts`](../src/data/projects.ts) — o card volta a entrar sem
-link, como os outros sem destino publico.
+### 4. WhatsApp no Contato — decisao do dono
 
-### 4b. Dois canais a mais no Contato — precisa de você
+O telefone esta no curriculo. Ficou de fora porque `wa.me` expoe o numero para
+qualquer visitante, robo de spam incluso. Se ele aceitar o risco, entra como
+canal.
 
-O painel **Canais** tem 4 (GitHub, LinkedIn, Instagram, e-mail) numa grade 2×2.
-Para fechar 6, só existem dois candidatos com lastro no currículo:
+### 5. Dominio .br — nao trava nada
 
-- **Currículo em PDF** — depende do item 3 acima. É o que mais falta num
-  portfólio de quem busca posição.
-- **WhatsApp** — o telefone está no currículo. Ficou fora de propósito:
-  publicar número em site aberto é convite para spam, e um `wa.me` expõe o
-  número do mesmo jeito. Se aceitar o risco, entra.
+Ele vai registrar. Quando existir, e so trocar `VITE_SITE_URL` e apontar o
+dominio na Vercel.
 
-Qualquer outro canal (X, Lattes, telefone puro) não tem fonte — a Regra de Ouro
-proíbe inventar. Se quiser outro, me mande o link.
+### 6. Versao em ingles — CANCELADA
 
-### 5. Versão em inglês — decisão de escopo
+Decisao de 22/09: nao precisa por enquanto, porque o dominio sera .br.
 
-Combinada, nunca começou. Decidir antes: só o texto traduzido, ou i18n de
-verdade com seletor e rota `/en`? O segundo caso muda a arquitetura — hoje é
-single page sem roteador.
+### 7. Polimento aberto (nao bloqueado)
 
-### 6. Polimento aberto (não bloqueado)
-
-- **As 6 capas de espectro ficaram monótonas.** Quatro são dominadas por
-  TypeScript e o `flowers2` é 99,3% dele — vira um retângulo quase sólido, que
-  lê como barra de progresso. Foi decisão explícita (consistência acima de
-  variedade) e **reafirmada em 22/09**: cheguei a montar o `flowers2` com print
-  do render 3D e você pediu para voltar ao padrão. Fica registrado que a saída
-  existe: os prints do Inhouse LoL e do X9 seguem em `src/assets/`, e as
-  variantes `shot` e `terminal` continuam no tipo com componente pronto —
-  **voltar um card é trocar a linha `cover`**.
-- **Dois botões com a mesma palavra e sentidos diferentes.** Os canais da
-  waveform no hero (`PYTHON`, `TYPESCRIPT`, `IA APLICADA`) usam `aria-pressed`
-  e redesenham as barras; os termos da Stack usam `aria-pressed` e acendem a
-  tecnologia na página. Clicar em "TYPESCRIPT" faz coisas diferentes nos dois
-  lugares. Nunca incomodou na prática — são contextos visuais distintos — mas
-  se for unificar, o caminho é a waveform também setar o foco técnico.
-- **A régua lateral e o botão de próxima seção convivem.** Duas navegações
-  extras além do header. Medi e não atrapalham, mas se achar poluído, a régua
-  (`SectionNav`) é a que sai mais fácil: é um componente em `App.tsx`.
-- **Sem runner de teste.** Ausência deliberada desta fase; não instale sem
-  alinhar. O CI roda os quatro portões, mas ninguém verifica comportamento
-  automaticamente — `npm run auditar` é manual. Ligá-la no CI exigiria um
-  navegador no runner (`browser-actions/setup-chrome`) e subir o preview antes;
-  é meia hora de trabalho se um dia incomodar.
-- **`main` nunca recebeu `develop`.** Quando o site for publicar, é o passo que
-  falta — e aí `VITE_SITE_URL` precisa estar definida, senão o `og:image` sai
-  do HTML.
+- **A auditoria so responde passa/nao passa no WCAG AA**, que e o piso legal.
+  Foi assim que 96 elementos em 10px a 5,04:1 passaram despercebidos ate o dono
+  reclamar que estava "muito dark". Vale a auditoria passar a reportar a
+  **razao** de cada estilo e alertar quando a folga for menor que ~1,5.
+- **As 6 capas de espectro sao monotonas** — quatro dominadas por TypeScript.
+  Decisao explicita e ja reafirmada duas vezes. Os prints do Inhouse LoL e do X9
+  seguem em `src/assets/`, e as variantes `shot` e `terminal` continuam no tipo:
+  voltar um card e trocar a linha `cover`.
+- **O botao de proxima secao continua sobre o conteudo** em Projetos, a unica
+  secao mais alta que a viewport. Virou pilula com fundo, entao le como
+  controle flutuante — mas a sobreposicao existe. A saida honesta seria
+  esconde-lo quando a secao nao cabe na tela.
+- **Dois botoes com a mesma palavra**: "TYPESCRIPT" na waveform do hero
+  redesenha as barras; na Stack acende a tecnologia na pagina. Avaliei unificar
+  e **nao recomendo**: Projetos fica ~4 telas abaixo, entao o efeito
+  aconteceria fora da tela.
+- **Sem runner de teste.** Ausencia deliberada desta fase.
 
 ---
 
@@ -204,6 +173,25 @@ Windows, e aí o log some. Por isso os comandos acima chamam
 `node node_modules/vite/bin/vite.js` direto.
 
 ---
+
+**Nunca deixe a arvore de trabalho numa branch WIP.** Em 22/09 o dono abriu o
+`npm run dev` na pasta enquanto ela estava em `fix/legibilidade` com alteracoes
+nao commitadas, viu o trabalho pela metade e concluiu — com razao — que o site
+tinha quebrado. Ao terminar qualquer bloco: commitar, voltar para `develop` e
+rebuildar.
+
+**PR aberto e trabalho nao entregue.** Regra do dono, dada em 22/09: com o CI
+verde e sem conflito, **mergear sem perguntar**. Ele quer fazer so o que so ele
+consegue fazer — credencial, dominio, conteudo do curriculo, exposicao de link
+pessoal. O resto e para resolver e avisar.
+
+**Medir contraste sem depender da auditoria.** A auditoria responde
+passa/nao passa. Para responder "quanto", enumere os nos de texto, calcule a
+luminancia relativa contra o fundo efetivo (subindo a arvore e compondo as cores
+translucidas) e agrupe por estilo. Duas armadilhas ja pagas: o Chrome devolve
+tanto `rgba(13, 13, 13, .8)` quanto `rgb(13 13 13 / .8)`, entao normalize
+virgula e barra antes de partir a string; e o CDP serializa `NaN` como `null`,
+entao um parser que falha nao estoura — ele reporta silencio.
 
 ## Decisões já tomadas (com motivo)
 
