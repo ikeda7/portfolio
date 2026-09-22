@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
 
-import { contatoEstaConfigurado, enviarContato } from '@/lib/contact'
+import { enviarContato } from '@/lib/contact'
 import type { FormStatus } from '@/types/content'
 
 interface FormValues {
@@ -58,8 +58,6 @@ export function ContactForm() {
     montadoEm.current = Date.now()
   }, [])
 
-  const configurado = contatoEstaConfigurado()
-
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target
     setValues((current) => ({ ...current, [name]: value }))
@@ -110,11 +108,14 @@ export function ContactForm() {
     }
 
     setStatus('erro')
-    setMessage(
-      resultado.motivo === 'nao-configurado'
-        ? '[PENDENTE] Envio não configurado — preencha as variáveis VITE_EMAILJS_* no .env.local.'
-        : 'Não foi possível enviar agora. Tente novamente ou use um dos canais ao lado.',
-    )
+
+    // O motivo tecnico fica no console, onde quem desenvolve olha. O visitante
+    // recebe uma saida util: os canais ao lado funcionam sempre.
+    if (resultado.motivo === 'nao-configurado') {
+      console.warn('Envio desligado: preencha as variáveis VITE_EMAILJS_* no .env.local.')
+    }
+
+    setMessage('Não foi possível enviar agora — me chame por e-mail ou LinkedIn.')
   }
 
   const enviando = status === 'enviando'
@@ -197,10 +198,7 @@ export function ContactForm() {
         aria-live="polite"
         className={`font-mono text-[11px] ${status === 'ok' ? 'text-accent-text' : 'text-ink-faint'}`}
       >
-        {message ??
-          (configurado
-            ? ''
-            : '[PENDENTE] Configure as variáveis VITE_EMAILJS_* para ativar o envio.')}
+        {message}
       </output>
     </form>
   )

@@ -39,11 +39,6 @@ function lerConfig(): EmailJSConfig | null {
   return { serviceId, templateId, publicKey }
 }
 
-/** `true` quando o envio está plugado — a UI usa isso para avisar antes do clique. */
-export function contatoEstaConfigurado(): boolean {
-  return lerConfig() !== null
-}
-
 export async function enviarContato(payload: ContactPayload): Promise<SendResult> {
   const config = lerConfig()
   if (!config) return { ok: false, motivo: 'nao-configurado' }

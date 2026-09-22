@@ -12,13 +12,13 @@ export function Projects() {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <Section id="projetos" index="03" label="Projetos">
+    <Section id="projetos" index="03" label="Projetos" fill={false}>
       <h2 id="projetos-title" className="sr-only">
         Projetos
       </h2>
 
       <m.div
-        className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
         initial={prefersReducedMotion ? undefined : 'hidden'}
         whileInView={prefersReducedMotion ? undefined : 'visible'}
         viewport={VIEWPORT}

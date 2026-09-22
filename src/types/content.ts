@@ -40,12 +40,22 @@ export interface TerminalLine {
  * - `shot`: print do site no ar. So para projeto que tem interface publica.
  * - `terminal`: comandos REAIS do README do repositorio. Para projeto de
  *   linha de comando, o terminal e a interface — nao e ilustracao.
- * - `sleeve`: capa tipografica, para quando nao ha nada publico que mostrar.
+ * - `spectrum`: composicao real de linguagens do repositorio (API do GitHub).
  */
+export interface LanguageShare {
+  readonly label: string
+  /** Percentual real do repositorio, 0-100, medido pela API do GitHub. */
+  readonly share: number
+}
+
 export type ProjectCover =
   | { readonly kind: 'shot'; readonly src: string }
   | { readonly kind: 'terminal'; readonly lines: readonly TerminalLine[] }
-  | { readonly kind: 'sleeve' }
+  | {
+      readonly kind: 'spectrum'
+      readonly repo: string
+      readonly languages: readonly LanguageShare[]
+    }
 
 export interface Project {
   /** Numero da "faixa" exibido na capa (01…06). */
