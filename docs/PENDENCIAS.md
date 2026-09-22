@@ -85,11 +85,29 @@ Ordem correta, e a ordem importa:
    remove as tags de `og:image` e o link no LinkedIn fica sem card.
 5. Quando o dominio .br existir, trocar `VITE_SITE_URL` e redeployar de novo.
 
-### 2. Curriculo em PDF — BLOQUEADA, precisa do arquivo
+### 2. Curriculo em PDF — ARQUIVO CHEGOU, falta ligar
 
-Nao existe link para curriculo no site. Basta colocar o PDF em `public/` e
-avisar o nome. Destrava **duas** coisas: o botao de download e o 5o canal do
-painel Contato.
+Os PDFs ja estao versionados em `public/`:
+
+- `curriculo-lucas-ikeda-pt.pdf` (273 kB)
+- `curriculo-lucas-ikeda-en.pdf`
+
+Eles entraram por acidente no commit `6a5cbe7`, arrastados por um `git add -A`
+enquanto o dono os colocava na pasta. Sao os arquivos certos; so a mensagem
+daquele commit nao os menciona.
+
+**Falta fazer** (nao depende de mais nada do dono):
+
+1. Botao de download no Hero e/ou na secao Contato, apontando para
+   `/curriculo-lucas-ikeda-pt.pdf`.
+2. Quinto canal no painel Contato — "Curriculo" — o que fecha a grade que hoje
+   tem 4 numa 2x2.
+3. Decidir o que fazer com a versao em ingles. O **site** em ingles foi
+   cancelado, mas o PDF existir muda a conversa: da para oferecer o curriculo
+   em ingles sem traduzir o site inteiro. Perguntar antes de expor.
+
+Usar `download` no anchor e um rotulo que diga o formato, para o visitante
+saber que e um arquivo e nao uma pagina.
 
 ### 3. EmailJS — BLOQUEADA, precisa das 3 credenciais
 
