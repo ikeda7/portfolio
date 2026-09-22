@@ -116,14 +116,14 @@ Camadas:
   [foco.ts](src/lib/foco.ts) (normaliza rótulos para comparar "Node.js" com
   "NODE.JS"). Lógica sem JSX.
 
+- Exports **nomeados** em todo lugar; `export default` só em `App.tsx`.
+
 **Foco técnico.** Todo nome de tecnologia na Stack e na fita é um
 [`BotaoTecnologia`](src/components/ui/BotaoTecnologia.tsx): clicar acende o
 termo na página inteira — os cards de projeto que o usam ganham destaque, os
 outros recuam, a fita para e a seção Projetos diz quantos casaram. Se parece
 clicável, é clicável: foi por isso que os canais da waveform e os termos da
 Stack viraram botões de verdade.
-
-- Exports **nomeados** em todo lugar; `export default` só em `App.tsx`.
 
 Âncoras em pt-BR (`#sobre`, `#experiencia`, `#habilidades`, `#projetos`,
 `#contato`). **Ao adicionar seção, entre em `navLinks` e o resto acompanha** —
