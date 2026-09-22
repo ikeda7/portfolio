@@ -72,7 +72,7 @@ export interface Project {
 export interface SocialChannel {
   readonly label: string
   readonly href: string | null
-  /** Identificador mostrado abaixo do rotulo: "/ikeda7", "@ikedaz", o e-mail. */
+  /** Identificador mostrado abaixo do rotulo: "/ikeda7", "@_ikedaz", o e-mail. */
   readonly handle: string
   readonly icon: 'github' | 'linkedin' | 'instagram' | 'mail'
 }

@@ -14,8 +14,8 @@ export const socialChannels: readonly SocialChannel[] = [
   },
   {
     label: 'Instagram',
-    handle: '@ikedaz',
-    href: 'https://instagram.com/ikedaz',
+    handle: '@_ikedaz',
+    href: 'https://instagram.com/_ikedaz',
     icon: 'instagram',
   },
   {
