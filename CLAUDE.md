@@ -93,9 +93,20 @@ Camadas:
 - Exports **nomeados** em todo lugar; `export default` só em `App.tsx`.
 
 Âncoras em pt-BR (`#sobre`, `#experiencia`, `#habilidades`, `#projetos`,
-`#contato`). [Header.tsx](src/components/layout/Header.tsx) deriva os ids de
-`navLinks` (`href.slice(1)`), e o `ScrollHint` do hero aponta para o primeiro
-item da mesma lista — ao adicionar seção, basta entrar em `navLinks`.
+`#contato`). **Ao adicionar seção, entre em `navLinks` e o resto acompanha** —
+três componentes derivam dela:
+
+- [Header.tsx](src/components/layout/Header.tsx) tira os ids de `navLinks`.
+- [SectionNav.tsx](src/components/layout/SectionNav.tsx) (régua lateral, some
+  abaixo de `lg`) e [ScrollHint.tsx](src/components/ui/ScrollHint.tsx) (botão de
+  próxima seção, centralizado no rodapé da janela) usam `destinos`, que é
+  `navLinks` com o hero na frente. O hero não entra em `navLinks` porque não é
+  destino de menu, mas é destino de navegação.
+
+Os dois vivem em [App.tsx](src/App.tsx), fora das seções: são navegação da
+página inteira, não de um bloco. O `ScrollHint` aponta para a seção seguinte e,
+na última, vira "voltar ao topo" — sumir deixaria no DOM um link sem destino e
+sem nome acessível.
 
 **A altura do header é `--header-h`** em [src/index.css](src/index.css): 97px até
 `sm`, 62px depois. Três coisas dependem dela — o `scroll-margin-top` das âncoras,

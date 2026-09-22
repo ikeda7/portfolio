@@ -1,20 +1,12 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
-import { ScrollHint } from '@/components/ui/ScrollHint'
 import { Waveform } from '@/components/ui/Waveform'
-import { navLinks, site } from '@/data/site'
+import { site } from '@/data/site'
 import { usePointerGlow } from '@/hooks/usePointerGlow'
 import { REVEAL_TRANSITION, VIEWPORT, revealVariants, staggerVariants } from '@/lib/motion'
 
 const { hero } = site
-
-/**
- * Primeiro destino abaixo do hero. Sai de `navLinks` em vez de ser fixo, para
- * a indicação de rolagem acompanhar quem for a primeira seção — do mesmo jeito
- * que o Header deriva os ids de lá.
- */
-const primeiraSecao = navLinks[0] ?? { href: '#sobre', label: 'Sobre' }
 
 /**
  * Palco principal: pill de status, título, CTAs e painel de waveform.
@@ -118,12 +110,10 @@ export function Hero() {
           <Waveform
             meta={hero.waveform.meta}
             timecode={hero.waveform.timecode}
-            tags={hero.waveform.tags}
+            canais={hero.waveform.canais}
           />
         </m.div>
       </m.div>
-
-      <ScrollHint watch="top" href={primeiraSecao.href} label={primeiraSecao.label} />
     </section>
   )
 }

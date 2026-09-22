@@ -25,10 +25,19 @@ export function Timeline({ entries, headingLevel = 'h3', compact = false }: Time
 
       {entries.map((entry) => (
         <li key={`${entry.org}-${entry.period}`} className="relative">
+          {/*
+           * Todo marcador acende. O apagado (cinza do knob) era o unico LED
+           * escuro da pagina — hero, canais, PatchBay e Idiomas acendem todos —
+           * e por isso lia como defeito, nao como "posicao anterior".
+           *
+           * A distincao entre atual e passado continua existindo, mas so no
+           * brilho: o atual tem halo, o anterior nao. Quem carrega a informacao
+           * de verdade e a etiqueta "Em andamento", em texto, ao lado.
+           */}
           <span
             aria-hidden="true"
-            className={`absolute top-[7px] -left-7 size-2 rounded-full ${
-              entry.current ? 'bg-accent glow-led' : 'bg-knob border-knob-line border'
+            className={`bg-accent absolute top-[7px] -left-7 size-2 rounded-full ${
+              entry.current ? 'glow-led' : 'opacity-70'
             }`}
           />
 

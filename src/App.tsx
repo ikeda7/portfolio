@@ -2,6 +2,7 @@ import { LazyMotion, domAnimation } from 'motion/react'
 
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
+import { SectionNav } from '@/components/layout/SectionNav'
 import { About } from '@/components/sections/About'
 import { Contact } from '@/components/sections/Contact'
 import { Experience } from '@/components/sections/Experience'
@@ -9,6 +10,7 @@ import { Hero } from '@/components/sections/Hero'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
 import { Marquee } from '@/components/ui/Marquee'
+import { ScrollHint } from '@/components/ui/ScrollHint'
 import { marqueeItems } from '@/data/skills'
 
 export default function App() {
@@ -31,6 +33,8 @@ export default function App() {
       </a>
 
       <Header />
+      <SectionNav />
+      <ScrollHint />
 
       <main id="conteudo">
         <Hero />

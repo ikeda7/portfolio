@@ -24,7 +24,13 @@ export const site = {
       // cuja regra é não inventar nada. As 48 bandas existem de verdade em
       // `waveformHeights`, logo abaixo, e são desenhadas em CSS puro.
       timecode: '48 bandas · CSS',
-      tags: ['PYTHON', 'TYPESCRIPT', 'IA APLICADA'],
+      /**
+       * Canais do painel. São **botões de verdade**: trocar de canal redesenha
+       * a waveform. Antes eram três etiquetas com uma marcada como ativa e
+       * nenhuma clicável — o visual prometia interação que não existia, que é
+       * o pior tipo de afordância.
+       */
+      canais: ['PYTHON', 'TYPESCRIPT', 'IA APLICADA'],
     },
   },
   about: {
@@ -57,6 +63,16 @@ export const navLinks = [
   { label: 'Projetos', href: '#projetos' },
   { label: 'Contato', href: '#contato' },
 ] as const
+
+/**
+ * A página em ordem, incluindo o hero — que não está em `navLinks` porque não
+ * é destino de menu, mas é destino de navegação.
+ *
+ * Fonte única da régua lateral e do botão de próxima seção. Sem isso, as duas
+ * teriam a ordem das seções duplicada e sairiam de sincronia na primeira vez
+ * que alguém mexesse em uma delas.
+ */
+export const destinos = [{ label: 'Topo', href: '#top' }, ...navLinks] as const
 
 /**
  * Números verificáveis — currículo e perfil público do GitHub, conferidos em
