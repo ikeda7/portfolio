@@ -1,6 +1,7 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
+import { BotaoTecnologia } from '@/components/ui/BotaoTecnologia'
 import { FILL_TRANSITION, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
 import type { SkillChannel } from '@/types/content'
 
@@ -21,9 +22,13 @@ export function RackRow({ label, value, index }: RackRowProps) {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-ink w-28 flex-none truncate font-mono text-[11px] uppercase">
+      <BotaoTecnologia
+        termo={label}
+        className="text-ink hover:text-accent-text flex min-h-6 w-28 flex-none items-center font-mono text-[11px] uppercase transition-colors duration-300"
+        classNameAtivo="text-accent-text"
+      >
         {label}
-      </span>
+      </BotaoTecnologia>
 
       <div
         aria-hidden="true"

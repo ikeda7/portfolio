@@ -1,4 +1,3 @@
-import capaFlowers2 from '@/assets/capa-flowers2.webp'
 import type { Project } from '@/types/content'
 
 /**
@@ -120,8 +119,15 @@ export const projects: readonly Project[] = [
      * codigo — sem expor o destino. Para publicar, basta preencher `href`.
      */
     href: null,
-    // Print do render 3D em vez de espectro: 99,3% TypeScript viraria uma
-    // barra solida, e o que esse projeto tem para mostrar e justamente a arte.
-    cover: { kind: 'shot', src: capaFlowers2 },
+    cover: {
+      kind: 'spectrum',
+      repo: '~/flowers2',
+      languages: [
+        { label: 'TypeScript', share: 99.3 },
+        { label: 'PowerShell', share: 0.3 },
+        { label: 'CSS', share: 0.2 },
+        { label: 'JavaScript', share: 0.2 },
+      ],
+    },
   },
 ]

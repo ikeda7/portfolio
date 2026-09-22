@@ -10,6 +10,7 @@ import { Hero } from '@/components/sections/Hero'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
 import { Marquee } from '@/components/ui/Marquee'
+import { FocoTecnicoProvider } from '@/hooks/useFocoTecnico'
 import { ScrollHint } from '@/components/ui/ScrollHint'
 import { marqueeItems } from '@/data/skills'
 
@@ -25,28 +26,30 @@ export default function App() {
      * no bundle.
      */
     <LazyMotion features={domAnimation} strict>
-      <a
-        href="#conteudo"
-        className="bg-accent sr-only rounded-lg px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
-      >
-        Pular para o conteúdo
-      </a>
+      <FocoTecnicoProvider>
+        <a
+          href="#conteudo"
+          className="bg-accent sr-only rounded-lg px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
+        >
+          Pular para o conteúdo
+        </a>
 
-      <Header />
-      <SectionNav />
-      <ScrollHint />
+        <Header />
+        <SectionNav />
+        <ScrollHint />
 
-      <main id="conteudo">
-        <Hero />
-        <About />
-        <Experience />
-        <Skills />
-        <Marquee items={marqueeItems} />
-        <Projects />
-        <Contact />
-      </main>
+        <main id="conteudo">
+          <Hero />
+          <About />
+          <Experience />
+          <Skills />
+          <Marquee items={marqueeItems} />
+          <Projects />
+          <Contact />
+        </main>
 
-      <Footer />
+        <Footer />
+      </FocoTecnicoProvider>
     </LazyMotion>
   )
 }
