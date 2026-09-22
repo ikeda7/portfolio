@@ -20,7 +20,10 @@ export const site = {
     secondaryCta: { label: 'Falar comigo', href: '#contato' },
     waveform: {
       meta: 'Waveform · master',
-      timecode: '00:00:00 / 00:03:24',
+      // Era '00:00:00 / 00:03:24' — a única coisa na tela sem fonte, num site
+      // cuja regra é não inventar nada. As 48 bandas existem de verdade em
+      // `waveformHeights`, logo abaixo, e são desenhadas em CSS puro.
+      timecode: '48 bandas · CSS',
       tags: ['PYTHON', 'TYPESCRIPT', 'IA APLICADA'],
     },
   },

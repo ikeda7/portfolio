@@ -142,16 +142,27 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Compensa o header sticky, que e mais alto no mobile (marca + nav
-     empilhadas) do que a partir de sm, onde volta a ser uma linha so. */
-  section[id] {
-    scroll-margin-top: 100px;
+  /*
+   * Altura real do header sticky, medida no navegador: 97px ate `sm` (marca e
+   * nav empilhadas) e 62px a partir dai, quando volta a ser uma linha so.
+   *
+   * Vira variavel porque tres coisas dependem dela e estavam com o numero
+   * cravado em lugares diferentes: a compensacao da ancora, a altura util do
+   * hero e a posicao da indicacao de rolagem. Mudou o header, muda aqui.
+   */
+  :root {
+    --header-h: 97px;
   }
 
   @media (min-width: 40rem) {
-    section[id] {
-      scroll-margin-top: 80px;
+    :root {
+      --header-h: 62px;
     }
+  }
+
+  /* Sem isso a ancora para atras do header e o topo da secao fica escondido. */
+  section[id] {
+    scroll-margin-top: calc(var(--header-h) + 4px);
   }
 
   ::selection {
