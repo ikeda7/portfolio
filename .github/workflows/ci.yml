@@ -52,3 +52,59 @@ jobs:
       # a maioria dos erros em segundos.
       - name: build
         run: npm run build
+
+  auditoria:
+    name: auditoria visual
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # So roda se os quatro portoes passarem: nao adianta medir contraste de um
+    # build que nem compila, e economiza um runner quando o PR ja esta vermelho.
+    needs: portoes
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # O runner nao traz Chrome garantido; esta action instala e devolve o
+      # caminho, que a auditoria le por BROWSER_PATH.
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+        with:
+          chrome-version: stable
+
+      # Preview e auditoria no MESMO step de proposito: um servidor iniciado em
+      # background num step nao tem vida garantida no step seguinte.
+      - name: preview + auditoria
+        env:
+          BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          BROWSER_FLAGS: --no-sandbox
+          AUDIT_URL: http://localhost:4173/
+        run: |
+          npm run preview -- --port 4173 --strictPort &
+          PREVIEW_PID=$!
+
+          for _ in $(seq 1 60); do
+            if curl -sf http://localhost:4173/ > /dev/null; then break; fi
+            sleep 1
+          done
+
+          if ! curl -sf http://localhost:4173/ > /dev/null; then
+            echo "O preview nao subiu em 60s."
+            kill "$PREVIEW_PID" 2>/dev/null || true
+            exit 1
+          fi
+
+          npm run auditar
+          CODIGO=$?
+
+          kill "$PREVIEW_PID" 2>/dev/null || true
+          exit $CODIGO
