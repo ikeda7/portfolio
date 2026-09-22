@@ -1,12 +1,20 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
+import { ScrollHint } from '@/components/ui/ScrollHint'
 import { Waveform } from '@/components/ui/Waveform'
-import { site } from '@/data/site'
+import { navLinks, site } from '@/data/site'
 import { usePointerGlow } from '@/hooks/usePointerGlow'
 import { REVEAL_TRANSITION, VIEWPORT, revealVariants, staggerVariants } from '@/lib/motion'
 
 const { hero } = site
+
+/**
+ * Primeiro destino abaixo do hero. Sai de `navLinks` em vez de ser fixo, para
+ * a indicação de rolagem acompanhar quem for a primeira seção — do mesmo jeito
+ * que o Header deriva os ids de lá.
+ */
+const primeiraSecao = navLinks[0] ?? { href: '#sobre', label: 'Sobre' }
 
 /**
  * Palco principal: pill de status, título, CTAs e painel de waveform.
@@ -22,7 +30,14 @@ export function Hero() {
     <section
       {...bind}
       id="top"
-      className="relative flex min-h-[100svh] items-center overflow-hidden px-6 pt-24 pb-20"
+      /*
+       * O header e sticky, entao ocupa espaco no fluxo e o hero comeca abaixo
+       * dele. Com `100svh` cheios, o hero terminava exatamente a altura do
+       * header abaixo da dobra — e a indicacao de rolagem, ancorada no rodape
+       * da secao, nascia fora da tela. Descontar `--header-h` faz o primeiro
+       * quadro conter o hero inteiro.
+       */
+      className="relative flex min-h-[calc(100svh-var(--header-h))] items-center overflow-hidden px-6 pt-16 pb-20"
       aria-labelledby="hero-title"
     >
       <div
@@ -107,6 +122,8 @@ export function Hero() {
           />
         </m.div>
       </m.div>
+
+      <ScrollHint watch="top" href={primeiraSecao.href} label={primeiraSecao.label} />
     </section>
   )
 }
