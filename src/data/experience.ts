@@ -31,37 +31,36 @@ export const experience: readonly TimelineEntry[] = [
       'Manutenção e otimização de banco Oracle PL/SQL, com foco em performance de queries (DBeaver).',
     ],
   },
-  {
-    period: 'Nov/2024 — Ago/2026',
-    title: 'Gerente de Recursos Humanos',
-    org: 'EJCOMP — Empresa Júnior de Computação',
-    context: 'FCT-UNESP',
-    bullets: [
-      'Gestão de pessoas e processos internos, análise de indicadores organizacionais e condução de reuniões de equipe e 1-on-1 orientadas a resultados.',
-    ],
-  },
 ]
 
+/**
+ * Formação.
+ *
+ * Sem a ementa da pós de propósito: ela já é o painel "Pós · IA aplicada" da
+ * seção Stack, em formato escaneável. Aqui fica a credencial — o quê, onde e
+ * quando. Repetir os dois lugares só alongaria o painel.
+ *
+ * A UNESP aparece pelo nome por extenso, e não só pela sigla do campus, porque
+ * universidade pública estadual é informação que pesa para quem lê.
+ */
 export const education: readonly TimelineEntry[] = [
   {
     period: 'Set/2026 — Atual',
     title: 'Pós em Engenharia de Software em IA Aplicada',
     org: 'UniPDS',
     current: true,
-    bullets: [
-      'LLMs e engenharia de prompt; RAG, embeddings e vector databases; agentes autônomos e multiagente (LangChain/LangGraph); MCP; fine-tuning (LoRA/PEFT); governança em IA.',
-    ],
   },
   {
     period: 'Concluído em Ago/2026',
     title: 'Bacharelado em Ciência da Computação',
-    org: 'FCT-UNESP',
+    org: 'UNESP — Universidade Estadual Paulista',
+    context: 'FCT · Presidente Prudente, SP',
   },
 ]
 
 /** Idiomas, do bloco final do currículo. */
-export const languages: readonly string[] = [
-  'Português — nativo',
-  'Inglês — B2 (Linguaskill)',
-  'Espanhol — básico',
+export const languages: readonly { readonly nome: string; readonly nivel: string }[] = [
+  { nome: 'Português', nivel: 'Nativo' },
+  { nome: 'Inglês', nivel: 'B2 · Linguaskill' },
+  { nome: 'Espanhol', nivel: 'Básico' },
 ]
