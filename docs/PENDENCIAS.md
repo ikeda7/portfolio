@@ -106,19 +106,18 @@ domínio real.
 Não existe link para currículo em lugar nenhum do site. Coloque o PDF em
 `public/` e me avise para eu ligar o botão no Hero e na seção Contato.
 
-### 4. Link do `flowers2` — decisão sua
+### 4. Link do `flowers2` — RESOLVIDO em 22/09
 
-Ele **já está no Setlist**, na faixa 06, no lugar do `merge-pdf`. Entrou com o
-espectro real do repositório (99,3% TypeScript) e **sem link**.
+O card da faixa 06 agora **tem link**: aponta para `https://flowers2.dev`.
 
-Sem link porque o deploy público (`flowers2.dev`) redireciona para
-`/rebeca` — o título da página é "Flores para Rebeca ♥". É um presente pessoal,
-e mandar um recrutador para lá é decisão sua, não minha. O card entra pelo que
-o projeto demonstra (3D em código) sem expor o destino.
+O dono do portfolio foi avisado de que o deploy abre em "Flores para Rebeca ♥",
+uma pagina dedicada a uma pessoa, e decidiu publicar assim mesmo. O repositorio
+segue privado; o link vai para o site no ar, que e o que demonstra o 3D em
+codigo.
 
-Para publicar: preencher `href` em
-[`src/data/projects.ts`](../src/data/projects.ts). Ou tornar o repositório
-público e apontar para ele.
+Para voltar atras, e trocar `href` por `null` em
+[`src/data/projects.ts`](../src/data/projects.ts) — o card volta a entrar sem
+link, como os outros sem destino publico.
 
 ### 4b. Dois canais a mais no Contato — precisa de você
 

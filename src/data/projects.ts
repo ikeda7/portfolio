@@ -114,11 +114,12 @@ export const projects: readonly Project[] = [
       'Buquê de flores em 3D voxel montado por código: o arranjo é resolvido por simulação de encaixe, não posicionado a mão.',
     tags: ['THREE.JS', 'TYPESCRIPT', '3D VOXEL'],
     /*
-     * Sem link: o repositorio e privado e o deploy publico abre numa pagina
-     * dedicada a uma pessoa. O projeto entra pelo que ele demonstra — 3D em
-     * codigo — sem expor o destino. Para publicar, basta preencher `href`.
+     * O deploy publico abre em "Flores para Rebeca ♥" — e um presente pessoal.
+     * O dono do portfolio foi avisado do destino e decidiu publicar assim mesmo
+     * em 22/09/2026. O repositorio segue privado; o link aponta para o site no
+     * ar, que e o que demonstra o 3D em codigo.
      */
-    href: null,
+    href: 'https://flowers2.dev',
     cover: {
       kind: 'spectrum',
       repo: '~/flowers2',
