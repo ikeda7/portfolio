@@ -14,14 +14,47 @@
       content="Desenvolvedor de software em Bauru – SP. Sistemas ERP nas duas pontas, back-end e dados, e IA generativa aplicada ao fluxo de trabalho."
     />
     <meta name="author" content="Lucas Ikeda" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lucas Ikeda" />
     <meta property="og:title" content="Lucas Ikeda — Desenvolvedor de Software &amp; IA Aplicada" />
     <meta
       property="og:description"
       content="Desenvolvedor de software em Bauru – SP. Sistemas ERP nas duas pontas, back-end e dados, e IA generativa aplicada ao fluxo de trabalho."
     />
     <meta property="og:locale" content="pt_BR" />
+
     <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Lucas Ikeda — Desenvolvedor de Software &amp; IA Aplicada"
+    />
+    <meta
+      name="twitter:description"
+      content="Desenvolvedor de software em Bauru – SP. Sistemas ERP nas duas pontas, back-end e dados, e IA generativa aplicada ao fluxo de trabalho."
+    />
+
+    <!--
+      As tags abaixo exigem URL ABSOLUTA: o LinkedIn, o WhatsApp e o X buscam a
+      imagem a partir de um servidor deles, onde caminho relativo não resolve.
+
+      O plugin em vite.config.ts troca %SITE_URL% por VITE_SITE_URL. Sem essa
+      variável, ele **remove o bloco inteiro** em vez de gerar URL relativa
+      quebrada — e avisa no build. Não tire os marcadores.
+    -->
+    <!-- social:url-absoluta -->
+    <link rel="canonical" href="%SITE_URL%/" />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Lucas Ikeda — Desenvolvedor de Software · Implantação e IA Aplicada"
+    />
+    <meta name="twitter:image" content="%SITE_URL%/og.png" />
+    <!-- /social:url-absoluta -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
