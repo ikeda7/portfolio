@@ -33,7 +33,7 @@ export function SpectrumCover({ repo, languages }: SpectrumCoverProps) {
       <div aria-hidden="true" className="flex flex-1 gap-2 pt-3 pb-1">
         {languages.map((language) => (
           <div key={language.label} className="flex min-w-0 flex-1 flex-col justify-end gap-1">
-            <span className="text-ink-faint text-center font-mono text-[9px] tabular-nums">
+            <span className="text-ink-faint text-center font-mono text-[10px] tabular-nums">
               {language.share.toFixed(1)}
             </span>
             <div
@@ -48,7 +48,7 @@ export function SpectrumCover({ repo, languages }: SpectrumCoverProps) {
         {languages.map((language) => (
           <li
             key={language.label}
-            className="text-ink-muted min-w-0 flex-1 truncate text-center font-mono text-[9px] tracking-[0.1em] uppercase"
+            className="text-ink-muted min-w-0 flex-1 truncate text-center font-mono text-[10px] tracking-[0.08em] uppercase"
           >
             {language.label}
           </li>

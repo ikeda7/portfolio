@@ -9,7 +9,7 @@ const { contact } = site
 /** Booking: canais de contato + formulário. */
 export function Contact() {
   return (
-    <Section id="contato" index="04" label="Contato">
+    <Section id="contato" index="05" label="Contato">
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-start gap-14">
         <Reveal>
           <h2

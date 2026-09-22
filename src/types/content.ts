@@ -82,4 +82,26 @@ export interface AboutStat {
   readonly label: string
 }
 
+/**
+ * Uma entrada da linha do tempo — emprego ou formacao.
+ *
+ * Todo campo sai do curriculo. Cargo, empresa e periodo sao exatamente o tipo
+ * de dado que a Regra de Ouro proibe inferir: nao existe no GitHub e nao da
+ * para deduzir do codigo.
+ */
+export interface TimelineEntry {
+  /** Periodo como aparece no curriculo, ex.: "Ago/2026 — Atual". */
+  readonly period: string
+  /** Cargo, ou o nome do curso no caso de formacao. */
+  readonly title: string
+  /** Empresa ou instituicao. */
+  readonly org: string
+  /** Complemento de uma linha: alocacao, campus, cidade. */
+  readonly context?: string
+  /** Entregas da posicao, ou ementa resumida do curso. */
+  readonly bullets?: readonly string[]
+  /** Em andamento — acende o LED e marca a entrada como atual. */
+  readonly current?: boolean
+}
+
 export type FormStatus = 'idle' | 'enviando' | 'ok' | 'erro'

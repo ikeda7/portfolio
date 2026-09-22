@@ -49,6 +49,7 @@ export const site = {
 
 export const navLinks = [
   { label: 'Sobre', href: '#sobre' },
+  { label: 'Experiência', href: '#experiencia' },
   { label: 'Stack', href: '#habilidades' },
   { label: 'Projetos', href: '#projetos' },
   { label: 'Contato', href: '#contato' },

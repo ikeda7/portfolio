@@ -7,10 +7,17 @@ const SECTION_IDS = navLinks.map((link) => link.href.slice(1))
 /**
  * Header sticky com blur, marca, navegação por âncora e playhead de scroll.
  *
- * No mobile a marca e a navegação ficam empilhadas: lado a lado, os 4 links
+ * No mobile a marca e a navegação ficam empilhadas: lado a lado, os links
  * quebravam em três linhas a partir de ~390px e o header triplicava de altura.
  * Os links têm 44px de altura até `sm` para virarem alvos de toque confortáveis;
  * a marca fica na altura natural para o header não comer a tela.
+ *
+ * Com a quinta seção (Experiência) a nav passou a quebrar em duas linhas até
+ * 414px, levando o header a 145px — 20% da tela de um celular, e mais alto que
+ * o `scroll-margin-top`, o que escondia o topo de cada seção ao navegar. Por
+ * isso, até `sm`, a nav vira uma faixa de rolagem horizontal: os links ficam em
+ * uma linha só, com máscara de fade na direita indicando que há mais. Acima de
+ * `sm` ela volta a ser uma linha comum, sem rolagem.
  */
 export function Header() {
   const activeId = useActiveSection(SECTION_IDS)
@@ -31,17 +38,20 @@ export function Header() {
           </span>
         </a>
 
-        <nav aria-label="Navegação principal">
-          <ul className="flex flex-wrap justify-center gap-1">
+        <nav
+          aria-label="Navegação principal"
+          className="w-full [mask-image:linear-gradient(90deg,#000_88%,transparent)] sm:w-auto sm:[mask-image:none]"
+        >
+          <ul className="flex snap-x gap-1 overflow-x-auto [scrollbar-width:none] sm:flex-wrap sm:justify-center sm:overflow-visible [&::-webkit-scrollbar]:hidden">
             {navLinks.map((link) => {
               const isActive = activeId === link.href.slice(1)
 
               return (
-                <li key={link.href}>
+                <li key={link.href} className="snap-start">
                   <a
                     href={link.href}
                     aria-current={isActive ? 'true' : undefined}
-                    className={`hover:bg-panel-2 hover:text-ink flex min-h-11 items-center rounded-md px-3 font-mono text-[11px] tracking-[0.1em] uppercase transition-all duration-300 sm:min-h-0 sm:py-2 ${
+                    className={`hover:bg-panel-2 hover:text-ink flex min-h-11 items-center rounded-md px-3 font-mono text-[11px] whitespace-nowrap tracking-[0.1em] uppercase transition-all duration-300 sm:min-h-0 sm:py-2 ${
                       isActive ? 'text-accent-text' : 'text-ink-muted'
                     }`}
                   >
