@@ -10,6 +10,11 @@ interface SectionProps {
   /** Rótulo em caixa alta do cabeçalho, ex.: "Sobre". */
   readonly label: string
   readonly children: ReactNode
+  /**
+   * Ocupar no mínimo uma tela.  para seção cujo conteúdo já preenche —
+   * Projetos, com 6 cards, ficaria alto demais e obrigaria a rolar.
+   */
+  readonly fill?: boolean
 }
 
 /**
@@ -25,12 +30,12 @@ interface SectionProps {
  * causa da impressão de "não é responsivo", já que nada quebrava, só sobrava
  * margem.
  */
-export function Section({ id, index, label, children }: SectionProps) {
+export function Section({ id, index, label, children, fill = true }: SectionProps) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="flex min-h-[100svh] items-center px-6 py-24"
+      className={`flex items-center px-6 ${fill ? 'min-h-[100svh] py-24' : 'py-12'}`}
     >
       <div className="mx-auto w-full max-w-[1200px] 2xl:max-w-[1440px]">
         <SectionHeading index={index} label={label} />

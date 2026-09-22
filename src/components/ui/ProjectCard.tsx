@@ -33,11 +33,11 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
     >
       <ProjectCover track={track} title={title} cover={cover} />
 
-      <div className="flex-1 p-[18px]">
+      <div className="flex-1 p-4">
         <h3 className="text-ink text-[17px] font-semibold tracking-[-0.01em]">{title}</h3>
         <p className="text-ink-muted mt-2 text-[13px] leading-[1.6]">{description}</p>
 
-        <ul className="mt-3 flex flex-wrap gap-1.5">
+        <ul className="mt-2.5 flex flex-wrap gap-1.5">
           {tags.map((tag) => (
             <li
               key={tag}
@@ -53,7 +53,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
             href={href}
             target="_blank"
             rel="noreferrer noopener"
-            className="text-ink-muted group-hover:text-accent-text mt-4 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3 after:absolute after:inset-0 after:z-20 after:content-['']"
+            className="text-ink-muted group-hover:text-accent-text mt-3 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3 after:absolute after:inset-0 after:z-20 after:content-['']"
             aria-label={`Abrir o projeto ${title} em uma nova aba`}
           >
             Abrir
@@ -61,7 +61,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
           </a>
         ) : (
           // Sem link publico — LexTrack e trabalho de cliente em producao.
-          <span className="text-ink-faint mt-4 inline-flex font-mono text-[11px] tracking-[0.12em] uppercase">
+          <span className="text-ink-faint mt-3 inline-flex font-mono text-[11px] tracking-[0.12em] uppercase">
             Em produção · sem repositório público
           </span>
         )}

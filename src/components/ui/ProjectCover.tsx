@@ -1,4 +1,3 @@
-import { SleeveCover } from '@/components/ui/SleeveCover'
 import { SpectrumCover } from '@/components/ui/SpectrumCover'
 import { TerminalCover } from '@/components/ui/TerminalCover'
 import type { ProjectCover as Cover } from '@/types/content'
@@ -16,12 +15,13 @@ interface ProjectCoverProps {
  * desliza para a esquerda e o disco aparece pela direita, girando — um vinil
  * saindo da capa.
  *
- * A sleeve muda conforme o projeto tem o quê para mostrar: print do site,
- * terminal com os comandos reais, ou capa tipográfica.
+ * A arte muda conforme o projeto tem o quê para mostrar. Hoje todos usam o
+ * espectro de linguagens do repositório; as variantes de print e de terminal
+ * seguem prontas e a um campo de distância.
  */
 export function ProjectCover({ track, title, cover }: ProjectCoverProps) {
   return (
-    <div className="border-line bg-panel-sunken relative aspect-[16/10] overflow-hidden border-b">
+    <div className="border-line bg-panel-sunken relative aspect-[16/7] overflow-hidden border-b">
       <div
         aria-hidden="true"
         className="absolute inset-y-0 right-[8%] flex items-center justify-end"
@@ -47,7 +47,6 @@ export function ProjectCover({ track, title, cover }: ProjectCoverProps) {
         {cover.kind === 'spectrum' && (
           <SpectrumCover repo={cover.repo} languages={cover.languages} />
         )}
-        {cover.kind === 'sleeve' && <SleeveCover title={title} />}
       </div>
 
       <span
