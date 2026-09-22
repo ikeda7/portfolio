@@ -31,7 +31,7 @@ const ALTURA_ROTULO = 18
 export function SpectrumCover({ repo, languages }: SpectrumCoverProps) {
   return (
     <div className="bg-panel-sunken flex h-full w-full flex-col justify-between p-4">
-      <div className="text-ink-faint flex items-baseline justify-between font-mono text-[10px] tracking-[0.14em] uppercase">
+      <div className="text-ink-faint flex items-baseline justify-between font-mono text-[11px] tracking-[0.14em] uppercase">
         {/* Recuo para nao colidir com o numero da faixa, que e absoluto no canto. */}
         <span className="truncate pl-6">{repo}</span>
         <span className="shrink-0 pl-2">Espectro</span>
@@ -40,7 +40,7 @@ export function SpectrumCover({ repo, languages }: SpectrumCoverProps) {
       <div aria-hidden="true" className="flex flex-1 gap-2 pt-3 pb-1">
         {languages.map((language) => (
           <div key={language.label} className="flex min-w-0 flex-1 flex-col justify-end gap-1">
-            <span className="text-ink-faint text-center font-mono text-[10px] tabular-nums">
+            <span className="text-ink-faint text-center font-mono text-[11px] tabular-nums">
               {language.share.toFixed(1)}
             </span>
             <div
@@ -57,7 +57,7 @@ export function SpectrumCover({ repo, languages }: SpectrumCoverProps) {
         {languages.map((language) => (
           <li
             key={language.label}
-            className="text-ink-muted min-w-0 flex-1 truncate text-center font-mono text-[10px] tracking-[0.08em] uppercase"
+            className="text-ink-muted min-w-0 flex-1 truncate text-center font-mono text-[11px] tracking-[0.08em] uppercase"
           >
             {language.label}
           </li>

@@ -45,7 +45,7 @@ export function Experience() {
                     <span aria-hidden="true" className="bg-accent glow-led size-1.5 rounded-full" />
                     {idioma.nome}
                   </span>
-                  <span className="text-ink-faint font-mono text-[10px] tracking-[0.1em] uppercase">
+                  <span className="text-ink-faint font-mono text-[11px] tracking-[0.1em] uppercase">
                     {idioma.nivel}
                   </span>
                 </li>

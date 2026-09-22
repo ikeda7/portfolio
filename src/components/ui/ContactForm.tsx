@@ -24,7 +24,7 @@ const INTERVALO_ENTRE_ENVIOS_MS = 30_000
 const FIELD_CLASS =
   'border-line-strong focus:border-accent focus:glow-input w-full border-0 border-b bg-transparent px-0.5 py-2.5 text-[15px] outline-none transition-all duration-300'
 
-const LABEL_CLASS = 'text-ink-faint font-mono text-[10px] tracking-[0.14em] uppercase'
+const LABEL_CLASS = 'text-ink-faint font-mono text-[11px] tracking-[0.14em] uppercase'
 
 function validar({ nome, email, mensagem }: FormValues): string | null {
   if (nome.trim().length < 2) return 'Informe seu nome.'

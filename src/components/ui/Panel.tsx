@@ -26,7 +26,7 @@ export function Panel({ title, code, fill = false, children }: PanelProps) {
     >
       <div className="border-line bg-panel-2 flex items-center justify-between border-b px-[18px] py-[14px]">
         <h3 className="text-ink font-mono text-[11px] tracking-[0.14em] uppercase">{title}</h3>
-        <span className="text-ink-faint font-mono text-[10px]">{code}</span>
+        <span className="text-ink-faint font-mono text-[11px]">{code}</span>
       </div>
       {children}
     </div>

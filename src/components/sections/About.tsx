@@ -36,7 +36,7 @@ export function About() {
                   </span>
                   <span
                     aria-hidden="true"
-                    className="text-ink-faint mt-1 block font-mono text-[10px] tracking-[0.12em] uppercase"
+                    className="text-ink-faint mt-1 block font-mono text-[11px] tracking-[0.12em] uppercase"
                   >
                     {stat.label}
                   </span>
@@ -87,7 +87,7 @@ export function About() {
                 aria-hidden="true"
                 className="size-16 rounded-[14px] border border-[rgb(var(--accent-rgb)/0.5)] bg-[rgb(var(--accent-rgb)/0.12)]"
               />
-              <span className="text-ink-faint font-mono text-[10px] tracking-[0.12em] uppercase">
+              <span className="text-ink-faint font-mono text-[11px] tracking-[0.12em] uppercase">
                 [INSERIR FOTO]
               </span>
             </div>

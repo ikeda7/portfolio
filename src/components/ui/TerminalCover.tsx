@@ -22,7 +22,7 @@ const CLASSES: Record<TerminalLine['kind'], string> = {
 export function TerminalCover({ lines }: TerminalCoverProps) {
   return (
     <div className="bg-panel-sunken flex h-full w-full flex-col justify-center overflow-hidden p-4">
-      <pre className="font-mono text-[10px] leading-[1.7] whitespace-pre">
+      <pre className="font-mono text-[11px] leading-[1.7] whitespace-pre">
         {lines.map((line, index) => (
           <div key={index} className={CLASSES[line.kind]}>
             {line.kind === 'command' && <span className="text-accent-text">$ </span>}

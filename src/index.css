@@ -14,16 +14,18 @@
      afordancia do componente (campos de formulario). WCAG 1.4.11. */
   --color-line-strong: #6e6e6e;
   --color-ink: #ededed;
-  --color-ink-muted: #a3a3a3;
-  /* 5.04:1 no pior fundo (--panel-2). O #787878 do prototipo dava 3.94:1. */
-  --color-ink-faint: #8a8a8a;
+  --color-ink-muted: #b0b0b0;
+  /* 6.18:1 no pior fundo (--panel-2). O #787878 do prototipo dava 3.94:1 e o
+     #8a8a8a anterior, 5.04:1 — passava no AA e ainda assim sumia, porque e a
+     cor do rotulo mono, o estilo mais repetido da pagina. */
+  --color-ink-faint: #9a9a9a;
   /* Acento para PREENCHIMENTO, glow, borda e LED — 3.2:1+, suficiente para
      componente nao-textual. NAO usar como cor de texto.
      Matiz 219, amostrado da camiseta da foto da secao Sobre (#072C6F, que
      sozinho da 1.48:1 e sumiria no carvao — mesma cor, mais clara). */
   --color-accent: #0059ff;
-  /* Acento para TEXTO — 5.35:1 no pior fundo. Mesmo matiz, so mais claro. */
-  --color-accent-text: #4d8bff;
+  /* Acento para TEXTO — 7.56:1 sobre o fundo. Mesmo matiz (219), so mais claro. */
+  --color-accent-text: #6ba1ff;
   --color-accent-2: #2e6de0;
   --color-knob: #2a2a2a;
   --color-knob-line: #3a3a3a;

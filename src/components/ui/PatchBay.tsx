@@ -39,7 +39,7 @@ export function PatchBay({ items }: PatchBayProps) {
           >
             <span className="bg-accent glow-led size-1.5 rounded-full" />
           </span>
-          <span className="text-ink-muted group-hover:text-ink font-mono text-[10px] leading-[1.45] tracking-[0.1em] uppercase transition-colors duration-300">
+          <span className="text-ink-muted group-hover:text-ink font-mono text-[11px] leading-[1.45] tracking-[0.1em] uppercase transition-colors duration-300">
             {item}
           </span>
         </m.li>

@@ -46,7 +46,7 @@ export function Timeline({ entries, headingLevel = 'h3', compact = false }: Time
               {entry.period}
             </span>
             {entry.current && (
-              <span className="border-line bg-panel text-ink-faint rounded-full border px-2 py-0.5 font-mono text-[10px] tracking-[0.12em] uppercase">
+              <span className="border-line bg-panel text-ink-faint rounded-full border px-2 py-0.5 font-mono text-[11px] tracking-[0.12em] uppercase">
                 Em andamento
               </span>
             )}

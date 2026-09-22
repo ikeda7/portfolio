@@ -37,7 +37,7 @@ export function Waveform({ meta, timecode, canais }: WaveformProps) {
 
   return (
     <div className="border-line glow-panel mx-auto mt-18 w-full max-w-[880px] rounded-[14px] border bg-gradient-to-b from-[#141414] to-[#101010] p-[22px]">
-      <div className="text-ink-faint flex items-center justify-between font-mono text-[10px] tracking-[0.14em] uppercase">
+      <div className="text-ink-faint flex items-center justify-between font-mono text-[11px] tracking-[0.14em] uppercase">
         <span>{meta}</span>
         <span>{timecode}</span>
       </div>
@@ -73,7 +73,7 @@ export function Waveform({ meta, timecode, canais }: WaveformProps) {
               type="button"
               aria-pressed={ativo}
               onClick={() => setCanalAtivo(index)}
-              className={`min-h-6 rounded px-[10px] py-[5px] font-mono text-[10px] transition-all duration-300 ${
+              className={`min-h-6 rounded px-[10px] py-[5px] font-mono text-[11px] transition-all duration-300 ${
                 ativo
                   ? 'text-ink border border-[rgb(var(--accent-rgb)/0.4)] bg-[rgb(var(--accent-rgb)/0.14)]'
                   : 'bg-panel-2 text-ink-muted hover:text-ink border border-transparent hover:border-[rgb(var(--accent-rgb)/0.3)]'

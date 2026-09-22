@@ -8,7 +8,7 @@ import { socialChannels } from '@/data/social'
  * desalinhamento mesmo com as colunas nascendo no mesmo y.
  */
 const LINHA_TOPO = 'flex min-h-6 items-center'
-const ROTULO = 'text-ink-faint font-mono text-[10px] tracking-[0.14em] uppercase'
+const ROTULO = 'text-ink-faint font-mono text-[11px] tracking-[0.14em] uppercase'
 const ITEM =
   'text-ink-muted hover:text-accent-text flex min-h-6 items-center gap-2 font-mono text-[11px] tracking-[0.06em] transition-colors duration-300'
 

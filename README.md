@@ -54,7 +54,7 @@ o acento é dois tokens:
 | Token                 | Valor     | Usar em                                             |
 | --------------------- | --------- | --------------------------------------------------- |
 | `--color-accent`      | `#0059FF` | preenchimento, glow, borda, LED, fundo de botão     |
-| `--color-accent-text` | `#4D8BFF` | qualquer **texto** em acento (5.35:1 no pior fundo) |
+| `--color-accent-text` | `#6BA1FF` | qualquer **texto** em acento (7.56:1 sobre o fundo) |
 
 Outras regras do mesmo tipo:
 
