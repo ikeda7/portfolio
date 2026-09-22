@@ -14,39 +14,20 @@ Antes de mexer em qualquer coisa, leia nesta ordem:
 ```bash
 git clone https://github.com/ikeda7/portfolio
 cd portfolio
-
-# O trabalho mais recente esta no TOPO DA PILHA de PRs, nao em develop.
-git checkout feature/social-preview
+git checkout develop
 npm install
 npm run dev            # http://localhost:5173
 ```
 
-> **`main` está desatualizada de propósito** — ainda tem só o commit de setup.
-> **`develop` também está atrás**: os quatro PRs abaixo ainda não foram
-> mergeados. Quem fizer `git checkout develop` vai ver o site de 21/09, sem
-> nada do que foi feito depois.
+> **`develop` é o estado completo do site.** A pilha de PRs que existia em
+> 21–22/09 (#1 a #7) foi toda mergeada.
+>
+> **`main` continua com só o commit de setup, de propósito** — é espelho de
+> produção e só recebe `develop` quando o site for publicar. Quem abrir `main`
+> vai achar que perdeu o trabalho.
 
-### Ordem de merge dos PRs abertos
-
-São **empilhados**: cada um tem o anterior como base. Merge fora de ordem gera
-conflito à toa.
-
-| Ordem | PR                                               | Branch                   | Base      | O que entrega                                                  |
-| ----- | ------------------------------------------------ | ------------------------ | --------- | -------------------------------------------------------------- |
-| 1º    | [#1](https://github.com/ikeda7/portfolio/pull/1) | `docs/claude-md`         | `develop` | `CLAUDE.md` + correção de deriva no README                     |
-| 2º    | [#2](https://github.com/ikeda7/portfolio/pull/2) | `feature/revisao-secoes` | `develop` | Seções de tela cheia, container mais largo, 3º painel na Stack |
-| 3º    | [#3](https://github.com/ikeda7/portfolio/pull/3) | `feature/capas-projetos` | `#2`      | Capas de espectro nos 6 cards, Projetos em uma tela            |
-| 4º    | [#4](https://github.com/ikeda7/portfolio/pull/4) | `feature/social-preview` | `#3`      | `og:image` e metatags absolutas                                |
-| 5º    | —                                                | `feature/experiencia`    | `#4`      | Seção Experiência, nav rolável no mobile, correção do 9px      |
-
-Depois que o #2 mergear, o #3 vira automaticamente um PR contra `develop`
-(mesmo para o #4 depois do #3, e o #5 depois do #4).
-
-`docs/handoff-continuacao` é uma branch de integração que junta tudo isso —
-serve para ver o site completo sem esperar a pilha mergear, e é a base do
-`feature/experiencia`.
-
-**Branches antigas foram apagadas** (8 delas, todas já contidas em `develop`).
+Trabalho novo sai de `develop` em `feature/*` (ou `fix/`, `chore/`, `docs/`) e
+volta por PR com merge `--no-ff`. O CI roda os quatro portões em todo PR.
 
 ---
 
@@ -63,9 +44,13 @@ Verificado por CDP (Chrome headless), não no olho:
 - `typecheck`, `lint`, `format:check` e `build` passam
 - Bundle: ~112 kB gzip
 
-A seção **Experiência** entrou em 22/09 e preencheu o que era o item 1 desta
-lista: a carreira deixou de viver num parágrafo do Sobre. São 5 seções
-numeradas agora — Sobre 01, Experiência 02, Stack 03, Projetos 04, Contato 05.
+São 5 seções numeradas — Sobre 01, Experiência 02, Stack 03, Projetos 04,
+Contato 05 — e o CI roda os quatro portões em todo PR.
+
+Entrou em 22/09, fechando itens que estavam nesta lista: a seção **Experiência**
+(a carreira deixou de viver num parágrafo do Sobre), a **indicação de rolagem**
+no hero, o **rodapé** com navegação e canais, e o **timecode do hero**, que era
+a única coisa na tela sem fonte.
 
 ---
 
@@ -120,16 +105,12 @@ single page sem roteador.
   variedade), mas vale rever com o olho. Os prints do Inhouse LoL e do X9
   continuam em `src/assets/` e as variantes `shot` e `terminal` seguem no tipo
   com componente pronto: **voltar um card é trocar a linha `cover`**.
-- **Timecode do hero é inventado.** `00:00:00 / 00:03:24` em
-  [`src/data/site.ts`](../src/data/site.ts) é a única coisa na tela sem fonte,
-  num site cuja regra é não inventar nada.
-- **Hero sem indicação de rolagem**, apesar de todas as seções serem de tela
-  cheia.
-- **Footer com duas linhas** e nada mais — cabe navegação e canais.
-- **Sem CI.** Nenhum workflow roda os quatro portões num PR. O token do `gh`
-  tem escopo `workflow`, então dá para criar.
 - **Sem runner de teste.** Ausência deliberada desta fase; não instale sem
-  alinhar.
+  alinhar. O CI roda os quatro portões, mas ninguém verifica comportamento
+  automaticamente — a auditoria por CDP é manual (ver abaixo).
+- **`main` nunca recebeu `develop`.** Quando o site for publicar, é o passo que
+  falta — e aí `VITE_SITE_URL` precisa estar definida, senão o `og:image` sai
+  do HTML.
 
 ---
 

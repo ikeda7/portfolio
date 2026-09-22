@@ -7,28 +7,26 @@ Código, comentários, copy e ids de âncora são em **pt-BR** — mantenha o id
 
 ## Antes de tocar em qualquer coisa
 
-**Confira a branch antes de qualquer coisa.** `main` tem só o commit de setup, e
-`develop` está atrás de uma pilha de PRs abertos. O estado completo do site fica
-na branch do topo da pilha.
+**Confira a branch.** `develop` é o estado completo do site — a pilha de PRs que
+existia em 21–22/09 foi toda mergeada. `main` continua com só o commit de setup,
+de propósito: ela é espelho de produção e só recebe `develop` quando o site for
+publicar.
 
 ```bash
-git log --oneline -1          # um commit so = branch errada
-git branch -r                 # ache a branch do topo
+git log --oneline -1          # um commit so = voce esta na main
+git status                    # confira antes de comecar
 ```
 
-A ordem de merge dos PRs e o que cada um entrega estão em
-[docs/PENDENCIAS.md](docs/PENDENCIAS.md) — **leia antes de editar**, porque
-merge fora de ordem gera conflito à toa.
-
-Não rode `/init` aqui: este arquivo já existe e carrega sozinho no início da
-sessão. Rodar `/init` numa branch atrasada geraria um CLAUDE.md descrevendo um
-site que não existe mais.
-
-Leia nesta ordem: [DIRETRIZES_CLAUDE.MD](DIRETRIZES_CLAUDE.MD) (a Regra de Ouro),
+Leia nesta ordem, **antes de editar**:
+[DIRETRIZES_CLAUDE.MD](DIRETRIZES_CLAUDE.MD) (a Regra de Ouro),
 [docs/PENDENCIAS.md](docs/PENDENCIAS.md) (o que falta, o que está bloqueado e as
 decisões já tomadas — com o motivo), [README.md](README.md) (contraste de cores e
 formulário) e [docs/design-reference/README.md](docs/design-reference/README.md)
 (a spec visual).
+
+Não rode `/init` aqui: este arquivo já existe e carrega sozinho no início da
+sessão. Rodar `/init` numa branch atrasada geraria um CLAUDE.md descrevendo um
+site que não existe mais.
 
 ## Comandos
 
@@ -42,10 +40,19 @@ npm run format:check
 npm run preview       # serve o build
 ```
 
-**Não há runner de teste** (sem vitest/jest, sem script `test`) e **não há CI**.
-O portão antes de commitar é rodar os quatro:
-`npm run typecheck && npm run lint && npm run format:check && npm run build`.
-Não instale framework de teste sem alinhar — a ausência é uma escolha desta fase.
+**Não há runner de teste** (sem vitest/jest, sem script `test`). Não instale
+framework de teste sem alinhar — a ausência é uma escolha desta fase.
+
+O portão antes de commitar continua sendo rodar os quatro:
+
+```bash
+npm run typecheck && npm run lint && npm run format:check && npm run build
+```
+
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) roda esses mesmos quatro
+em todo PR e em todo push para `develop` e `main`, cada um como step nomeado —
+a aba de checks diz qual falhou sem precisar abrir o log. O CI é rede de
+segurança, não substituto: rodar local antes evita descobrir no PR.
 
 ## Regra de Ouro
 
@@ -66,7 +73,8 @@ descrição. Prefira isso a supor.
 ## Arquitetura
 
 `index.html` → [src/main.tsx](src/main.tsx) → [src/App.tsx](src/App.tsx) → Hero →
-About → Skills → Marquee → Projects → Contact, com Header sticky e Footer.
+About → Experience → Skills → Marquee → Projects → Contact, com Header sticky e
+Footer.
 
 **Conteúdo é dado, não JSX.** Nenhum texto fica hardcoded em componente. Copy,
 listas e números vivem em [src/data/](src/data/) (`site.ts`, `skills.ts`,
@@ -84,9 +92,17 @@ Camadas:
   [contact.ts](src/lib/contact.ts) (envio do formulário). Lógica sem JSX.
 - Exports **nomeados** em todo lugar; `export default` só em `App.tsx`.
 
-Âncoras em pt-BR (`#sobre`, `#habilidades`, `#projetos`, `#contato`).
-[Header.tsx](src/components/layout/Header.tsx) deriva os ids de `navLinks`
-(`href.slice(1)`) — ao adicionar seção, basta entrar em `navLinks`.
+Âncoras em pt-BR (`#sobre`, `#experiencia`, `#habilidades`, `#projetos`,
+`#contato`). [Header.tsx](src/components/layout/Header.tsx) deriva os ids de
+`navLinks` (`href.slice(1)`), e o `ScrollHint` do hero aponta para o primeiro
+item da mesma lista — ao adicionar seção, basta entrar em `navLinks`.
+
+**A altura do header é `--header-h`** em [src/index.css](src/index.css): 97px até
+`sm`, 62px depois. Três coisas dependem dela — o `scroll-margin-top` das âncoras,
+a altura útil do hero e a posição da indicação de rolagem. Como o header é
+_sticky_, ele ocupa espaço no fluxo e a primeira seção começa abaixo dele; por
+isso o hero é `min-h-[calc(100svh-var(--header-h))]` e não `100svh` cheios, senão
+ele termina abaixo da dobra em toda tela. Mudou o header, mude a variável.
 
 ## Cor de acento: dois tokens, não um
 
