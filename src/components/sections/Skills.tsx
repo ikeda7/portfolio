@@ -57,7 +57,7 @@ export function Skills() {
                   <m.li key={tag} variants={prefersReducedMotion ? undefined : revealVariants}>
                     <BotaoTecnologia
                       termo={tag}
-                      className="border-line bg-panel-2 text-ink-faint hover:border-accent hover:text-ink block min-h-6 rounded border px-2.5 py-1.5 font-mono text-[10px] tracking-[0.1em] uppercase transition-all duration-300"
+                      className="border-line bg-panel-2 text-ink-faint hover:border-accent hover:text-ink block min-h-6 rounded border px-2.5 py-1.5 font-mono text-[11px] tracking-[0.1em] uppercase transition-all duration-300"
                       classNameAtivo="border-accent text-accent-text bg-[rgb(var(--accent-rgb)/0.12)]"
                     >
                       {tag}

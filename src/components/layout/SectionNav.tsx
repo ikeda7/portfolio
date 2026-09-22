@@ -38,7 +38,7 @@ export function SectionNav() {
                 className="group flex min-h-6 items-center justify-end gap-3 py-1"
               >
                 <span
-                  className={`font-mono text-[10px] tracking-[0.14em] uppercase opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 ${
+                  className={`font-mono text-[11px] tracking-[0.14em] uppercase opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 ${
                     isActive ? 'text-accent-text' : 'text-ink-muted'
                   }`}
                 >

@@ -43,7 +43,7 @@ export function ScrollHint() {
         aria-label={noFim ? 'Voltar ao topo' : `Ir para ${destino.label}`}
         className="text-ink-faint hover:text-accent-text group border-line bg-bg/80 hover:border-accent pointer-events-auto flex flex-col items-center gap-2 rounded-2xl border px-3 py-2.5 backdrop-blur-sm transition-colors duration-300"
       >
-        <span aria-hidden="true" className="font-mono text-[10px] tracking-[0.16em] uppercase">
+        <span aria-hidden="true" className="font-mono text-[11px] tracking-[0.16em] uppercase">
           {noFim ? 'Topo' : destino.label}
         </span>
 

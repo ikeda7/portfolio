@@ -65,7 +65,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
             {tags.map((tag) => (
               <li
                 key={tag}
-                className="bg-panel-2 text-ink-faint rounded px-2 py-1 font-mono text-[10px] tracking-[0.12em]"
+                className="bg-panel-2 text-ink-faint rounded px-2 py-1 font-mono text-[11px] tracking-[0.12em]"
               >
                 {tag}
               </li>

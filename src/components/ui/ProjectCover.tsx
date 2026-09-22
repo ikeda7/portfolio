@@ -51,7 +51,7 @@ export function ProjectCover({ track, title, cover }: ProjectCoverProps) {
 
       <span
         aria-hidden="true"
-        className="text-ink-faint absolute top-[10px] left-3 z-10 font-mono text-[10px] tracking-[0.14em]"
+        className="text-ink-faint absolute top-[10px] left-3 z-10 font-mono text-[11px] tracking-[0.14em]"
       >
         {track}
       </span>
