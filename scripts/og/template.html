@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /*
+       * Card de compartilhamento, 1200x630 (proporcao que LinkedIn, WhatsApp,
+       * X e Slack usam). Os tokens abaixo sao copia dos de src/index.css —
+       * este arquivo roda fora do bundle, entao nao da para importar o tema.
+       * Ao trocar o acento no site, troque aqui tambem.
+       */
+      :root {
+        --bg: #0d0d0d;
+        --panel: #141414;
+        --line: #262626;
+        --ink: #ededed;
+        --ink-muted: #a3a3a3;
+        --ink-faint: #8a8a8a;
+        --accent: #0059ff;
+        --accent-text: #4d8bff;
+        --accent-2: #2e6de0;
+        --accent-rgb: 0 89 255;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 1200px;
+        height: 630px;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .glow {
+        position: absolute;
+        top: -220px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 900px;
+        height: 520px;
+        background: radial-gradient(
+          ellipse at center,
+          rgb(var(--accent-rgb) / 0.26),
+          rgb(13 13 13 / 0) 70%
+        );
+        filter: blur(10px);
+        pointer-events: none;
+      }
+
+      .frame {
+        position: relative;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 64px;
+        padding: 64px 72px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--panel);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 15px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+      }
+
+      .led {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: var(--accent);
+        box-shadow: 0 0 12px var(--accent);
+      }
+
+      h1 {
+        margin-top: 30px;
+        font-size: 88px;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+      }
+
+      .role {
+        margin-top: 22px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 18px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent-text);
+        line-height: 1.5;
+      }
+
+      .desc {
+        margin-top: 24px;
+        max-width: 620px;
+        font-size: 22px;
+        line-height: 1.5;
+        color: var(--ink-muted);
+      }
+
+      .portrait {
+        width: 300px;
+        height: 300px;
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        object-fit: cover;
+        box-shadow: 0 0 60px rgb(var(--accent-rgb) / 0.28);
+      }
+
+      .wave {
+        position: absolute;
+        left: 72px;
+        right: 72px;
+        bottom: 56px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        height: 60px;
+      }
+
+      .wave span {
+        flex: 1 1 0;
+        min-width: 0;
+        border-radius: 999px;
+        background: linear-gradient(180deg, var(--accent), rgb(46 109 224 / 0.4));
+      }
+
+      .foot {
+        position: absolute;
+        left: 72px;
+        right: 72px;
+        bottom: 22px;
+        display: flex;
+        justify-content: space-between;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow"></div>
+
+    <div class="frame">
+      <div>
+        <div class="pill"><span class="led"></span>Bauru – SP · Brasil</div>
+        <h1>Lucas Ikeda</h1>
+        <p class="role">Desenvolvedor de Software · Implantação e IA Aplicada</p>
+        <p class="desc">
+          Sistemas ERP nas duas pontas, back-end e dados — e IA generativa aplicada para automatizar
+          levantamento, documentação e testes.
+        </p>
+      </div>
+
+      <img class="portrait" src="../../src/assets/lucas-ikeda.webp" alt="" />
+    </div>
+
+    <div class="wave" id="wave"></div>
+
+    <div class="foot">
+      <span>github.com/ikeda7</span>
+      <span>Portfólio</span>
+    </div>
+
+    <script>
+      // Mesmas alturas do waveform do hero (src/data/site.ts), para o card
+      // compartilhado e a pagina falarem a mesma lingua.
+      const heights = [
+        22, 38, 54, 30, 66, 82, 48, 70, 90, 58, 34, 74, 96, 62, 44, 80, 52, 68, 88, 40, 26, 58, 76,
+        92, 64, 36, 50, 84, 70, 46, 32, 60, 86, 54, 28, 72, 94, 42, 56, 78, 38, 66, 48, 90, 60, 34,
+        44, 24,
+      ]
+      const wave = document.getElementById('wave')
+      for (const h of heights) {
+        const bar = document.createElement('span')
+        bar.style.height = h + '%'
+        wave.appendChild(bar)
+      }
+    </script>
+  </body>
+</html>
