@@ -1,7 +1,8 @@
 # Pendências — portfólio Lucas Ikeda
 
-Última atualização: **23/09/2026**. Este arquivo existe para retomar o
-trabalho de outra máquina.
+Última atualização: **23/09/2026**, fim do dia. Este arquivo existe para
+retomar o trabalho de outra máquina — leia a pendência 1 antes de tentar o
+deploy.
 
 Antes de mexer em qualquer coisa, leia nesta ordem:
 [`DIRETRIZES_CLAUDE.MD`](../DIRETRIZES_CLAUDE.MD) (a Regra de Ouro),
@@ -48,6 +49,13 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
 fotografa. As duas precisam do `npm run preview` no ar. A segunda nasceu em
 23/09 porque a primeira deu "tudo limpo" numa tela que tinha uma etiqueta
 quebrada e um botao flutuante em cima do "Enviar mensagem" — medir nao e ver.
+
+### O que entrou em 23/09 (noite)
+
+- **CACiC na linha do tempo**: Diretor de Marketing, Abr/2024 — Abr/2025
+  (pendencia 7, concluida).
+- **Passo a passo do deploy escrito na pendencia 1**, porque o conector da
+  Vercel esta sem escopo e a solucao e no navegador, nao aqui.
 
 ### O que entrou em 23/09 (tarde) — reestruturacao
 
@@ -152,37 +160,86 @@ tecnologia na pagina inteira e para a fita. Ela deixou de ser enfeite.
 
 ## Pendencias, em ordem
 
-### 1. DEPLOY NA VERCEL — o proximo passo, e quase todo automatizavel
+### 1. DEPLOY NA VERCEL — BLOQUEADO, e a solucao e no navegador
 
-**Nao foi feito.** Combinado com o dono em 22/09: publicar primeiro na Vercel,
-dominio .br depois.
+Combinado com o dono em 22/09: publicar primeiro na Vercel, dominio .br
+depois.
 
-> **BLOQUEADA em 23/09: o conector perdeu o escopo.** Uma chamada a
-> `list_projects` com o `teamId` abaixo devolve **403 forbidden** —
-> _"Not authorized: trying to access resource under scope ikeda7s-projects.
-> You must re-authenticate to this scope"_. Os seis projetos existentes eu
-> continuo lendo sem escopo, mas **criar** o do portfolio nao da. Reautorize
-> o conector Vercel nas configuracoes de conectores do claude.ai.
+> **Por que esta bloqueado.** O conector Vercel desta sessao perdeu o escopo.
+> `list_projects` com o `teamId` abaixo devolve **403 forbidden** — _"Not
+> authorized: trying to access resource under scope ikeda7s-projects. You
+> must re-authenticate to this scope"_. Sem escopo da para **ler** os seis
+> projetos que ja existem, mas nao para **criar** o do portfolio.
 
-Dados ja descobertos, para nao redescobrir:
+#### Passo 0 — mergear `develop` em `main` ANTES de tudo
+
+A Vercel publica a **branch padrao** do repositorio, que e a `main` — e a
+`main` ainda tem so o commit de setup. Criar o projeto antes disso publica um
+site vazio e voce vai achar que quebrou alguma coisa.
+
+```bash
+git checkout main
+git pull --ff-only
+git merge --no-ff develop -m "chore: publica o site"
+git push
+git checkout develop
+```
+
+#### Caminho A — direto no site da Vercel (mais rapido, nao depende de mim)
+
+1. Entre em **vercel.com/new** logado como `ikeda7`.
+2. Na lista **Import Git Repository**, procure `ikeda7/portfolio`.
+3. **Se o repositorio nao aparecer**, e permissao do GitHub App, nao da
+   Vercel. Na mesma tela tem o link **"Adjust GitHub App Permissions"**
+   (ou va em github.com/settings/installations -> **Vercel** ->
+   **Configure**). La escolha **Only select repositories** e marque
+   `portfolio`, ou **All repositories**. Salve e volte para a aba da Vercel.
+4. A Vercel detecta Vite sozinha. Confira e nao mexa:
+   - Framework Preset: **Vite**
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Install Command: `npm install`
+5. **Nao clique em Deploy ainda.** Abra **Environment Variables** e crie:
+   - Name `VITE_SITE_URL`, Value `https://SEU-PROJETO.vercel.app`
+   - Marque **Production**, **Preview** e **Development**
+
+   Voce ainda nao sabe a URL final. Entao: **clique em Deploy sem essa
+   variavel**, espere terminar, copie a URL que a Vercel mostrar, e so
+   depois crie a variavel e clique em **Redeploy**. Sem ela o build remove
+   as tags de `og:image` e o link no LinkedIn sai sem card de compartilhar —
+   o proprio build avisa isso no log.
+
+#### Caminho B — por mim, depois de reautorizar o conector
+
+Se preferir que eu faca, reautorize o conector antes:
+
+1. claude.ai -> **Settings** (engrenagem) -> **Connectors**
+2. Ache **Vercel** na lista
+3. **Disconnect** e depois **Connect** de novo (so "Reconnect" as vezes nao
+   renova o escopo)
+4. Na tela de autorizacao da Vercel, **selecione o escopo**
+   `ikeda7s-projects` — e exatamente esse que esta faltando
+
+Feito isso, me avise: eu crio o projeto, leio a URL, seto `VITE_SITE_URL` e
+redeployo, tudo numa tacada.
+
+#### Depois do deploy, nesta ordem
+
+1. Conferir o site no ar e rodar `npm run auditar` contra a URL de producao:
+   `AUDIT_URL=https://... npm run auditar`
+2. Ligar a **allowlist de dominios do EmailJS** (pendencia 3) apontando para
+   o dominio novo — antes disso o formulario segue desligado, e ele avisa
+   isso na tela em vez de falhar calado
+3. Quando o dominio .br existir: apontar na Vercel, trocar `VITE_SITE_URL` e
+   redeployar de novo
+
+Dados da conta, para nao redescobrir:
 
 |                   |                                                                       |
 | ----------------- | --------------------------------------------------------------------- |
 | Conta (accountId) | `team_dFIqik9gl4cwNS9RjHk1zdcU`                                       |
 | `list_teams`      | devolve vazio — e conta pessoal, use o accountId acima como `teamId`  |
 | Projetos ja la    | inhouse-lol, sportscontrol, lextrack, flowers2, x9-game, ikeda7-stats |
-
-Ordem correta, e a ordem importa:
-
-1. **Mergear `develop` em `main` primeiro.** A Vercel publica a branch padrao
-   do repositorio, que e `main` — e `main` ainda tem so o commit de setup.
-   Criar o projeto antes disso publicaria um site vazio.
-2. Criar o projeto (`create_git_project`, repo `ikeda7/portfolio`, com o
-   `teamId` acima).
-3. Pegar a URL `*.vercel.app` que a Vercel devolver.
-4. Definir `VITE_SITE_URL` com essa URL e **redeployar** — sem ela o build
-   remove as tags de `og:image` e o link no LinkedIn fica sem card.
-5. Quando o dominio .br existir, trocar `VITE_SITE_URL` e redeployar de novo.
 
 ### 2. Curriculo em PDF — REMOVIDO DO SITE
 
@@ -216,7 +273,12 @@ Se um dia fizer sentido voltar, o caminho honesto e um PDF **sem telefone**,
 gerado so para o site. Os arquivos originais continuam no historico do git
 (commit `6a5cbe7`), entao nada se perdeu.
 
-### 3. EmailJS — BLOQUEADA, precisa das 3 credenciais
+### 3. EmailJS — BLOQUEADA, e e a ULTIMA da fila
+
+> Decisao do dono em 23/09: **"email depois vemos, vai ser o ultimo dos
+> ultimos"**. Nao e esquecimento — e ordem de prioridade. O formulario ja
+> falha bem sem credencial: valida os campos e diz "nao foi possivel enviar
+> agora — me chame por e-mail ou LinkedIn", com os dois canais logo ao lado.
 
 O codigo esta pronto em `src/lib/contact.ts`. Em emailjs.com: criar conta,
 _Email Services_ -> Gmail (da o **Service ID**), _Email Templates_ com
@@ -241,21 +303,20 @@ dominio na Vercel.
 
 Decisao de 22/09: nao precisa por enquanto, porque o dominio sera .br.
 
-### 7. Centro Academico — FALTAM DOIS DADOS
+### 7. Centro Academico — CONCLUIDA
 
-O dono foi **Diretor de Marketing** do centro academico: social media,
-postagens, comunicacao e o canal de comunicacao no WhatsApp. Isso veio dele
-direto, entao e fonte valida.
+**FEITO em 23/09.** Entrou na linha do tempo, abaixo do estagio:
 
-Nao esta no curriculo nem no LinkedIn, e faltam duas coisas que a Regra de
-Ouro proibe inventar:
+- **Diretor de Marketing** · CACiC — Centro Academico de Ciencia da
+  Computacao · FCT-UNESP · Presidente Prudente, SP
+- **Abr/2024 — Abr/2025**
+- Comunicacao com o corpo discente (pauta, redacao e publicacao das
+  postagens) e gestao das redes sociais e do canal no WhatsApp
 
-1. **O periodo** (`TimelineEntry.period` e obrigatorio);
-2. **O nome do centro academico** — "Centro Academico de Ciencia da
-   Computacao" seria chute.
-
-Com os dois em maos, a entrada entra na linha do tempo ao lado da EJCOMP,
-redigida no mesmo registro das outras (verbo de acao, sem numero inventado).
+E a **unica entrada da pagina que nao sai do curriculo nem do GitHub**: o
+dono ditou cargo, periodo e atividades, e fonte direta dele e fonte valida.
+O texto fica proximo do que ele disse, arrumado no registro das outras
+entradas — sem numero, sem alcance, sem resultado que nao foi dito.
 
 ### 8. Nivel por tecnologia — DECISAO DO DONO
 
