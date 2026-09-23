@@ -1,6 +1,8 @@
+import * as m from 'motion/react-m'
 import type { ReactNode } from 'react'
 
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { usePointerGlow } from '@/hooks/usePointerGlow'
 
 interface SectionProps {
   /** Id da âncora, sem `#`. O título da seção precisa usar `<id>-title`. */
@@ -33,17 +35,47 @@ interface SectionProps {
  * Contato, com 200px mortos em cima e embaixo. Agora o espaço vai para dentro
  * do conteúdo em vez de sobrar em volta: o miolo recebe `h-full` e cada seção
  * distribui o que tem na altura disponível.
+ *
+ * **As duas luzes moram aqui, e não em cada seção.** Elas existiam só no hero:
+ * um pulso ambiente e um brilho de acento que persegue o cursor. Quem descia a
+ * página entrava numa sequência de blocos parados e o site parecia perder
+ * energia depois da primeira tela. Implementadas no container, toda seção
+ * recebe as duas sem que ninguém precise lembrar de repetir o código — e o
+ * ambiente **alterna de lado** conforme o número da faixa, para a página não
+ * parecer o mesmo quadro colado seis vezes.
+ *
+ * Nenhuma das duas sobrevive a `prefers-reduced-motion`: o pulso morre no kill
+ * switch CSS do `index.css`, e `usePointerGlow` devolve `background: null`.
  */
 export function Section({ id, index, label, children, fill = true }: SectionProps) {
+  const { bind, background } = usePointerGlow<HTMLElement>({ size: 520, alpha: 0.1 })
+  const daEsquerda = Number(index) % 2 === 1
+
   return (
     <section
+      {...bind}
       id={id}
       aria-labelledby={`${id}-title`}
-      className={`flex items-stretch px-6 ${
+      className={`relative flex items-stretch overflow-hidden px-6 ${
         fill ? 'min-h-[100svh] py-[clamp(3.5rem,7vh,6rem)]' : 'py-12'
       }`}
     >
-      <div className="mx-auto flex w-full max-w-[1200px] flex-col 2xl:max-w-[1440px]">
+      <div
+        aria-hidden="true"
+        className={`animate-driftglow pointer-events-none absolute -top-[220px] h-[min(520px,62vw)] w-[min(860px,120%)] bg-[radial-gradient(ellipse_at_center,rgb(var(--accent-rgb)/0.16),rgb(13_13_13/0)_70%)] blur-[14px] ${
+          daEsquerda ? '-left-[12%]' : '-right-[12%]'
+        }`}
+      />
+
+      {background && (
+        <m.div
+          aria-hidden="true"
+          style={{ background }}
+          className="pointer-events-none absolute inset-0"
+        />
+      )}
+
+      <div className="relative mx-auto flex w-full max-w-[1200px] flex-col 2xl:max-w-[1440px]">
         <SectionHeading index={index} label={label} />
         {/*
          * `flex-1` entrega a altura que sobra para o conteúdo. Quem decide o

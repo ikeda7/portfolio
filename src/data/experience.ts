@@ -23,6 +23,23 @@ export const experience: readonly TimelineEntry[] = [
     ],
   },
   {
+    /*
+     * Entra na linha do tempo principal, e nao num bloco separado de "atuacao
+     * academica": e cargo de gestao numa empresa junior, com periodo e
+     * responsabilidade — le como experiencia porque e experiencia.
+     *
+     * **Sem bullets de proposito.** O curriculo tem uma linha de entregas aqui,
+     * mas a extracao do PDF perde o comeco de cada bullet nos dois idiomas (so
+     * sobra "...-focused team meetings and 1-on-1s"). Reconstruir a frase seria
+     * inventar entrega, que e exatamente o que a Regra de Ouro proibe. Entrada
+     * sem bullets e honesta; as de formacao ja sao assim.
+     */
+    period: 'Nov/2024 — Ago/2026',
+    title: 'Gerente de Recursos Humanos',
+    org: 'EJCOMP — Empresa Júnior de Computação',
+    context: 'FCT-UNESP · Presidente Prudente, SP',
+  },
+  {
     period: 'Nov/2024 — Abr/2025',
     title: 'Estagiário em Desenvolvimento',
     org: 'BMC Active I.T / Engetex',
@@ -36,9 +53,14 @@ export const experience: readonly TimelineEntry[] = [
 /**
  * Formação.
  *
- * Sem a ementa da pós de propósito: ela já é o painel "Pós · IA aplicada" da
- * seção Stack, em formato escaneável. Aqui fica a credencial — o quê, onde e
- * quando. Repetir os dois lugares só alongaria o painel.
+ * **A ementa da pós vive aqui agora.** Ela era o painel "Pós · IA aplicada" da
+ * seção Stack e, ao mesmo tempo, o fim do segundo parágrafo do Sobre — os
+ * mesmos sete termos, escritos duas vezes na mesma página. A auditoria de
+ * redundância mediu: seis deles apareciam 2x e "embeddings" aparecia 3x.
+ *
+ * Ementa de curso é atributo do curso, então o lugar dela é na entrada do
+ * curso. O texto é o do currículo, incluindo o que o painel de chips não
+ * cabia — LangChain/LangGraph e LoRA/PEFT.
  *
  * A UNESP aparece pelo nome por extenso, e não só pela sigla do campus, porque
  * universidade pública estadual é informação que pesa para quem lê.
@@ -49,6 +71,11 @@ export const education: readonly TimelineEntry[] = [
     title: 'Pós em Engenharia de Software em IA Aplicada',
     org: 'UniPDS',
     current: true,
+    bullets: [
+      'LLMs e engenharia de prompt; RAG, embeddings e vector databases.',
+      'Agentes autônomos e multiagente (LangChain/LangGraph); MCP.',
+      'Fine-tuning (LoRA/PEFT) e governança em IA.',
+    ],
   },
   {
     period: 'Concluído em Ago/2026',

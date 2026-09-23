@@ -21,8 +21,13 @@ const TEMPO_MINIMO_MS = 3_000
 /** Intervalo mínimo entre dois envios do mesmo visitante. */
 const INTERVALO_ENTRE_ENVIOS_MS = 30_000
 
+/*
+ * `hover:border-ink`: os campos so reagiam ao foco. Quem navega com o mouse
+ * passava por cima dos quatro e nao recebia resposta nenhuma — a borda e a
+ * unica afordancia deste campo, entao ela precisa acender antes do clique.
+ */
 const FIELD_CLASS =
-  'border-line-strong focus:border-accent focus:glow-input w-full border-0 border-b bg-transparent px-0.5 py-2.5 text-[15px] outline-none transition-all duration-300'
+  'border-line-strong hover:border-ink focus:border-accent focus:glow-input w-full border-0 border-b bg-transparent px-0.5 py-2.5 text-[15px] outline-none transition-all duration-300'
 
 const LABEL_CLASS = 'text-ink-faint font-mono text-[11px] tracking-[0.14em] uppercase'
 

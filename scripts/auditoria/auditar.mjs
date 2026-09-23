@@ -122,11 +122,26 @@ const SONDA_A11Y = `(() => {
   document.querySelectorAll('body *').forEach((el) => {
     const cs = getComputedStyle(el)
 
-    // Conteudo cortado por overflow escondido. sr-only usa isso de proposito.
+    /*
+     * Conteudo cortado por overflow escondido. sr-only usa isso de proposito.
+     *
+     * So conta quando o que transborda carrega TEXTO. Decoracao cortada de
+     * proposito e comum e legitima: o selo de vinil dos projetos tem um disco
+     * de 240% de altura, enquadrado pela moldura como um vinil visto de perto,
+     * e a checagem acusava os seis cards de "conteudo cortado" quando nenhuma
+     * letra estava escondida. Alarme falso treina quem le o relatorio a ignorar
+     * o relatorio.
+     */
     if (!String(el.className).includes('sr-only')) {
       const escondido = cs.overflowY === 'hidden' || cs.overflow === 'hidden'
       const sobra = el.scrollHeight - el.clientHeight
-      if (escondido && sobra > 2 && el.clientHeight > 0) {
+      const limite = el.clientHeight
+      const textoVazando = [...el.querySelectorAll('*')].some((f) => {
+        if (f.getAttribute('aria-hidden') === 'true' || f.closest('[aria-hidden="true"]')) return false
+        if (!Array.from(f.childNodes).some((n) => n.nodeType === 3 && n.textContent.trim())) return false
+        return f.offsetTop + f.offsetHeight > limite + 2
+      })
+      if (escondido && sobra > 2 && el.clientHeight > 0 && textoVazando) {
         out.cortados.push(
           el.tagName.toLowerCase() + ' -' + sobra + 'px "' + (el.innerText || '').trim().slice(0, 30) + '"',
         )
@@ -411,6 +426,107 @@ async function main() {
     )
     relevantes.forEach((x) => console.log('          ' + x))
   }
+
+  /* ------------------------------------------------------------------ *
+   * Hover: todo interativo responde ao mouse?                           *
+   * ------------------------------------------------------------------ */
+
+  /*
+   * Existe porque o dono do portfolio reparou antes da auditoria: "vi alguns
+   * que nao estavam tendo nem o hover". Eram tres classes de defeito, e
+   * nenhuma aparece nas outras checagens — o elemento tem nome acessivel,
+   * tamanho de alvo e contraste, e mesmo assim nao se anuncia como clicavel:
+   *
+   *   - o canal ATIVO da waveform, que so tinha estilo de estado;
+   *   - os quatro campos do formulario, que so tinham :focus;
+   *   - a marca "Lucas /IKEDA", que e link no header e no rodape.
+   *
+   * **A pergunta e feita ao CSSOM, nao ao ponteiro.** Duas tentativas antes
+   * desta falharam, e por motivos diferentes:
+   *
+   * 1. `CSS.forcePseudoState` pelo CDP funcionava no Chrome desta maquina e era
+   *    no-op no Chrome do CI — o mesmo commit passava local e acusava ~50
+   *    elementos mudos no runner. Pseudo-estado forcado e ferramenta de
+   *    DevTools e o comportamento varia entre versoes.
+   * 2. Mover o ponteiro de verdade (`Input.dispatchMouseEvent`) resolvia isso e
+   *    criou outro: a fita de tecnologias e uma faixa em movimento, entao a
+   *    coordenada lida e a coordenada clicada nunca sao a mesma posicao do
+   *    elemento. Alvo que anda nao se mede por coordenada.
+   *
+   * Varrer as folhas de estilo nao depende de versao de navegador nem de onde
+   * o elemento esta. O truque e tirar o `:hover` do seletor e testar se o que
+   * sobra casa com o elemento: `.group:hover .x` vira `.group .x`, que casa se
+   * o elemento estiver dentro de um `.group` — entao `group-hover:` do Tailwind
+   * sai de graca.
+   *
+   * Limite conhecido, e aceito: isto responde "existe regra de hover para este
+   * elemento", nao "a regra produz mudanca visivel". Uma regra sobrescrita
+   * passaria. E a pergunta certa mesmo assim, e nao tem falso negativo.
+   */
+  const hover = await js(`(() => {
+    const seletores = []
+    for (const folha of document.styleSheets) {
+      let regras
+      try {
+        regras = folha.cssRules
+      } catch {
+        continue // folha de outra origem
+      }
+      const visitar = (lista) => {
+        for (const regra of lista) {
+          if (regra.cssRules) visitar(regra.cssRules) // @media, @supports, @layer
+          const sel = regra.selectorText
+          if (!sel || !sel.includes(':hover')) continue
+          for (const parte of sel.split(',')) {
+            if (!parte.includes(':hover')) continue
+            const limpo = parte.replaceAll(':hover', '').trim()
+            if (limpo) seletores.push(limpo)
+          }
+        }
+      }
+      visitar(regras)
+    }
+
+    const mudos = []
+    let total = 0
+
+    for (const el of document.querySelectorAll('a, button, input, textarea, select, [role="button"]')) {
+      const b = el.getBoundingClientRect()
+      const cs = getComputedStyle(el)
+      if (b.width === 0 || b.height === 0) continue
+      if (cs.visibility === 'hidden' || cs.display === 'none') continue
+      if (String(el.className).includes('sr-only')) continue
+      // Armadilha anti-bot do formulario: invisivel para humano, nao deve reagir.
+      if (el.closest('[aria-hidden="true"]')) continue
+      total++
+
+      // Conta tambem hover herdado: um link cujo unico feedback vem do card ao
+      // redor responde ao mouse, mesmo sem regra propria.
+      const alvos = [el, ...el.querySelectorAll('*')]
+      const reage = seletores.some((sel) => {
+        try {
+          return alvos.some((n) => n.matches(sel))
+        } catch {
+          return false
+        }
+      })
+
+      if (!reage) {
+        const sec = el.closest('section[id]')
+        const nome = (el.getAttribute('aria-label') || el.innerText || el.tagName)
+          .trim()
+          .replace(/\\s+/g, ' ')
+          .slice(0, 34)
+        mudos.push((sec ? '#' + sec.id : 'fora') + ' ' + el.tagName.toLowerCase() + ' "' + nome + '"')
+      }
+    }
+
+    return { total, mudos }
+  })()`)
+
+  console.log(`\n### HOVER  (${hover.total} interativos visiveis)`)
+  linha('interativo sem hover', hover.mudos.length, hover.mudos.length > 0)
+  hover.mudos.forEach((x) => console.log('          ' + x))
 
   console.log('\n### CONSOLE')
   linha('erros de console', erros.length, erros.length > 0)

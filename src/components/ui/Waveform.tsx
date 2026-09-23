@@ -75,7 +75,7 @@ export function Waveform({ meta, timecode, canais }: WaveformProps) {
               onClick={() => setCanalAtivo(index)}
               className={`min-h-6 rounded px-[10px] py-[5px] font-mono text-[11px] transition-all duration-300 ${
                 ativo
-                  ? 'text-ink border border-[rgb(var(--accent-rgb)/0.4)] bg-[rgb(var(--accent-rgb)/0.14)]'
+                  ? 'text-ink border border-[rgb(var(--accent-rgb)/0.4)] bg-[rgb(var(--accent-rgb)/0.14)] hover:border-[rgb(var(--accent-rgb)/0.75)] hover:bg-[rgb(var(--accent-rgb)/0.24)]'
                   : 'bg-panel-2 text-ink-muted hover:text-ink border border-transparent hover:border-[rgb(var(--accent-rgb)/0.3)]'
               }`}
             >

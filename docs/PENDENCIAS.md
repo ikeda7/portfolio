@@ -49,7 +49,61 @@ fotografa. As duas precisam do `npm run preview` no ar. A segunda nasceu em
 23/09 porque a primeira deu "tudo limpo" numa tela que tinha uma etiqueta
 quebrada e um botao flutuante em cima do "Enviar mensagem" — medir nao e ver.
 
-### O que entrou em 23/09 — resposta ao feedback de fora
+### O que entrou em 23/09 (tarde) — reestruturacao
+
+- **Stack separada pelos cinco nichos do curriculo** (Linguagens / Front-end
+  & mobile / Back-end & dados / IA aplicada / Ferramentas & processos). A
+  taxonomia nao foi inventada: e a secao "Competencias tecnicas" do PDF, com
+  os mesmos termos e a mesma ordem. Antes a pagina misturava linguagem,
+  framework, banco e tecnica de IA nos mesmos tres blocos.
+- **Linguagens ganham selo de extensao** (`.py`, `.ts`) — ideia do dono. Fica
+  ao lado do nome e nao colado (`java.java` e `sql.sql` liam como erro de
+  digitacao). A extensao so existe em Linguagens: e ela que marca a
+  categoria sem precisar de legenda.
+- **Capas dos seis projetos viraram uma so: o selo de vinil.** Eram quatro
+  tratamentos diferentes e o conjunto lia como falta de padrao. Print em
+  todos era impossivel — tres projetos nao tem tela nenhuma.
+- **Curriculo em PDF REMOVIDO do site e do repositorio.** Ver pendencia 2.
+- **EJCOMP entrou na linha do tempo** (Gerente de RH, Nov/2024–Ago/2026).
+- **Ementa da pos saiu da Stack e foi para Formacao**, onde e atributo do
+  curso. Ela era copia literal do fim do segundo paragrafo do Sobre.
+- **Linha orfa eliminada**: os nichos sao listas de uma coluna, que nao tem
+  ultima linha incompleta em largura nenhuma; a mesa tem 8 linguagens em 4
+  ou 8 colunas, e as duas contas fecham.
+- **As duas luzes do hero foram para o `Section`**, entao toda secao tem o
+  pulso ambiente e o brilho que segue o cursor. O ambiente alterna de lado
+  conforme o numero da faixa.
+- **Contraste dos discos**: o fundo, o disco e o selo eram tres tons quase
+  iguais. A auditoria nao pegava porque WCAG AA e piso, nao legibilidade.
+- **Auditoria ganhou checagem de HOVER** (ver abaixo).
+
+### Redundancia, medida
+
+De 26 termos distintos na pagina, 17 apareciam em mais de um lugar. A
+maioria e **reforco, nao redundancia** — "Python" na waveform e filtro, na
+Stack e catalogo, nas tags de projeto e uso real. Funcao diferente, lugar
+diferente.
+
+A redundancia de verdade era uma so, e foi corrigida: o painel "Pos · IA
+aplicada" repetia **os sete termos** do fim do segundo paragrafo do Sobre.
+Seis apareciam 2x e "Embeddings" aparecia **3x** (mesa + pos + prosa).
+
+### Hover, medido
+
+De 113 interativos visiveis, **12 nao reagiam ao mouse**. Tres classes:
+
+- o canal **ativo** da waveform (so os inativos tinham hover);
+- os quatro campos do formulario (so tinham `:focus`);
+- a marca "Lucas /IKEDA", que e link no header e no rodape.
+
+Hoje sao **zero**, e a checagem esta versionada em `npm run auditar` — ela
+desliga as transicoes antes de medir, senao o valor lido e o de partida
+(a primeira versao da sonda acusou 79 de 82 como mudos, todos falso
+positivo).
+
+---
+
+### O que entrou em 23/09 (manha) — resposta ao feedback de fora
 
 Primeira leitura da pagina por alguem que nao participou dela. Vale registrar
 o que ela pegou, porque foram coisas que nenhum dos portoes pega e que eu
@@ -103,8 +157,14 @@ tecnologia na pagina inteira e para a fita. Ela deixou de ser enfeite.
 **Nao foi feito.** Combinado com o dono em 22/09: publicar primeiro na Vercel,
 dominio .br depois.
 
-O acesso a Vercel funciona por MCP nesta sessao. Dados ja descobertos, para nao
-redescobrir amanha:
+> **BLOQUEADA em 23/09: o conector perdeu o escopo.** Uma chamada a
+> `list_projects` com o `teamId` abaixo devolve **403 forbidden** —
+> _"Not authorized: trying to access resource under scope ikeda7s-projects.
+> You must re-authenticate to this scope"_. Os seis projetos existentes eu
+> continuo lendo sem escopo, mas **criar** o do portfolio nao da. Reautorize
+> o conector Vercel nas configuracoes de conectores do claude.ai.
+
+Dados ja descobertos, para nao redescobrir:
 
 |                   |                                                                       |
 | ----------------- | --------------------------------------------------------------------- |
@@ -124,7 +184,7 @@ Ordem correta, e a ordem importa:
    remove as tags de `og:image` e o link no LinkedIn fica sem card.
 5. Quando o dominio .br existir, trocar `VITE_SITE_URL` e redeployar de novo.
 
-### 2. Curriculo em PDF — CONCLUIDA
+### 2. Curriculo em PDF — REMOVIDO DO SITE
 
 Os PDFs ja estao versionados em `public/`:
 
@@ -135,16 +195,26 @@ Eles entraram por acidente no commit `6a5cbe7`, arrastados por um `git add -A`
 enquanto o dono os colocava na pasta. Sao os arquivos certos; so a mensagem
 daquele commit nao os menciona.
 
-**FEITO em 23/09.** O painel "Canais" virou lista vertical e ganhou uma quinta
-linha, "Curriculo", com dois botoes de download: PT-BR e EN. Os anchors usam
-`download` e o rotulo acessivel diz que e PDF, para o visitante saber que vai
-baixar um arquivo em vez de abrir uma pagina.
+**REVERTIDO no mesmo dia, e com motivo tecnico.** Os PDFs chegaram a ficar no
+painel "Canais", com download em PT-BR e EN. Sairam do site **e do
+repositorio** algumas horas depois.
 
-**O PDF em ingles entrou.** O _site_ em ingles continua cancelado — sao coisas
-diferentes: traduzir a pagina inteira e manutencao permanente, oferecer um
-arquivo que ja existe nao custa nada depois de subido. Se o dono preferir nao
-expor a versao EN, e apagar uma entrada de `CURRICULOS` em
-`src/components/ui/ContactChannels.tsx`.
+O PDF traz o telefone `(18) 99689-5151`. E o site esconde o telefone **de
+proposito** — esta escrito em `src/data/social.ts`: "publicar numero em site
+aberto e convite para spam". Publicar o arquivo desfazia em silencio uma
+decisao que o proprio repositorio documenta, e bastava um `curl` na URL do
+PDF para pegar o numero.
+
+Apagar do `public/` nao bastava se o site ja estivesse no ar: arquivo servido
+fica em cache e em indice. Como o deploy ainda nao aconteceu, o numero nunca
+chegou a ser publicado.
+
+As experiencias que o curriculo carrega ja estao na secao Experiencia, que e
+o argumento do proprio dono: o portfolio basta.
+
+Se um dia fizer sentido voltar, o caminho honesto e um PDF **sem telefone**,
+gerado so para o site. Os arquivos originais continuam no historico do git
+(commit `6a5cbe7`), entao nada se perdeu.
 
 ### 3. EmailJS — BLOQUEADA, precisa das 3 credenciais
 
@@ -171,7 +241,23 @@ dominio na Vercel.
 
 Decisao de 22/09: nao precisa por enquanto, porque o dominio sera .br.
 
-### 7. Nivel por tecnologia — DECISAO DO DONO
+### 7. Centro Academico — FALTAM DOIS DADOS
+
+O dono foi **Diretor de Marketing** do centro academico: social media,
+postagens, comunicacao e o canal de comunicacao no WhatsApp. Isso veio dele
+direto, entao e fonte valida.
+
+Nao esta no curriculo nem no LinkedIn, e faltam duas coisas que a Regra de
+Ouro proibe inventar:
+
+1. **O periodo** (`TimelineEntry.period` e obrigatorio);
+2. **O nome do centro academico** — "Centro Academico de Ciencia da
+   Computacao" seria chute.
+
+Com os dois em maos, a entrada entra na linha do tempo ao lado da EJCOMP,
+redigida no mesmo registro das outras (verbo de acao, sem numero inventado).
+
+### 8. Nivel por tecnologia — DECISAO DO DONO
 
 Os faders da Stack nao tem mais altura variavel. Cada canal tinha um `value` de
 0 a 100 que desenhava a altura; o numero nunca apareceu na tela, mas o desenho
@@ -189,7 +275,7 @@ leitura errada em primeiro lugar.
 Se ele preferir nao declarar nivel, nao ha nada a fazer: a mesa reta ja e a
 resposta honesta.
 
-### 8. Polimento aberto (nao bloqueado)
+### 9. Polimento aberto (nao bloqueado)
 
 - ~~A auditoria so responde passa/nao passa no WCAG AA.~~ **FEITO em 23/09.**
   Ela agora agrupa por estilo (cor + fundo + tamanho + peso), ordena pela
@@ -215,6 +301,51 @@ resposta honesta.
   e **nao recomendo**: Projetos fica ~4 telas abaixo, entao o efeito
   aconteceria fora da tela.
 - **Sem runner de teste.** Ausencia deliberada desta fase.
+
+---
+
+## Ideias para discutir (nenhuma foi implementada)
+
+O dono pediu que eu separasse ideias em vez de sair fazendo. Estao em ordem
+de quanto acho que valem, e cada uma diz o que custa.
+
+### 1. A mesa das Linguagens ainda e o ponto mais fraco
+
+Oito faders identicos, todos na mesma marca. Depois que o nivel saiu (ver
+pendencia 8), a mesa virou desenho sem variavel — bonita e sem informacao.
+Tres saidas possiveis:
+
+- **Nivel categorico**, se o dono quiser declarar (pendencia 8). E a unica
+  que devolve significado a altura.
+- **Altura por tempo de uso**: "desde 2021". E fato verificavel se ele
+  souber os anos, e ninguem le ano como nota.
+- **Trocar a mesa por outra coisa** e aposentar o componente. Perde a
+  assinatura do site — nao recomendo sem os outros dois descartados.
+
+### 2. Um projeto em destaque, maior que os outros cinco
+
+Os seis cards tem o mesmo peso, e o TCC nao e um projeto como os outros. Um
+card duplo na primeira linha daria hierarquia ao Setlist sem quebrar o
+padrao do selo. Custa layout, nao conteudo.
+
+### 3. A fita e o unico lugar onde clicar nao tem retorno visivel
+
+Clicar num termo acende os projetos que o usam — mas a secao Projetos fica
+~3 telas abaixo, entao quem clica na Stack nao ve nada acontecer. Um contador
+discreto no proprio painel ("3 projetos") fecharia o laco na hora.
+
+### 4. Numero de repositorios esta desatualizado por construcao
+
+`aboutStats` diz "35 repositorios publicos", conferido a mao em 21/09. Isso
+envelhece sozinho. Da para gerar no build com uma chamada a API do GitHub e
+cravar o numero no bundle — continua sendo numero com fonte, e para de
+mentir com o tempo.
+
+### 5. Sem runner de teste
+
+Decisao desta fase, registrada. Vale reavaliar quando o site estiver no ar:
+a auditoria visual cobre muito, mas nao cobre logica (validacao do
+formulario, normalizacao do foco tecnico).
 
 ---
 

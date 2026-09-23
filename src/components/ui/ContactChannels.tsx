@@ -1,22 +1,10 @@
-import { ArrowUpRight, Download } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 
 import { Panel } from '@/components/ui/Panel'
 import { socialChannels } from '@/data/social'
 
 const LINHA_CLASS =
   'flex h-full items-center gap-3 px-[18px] py-3.5 transition-all duration-300 hover:bg-[rgb(var(--accent-rgb)/0.07)]'
-
-/**
- * Os dois PDFs já estavam versionados em `public/` e não tinham link nenhum na
- * página — currículo que existe no repositório e não existe na tela é currículo
- * que ninguém lê. Ficam aqui, e não em `socialChannels`, porque não são canal:
- * são documento. O tipo `SocialChannel` pede `handle`, e "PT-BR" não é handle
- * de lugar nenhum.
- */
-const CURRICULOS = [
-  { idioma: 'PT-BR', href: '/curriculo-lucas-ikeda-pt.pdf', acessivel: 'em português' },
-  { idioma: 'EN', href: '/curriculo-lucas-ikeda-en.pdf', acessivel: 'em inglês' },
-] as const
 
 /**
  * Painel "Canais": os contatos como linhas de um patchbay.
@@ -26,6 +14,13 @@ const CURRICULOS = [
  * caber na coluna. Em linha o endereço cabe inteiro, o painel ganha altura o
  * bastante para encostar no formulário ao lado, e a leitura vira uma varredura
  * vertical em vez de quatro paradas.
+ *
+ * **Sem currículo em PDF, de propósito.** Ele chegou a ficar aqui, com
+ * download em PT-BR e EN, e foi removido em 23/09: o PDF traz o telefone,
+ * e o telefone é justamente o dado que `socialChannels` mantém fora da
+ * página para não virar alvo de robô de spam. Publicar o arquivo desfazia
+ * em silêncio uma decisão que o resto do arquivo documenta. As experiências
+ * que o currículo carrega já estão na seção Experiência.
  *
  * O LED redondo vem do protótipo aprovado. TODO(design): trocar por ícones de
  * marca — `lucide-react@1` removeu Github/Linkedin/Instagram, então a fonte
@@ -70,30 +65,6 @@ export function ContactChannels() {
             </a>
           </li>
         ))}
-
-        <li className="flex-1">
-          <div className={LINHA_CLASS}>
-            <span aria-hidden="true" className="bg-accent glow-led size-2 shrink-0 rounded-full" />
-            <span className="text-ink min-w-0 flex-1 font-mono text-[11px] tracking-[0.1em] uppercase">
-              Currículo
-            </span>
-
-            <span className="flex shrink-0 items-center gap-1.5">
-              {CURRICULOS.map((curriculo) => (
-                <a
-                  key={curriculo.idioma}
-                  href={curriculo.href}
-                  download
-                  className="border-line text-ink-faint hover:border-accent hover:text-accent-text inline-flex min-h-6 items-center gap-1.5 rounded border px-2 py-1 font-mono text-[11px] tracking-[0.1em] uppercase transition-all duration-300"
-                  aria-label={`Baixar o currículo ${curriculo.acessivel} em PDF`}
-                >
-                  <Download aria-hidden="true" className="size-3" />
-                  {curriculo.idioma}
-                </a>
-              ))}
-            </span>
-          </div>
-        </li>
       </ul>
     </Panel>
   )
