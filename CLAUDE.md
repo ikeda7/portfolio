@@ -73,13 +73,19 @@ abaixo de 24×24, overflow horizontal de 320 a 1920px, espaço morto nas seçõe
 **interativo que não reage ao mouse** e erro de console. Sai com código 1 se
 algo falhar.
 
-A checagem de hover força `:hover` pelo CDP no elemento **e nos ancestrais**
-(`group-hover:` do Tailwind pendura a regra no ancestral) e compara o estilo.
-Ela **desliga as transições antes de medir**: com `transition-all
-duration-300`, ler o estilo logo depois de forçar `:hover` devolve o valor de
-partida, e a primeira versão acusou 79 de 82 elementos como mudos — todos
-falso positivo. Ela achou 12 defeitos reais: o canal **ativo** da waveform, os
-quatro campos do formulário e a marca "Lucas /IKEDA" no header e no rodapé.
+A checagem de hover **pergunta ao CSSOM**, e não simula o ponteiro. Ela varre
+as folhas de estilo, tira o `:hover` de cada seletor e testa se o que sobra
+casa com o elemento ou com um filho — `.group:hover .x` vira `.group .x`, então
+`group-hover:` do Tailwind entra de graça.
+
+Duas abordagens falharam antes, e as duas estão documentadas no script para
+ninguém tentar de novo: `CSS.forcePseudoState` pelo CDP funciona no Chrome
+local e é **no-op no Chrome do CI** (mesmo commit, verde aqui, ~50 mudos lá), e
+mover o ponteiro de verdade quebra na fita de tecnologias, porque alvo em
+movimento não se mede por coordenada.
+
+Ela achou 12 defeitos reais: o canal **ativo** da waveform, os quatro campos do
+formulário e a marca "Lucas /IKEDA" no header e no rodapé.
 
 Cada checagem ali dentro pegou bug real neste repositório — painel com texto
 decepado, 40 rótulos em 9px, seção com 53% de ocupação. Nenhuma é teórica.

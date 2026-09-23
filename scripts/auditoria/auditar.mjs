@@ -315,8 +315,6 @@ async function main() {
     }
   }
   await send('Runtime.enable')
-  await send('DOM.enable')
-  await send('CSS.enable')
   const js = async (expr) => {
     const o = await send('Runtime.evaluate', { returnByValue: true, expression: expr })
     if (o.exceptionDetails) throw new Error(o.exceptionDetails.exception?.description)
@@ -436,113 +434,99 @@ async function main() {
   /*
    * Existe porque o dono do portfolio reparou antes da auditoria: "vi alguns
    * que nao estavam tendo nem o hover". Eram tres classes de defeito, e
-   * nenhuma delas aparece em nenhuma das outras checagens — o elemento tem
-   * nome acessivel, tamanho de alvo e contraste, e mesmo assim nao se anuncia
-   * como clicavel:
+   * nenhuma aparece nas outras checagens — o elemento tem nome acessivel,
+   * tamanho de alvo e contraste, e mesmo assim nao se anuncia como clicavel:
    *
    *   - o canal ATIVO da waveform, que so tinha estilo de estado;
    *   - os quatro campos do formulario, que so tinham :focus;
    *   - a marca "Lucas /IKEDA", que e link no header e no rodape.
    *
-   * **As transicoes sao desligadas antes de medir.** Todo hover aqui e
-   * `transition-all duration-300`, entao ler o estilo logo depois de forcar
-   * :hover devolve o valor de PARTIDA, que e igual ao de antes — a primeira
-   * versao desta sonda acusou 79 de 82 elementos como mudos. Sem transicao o
-   * valor final e instantaneo e a checagem inteira roda em segundos em vez de
-   * minutos.
+   * **A pergunta e feita ao CSSOM, nao ao ponteiro.** Duas tentativas antes
+   * desta falharam, e por motivos diferentes:
+   *
+   * 1. `CSS.forcePseudoState` pelo CDP funcionava no Chrome desta maquina e era
+   *    no-op no Chrome do CI — o mesmo commit passava local e acusava ~50
+   *    elementos mudos no runner. Pseudo-estado forcado e ferramenta de
+   *    DevTools e o comportamento varia entre versoes.
+   * 2. Mover o ponteiro de verdade (`Input.dispatchMouseEvent`) resolvia isso e
+   *    criou outro: a fita de tecnologias e uma faixa em movimento, entao a
+   *    coordenada lida e a coordenada clicada nunca sao a mesma posicao do
+   *    elemento. Alvo que anda nao se mede por coordenada.
+   *
+   * Varrer as folhas de estilo nao depende de versao de navegador nem de onde
+   * o elemento esta. O truque e tirar o `:hover` do seletor e testar se o que
+   * sobra casa com o elemento: `.group:hover .x` vira `.group .x`, que casa se
+   * o elemento estiver dentro de um `.group` — entao `group-hover:` do Tailwind
+   * sai de graca.
+   *
+   * Limite conhecido, e aceito: isto responde "existe regra de hover para este
+   * elemento", nao "a regra produz mudanca visivel". Uma regra sobrescrita
+   * passaria. E a pergunta certa mesmo assim, e nao tem falso negativo.
    */
-  const PROPS_HOVER = [
-    'color',
-    'backgroundColor',
-    'borderTopColor',
-    'borderLeftColor',
-    'boxShadow',
-    'opacity',
-    'transform',
-    'textDecorationLine',
-    'gap',
-    'width',
-  ]
+  const hover = await js(`(() => {
+    const seletores = []
+    for (const folha of document.styleSheets) {
+      let regras
+      try {
+        regras = folha.cssRules
+      } catch {
+        continue // folha de outra origem
+      }
+      const visitar = (lista) => {
+        for (const regra of lista) {
+          if (regra.cssRules) visitar(regra.cssRules) // @media, @supports, @layer
+          const sel = regra.selectorText
+          if (!sel || !sel.includes(':hover')) continue
+          for (const parte of sel.split(',')) {
+            if (!parte.includes(':hover')) continue
+            const limpo = parte.replaceAll(':hover', '').trim()
+            if (limpo) seletores.push(limpo)
+          }
+        }
+      }
+      visitar(regras)
+    }
 
-  const totalHover = await js(`(() => {
-    const estilo = document.createElement('style')
-    estilo.id = 'auditoria-sem-transicao'
-    estilo.textContent = '*,*::before,*::after{transition:none !important;animation:none !important}'
-    document.head.appendChild(estilo)
+    const mudos = []
+    let total = 0
 
-    const els = [...document.querySelectorAll('a, button, input, textarea, select, [role="button"]')]
-      .filter((el) => {
-        const b = el.getBoundingClientRect()
-        const cs = getComputedStyle(el)
-        if (b.width === 0 || b.height === 0) return false
-        if (cs.visibility === 'hidden' || cs.display === 'none') return false
-        if (String(el.className).includes('sr-only')) return false
-        // Armadilha anti-bot: invisivel para humano, entao nao deve reagir.
-        if (el.closest('[aria-hidden="true"]')) return false
-        return true
+    for (const el of document.querySelectorAll('a, button, input, textarea, select, [role="button"]')) {
+      const b = el.getBoundingClientRect()
+      const cs = getComputedStyle(el)
+      if (b.width === 0 || b.height === 0) continue
+      if (cs.visibility === 'hidden' || cs.display === 'none') continue
+      if (String(el.className).includes('sr-only')) continue
+      // Armadilha anti-bot do formulario: invisivel para humano, nao deve reagir.
+      if (el.closest('[aria-hidden="true"]')) continue
+      total++
+
+      // Conta tambem hover herdado: um link cujo unico feedback vem do card ao
+      // redor responde ao mouse, mesmo sem regra propria.
+      const alvos = [el, ...el.querySelectorAll('*')]
+      const reage = seletores.some((sel) => {
+        try {
+          return alvos.some((n) => n.matches(sel))
+        } catch {
+          return false
+        }
       })
-    els.forEach((el, i) => el.setAttribute('data-hv', String(i)))
-    return els.length
+
+      if (!reage) {
+        const sec = el.closest('section[id]')
+        const nome = (el.getAttribute('aria-label') || el.innerText || el.tagName)
+          .trim()
+          .replace(/\\s+/g, ' ')
+          .slice(0, 34)
+        mudos.push((sec ? '#' + sec.id : 'fora') + ' ' + el.tagName.toLowerCase() + ' "' + nome + '"')
+      }
+    }
+
+    return { total, mudos }
   })()`)
 
-  const estiloDe = (i) =>
-    js(`(() => {
-      const el = document.querySelector('[data-hv="${i}"]')
-      const ler = (n) => ${JSON.stringify(PROPS_HOVER)}.map((prop) => getComputedStyle(n)[prop]).join('|')
-      const filhos = [...el.querySelectorAll('*')].map(ler).join('//')
-      return ler(el) + '###' + filhos
-    })()`)
-
-  const { root } = await send('DOM.getDocument', { depth: -1 })
-  const semHover = []
-
-  for (let i = 0; i < totalHover; i++) {
-    const antes = await estiloDe(i)
-    const { nodeIds } = await send('DOM.querySelectorAll', {
-      nodeId: root.nodeId,
-      selector: `[data-hv="${i}"]`,
-    })
-    if (!nodeIds?.length) continue
-
-    /*
-     * Forca :hover no elemento E nos ancestrais: `group-hover:` do Tailwind
-     * pendura a regra no ancestral marcado com `.group`, entao um link cujo
-     * unico feedback vem do card ao redor passaria por mudo.
-     */
-    const cadeia = []
-    let atual = nodeIds[0]
-    for (let n = 0; n < 6 && atual; n++) {
-      cadeia.push(atual)
-      const { node } = await send('DOM.describeNode', { nodeId: atual })
-      atual = node?.parentId
-    }
-    for (const nodeId of cadeia) {
-      await send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: ['hover'] })
-    }
-
-    const depois = await estiloDe(i)
-
-    for (const nodeId of cadeia) {
-      await send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: [] })
-    }
-
-    if (antes === depois) {
-      semHover.push(
-        await js(`(() => {
-          const el = document.querySelector('[data-hv="${i}"]')
-          const sec = el.closest('section[id]')
-          const nome = (el.getAttribute('aria-label') || el.innerText || el.tagName).trim().replace(/\\s+/g, ' ').slice(0, 34)
-          return (sec ? '#' + sec.id : 'fora') + ' ' + el.tagName.toLowerCase() + ' "' + nome + '"'
-        })()`),
-      )
-    }
-  }
-
-  await js(`document.getElementById('auditoria-sem-transicao')?.remove()`)
-
-  console.log(`\n### HOVER  (${totalHover} interativos visiveis)`)
-  linha('interativo sem hover', semHover.length, semHover.length > 0)
-  semHover.forEach((x) => console.log('          ' + x))
+  console.log(`\n### HOVER  (${hover.total} interativos visiveis)`)
+  linha('interativo sem hover', hover.mudos.length, hover.mudos.length > 0)
+  hover.mudos.forEach((x) => console.log('          ' + x))
 
   console.log('\n### CONSOLE')
   linha('erros de console', erros.length, erros.length > 0)
