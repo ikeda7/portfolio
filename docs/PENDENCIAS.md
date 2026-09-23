@@ -1,7 +1,7 @@
 # Pendências — portfólio Lucas Ikeda
 
-Última atualização: **22/09/2026**, fim da noite. Este arquivo existe para
-retomar o trabalho de outra máquina.
+Última atualização: **23/09/2026**. Este arquivo existe para retomar o
+trabalho de outra máquina.
 
 Antes de mexer em qualquer coisa, leia nesta ordem:
 [`DIRETRIZES_CLAUDE.MD`](../DIRETRIZES_CLAUDE.MD) (a Regra de Ouro),
@@ -21,8 +21,8 @@ npm install
 npm run dev            # http://localhost:5173
 ```
 
-> **`develop` é o estado completo do site.** Todos os PRs (#1 a #19) foram
-> mergeados. Nenhum PR aberto.
+> **`develop` é o estado completo do site.** Todos os PRs (#1 a #22) foram
+> mergeados. Nenhum PR aberto, nenhuma branch órfã — só `main` e `develop`.
 >
 > **`main` continua com só o commit de setup, de propósito** — é espelho de
 > produção e só recebe `develop` quando o site for publicar. Quem abrir `main`
@@ -40,7 +40,14 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
 
 - Zero overflow de 320 a 1920px, zero espaco morto, zero erro de console
 - Zero texto abaixo de **11px** (era 10px) e zero falha de contraste
-- Bundle ~113 kB gzip
+- Estilo de texto mais justo em **1,2x** o minimo do AA (a auditoria agora
+  reporta a margem, nao so passa/nao passa)
+- Bundle ~114 kB gzip
+
+**Duas ferramentas, nao uma.** `npm run auditar` mede; `npm run capturar`
+fotografa. As duas precisam do `npm run preview` no ar. A segunda nasceu em
+23/09 porque a primeira deu "tudo limpo" numa tela que tinha uma etiqueta
+quebrada e um botao flutuante em cima do "Enviar mensagem" — medir nao e ver.
 
 ### O que entrou em 23/09 — resposta ao feedback de fora
 

@@ -39,6 +39,7 @@ npm run format        # prettier --write .
 npm run format:check
 npm run preview       # serve o build
 npm run auditar       # auditoria visual por CDP (precisa do preview no ar)
+npm run capturar      # PNG de cada seção, para olhar (idem)
 npm run og            # regenera public/og.png
 ```
 
@@ -73,6 +74,25 @@ erro de console. Sai com código 1 se algo falhar.
 
 Cada checagem ali dentro pegou bug real neste repositório — painel com texto
 decepado, 40 rótulos em 9px, seção com 53% de ocupação. Nenhuma é teórica.
+
+**E a auditoria mede, não vê.**
+[`scripts/auditoria/capturar.mjs`](scripts/auditoria/capturar.mjs) fecha o
+resto: fotografa cada seção e grava em `capturas/` (ignorada pelo git).
+
+```bash
+npm run capturar                    # todas as seções, 1400px
+npm run capturar -- 390             # todas as seções, num celular
+npm run capturar -- 390 "#contato"  # só uma
+```
+
+Ela varre a página em passos de meia tela antes de fotografar, senão tudo que
+entra por `whileInView` e nunca cruzou a viewport sai em `opacity: 0` — em
+390px a Stack tem ~1300px e os painéis de baixo saíam em branco.
+
+Duas coisas que passaram limpas por toda a medição e morreram numa olhada: a
+etiqueta do LexTrack quebrando com "PÚBLICO" órfão, e o atalho flutuante
+pousado em cima do "Enviar mensagem", roubando o clique. **Depois de mexer em
+layout, rode os dois.**
 
 ## Regra de Ouro
 
