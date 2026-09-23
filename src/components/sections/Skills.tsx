@@ -1,88 +1,68 @@
-import { useReducedMotion } from 'motion/react'
-import * as m from 'motion/react-m'
-
-import { BotaoTecnologia } from '@/components/ui/BotaoTecnologia'
 import { Fader } from '@/components/ui/Fader'
+import { NichePanel } from '@/components/ui/NichePanel'
 import { Panel } from '@/components/ui/Panel'
-import { PatchBay } from '@/components/ui/PatchBay'
-import { RackRow } from '@/components/ui/RackRow'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
-import { codigoDoPainel, faderPanel, formacaoPanel, rackPanel, skillTags } from '@/data/skills'
-import { VIEWPORT, revealVariants, staggerVariants } from '@/lib/motion'
+import { backend, ferramentas, frontend, iaAplicada, linguagens } from '@/data/skills'
 
 /**
- * Rack de processamento: mesa de som (IA & dados), rack (engenharia) e a
- * bandeja de patch (o que a pós aprofunda).
+ * Stack, separada pelos cinco nichos do currículo.
  *
- * Os corpos dos painéis são `flex-1` para que os três cresçam até a altura da
- * linha — sem isso a mesa ficava com um vão embaixo, porque os faders têm
- * altura fixa e o rack ao lado é mais alto.
+ * A seção já teve três painéis que misturavam linguagem, framework, banco,
+ * técnica de IA e ferramenta nos mesmos blocos — e a leitura de fora foi "fica
+ * tudo muito bagunçado". A taxonomia que resolve isso já existia na seção
+ * "Competências técnicas" do currículo; ver [skills.ts](src/data/skills.ts).
+ *
+ * **Linguagens sobe para a mesa, sozinha e na largura inteira.** É o único
+ * nicho com tratamento próprio, e por um motivo: é o único onde a extensão de
+ * arquivo (`.py`, `.ts`) significa alguma coisa. Num framework ela não marca
+ * nada, e usar a mesa nos cinco apagaria a distinção que a seção existe para
+ * fazer.
+ *
+ * Os outros quatro entram numa grade 2x2 como listas de uma coluna. Coluna
+ * única não produz linha órfã: a grade anterior quebrava sozinha e deixava o
+ * último item isolado embaixo de uma linha cheia.
  */
 export function Skills() {
-  const prefersReducedMotion = useReducedMotion()
-
   return (
     <Section id="habilidades" index="03" label="Stack">
       <h2 id="habilidades-title" className="sr-only">
         Habilidades técnicas
       </h2>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-5">
-        <Reveal className="h-full">
-          <Panel title={faderPanel.title} code={codigoDoPainel(faderPanel)} fill>
+      <div className="flex flex-1 flex-col gap-5">
+        <Reveal>
+          <Panel title={linguagens.title} code={linguagens.code}>
             {/*
-             * A mesa reflui: tres canais por linha ate `sm`, seis depois.
-             * Os rotulos deixaram de ser verticais (ninguem le texto deitado)
-             * e passaram a precisar de largura — em 320px, seis colunas
-             * horizontais dariam ~31px cada e "EMBEDDINGS" nao caberia em
-             * nenhuma. `auto-rows-fr` mantem as duas fileiras com a mesma
-             * altura de trilho quando ela quebra.
+             * Quatro colunas ate `sm`, oito depois — e as duas contas fecham:
+             * sao oito linguagens, entao nenhuma largura deixa fileira pela
+             * metade. Rotulo horizontal precisa de largura, e em 320px oito
+             * colunas dariam ~31px cada.
              */}
-            <div className="grid flex-1 auto-rows-fr grid-cols-3 gap-x-2.5 gap-y-7 px-[18px] py-[26px] sm:grid-cols-6 sm:gap-y-0">
-              {faderPanel.channels.map((channel, index) => (
-                <Fader key={channel.label} index={index} {...channel} />
+            <div className="grid auto-rows-fr grid-cols-4 gap-x-2.5 gap-y-7 px-[18px] py-[26px] sm:grid-cols-8 sm:gap-y-0">
+              {linguagens.terms.map((termo, index) => (
+                <Fader key={termo.label} index={index} termo={termo} />
               ))}
             </div>
           </Panel>
         </Reveal>
 
-        <Reveal delay={0.12} className="h-full">
-          <Panel title={rackPanel.title} code={codigoDoPainel(rackPanel)} fill>
-            <div className="flex flex-1 flex-col gap-3.5 px-[18px] py-[22px]">
-              {rackPanel.channels.map((channel, index) => (
-                <RackRow key={channel.label} index={index} {...channel} />
-              ))}
-
-              <m.ul
-                className="border-line mt-auto flex flex-wrap gap-1.5 border-t pt-3.5"
-                initial={prefersReducedMotion ? undefined : 'hidden'}
-                whileInView={prefersReducedMotion ? undefined : 'visible'}
-                viewport={VIEWPORT}
-                variants={staggerVariants}
-              >
-                {skillTags.map((tag) => (
-                  <m.li key={tag} variants={prefersReducedMotion ? undefined : revealVariants}>
-                    <BotaoTecnologia
-                      termo={tag}
-                      className="border-line bg-panel-2 text-ink-faint hover:border-accent hover:text-ink block min-h-6 rounded border px-2.5 py-1.5 font-mono text-[11px] tracking-[0.1em] uppercase transition-all duration-300"
-                      classNameAtivo="border-accent text-accent-text bg-[rgb(var(--accent-rgb)/0.12)]"
-                    >
-                      {tag}
-                    </BotaoTecnologia>
-                  </m.li>
-                ))}
-              </m.ul>
-            </div>
-          </Panel>
-        </Reveal>
+        <div className="grid flex-1 items-stretch gap-5 lg:grid-cols-2">
+          {/*
+           * Os pares sao montados por TAMANHO, nao pela ordem do curriculo.
+           * As linhas sao `flex-1` e paineis irmaos esticam ate a altura do
+           * mais alto: com 6 ao lado de 9, as seis linhas do menor ficavam
+           * gordas e as nove do maior apertadas, e a grade inteira lia
+           * desalinhada. 7+6 em cima e 8+9 embaixo mantem a diferenca em uma
+           * linha.
+           */}
+          {[frontend, iaAplicada, backend, ferramentas].map((nicho, index) => (
+            <Reveal key={nicho.id} delay={0.08 * (index + 1)} className="h-full">
+              <NichePanel nicho={nicho} />
+            </Reveal>
+          ))}
+        </div>
       </div>
-
-      <Reveal delay={0.24} className="mt-5 block">
-        <Panel title={formacaoPanel.title} code={formacaoPanel.code} fill>
-          <PatchBay items={formacaoPanel.topics} />
-        </Panel>
-      </Reveal>
     </Section>
   )
 }

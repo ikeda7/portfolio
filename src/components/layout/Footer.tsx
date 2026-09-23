@@ -33,11 +33,11 @@ export function Footer() {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-10 2xl:max-w-[1440px]">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div>
-            <a href="#top" className={`${LINHA_TOPO} gap-2`} aria-label="Voltar ao topo">
+            <a href="#top" className={`${LINHA_TOPO} group gap-2`} aria-label="Voltar ao topo">
               <span className="text-ink text-base font-bold tracking-[-0.02em]">
                 {site.brand.firstName}
               </span>
-              <span className="text-accent-text font-mono text-[11px] tracking-[0.08em]">
+              <span className="text-accent-text group-hover:text-ink font-mono text-[11px] tracking-[0.08em] transition-colors duration-300">
                 /{site.brand.lastName.toUpperCase()}
               </span>
             </a>

@@ -1,20 +1,19 @@
 import { ArrowRight } from 'lucide-react'
 import * as m from 'motion/react-m'
 
-import { ProjectCover } from '@/components/ui/ProjectCover'
+import { LabelCover } from '@/components/ui/LabelCover'
 import { useFocoTecnico } from '@/hooks/useFocoTecnico'
 import { usePointerGlow } from '@/hooks/usePointerGlow'
 import { algumEmFoco } from '@/lib/foco'
 import type { Project } from '@/types/content'
 
 /**
- * Card de projeto no formato "capa de vinil / painel de plugin".
+ * Card de projeto, no formato capa de vinil.
  *
  * **A área de hit não se move.** O `<article>` fica parado e quem sobe no hover
  * é o `<div>` interno. Com o transform no próprio `<article>`, a área sensível
  * subia junto: perto da borda de baixo o card fugia do cursor, perdia o hover,
- * voltava, ganhava de novo — e ficava piscando. O atalho fixo no rodapé da
- * janela só tornou isso evidente, mas o laço existia em qualquer borda.
+ * voltava, ganhava de novo — e ficava piscando.
  *
  * O link usa *stretched link*: o `::after` do `<a>` cobre o card inteiro, então
  * a área clicável é o card todo em vez dos ~17px de altura do texto "Abrir" —
@@ -27,7 +26,7 @@ import type { Project } from '@/types/content'
  * (pinta acima do conteúdo em fluxo, com `pointer-events-none`) e o `::after`
  * sobe para z-20, acima do brilho.
  */
-export function ProjectCard({ track, title, description, tags, href, cover }: Project) {
+export function ProjectCard({ track, title, description, tags, href, estado, repo }: Project) {
   const { bind, background } = usePointerGlow<HTMLElement>({
     size: 260,
     alpha: 0.16,
@@ -55,10 +54,14 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
           combina ? 'border-accent glow-soft' : 'border-line'
         }`}
       >
-        <ProjectCover track={track} title={title} cover={cover} />
+        <div className="border-line relative aspect-[16/7] overflow-hidden border-b">
+          <LabelCover track={track} estado={estado} repo={repo} />
+        </div>
 
         <div className="flex-1 p-4">
-          <h3 className="text-ink text-[17px] font-semibold tracking-[-0.01em]">{title}</h3>
+          <h3 className="text-ink group-hover:text-accent-text text-[17px] font-semibold tracking-[-0.01em] transition-colors duration-300">
+            {title}
+          </h3>
           <p className="text-ink-muted mt-2 text-[13px] leading-[1.6]">{description}</p>
 
           <ul className="mt-2.5 flex flex-wrap gap-1.5">
@@ -77,7 +80,7 @@ export function ProjectCard({ track, title, description, tags, href, cover }: Pr
               href={href}
               target="_blank"
               rel="noreferrer noopener"
-              className="text-ink-muted group-hover:text-accent-text mt-3 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3 after:absolute after:inset-0 after:z-20 after:content-['']"
+              className="text-ink-muted hover:text-accent-text group-hover:text-accent-text mt-3 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3 after:absolute after:inset-0 after:z-20 after:content-['']"
               aria-label={`Abrir o projeto ${title} em uma nova aba`}
             >
               Abrir

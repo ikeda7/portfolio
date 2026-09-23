@@ -69,8 +69,17 @@ npm run auditar
 [`scripts/auditoria/auditar.mjs`](scripts/auditoria/auditar.mjs) dirige um
 Chrome ou Edge headless (sem dependência nova — `WebSocket` é global no Node 24) e mede contraste WCAG, texto abaixo de 10px, conteúdo cortado por
 `overflow`, interativo sem nome acessível, ordem de headings, alvo de toque
-abaixo de 24×24, overflow horizontal de 320 a 1920px, espaço morto nas seções e
-erro de console. Sai com código 1 se algo falhar.
+abaixo de 24×24, overflow horizontal de 320 a 1920px, espaço morto nas seções,
+**interativo que não reage ao mouse** e erro de console. Sai com código 1 se
+algo falhar.
+
+A checagem de hover força `:hover` pelo CDP no elemento **e nos ancestrais**
+(`group-hover:` do Tailwind pendura a regra no ancestral) e compara o estilo.
+Ela **desliga as transições antes de medir**: com `transition-all
+duration-300`, ler o estilo logo depois de forçar `:hover` devolve o valor de
+partida, e a primeira versão acusou 79 de 82 elementos como mudos — todos
+falso positivo. Ela achou 12 defeitos reais: o canal **ativo** da waveform, os
+quatro campos do formulário e a marca "Lucas /IKEDA" no header e no rodapé.
 
 Cada checagem ali dentro pegou bug real neste repositório — painel com texto
 decepado, 40 rótulos em 9px, seção com 53% de ocupação. Nenhuma é teórica.
@@ -225,36 +234,58 @@ animações e transições CSS de uma vez.
   checa `useReducedMotion()` e renderiza a versão estática (ver
   [Reveal.tsx](src/components/ui/Reveal.tsx); `usePointerGlow` devolve `null`).
 
-## Capas de projeto e canais: dois contratos com intenção
+## Capas de projeto e Stack: dois contratos com intenção
 
-`ProjectCover` é união discriminada — `shot` (print do site no ar) | `terminal`
-(comandos **reais** do README do repo) | `spectrum` (linguagens medidas pela API
-do GitHub) | `sleeve` (placa cega com o estado do projeto). Sempre existe uma:
-**o card nunca fica com buraco**. Escolha pelo que o projeto tem para mostrar,
-não por estética.
+**As seis capas são iguais.** `LabelCover` — o selo de vinil — é a capa de
+todo projeto, e só o número da faixa, o `estado` e o `repo` mudam. Não existe
+mais campo de capa em `Project`.
 
-**Não use uma variante nos seis.** As capas já foram `spectrum` em todos os
-cards, e o resultado dizia duas vezes a mesma coisa: quatro deles abriam com uma
-barra de "TypeScript ~85%" e, três linhas abaixo, uma tag escrita TYPESCRIPT.
-Um gráfico só se justifica quando a composição conta o que as tags não contam —
-hoje sobra um, o do TCC, onde o quarto do repositório em TeX é a monografia.
+Isso já foi diferente e voltou atrás duas vezes; leia antes de mexer. As capas
+eram união discriminada com quatro variantes (print, terminal, espectro de
+linguagens, placa), cada projeto escolhendo pelo que tinha. Cada card se
+defendia sozinho e o conjunto ficou ruim: seis linguagens visuais lado a lado
+leem como falta de padrão, não como cuidado.
 
-`SkillChannel` tem **só `label`**. Havia um `value` de 0 a 100 que desenhava a
-altura do fader; o número nunca aparecia na tela, mas o desenho aparecia, e uma
-fileira de faders parados em alturas diferentes é lida como nota — foi o primeiro
-comentário de quem viu a página de fora. Nota de proficiência é afirmação sobre o
-dono do portfólio, e afirmação sem fonte é o que a Regra de Ouro proíbe.
+**Print em todos é impossível** — três dos seis não têm tela nenhuma: o TCC é
+linha de comando, o LexTrack é trabalho de cliente sem site público e o
+Flowers2 abre numa página pessoal que o dono pediu para não fotografar. Com
+três impossíveis, qualquer mistura reintroduz a exceção. Se alguém pedir
+"põe print nos projetos", a resposta é essa conta, não um print em três.
 
-Hoje todo canal sobe até a mesma marca (`UNIDADE` em
-[Fader.tsx](src/components/ui/Fader.tsx)) e o rack usa cabo + LED, que liga em vez
-de medir. **Não volte a amarrar altura a número** sem uma fonte: nível por
+**A Stack é separada pelos cinco nichos do currículo** — Linguagens,
+Front-end & mobile, Back-end & dados, IA aplicada, Ferramentas & processos.
+A taxonomia **não foi inventada**: é a seção "Competências técnicas" do PDF,
+com os mesmos termos e a mesma ordem. Antes a página misturava linguagem,
+framework, banco e técnica de IA nos mesmos três blocos.
+
+- **Linguagens é o único nicho na mesa** ([Fader.tsx](src/components/ui/Fader.tsx)),
+  e o único com `ext`. A extensão vira selo ao lado do nome (`.py`), não
+  `python.py` colado — colada ela produz `java.java` e `sql.sql`, que leem
+  como erro de digitação.
+- **Os outros quatro são listas de UMA coluna**
+  ([NichePanel.tsx](src/components/ui/NichePanel.tsx)). Não é estética: grade
+  que quebra sozinha deixa órfão, e um painel de 7 itens em 2 colunas saía
+  2+2+2+1. Coluna única não tem última linha incompleta em largura nenhuma.
+- Os pares da grade 2x2 são montados **por tamanho** (7+6, depois 8+9), não
+  pela ordem do currículo: painéis irmãos esticam até a altura do mais alto.
+
+`SkillTerm` tem **só `label` e `ext`**. Havia um `value` de 0 a 100 que
+desenhava a altura do fader; o número nunca aparecia na tela, mas o desenho
+aparecia, e uma fileira de faders parados em alturas diferentes é lida como
+nota. **Não volte a amarrar altura a número** sem uma fonte: nível por
 tecnologia é conteúdo do Lucas, como já é em Idiomas. Ver
 [docs/PENDENCIAS.md](docs/PENDENCIAS.md).
 
-E o rótulo do canal é horizontal. Ele já foi `writing-mode: vertical-rl`, o que
-economizava largura e custava a leitura — "texto deitado não dá pra ler" foi
-literal. A mesa reflui (3 colunas até `sm`, 6 depois) justamente para o rótulo
-nunca mais precisar deitar.
+## As duas luzes moram no `Section`
+
+[Section.tsx](src/components/ui/Section.tsx) carrega o pulso ambiente
+(`animate-driftglow`) e o brilho que segue o cursor (`usePointerGlow`). Elas
+existiam só no hero, e a página perdia energia depois da primeira tela.
+
+Ficam no container e não em cada seção para que ninguém precise lembrar de
+repetir — e o ambiente **alterna de lado** conforme o número da faixa, para a
+página não parecer o mesmo quadro colado seis vezes. Nenhuma das duas
+sobrevive a `prefers-reduced-motion`.
 
 ## Formulário de contato
 

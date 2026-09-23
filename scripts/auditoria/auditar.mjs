@@ -122,11 +122,26 @@ const SONDA_A11Y = `(() => {
   document.querySelectorAll('body *').forEach((el) => {
     const cs = getComputedStyle(el)
 
-    // Conteudo cortado por overflow escondido. sr-only usa isso de proposito.
+    /*
+     * Conteudo cortado por overflow escondido. sr-only usa isso de proposito.
+     *
+     * So conta quando o que transborda carrega TEXTO. Decoracao cortada de
+     * proposito e comum e legitima: o selo de vinil dos projetos tem um disco
+     * de 240% de altura, enquadrado pela moldura como um vinil visto de perto,
+     * e a checagem acusava os seis cards de "conteudo cortado" quando nenhuma
+     * letra estava escondida. Alarme falso treina quem le o relatorio a ignorar
+     * o relatorio.
+     */
     if (!String(el.className).includes('sr-only')) {
       const escondido = cs.overflowY === 'hidden' || cs.overflow === 'hidden'
       const sobra = el.scrollHeight - el.clientHeight
-      if (escondido && sobra > 2 && el.clientHeight > 0) {
+      const limite = el.clientHeight
+      const textoVazando = [...el.querySelectorAll('*')].some((f) => {
+        if (f.getAttribute('aria-hidden') === 'true' || f.closest('[aria-hidden="true"]')) return false
+        if (!Array.from(f.childNodes).some((n) => n.nodeType === 3 && n.textContent.trim())) return false
+        return f.offsetTop + f.offsetHeight > limite + 2
+      })
+      if (escondido && sobra > 2 && el.clientHeight > 0 && textoVazando) {
         out.cortados.push(
           el.tagName.toLowerCase() + ' -' + sobra + 'px "' + (el.innerText || '').trim().slice(0, 30) + '"',
         )
@@ -300,6 +315,8 @@ async function main() {
     }
   }
   await send('Runtime.enable')
+  await send('DOM.enable')
+  await send('CSS.enable')
   const js = async (expr) => {
     const o = await send('Runtime.evaluate', { returnByValue: true, expression: expr })
     if (o.exceptionDetails) throw new Error(o.exceptionDetails.exception?.description)
@@ -411,6 +428,121 @@ async function main() {
     )
     relevantes.forEach((x) => console.log('          ' + x))
   }
+
+  /* ------------------------------------------------------------------ *
+   * Hover: todo interativo responde ao mouse?                           *
+   * ------------------------------------------------------------------ */
+
+  /*
+   * Existe porque o dono do portfolio reparou antes da auditoria: "vi alguns
+   * que nao estavam tendo nem o hover". Eram tres classes de defeito, e
+   * nenhuma delas aparece em nenhuma das outras checagens — o elemento tem
+   * nome acessivel, tamanho de alvo e contraste, e mesmo assim nao se anuncia
+   * como clicavel:
+   *
+   *   - o canal ATIVO da waveform, que so tinha estilo de estado;
+   *   - os quatro campos do formulario, que so tinham :focus;
+   *   - a marca "Lucas /IKEDA", que e link no header e no rodape.
+   *
+   * **As transicoes sao desligadas antes de medir.** Todo hover aqui e
+   * `transition-all duration-300`, entao ler o estilo logo depois de forcar
+   * :hover devolve o valor de PARTIDA, que e igual ao de antes — a primeira
+   * versao desta sonda acusou 79 de 82 elementos como mudos. Sem transicao o
+   * valor final e instantaneo e a checagem inteira roda em segundos em vez de
+   * minutos.
+   */
+  const PROPS_HOVER = [
+    'color',
+    'backgroundColor',
+    'borderTopColor',
+    'borderLeftColor',
+    'boxShadow',
+    'opacity',
+    'transform',
+    'textDecorationLine',
+    'gap',
+    'width',
+  ]
+
+  const totalHover = await js(`(() => {
+    const estilo = document.createElement('style')
+    estilo.id = 'auditoria-sem-transicao'
+    estilo.textContent = '*,*::before,*::after{transition:none !important;animation:none !important}'
+    document.head.appendChild(estilo)
+
+    const els = [...document.querySelectorAll('a, button, input, textarea, select, [role="button"]')]
+      .filter((el) => {
+        const b = el.getBoundingClientRect()
+        const cs = getComputedStyle(el)
+        if (b.width === 0 || b.height === 0) return false
+        if (cs.visibility === 'hidden' || cs.display === 'none') return false
+        if (String(el.className).includes('sr-only')) return false
+        // Armadilha anti-bot: invisivel para humano, entao nao deve reagir.
+        if (el.closest('[aria-hidden="true"]')) return false
+        return true
+      })
+    els.forEach((el, i) => el.setAttribute('data-hv', String(i)))
+    return els.length
+  })()`)
+
+  const estiloDe = (i) =>
+    js(`(() => {
+      const el = document.querySelector('[data-hv="${i}"]')
+      const ler = (n) => ${JSON.stringify(PROPS_HOVER)}.map((prop) => getComputedStyle(n)[prop]).join('|')
+      const filhos = [...el.querySelectorAll('*')].map(ler).join('//')
+      return ler(el) + '###' + filhos
+    })()`)
+
+  const { root } = await send('DOM.getDocument', { depth: -1 })
+  const semHover = []
+
+  for (let i = 0; i < totalHover; i++) {
+    const antes = await estiloDe(i)
+    const { nodeIds } = await send('DOM.querySelectorAll', {
+      nodeId: root.nodeId,
+      selector: `[data-hv="${i}"]`,
+    })
+    if (!nodeIds?.length) continue
+
+    /*
+     * Forca :hover no elemento E nos ancestrais: `group-hover:` do Tailwind
+     * pendura a regra no ancestral marcado com `.group`, entao um link cujo
+     * unico feedback vem do card ao redor passaria por mudo.
+     */
+    const cadeia = []
+    let atual = nodeIds[0]
+    for (let n = 0; n < 6 && atual; n++) {
+      cadeia.push(atual)
+      const { node } = await send('DOM.describeNode', { nodeId: atual })
+      atual = node?.parentId
+    }
+    for (const nodeId of cadeia) {
+      await send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: ['hover'] })
+    }
+
+    const depois = await estiloDe(i)
+
+    for (const nodeId of cadeia) {
+      await send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: [] })
+    }
+
+    if (antes === depois) {
+      semHover.push(
+        await js(`(() => {
+          const el = document.querySelector('[data-hv="${i}"]')
+          const sec = el.closest('section[id]')
+          const nome = (el.getAttribute('aria-label') || el.innerText || el.tagName).trim().replace(/\\s+/g, ' ').slice(0, 34)
+          return (sec ? '#' + sec.id : 'fora') + ' ' + el.tagName.toLowerCase() + ' "' + nome + '"'
+        })()`),
+      )
+    }
+  }
+
+  await js(`document.getElementById('auditoria-sem-transicao')?.remove()`)
+
+  console.log(`\n### HOVER  (${totalHover} interativos visiveis)`)
+  linha('interativo sem hover', semHover.length, semHover.length > 0)
+  semHover.forEach((x) => console.log('          ' + x))
 
   console.log('\n### CONSOLE')
   linha('erros de console', erros.length, erros.length > 0)

@@ -1,109 +1,178 @@
-import type { SkillPanel } from '@/types/content'
+import type { SkillNiche, SkillTerm } from '@/types/content'
 
 /**
- * Codigo do cabecalho contado a partir dos canais: "CH 01–06".
+ * Stack, separada por nicho.
  *
- * Estava cravado como string e ficou errado no instante em que um canal
- * entrou — dizia 05 com seis na tela. Numero que descreve uma lista sai da
- * lista.
+ * **A separação não foi inventada aqui.** Ela é a seção "Competências técnicas"
+ * do currículo (pt-BR, Set/2026), com os mesmos cinco grupos, os mesmos termos
+ * e a mesma ordem. A página antes espalhava tudo em três blocos que misturavam
+ * linguagem, framework, banco, técnica de IA e ferramenta — e a leitura de fora
+ * foi exatamente essa: "fica tudo muito bagunçado o que é linguagem, o que é
+ * framework, o que é biblioteca, o que é técnica de IA".
+ *
+ * A taxonomia já existia no currículo. O trabalho foi usá-la, não criá-la.
+ *
+ * **Nenhum termo carrega nível.** Ver `SkillTerm` em @/types/content: os faders
+ * tinham altura variável vinda de um número escolhido para ficar bonito, e
+ * altura variável ao lado de um nome de tecnologia é lida como nota.
  */
-export function codigoDoPainel(painel: SkillPanel): string {
-  return painel.code ?? 'CH 01–' + String(painel.channels.length).padStart(2, '0')
+
+/**
+ * Nicho 1 — linguagens, com a extensão do arquivo.
+ *
+ * A extensão é o que faz a separação funcionar sem uma legenda: um `.py` ao lado diz
+ * "isto é uma linguagem" antes de qualquer rótulo de painel. Por isso ela é
+ * exclusiva deste nicho — em React ou RAG não significaria nada.
+ *
+ * SQL fica sem dialeto no rótulo e com os três no `context` do currículo
+ * (Oracle PL/SQL, PostgreSQL, T-SQL), que aparecem nos nichos de dados.
+ */
+export const linguagens: SkillNiche = {
+  id: 'linguagens',
+  title: 'Linguagens',
+  code: 'LANG',
+  terms: [
+    { label: 'Python', ext: 'py' },
+    { label: 'TypeScript', ext: 'ts' },
+    { label: 'JavaScript', ext: 'js' },
+    { label: 'PHP', ext: 'php' },
+    { label: 'C#', ext: 'cs' },
+    { label: 'Java', ext: 'java' },
+    { label: 'Dart', ext: 'dart' },
+    { label: 'SQL', ext: 'sql' },
+  ],
+}
+
+/** Nicho 2 — o que desenha tela, no navegador e no celular. */
+export const frontend: SkillNiche = {
+  id: 'frontend',
+  title: 'Front-end & mobile',
+  code: 'UI',
+  terms: [
+    { label: 'React' },
+    { label: 'Next.js' },
+    { label: 'Vite' },
+    { label: 'Flutter' },
+    { label: 'HTML5' },
+    { label: 'CSS3' },
+    { label: 'Bootstrap' },
+  ],
+}
+
+/** Nicho 3 — o que roda no servidor e o que guarda o dado. */
+export const backend: SkillNiche = {
+  id: 'backend',
+  title: 'Back-end & dados',
+  code: 'SRV',
+  terms: [
+    { label: 'Node.js' },
+    { label: 'NestJS' },
+    { label: 'Prisma' },
+    { label: 'ASP.NET MVC' },
+    { label: 'Entity Framework' },
+    { label: 'Oracle Database' },
+    { label: 'SQL Server' },
+    { label: 'PostgreSQL' },
+  ],
 }
 
 /**
- * Rack de processamento. As tecnologias vêm da seção "Competências técnicas"
- * do currículo.
+ * Nicho 4 — IA aplicada.
  *
- * Os canais **não carregam nota**, e agora também não desenham uma. Cada canal
- * tinha um `value` de 0 a 100; o número nunca aparecia na tela, mas o desenho
- * aparecia, e um fader parado em 91 ao lado de um em 55 é lido como nota por
- * qualquer pessoa — foi o primeiro comentário de quem viu a página de fora.
- *
- * Nota de proficiência é afirmação sobre o dono do portfólio, e afirmação sem
- * fonte é o que a Regra de Ouro proíbe. Os faders agora sobem todos à mesma
- * marca: mesa calibrada, informação no rótulo.
- *
- * Para voltar a ter nível por tecnologia, a fonte precisa vir do Lucas —
- * "intermediário"/"avançado" por item, como já existe em Idiomas. Enquanto não
- * vier, a mesa fica reta. Ver docs/PENDENCIAS.md.
+ * Aqui moram **técnicas**, não bibliotecas: engenharia de prompt, RAG,
+ * embeddings e agentes são como se usa um modelo. PyTorch e as APIs de LLM
+ * entram porque o currículo as lista nesta linha, e porque são a ferramenta
+ * concreta por trás das técnicas — sem elas o painel nomearia método sem dizer
+ * em que é feito.
  */
-
-/**
- * Painel A — mesa de som com faders verticais.
- *
- * Cobre a linha "IA aplicada" do curriculo inteira: engenharia de prompt, RAG,
- * embeddings, agentes, PyTorch e APIs de LLM. "Embeddings" faltava — estava na
- * competencia e nao na tela. Python fica como a linguagem que sustenta tudo
- * isso; sem ela o painel nomearia tecnicas sem dizer em que sao feitas.
- */
-export const faderPanel: SkillPanel = {
-  id: 'ia-dados',
-  title: 'IA aplicada & dados',
-  channels: [
-    { label: 'Python' },
-    { label: 'PyTorch' },
+export const iaAplicada: SkillNiche = {
+  id: 'ia-aplicada',
+  title: 'IA aplicada',
+  code: 'AI',
+  terms: [
+    { label: 'Engenharia de prompt' },
     { label: 'RAG' },
     { label: 'Embeddings' },
     { label: 'Agentes' },
-    { label: 'Prompt' },
+    { label: 'PyTorch' },
+    { label: 'APIs de LLM' },
   ],
 }
 
-/** Painel B — rack horizontal de engenharia de software. */
-export const rackPanel: SkillPanel = {
-  id: 'engenharia',
-  title: 'Engenharia de software',
-  channels: [
-    { label: 'TypeScript' },
-    { label: 'React' },
-    { label: 'Node.js' },
-    { label: 'PostgreSQL' },
-    { label: 'C#' },
+/**
+ * Nicho 5 — ferramentas e processos.
+ *
+ * O currículo junta os dois numa linha só, e faz sentido: são as duas metades
+ * do trabalho de implantação. Ferramenta é o que se abre; processo é o que se
+ * conduz. Um portfólio de dev que mostra só ferramenta esconde metade do que
+ * este currículo tem.
+ */
+export const ferramentas: SkillNiche = {
+  id: 'ferramentas',
+  title: 'Ferramentas & processos',
+  code: 'OPS',
+  terms: [
+    { label: 'Git/GitHub' },
+    { label: 'Docker' },
+    { label: 'Vercel' },
+    { label: 'DBeaver' },
+    { label: 'Jupyter' },
+    { label: 'Levantamento de requisitos' },
+    { label: 'Mapeamento de processos' },
+    { label: 'QA e homologação' },
+    { label: 'Gestão de chamados' },
   ],
 }
 
-/** Tags auxiliares exibidas abaixo do rack de engenharia. */
-export const skillTags: readonly string[] = [
-  'NEXT.JS',
-  'NESTJS',
-  'PRISMA',
-  'FLUTTER',
-  'DOCKER',
-  'ORACLE PL/SQL',
-  'ASP.NET MVC',
-  'VERCEL',
+/**
+ * Os cinco nichos na ordem do currículo.
+ *
+ * Linguagens sai na frente porque é o único com tratamento próprio (a mesa, com o selo
+ * de extensão no rótulo); os outros quatro dividem a grade abaixo.
+ */
+export const nichos: readonly SkillNiche[] = [
+  linguagens,
+  frontend,
+  backend,
+  iaAplicada,
+  ferramentas,
 ]
 
 /**
  * Fita de tecnologias exibida entre Habilidades e Projetos.
- * Deriva dos painéis + tags para não duplicar a fonte da verdade.
+ *
+ * Deriva dos nichos para não duplicar a fonte da verdade — e por isso ela
+ * repete, por construção, tudo que a Stack mostra. Isso é reforço e não
+ * redundância porque a função é outra: na Stack o termo é catálogo, na fita ele
+ * é o controle que acende a tecnologia na página inteira.
+ *
+ * Fica de fora o que não é tecnologia: processo não é termo de foco, e
+ * "Levantamento de requisitos" passando numa fita de stack só faria ruído.
  */
-export const marqueeItems: readonly string[] = [
-  ...faderPanel.channels.map((channel) => channel.label),
-  ...rackPanel.channels.map((channel) => channel.label),
-  ...skillTags,
-]
+const NAO_SAO_TECNOLOGIA = new Set([
+  'Levantamento de requisitos',
+  'Mapeamento de processos',
+  'QA e homologação',
+  'Gestão de chamados',
+])
+
+export const marqueeItems: readonly string[] = nichos
+  .flatMap((nicho) => nicho.terms.map((termo) => termo.label))
+  .filter((label) => !NAO_SAO_TECNOLOGIA.has(label))
 
 /**
- * Bandeja de patch — o que a pós em Engenharia de Software em IA Aplicada
- * (UniPDS) aprofunda. Curso em andamento.
+ * A extensão é **selo ao lado do nome**, e não `python.py` colado.
  *
- * Mesma fonte do segundo parágrafo da seção Sobre: a ementa do curso, não
- * inferência. Estavam soltos no meio de um parágrafo, onde quem escaneia a
- * página nunca ia ler — aqui viram conteúdo escaneável.
+ * A ideia veio do dono e é boa: extensão de arquivo marca "isto é uma
+ * linguagem" sem precisar de legenda. Mas escrita como nome de arquivo ela
+ * produz `java.java`, `dart.dart` e `sql.sql` — que leem como erro de
+ * digitação, não como padrão. Separada, funciona nos oito: o nome é o nome, e
+ * o `.py` ao lado é a etiqueta.
+ *
+ * Fica no dado, e não no componente, porque a mesa e a fita precisam escrever
+ * igual — dois lugares formatando o mesmo termo saem de sincronia na primeira
+ * mudança.
  */
-export const formacaoPanel = {
-  id: 'formacao',
-  title: 'Pós · IA aplicada',
-  code: 'EM CURSO',
-  topics: [
-    'LLMs',
-    'Embeddings',
-    'Vector databases',
-    'Sistemas multiagente',
-    'MCP',
-    'Fine-tuning',
-    'Governança',
-  ],
-} as const
+export function selo(termo: SkillTerm): string | null {
+  return termo.ext ? '.' + termo.ext : null
+}

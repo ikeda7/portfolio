@@ -2,10 +2,12 @@ import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
 import { BotaoTecnologia } from '@/components/ui/BotaoTecnologia'
+import { selo } from '@/data/skills'
 import { FILL_TRANSITION, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
-import type { SkillChannel } from '@/types/content'
+import type { SkillTerm } from '@/types/content'
 
-interface FaderProps extends SkillChannel {
+interface FaderProps {
+  readonly termo: SkillTerm
   /** Posição do canal na mesa — define o atraso da subida em cadeia. */
   readonly index: number
 }
@@ -13,11 +15,11 @@ interface FaderProps extends SkillChannel {
 /**
  * Marca de unidade: onde todo canal para.
  *
- * É a mesma altura para os seis de propósito. Antes cada canal tinha a sua, e
- * uma fileira de faders em alturas diferentes é lida como nota mesmo sem número
+ * É a mesma altura para todos de propósito. Antes cada canal tinha a sua, e uma
+ * fileira de faders em alturas diferentes é lida como nota mesmo sem número
  * nenhum na tela — foi o que aconteceu com a primeira pessoa que olhou a página
  * de fora. Nota de proficiência precisa de fonte; enquanto não existe, a mesa
- * fica calibrada em vez de opinativa. Ver `SkillChannel` em @/types/content.
+ * fica calibrada em vez de opinativa.
  *
  * 72% e não 100%: fader no topo lê como "estourado", e a faixa vazia acima do
  * knob é o que faz o controle parecer um controle.
@@ -25,21 +27,26 @@ interface FaderProps extends SkillChannel {
 const UNIDADE = 72
 
 /**
- * Canal vertical da mesa de som.
+ * Canal vertical da mesa de som — uma linguagem.
+ *
+ * **A mesa é só das linguagens.** Ela já misturou linguagem, técnica de IA e
+ * biblioteca nos mesmos canais, e a leitura de fora foi "fica tudo muito
+ * bagunçado o que é linguagem, o que é framework, o que é técnica de IA". Hoje
+ * o nicho vem da taxonomia do próprio currículo, e a extensão no rótulo é o que
+ * marca a categoria sem precisar de legenda: `.py` diz "linguagem" sozinho.
  *
  * **O rótulo fica deitado nunca mais.** Ele era `writing-mode: vertical-rl` com
- * `rotate(180deg)`, o que economizava largura e custava a leitura: em teste com
- * leitor humano, a primeira reação a esta seção foi "texto deitado não dá pra
- * ler". Texto de interface se lê na horizontal. A largura que faltava veio de
- * deixar a mesa refluir — três canais por linha no celular, seis a partir de
- * `sm` (ver a grade em Skills).
+ * `rotate(180deg)`, o que economizava largura e custava a leitura — "texto
+ * deitado não dá pra ler" foi literal. A largura que faltava veio de deixar a
+ * mesa refluir (ver a grade em Skills).
  *
  * O trilho, o preenchimento e o knob são decoração e `aria-hidden`: quem usa
  * leitor de tela recebe só o rótulo, que é a informação — e o botão de foco.
  */
-export function Fader({ label, index }: FaderProps) {
+export function Fader({ termo, index }: FaderProps) {
   const prefersReducedMotion = useReducedMotion()
   const fill = `${UNIDADE}%`
+  const extensao = selo(termo)
 
   const transition = { ...FILL_TRANSITION, delay: index * STAGGER_STEP }
 
@@ -76,16 +83,24 @@ export function Fader({ label, index }: FaderProps) {
       </div>
 
       {/*
-       * `min-h-8` com duas linhas cabendo: "EMBEDDINGS" quebra em coluna
-       * estreita e "RAG" não, e sem a altura reservada a fileira de rótulos
-       * ficava com os trilhos terminando em alturas diferentes.
+       * `min-h-9` com duas linhas cabendo: o nome quebra em coluna estreita e a
+       * extensão desce, e sem a altura reservada a fileira de rótulos deixaria
+       * os trilhos terminando em alturas diferentes.
        */}
       <BotaoTecnologia
-        termo={label}
-        className="text-ink-muted hover:text-ink flex min-h-8 w-full items-start justify-center text-center font-mono text-[11px] leading-[1.35] tracking-[0.04em] break-words uppercase transition-colors duration-300"
+        termo={termo.label}
+        className="text-ink-muted hover:text-ink flex min-h-9 w-full flex-col items-center justify-start gap-0.5 text-center font-mono text-[11px] leading-[1.3] tracking-[0.04em] break-words uppercase transition-colors duration-300"
         classNameAtivo="text-accent-text"
       >
-        {label}
+        {termo.label}
+        {extensao && (
+          <span
+            aria-hidden="true"
+            className="text-ink-faint text-[11px] tracking-[0.06em] lowercase"
+          >
+            {extensao}
+          </span>
+        )}
       </BotaoTecnologia>
     </div>
   )
