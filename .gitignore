@@ -33,5 +33,8 @@ dist-ssr
 *.tsbuildinfo
 coverage
 
+# Capturas de conferencia (npm run capturar) — artefato, nao conteudo
+capturas
+
 # Sistema operacional
 Thumbs.db
