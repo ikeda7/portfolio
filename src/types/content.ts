@@ -6,17 +6,22 @@
  * no formato `[INSERIR ...]` — e devem ser substituidos antes do deploy.
  */
 
-/** Um canal da "mesa de som" (fader vertical) ou do "rack" (barra horizontal). */
+/**
+ * Um canal da "mesa de som" (fader vertical) ou do "rack" (linha horizontal).
+ *
+ * **So tem rotulo, de proposito.** Havia aqui um `value` de 0 a 100 que
+ * desenhava a altura do fader. O numero nunca chegou a aparecer na tela, mas o
+ * desenho aparecia: seis faders parados em alturas diferentes sao lidos como
+ * nota, e nota de proficiencia e exatamente o tipo de afirmacao que a Regra de
+ * Ouro (DIRETRIZES_CLAUDE.MD) proibe inventar. Quem olhou a pagina de fora leu
+ * como nota na primeira passada — foi assim que o problema apareceu.
+ *
+ * Hoje todo canal sobe ate a mesma marca de unidade: a mesa fica calibrada em
+ * vez de opinativa, e a informacao e o rotulo, que tambem e o botao de foco.
+ */
 export interface SkillChannel {
-  /** Rotulo curto exibido no canal. */
+  /** Rotulo curto exibido no canal. Tambem e o termo do foco tecnico. */
   readonly label: string
-  /**
-   * Altura do fader / comprimento da barra, de 0 a 100.
-   *
-   * E composicao visual — uma mesa que nao esta zerada — e NAO auto-avaliacao.
-   * Por isso o valor nunca aparece na tela nem e exposto a leitor de tela.
-   */
-  readonly value: number
 }
 
 export interface SkillPanel {
@@ -47,6 +52,14 @@ export interface TerminalLine {
  * - `terminal`: comandos REAIS do README do repositorio. Para projeto de
  *   linha de comando, o terminal e a interface — nao e ilustracao.
  * - `spectrum`: composicao real de linguagens do repositorio (API do GitHub).
+ * - `sleeve`: capa tipografica, para projeto sem print e sem repositorio
+ *   publico. Nao desenha dado nenhum — so o numero da faixa e o estado real.
+ *
+ * **Nao use `spectrum` como padrao.** Ele ja foi a capa dos seis, e seis
+ * graficos iguais diziam duas vezes a mesma coisa: quatro abriam com
+ * "TypeScript ~85%" enquanto as tags logo abaixo ja diziam TYPESCRIPT. Um
+ * grafico so se justifica quando a composicao conta o que as tags nao contam —
+ * no TCC, o quarto do repositorio em TeX e a monografia.
  */
 export interface LanguageShare {
   readonly label: string
@@ -61,6 +74,14 @@ export type ProjectCover =
       readonly kind: 'spectrum'
       readonly repo: string
       readonly languages: readonly LanguageShare[]
+    }
+  | {
+      readonly kind: 'sleeve'
+      /**
+       * Estado do projeto, em uma linha. Fato verificavel ("Em producao",
+       * "Repositorio privado"), nunca adjetivo.
+       */
+      readonly status: string
     }
 
 export interface Project {

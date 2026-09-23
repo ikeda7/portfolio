@@ -205,18 +205,36 @@ animações e transições CSS de uma vez.
   checa `useReducedMotion()` e renderiza a versão estática (ver
   [Reveal.tsx](src/components/ui/Reveal.tsx); `usePointerGlow` devolve `null`).
 
-## Capas de projeto e faders: dois contratos com intenção
+## Capas de projeto e canais: dois contratos com intenção
 
 `ProjectCover` é união discriminada — `shot` (print do site no ar) | `terminal`
-(comandos **reais** do README do repo) | `sleeve` (tipográfica). Sempre existe
-uma: **o card nunca fica com buraco**. Escolha pelo que o projeto tem para
-mostrar, não por estética.
+(comandos **reais** do README do repo) | `spectrum` (linguagens medidas pela API
+do GitHub) | `sleeve` (placa cega com o estado do projeto). Sempre existe uma:
+**o card nunca fica com buraco**. Escolha pelo que o projeto tem para mostrar,
+não por estética.
 
-`SkillChannel.value` (0–100) é **composição visual**, não auto-avaliação. Por
-isso o número nunca aparece na tela nem vai para leitor de tela (a barra é
-`aria-hidden`, o rótulo é o que se lê). Não "conserte" adicionando `role="meter"`
-ou o número de volta sem ler a justificativa em
+**Não use uma variante nos seis.** As capas já foram `spectrum` em todos os
+cards, e o resultado dizia duas vezes a mesma coisa: quatro deles abriam com uma
+barra de "TypeScript ~85%" e, três linhas abaixo, uma tag escrita TYPESCRIPT.
+Um gráfico só se justifica quando a composição conta o que as tags não contam —
+hoje sobra um, o do TCC, onde o quarto do repositório em TeX é a monografia.
+
+`SkillChannel` tem **só `label`**. Havia um `value` de 0 a 100 que desenhava a
+altura do fader; o número nunca aparecia na tela, mas o desenho aparecia, e uma
+fileira de faders parados em alturas diferentes é lida como nota — foi o primeiro
+comentário de quem viu a página de fora. Nota de proficiência é afirmação sobre o
+dono do portfólio, e afirmação sem fonte é o que a Regra de Ouro proíbe.
+
+Hoje todo canal sobe até a mesma marca (`UNIDADE` em
+[Fader.tsx](src/components/ui/Fader.tsx)) e o rack usa cabo + LED, que liga em vez
+de medir. **Não volte a amarrar altura a número** sem uma fonte: nível por
+tecnologia é conteúdo do Lucas, como já é em Idiomas. Ver
 [docs/PENDENCIAS.md](docs/PENDENCIAS.md).
+
+E o rótulo do canal é horizontal. Ele já foi `writing-mode: vertical-rl`, o que
+economizava largura e custava a leitura — "texto deitado não dá pra ler" foi
+literal. A mesa reflui (3 colunas até `sm`, 6 depois) justamente para o rótulo
+nunca mais precisar deitar.
 
 ## Formulário de contato
 

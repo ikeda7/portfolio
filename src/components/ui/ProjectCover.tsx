@@ -1,3 +1,4 @@
+import { SleeveCover } from '@/components/ui/SleeveCover'
 import { SpectrumCover } from '@/components/ui/SpectrumCover'
 import { TerminalCover } from '@/components/ui/TerminalCover'
 import type { ProjectCover as Cover } from '@/types/content'
@@ -15,9 +16,12 @@ interface ProjectCoverProps {
  * desliza para a esquerda e o disco aparece pela direita, girando — um vinil
  * saindo da capa.
  *
- * A arte muda conforme o projeto tem o quê para mostrar. Hoje todos usam o
- * espectro de linguagens do repositório; as variantes de print e de terminal
- * seguem prontas e a um campo de distância.
+ * **A arte muda conforme o projeto tem o quê para mostrar** — e isso é
+ * escolha de conteúdo, não de estética. Já foi espectro de linguagens nos
+ * seis, e seis gráficos quase idênticos (quatro deles abrindo em
+ * "TypeScript ~85%") diziam duas vezes o que as tags do card já diziam uma.
+ * Quem tem site no ar mostra o site, quem é linha de comando mostra o
+ * comando, e quem não tem nem um nem outro leva placa cega.
  */
 export function ProjectCover({ track, title, cover }: ProjectCoverProps) {
   return (
@@ -35,7 +39,7 @@ export function ProjectCover({ track, title, cover }: ProjectCoverProps) {
         {cover.kind === 'shot' && (
           <img
             src={cover.src}
-            alt={`Tela inicial de ${title}`}
+            alt={`Captura de tela de ${title}`}
             width={800}
             height={500}
             loading="lazy"
@@ -47,6 +51,7 @@ export function ProjectCover({ track, title, cover }: ProjectCoverProps) {
         {cover.kind === 'spectrum' && (
           <SpectrumCover repo={cover.repo} languages={cover.languages} />
         )}
+        {cover.kind === 'sleeve' && <SleeveCover status={cover.status} />}
       </div>
 
       <span

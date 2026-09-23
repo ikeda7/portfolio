@@ -108,6 +108,17 @@ const SONDA_A11Y = `(() => {
 
   const out = { medidos: 0, contraste: [], pequenos: 0, cortados: [], semNome: [], headings: [], alvos: [] }
 
+  /*
+   * Margem de contraste por estilo.
+   *
+   * Passar no AA e binario, e binario esconde o quanto falta para reprovar:
+   * um par a 4.52:1 e outro a 12:1 saem os dois como "ok", mas o primeiro
+   * reprova se alguem clarear o fundo de um painel em dois pontos. Agrupado
+   * por estilo (cor + tamanho + peso + fundo), e nao por elemento, porque o
+   * que se conserta e o token — a ocorrencia so repete a decisao.
+   */
+  const margens = new Map()
+
   document.querySelectorAll('body *').forEach((el) => {
     const cs = getComputedStyle(el)
 
@@ -131,7 +142,17 @@ const SONDA_A11Y = `(() => {
     const peso = parseInt(cs.fontWeight, 10) || 400
     if (size < 10) out.pequenos++
     const min = size >= 24 || (size >= 18.66 && peso >= 700) ? 3 : 4.5
-    const r = ratio(fg, fundoDe(el))
+    const fundo = fundoDe(el)
+    const r = ratio(fg, fundo)
+
+    const chave = cs.color + ' sobre ' + fundo.join() + ' @' + cs.fontSize + '/' + peso
+    const visto = margens.get(chave)
+    if (visto) {
+      visto.n++
+    } else {
+      margens.set(chave, { r: r, min: min, n: 1, amostra: (el.textContent || '').trim().slice(0, 22) })
+    }
+
     if (r < min && out.contraste.length < 8) {
       out.contraste.push(r.toFixed(2) + ':1 (min ' + min + ') ' + cs.fontSize + ' "' + el.textContent.trim().slice(0, 24) + '"')
     }
@@ -162,6 +183,18 @@ const SONDA_A11Y = `(() => {
       out.alvos.push((el.getAttribute('aria-label') || el.innerText || el.tagName).trim().slice(0, 20) + ' ' + Math.round(b.width) + 'x' + Math.round(b.height))
     }
   })
+
+  // As cinco combinacoes mais apertadas, da menor margem para a maior.
+  out.folgas = [...margens.values()]
+    .sort((a, b) => a.r / a.min - b.r / b.min)
+    .slice(0, 5)
+    .map((m) => ({
+      r: +m.r.toFixed(2),
+      min: m.min,
+      folga: +(m.r / m.min).toFixed(2),
+      n: m.n,
+      amostra: m.amostra,
+    }))
 
   return out
 })()`
@@ -288,9 +321,10 @@ async function main() {
   await sleep(700)
 
   let falhou = false
-  const linha = (rotulo, valor, ruim) => {
+  const linha = (rotulo, valor, ruim, avisar = false) => {
     if (ruim) falhou = true
-    console.log(`  ${ruim ? 'FALHA' : '  ok '}  ${rotulo.padEnd(30)} ${valor}`)
+    const marca = ruim ? 'FALHA' : avisar ? 'aviso' : '  ok '
+    console.log(`  ${marca}  ${rotulo.padEnd(30)} ${valor}`)
   }
 
   const a = await js(SONDA_A11Y)
@@ -299,6 +333,28 @@ async function main() {
   console.log(`\n### ACESSIBILIDADE  (${a.medidos} elementos medidos)`)
   linha('contraste WCAG AA', a.contraste.length + ' falha(s)', a.contraste.length > 0)
   a.contraste.forEach((c) => console.log('          ' + c))
+
+  /*
+   * Aviso, nao falha. 4.6:1 passa no AA, e reprovar aqui transformaria a
+   * auditoria num portao que ninguem consegue fechar. O numero existe para
+   * a proxima pessoa que for mexer numa cor saber de quanto e o colchao
+   * antes de mexer — foi assim que o acento roxo virou azul sem regredir.
+   */
+  const APERTADO = 1.15
+  const pior = a.folgas?.[0]
+  if (pior) {
+    linha(
+      'margem do estilo mais justo',
+      `${pior.folga}x o minimo (${pior.r}:1 de ${pior.min})`,
+      false,
+      pior.folga < APERTADO,
+    )
+    for (const f of a.folgas) {
+      console.log(
+        `          ${String(f.r + ':1').padEnd(8)} min ${String(f.min).padEnd(4)} folga ${String(f.folga + 'x').padEnd(6)} ${String(f.n).padStart(3)} elem.  "${f.amostra}"`,
+      )
+    }
+  }
   linha('texto abaixo de 10px', a.pequenos, a.pequenos > 0)
   linha('conteudo cortado', a.cortados.length, a.cortados.length > 0)
   a.cortados.forEach((c) => console.log('          ' + c))

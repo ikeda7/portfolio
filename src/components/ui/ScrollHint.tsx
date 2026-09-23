@@ -22,6 +22,13 @@ const TOPO = destinos[0]
  *
  * É link de verdade, não enfeite: quem chega pelo teclado tabula até ele. Sob
  * `prefers-reduced-motion` a barrinha para e o link continua inteiro.
+ *
+ * **A pastilha é deitada de propósito.** Empilhado, rótulo sobre a barrinha,
+ * ele media ~60px de altura e, sendo `fixed`, cobria o que estivesse no
+ * rodapé da janela: numa captura da seção de Contato ele estava exatamente
+ * por cima do "Enviar mensagem", roubando o clique do botão mais importante
+ * da página. Deitado ele tem ~32px e cabe no respiro que toda seção já tem
+ * embaixo, em vez de disputar espaço com o conteúdo.
  */
 export function ScrollHint() {
   const prefersReducedMotion = useReducedMotion()
@@ -37,11 +44,11 @@ export function ScrollHint() {
   if (!destino) return null
 
   return (
-    <div className="pointer-events-none fixed bottom-6 left-1/2 z-10 -translate-x-1/2">
+    <div className="pointer-events-none fixed bottom-5 left-1/2 z-10 -translate-x-1/2">
       <a
         href={destino.href}
         aria-label={noFim ? 'Voltar ao topo' : `Ir para ${destino.label}`}
-        className="text-ink-faint hover:text-accent-text group border-line bg-bg/80 hover:border-accent pointer-events-auto flex flex-col items-center gap-2 rounded-2xl border px-3 py-2.5 backdrop-blur-sm transition-colors duration-300"
+        className="text-ink-faint hover:text-accent-text group border-line bg-bg/80 hover:border-accent pointer-events-auto flex items-center gap-2.5 rounded-full border py-1.5 pr-2 pl-3.5 backdrop-blur-sm transition-colors duration-300"
       >
         <span aria-hidden="true" className="font-mono text-[11px] tracking-[0.16em] uppercase">
           {noFim ? 'Topo' : destino.label}
@@ -49,21 +56,21 @@ export function ScrollHint() {
 
         <span
           aria-hidden="true"
-          className="border-line bg-bg/70 group-hover:border-accent relative h-7 w-[18px] overflow-hidden rounded-full border backdrop-blur-sm transition-colors duration-300"
+          className="border-line bg-bg/70 group-hover:border-accent relative h-5 w-[14px] shrink-0 overflow-hidden rounded-full border backdrop-blur-sm transition-colors duration-300"
         >
           {prefersReducedMotion ? (
             <span
               className={`bg-accent absolute left-1/2 h-1.5 w-0.5 -translate-x-1/2 rounded-full ${
-                noFim ? 'bottom-1.5' : 'top-1.5'
+                noFim ? 'bottom-1' : 'top-1'
               }`}
             />
           ) : (
             <m.span
               key={noFim ? 'sobe' : 'desce'}
               className="bg-accent absolute left-1/2 h-1.5 w-0.5 -translate-x-1/2 rounded-full"
-              initial={{ top: noFim ? 16 : 5, opacity: 0 }}
+              initial={{ top: noFim ? 11 : 4, opacity: 0 }}
               animate={{
-                top: noFim ? [16, 5, 5] : [5, 16, 16],
+                top: noFim ? [11, 4, 4] : [4, 11, 11],
                 opacity: [0, 1, 0],
               }}
               transition={{ duration: 1.9, ease: EASE_OUT, repeat: Infinity, repeatDelay: 0.3 }}

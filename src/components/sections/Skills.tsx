@@ -31,7 +31,15 @@ export function Skills() {
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-5">
         <Reveal className="h-full">
           <Panel title={faderPanel.title} code={codigoDoPainel(faderPanel)} fill>
-            <div className="flex flex-1 justify-between gap-2.5 px-[18px] py-[26px]">
+            {/*
+             * A mesa reflui: tres canais por linha ate `sm`, seis depois.
+             * Os rotulos deixaram de ser verticais (ninguem le texto deitado)
+             * e passaram a precisar de largura — em 320px, seis colunas
+             * horizontais dariam ~31px cada e "EMBEDDINGS" nao caberia em
+             * nenhuma. `auto-rows-fr` mantem as duas fileiras com a mesma
+             * altura de trilho quando ela quebra.
+             */}
+            <div className="grid flex-1 auto-rows-fr grid-cols-3 gap-x-2.5 gap-y-7 px-[18px] py-[26px] sm:grid-cols-6 sm:gap-y-0">
               {faderPanel.channels.map((channel, index) => (
                 <Fader key={channel.label} index={index} {...channel} />
               ))}

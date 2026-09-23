@@ -6,19 +6,24 @@ import { FILL_TRANSITION, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
 import type { SkillChannel } from '@/types/content'
 
 interface RackRowProps extends SkillChannel {
-  /** Posição da linha no rack — define o atraso do preenchimento em cadeia. */
+  /** Posição da linha no rack — define o atraso do traçado em cadeia. */
   readonly index: number
 }
 
 /**
- * Linha horizontal do rack: rótulo e barra iluminada.
+ * Linha do rack: rótulo, cabo e LED de canal conectado.
  *
- * Como nos faders, o comprimento da barra é composição visual, não nota —
- * por isso ela é `aria-hidden` e só o rótulo é lido.
+ * Era uma barra de preenchimento cujo comprimento vinha de um número de 0 a
+ * 100. O número não aparecia, mas a barra aparecia — e barra de comprimento
+ * variável ao lado de um nome de tecnologia é lida como nota de proficiência,
+ * que é afirmação sem fonte (ver `SkillChannel` em @/types/content).
+ *
+ * O cabo resolve isso sendo sempre inteiro: ele não mede nada, ele **liga**.
+ * Todo canal do rack está conectado, e é exatamente o que o rack diz.
  */
-export function RackRow({ label, value, index }: RackRowProps) {
+export function RackRow({ label, index }: RackRowProps) {
   const prefersReducedMotion = useReducedMotion()
-  const fill = `${value}%`
+  const transition = { ...FILL_TRANSITION, delay: index * STAGGER_STEP }
 
   return (
     <div className="flex items-center gap-3">
@@ -30,20 +35,33 @@ export function RackRow({ label, value, index }: RackRowProps) {
         {label}
       </BotaoTecnologia>
 
-      <div
-        aria-hidden="true"
-        className="border-line bg-panel-2 h-1.5 min-w-0 flex-1 overflow-hidden rounded-full border"
-      >
+      <div aria-hidden="true" className="flex min-w-0 flex-1 items-center gap-2">
+        {/*
+         * O cabo é traçado da esquerda para a direita, em cadeia — a mesma
+         * cadência que os faders da mesa ao lado, para as duas metades da
+         * seção entrarem como um aparelho só.
+         */}
         <m.span
-          className="fill-horizontal glow-bar block h-full rounded-full"
-          style={prefersReducedMotion ? { width: fill } : undefined}
+          className="bg-line block h-px min-w-0 flex-1 origin-left"
+          style={prefersReducedMotion ? undefined : { transformOrigin: 'left' }}
           {...(prefersReducedMotion
             ? {}
             : {
-                initial: { width: '0%' },
-                whileInView: { width: fill },
+                initial: { scaleX: 0 },
+                whileInView: { scaleX: 1 },
                 viewport: VIEWPORT,
-                transition: { ...FILL_TRANSITION, delay: index * STAGGER_STEP },
+                transition,
+              })}
+        />
+        <m.span
+          className="bg-accent glow-led block size-1.5 shrink-0 rounded-full"
+          {...(prefersReducedMotion
+            ? {}
+            : {
+                initial: { opacity: 0 },
+                whileInView: { opacity: 1 },
+                viewport: VIEWPORT,
+                transition: { ...transition, delay: index * STAGGER_STEP + 0.18 },
               })}
         />
       </div>
