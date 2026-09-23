@@ -1,6 +1,7 @@
 # Pendências — portfólio Lucas Ikeda
 
-Última atualização: **23/09/2026**, fim do dia. Este arquivo existe para
+Última atualização: **23/09/2026**, fim do dia. Há uma leva de 16 pontos do
+dono ainda **não implementada** — a seção logo antes de "Pendencias, em ordem". Este arquivo existe para
 retomar o trabalho de outra máquina — leia a pendência 1 antes de tentar o
 deploy.
 
@@ -155,6 +156,197 @@ tecnologia na pagina inteira e para a fita. Ela deixou de ser enfeite.
   card, e rotulos dos faders desencontrados
 - **Legibilidade**: `ink-faint` 5,04 -> 6,18, `accent-text` 5,97 -> 7,56, e as
   21 ocorrencias de `text-[10px]` viraram `text-[11px]`
+
+---
+
+## Leva de 23/09 (noite) — 16 pontos do dono, NENHUM implementado
+
+Ele pediu explicitamente para **anotar e nao resolver**, porque ia trocar de
+maquina. Esta tudo aqui, na ordem em que ele falou, com o que eu ja sei sobre
+cada um — arquivo, causa provavel, e onde eu discordo.
+
+> **Comece pelo ponto 11.** Ele nao e preferencia, e **erro factual no ar**.
+
+### 1. Footer precisa de atencao
+
+Sem detalhe do que incomoda. Perguntar antes de mexer.
+`src/components/layout/Footer.tsx`.
+
+### 2. O brilho do cursor "divide" entre secoes
+
+**Causa conhecida, e e minha.** Hoje cada `<section>` tem o seu
+`usePointerGlow` (mudanca de 23/09). Cada um mede a posicao **relativa a
+propria secao** e zera no `onPointerLeave`, entao o brilho morre e renasce na
+fronteira — exatamente a "divisao" que ele viu.
+
+Saida: um unico brilho `fixed` na raiz, em `App.tsx`, com coordenada de
+viewport, atras do conteudo. Um listener so, e nao seis. `Section.tsx` volta a
+nao saber de luz. O pulso ambiente (`animate-driftglow`) pode continuar por
+secao — esse e por secao de proposito, e alterna de lado.
+
+### 3. EJCOMP e CACiC merecem bloco proprio
+
+Hoje as duas estao na linha do tempo principal, junto com 3S e o estagio. Ele
+quer separar: **experiencia profissional** de um lado, **atuacao academica**
+de outro, e formacao e idiomas seguem em paineis. Ver tambem o ponto 15, que e
+a mesma discussao por outro angulo — resolver os dois juntos.
+
+`src/data/experience.ts`, `src/components/sections/Experience.tsx`.
+
+### 4. Stack: e se tudo fosse mesa de som?
+
+Varias mesas, uma por agrupamento, em vez de uma mesa + quatro listas. E a
+resposta dele para a mesma coisa que eu registrei em "Ideias" — a mesa de
+Linguagens virou oito faders identicos e nao carrega informacao nenhuma.
+
+**Cuidado com o que ja doeu:** rotulo horizontal precisa de largura, e 35
+termos em faders verticais e muita coluna. Um nicho de 9 termos numa mesa so
+pode nao caber em 320px. Testar em 320 antes de comprar a ideia.
+
+### 5. Fita muito rapida
+
+Facil: `duration = 38` em `src/components/ui/Marquee.tsx`. Ele quer tempo de
+clicar no termo que passa. Subir para ~60s e medir. Vale lembrar que a fita ja
+pausa no hover e quando ha algo em foco.
+
+### 6. Projetos — ele gostou, e quer sugestoes
+
+Ver o ponto 16, que e concreto. Alem dele, ha uma ideia ja registrada mais
+abaixo: um projeto em destaque, maior que os outros cinco.
+
+### 7. Contato: painel de Canais grande demais
+
+Ele **nao quer** encolher e perder o alinhamento com o formulario ao lado —
+quer icone no lugar do LED redondo. Isso ja esta marcado como TODO no proprio
+componente: `lucide-react@1` removeu Github/Linkedin/Instagram, entao a fonte
+seria Simple Icons (SVG inline, 16px, `currentColor`).
+
+`src/components/ui/ContactChannels.tsx`.
+
+### 8. Waveform do hero: tres trilhas, tres cores
+
+Trocar os canais atuais (PYTHON / TYPESCRIPT / IA APLICADA) por **
+Desenvolvimento Full Stack / Data Science / IA Aplicada**, e cada um muda a
+cor do neon: azul (padrao), roxo e vermelho.
+
+**Isto e a mudanca mais arriscada da lista, e a arquitetura ajuda.** O acento
+inteiro sai de `--accent-rgb` e `--accent-2-rgb` em `src/index.css`, e todo
+glow deriva dessas duas — trocar o acento ja custou 5 linhas uma vez. Entao
+trocar a cor por trilha e reescrever essas variaveis no `:root`.
+
+**O que NAO pode regredir:** existem dois tokens de acento, nao um.
+`--color-accent` passa como componente de UI e **reprova como texto**; texto
+usa `--color-accent-text`. Cada cor nova precisa do seu par, com o contraste
+conferido — a auditoria mede e hoje fecha em zero falha, com o estilo mais
+justo em 1,2x o minimo. Vermelho escuro sobre carvao e o caso mais provavel de
+reprovar.
+
+### 9. A divisao em tres trilhas vale para o portfolio inteiro
+
+E, nas palavras dele, "implantacao nao precisa desse destaque todo". Isso mexe
+no subtitulo do hero, no Sobre e possivelmente na ordem da Experiencia.
+
+**Atencao ao conflito:** o cargo atual dele **e** implantacao de ERP, e e a
+experiencia mais recente e mais longa. Reduzir o destaque da implantacao e
+decisao de posicionamento, nao de design — confirmar com ele o quanto, antes
+de mexer. Nao apagar o que o curriculo afirma.
+
+### 10. Tirar a localizacao
+
+Mesma linha do curriculo em PDF (pendencia 2): dado pessoal solto numa pagina
+aberta. "Bauru – SP" aparece em tres lugares: `site.hero.statusLabel`,
+`site.contact.description` e `site.footer.right`. Todos em `src/data/site.ts`.
+
+**Pensar antes de apagar os tres:** cidade e informacao que recrutador filtra,
+e nao e o mesmo risco de um telefone. Talvez manter no Contato e tirar do hero
+e do rodape. Perguntar.
+
+### 11. ERRO FACTUAL — o nome da pos esta errado no site
+
+A pagina diz **"Pos em Engenharia de Software em IA Aplicada"**. O certo,
+segundo ele, e **"Engenharia de IA Aplicada"**, na UniPDS. Confere com o site
+da instituicao (unipds.com.br/org-pos-ia e ia.unipds.com.br), que chama o
+curso de Engenharia de IA Aplicada.
+
+O nome errado provavelmente veio do curriculo: a organizacao dos alunos no
+GitHub se chama `unipds-engenharia-de-ia-aplicada` e tem um repositorio
+`engenharia-de-software-com-ia-aplicada` — nomenclatura antiga convivendo com
+a nova.
+
+Onde corrigir:
+
+- `src/data/experience.ts` -> `education[0].title`
+- `src/data/site.ts` -> primeiro paragrafo do Sobre ("pos-graduando em
+  Engenharia de Software em IA Aplicada")
+
+**Nao troque a ementa junto.** Os topicos (LLMs, RAG, embeddings, vector
+databases, multiagente, MCP, fine-tuning, governanca) saem do curriculo dele e
+continuam validos. A pagina do curso lista outra grade (AIOps, Kubernetes,
+IaC) que pode ser outra turma ou outro recorte — **o curriculo do dono e a
+fonte, nao o site da escola**.
+
+Ele disse que isso "afeta bastante o sobre mim" e pediu atencao aos textos.
+Reescrever o Sobre e tarefa propria, e depende da conversa do ponto 9.
+
+### 12. Justificar o texto, no portfolio inteiro
+
+`text-align: justify` nos paragrafos.
+
+**Eu desaconselho, e explico por que antes de ele decidir.** Justificado na
+web, sem hifenizacao, abre "rios" de espaco entre palavras — e pior em coluna
+estreita, que e exatamente o caso do Sobre no celular. Se for para fazer, vai
+com `hyphens: auto` e `lang="pt-BR"` no `<html>` (ja esta), e so nos
+paragrafos largos — nunca nos cards de projeto, que tem 3 linhas.
+
+Se ele reafirmar depois de ler isso, e decisao dele e se faz.
+
+### 13. Foto do Sobre desalinhada com o texto
+
+Duas saidas que ele mesmo deu: encolher a foto para casar com a altura do
+texto, ou **adicionar mais uma linha de cards** para o texto crescer. A
+segunda e melhor se houver conteudo real para os cards — hoje `aboutStats` tem
+tres (2026 / 35 repositorios / B2). Uma quarta so entra com fonte.
+
+`src/components/sections/About.tsx`, `src/data/site.ts`.
+
+### 14. LED "em andamento" deve piscar e brilhar mais
+
+Facil e bom. Hoje todo marcador acende e a diferenca entre atual e passado e
+so o halo (`glow-led` contra `opacity-70`) — pouco. Um pulso no atual resolve.
+
+**Nao esquecer:** animacao em JS nao morre no kill switch CSS. Se for
+keyframe CSS, o bloco `prefers-reduced-motion` do `index.css` ja cobre; se for
+`motion`, tem que checar `useReducedMotion()`.
+
+`src/components/ui/Timeline.tsx`.
+
+### 15. Separar Experiencia de Formacao em secoes?
+
+Ele deu liberdade para eu decidir. **Minha leitura: nao separar em duas
+secoes, e sim reorganizar dentro da que existe** — junto com o ponto 3.
+
+Motivo: cada secao ocupa a tela inteira (`min-h-[100svh]`), entao uma secao so
+para Formacao seria dois itens num oceano de vazio, e a auditoria de espaco
+morto ia acusar. Alem disso, toda secao nova entra em `navLinks` e engorda o
+header, que ja teve problema de altura no celular.
+
+Proposta a validar: manter uma secao, com **tres blocos** — profissional,
+academico (EJCOMP + CACiC), e a coluna de Formacao + Idiomas.
+
+### 16. Cards de projeto: palavras-chave e a descricao de 3 linhas
+
+Duas coisas:
+
+- **Destacar palavras-chave** na descricao. Cuidado para nao colidir com as
+  tags logo abaixo — foi exatamente essa redundancia que derrubou as capas de
+  espectro.
+- **O projeto 01 tem 3 linhas de descricao e os outros tem 2**, entao tags e
+  "Abrir" descem e quebram o alinhamento da fileira. Duas saidas: encurtar a
+  descricao do TCC para duas linhas, ou dar `min-h` a descricao e empurrar o
+  rodape do card com `mt-auto`. **A segunda e mais robusta** — resolve para
+  qualquer descricao futura em vez de calibrar texto a mao.
+
+`src/components/ui/ProjectCard.tsx`, `src/data/projects.ts`.
 
 ---
 
