@@ -3,10 +3,16 @@ import type { TimelineEntry } from '@/types/content'
 /**
  * Linha do tempo profissional e formação.
  *
- * Transcrito do currículo (versão pt-BR, Set/2026). Cargo, empresa e período
- * são o tipo de dado que a Regra de Ouro proíbe inferir: não existem no GitHub
- * e não dá para deduzir do código. Nada aqui foi reescrito além de encurtar
- * frases — o conteúdo é o do currículo.
+ * Transcrito do currículo (versão pt-BR, Set/2026), com uma exceção anotada
+ * na própria entrada: o CACiC não está no currículo nem no LinkedIn e veio do
+ * dono, por voz. Cargo, organização e período são o tipo de dado que a Regra
+ * de Ouro proíbe inferir — não existem no GitHub e não dá para deduzir do
+ * código —, então cada um deles tem que ter vindo de algum lugar.
+ *
+ * A ordem é por início, do mais recente para o mais antigo. EJCOMP e CACiC
+ * são atuação acadêmica e entram na mesma linha do tempo em vez de num bloco
+ * separado: têm cargo, período e responsabilidade, e leem como experiência
+ * porque são experiência.
  */
 export const experience: readonly TimelineEntry[] = [
   {
@@ -46,6 +52,28 @@ export const experience: readonly TimelineEntry[] = [
     bullets: [
       'Desenvolvimento fullstack de módulos para sistema ERP em PHP e JavaScript, com interfaces responsivas em HTML5, CSS3, Bootstrap e jQuery.',
       'Manutenção e otimização de banco Oracle PL/SQL, com foco em performance de queries (DBeaver).',
+    ],
+  },
+  {
+    /*
+     * Unica entrada da pagina que NAO sai do curriculo nem do GitHub: o dono
+     * ditou cargo, periodo e atividades, e fonte direta dele e fonte valida.
+     * Por isso o texto fica proximo do que ele disse — "social media,
+     * postagens, comunicacao, canal de comunicacao no WhatsApp" —, arrumado
+     * no mesmo registro das outras entradas.
+     *
+     * Ele pediu para "dar uma embelezada nas palavras", e embelezar aqui e
+     * escolher verbo e ordem, nao acrescentar resultado. Nenhum numero, nenhum
+     * alcance, nenhum "aumentou X%": nada disso foi dito, e inventar entrega e
+     * exatamente o que a Regra de Ouro proibe.
+     */
+    period: 'Abr/2024 — Abr/2025',
+    title: 'Diretor de Marketing',
+    org: 'CACiC — Centro Acadêmico de Ciência da Computação',
+    context: 'FCT-UNESP · Presidente Prudente, SP',
+    bullets: [
+      'Comunicação do centro acadêmico com o corpo discente: pauta, redação e publicação das postagens.',
+      'Gestão das redes sociais e do canal de comunicação no WhatsApp.',
     ],
   },
 ]
