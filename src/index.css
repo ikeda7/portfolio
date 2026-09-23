@@ -38,10 +38,10 @@
   @keyframes driftglow {
     0%,
     100% {
-      opacity: 0.35;
+      opacity: 0.22;
     }
     50% {
-      opacity: 0.7;
+      opacity: 0.45;
     }
   }
 }
@@ -79,6 +79,15 @@
 /* ------------------------------------------------------------------ */
 /* Glows — todos derivados de --accent-rgb.                            */
 /* Trocar a cor de acento = trocar apenas as duas variaveis abaixo.     */
+/*                                                                     */
+/* Os alfas cairam ~40% em 23/09/2026. A leitura de fora foi "efeito    */
+/* neon saturado", e o diagnostico junto dela foi mais duro: o estilo   */
+/* inteiro lia como gerado. Halo forte em tudo ao mesmo tempo e uma     */
+/* das assinaturas disso — quando todo elemento brilha, nenhum          */
+/* destaca, e a pagina vira efeito em vez de hierarquia.                */
+/*                                                                     */
+/* O acento nao mudou e os contrastes nao dependem daqui: glow e        */
+/* box-shadow, nao cor de texto. O que muda e a intensidade.           */
 /* ------------------------------------------------------------------ */
 :root {
   --accent-rgb: 0 89 255;
@@ -86,37 +95,37 @@
 }
 
 @utility glow-cta {
-  box-shadow: 0 0 34px rgb(var(--accent-rgb) / 0.75);
+  box-shadow: 0 0 30px rgb(var(--accent-rgb) / 0.42);
 }
 
 @utility glow-soft {
-  box-shadow: 0 0 22px rgb(var(--accent-rgb) / 0.25);
+  box-shadow: 0 0 20px rgb(var(--accent-rgb) / 0.16);
 }
 
 @utility glow-card {
   box-shadow:
     0 18px 40px rgb(0 0 0 / 0.5),
-    0 0 30px rgb(var(--accent-rgb) / 0.28);
+    0 0 26px rgb(var(--accent-rgb) / 0.18);
 }
 
 @utility glow-panel {
-  box-shadow: 0 0 60px rgb(var(--accent-rgb) / 0.12);
+  box-shadow: 0 0 52px rgb(var(--accent-rgb) / 0.07);
 }
 
 @utility glow-photo {
-  box-shadow: 0 0 40px rgb(var(--accent-rgb) / 0.18);
+  box-shadow: 0 0 36px rgb(var(--accent-rgb) / 0.12);
 }
 
 @utility glow-knob {
-  box-shadow: 0 0 12px rgb(var(--accent-rgb) / 0.5);
+  box-shadow: 0 0 10px rgb(var(--accent-rgb) / 0.3);
 }
 
 @utility glow-bar {
-  box-shadow: 0 0 14px rgb(var(--accent-rgb) / 0.6);
+  box-shadow: 0 0 12px rgb(var(--accent-rgb) / 0.38);
 }
 
 @utility glow-led {
-  box-shadow: 0 0 10px var(--color-accent);
+  box-shadow: 0 0 8px rgb(var(--accent-rgb) / 0.65);
 }
 
 @utility glow-input {

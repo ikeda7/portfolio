@@ -12,13 +12,21 @@ export function codigoDoPainel(painel: SkillPanel): string {
 }
 
 /**
- * Rack de processamento. As tecnologias vêm da seção "Competências
- * técnicas" do currículo.
+ * Rack de processamento. As tecnologias vêm da seção "Competências técnicas"
+ * do currículo.
  *
- * Os canais NÃO carregam nota: auto-avaliação numérica não é verificável e
- * convida a pergunta que ninguém consegue responder ("por que 82 e não 90?").
- * A altura de cada fader é composição visual — uma mesa não zerada — e o que
- * informa é o rótulo.
+ * Os canais **não carregam nota**, e agora também não desenham uma. Cada canal
+ * tinha um `value` de 0 a 100; o número nunca aparecia na tela, mas o desenho
+ * aparecia, e um fader parado em 91 ao lado de um em 55 é lido como nota por
+ * qualquer pessoa — foi o primeiro comentário de quem viu a página de fora.
+ *
+ * Nota de proficiência é afirmação sobre o dono do portfólio, e afirmação sem
+ * fonte é o que a Regra de Ouro proíbe. Os faders agora sobem todos à mesma
+ * marca: mesa calibrada, informação no rótulo.
+ *
+ * Para voltar a ter nível por tecnologia, a fonte precisa vir do Lucas —
+ * "intermediário"/"avançado" por item, como já existe em Idiomas. Enquanto não
+ * vier, a mesa fica reta. Ver docs/PENDENCIAS.md.
  */
 
 /**
@@ -33,12 +41,12 @@ export const faderPanel: SkillPanel = {
   id: 'ia-dados',
   title: 'IA aplicada & dados',
   channels: [
-    { label: 'Python', value: 82 },
-    { label: 'PyTorch', value: 64 },
-    { label: 'RAG', value: 91 },
-    { label: 'Embeddings', value: 68 },
-    { label: 'Agentes', value: 55 },
-    { label: 'Prompt', value: 73 },
+    { label: 'Python' },
+    { label: 'PyTorch' },
+    { label: 'RAG' },
+    { label: 'Embeddings' },
+    { label: 'Agentes' },
+    { label: 'Prompt' },
   ],
 }
 
@@ -47,11 +55,11 @@ export const rackPanel: SkillPanel = {
   id: 'engenharia',
   title: 'Engenharia de software',
   channels: [
-    { label: 'TypeScript', value: 88 },
-    { label: 'React', value: 76 },
-    { label: 'Node.js', value: 69 },
-    { label: 'PostgreSQL', value: 81 },
-    { label: 'C#', value: 58 },
+    { label: 'TypeScript' },
+    { label: 'React' },
+    { label: 'Node.js' },
+    { label: 'PostgreSQL' },
+    { label: 'C#' },
   ],
 }
 

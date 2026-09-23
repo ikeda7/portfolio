@@ -11,26 +11,43 @@ interface FaderProps extends SkillChannel {
 }
 
 /**
+ * Marca de unidade: onde todo canal para.
+ *
+ * É a mesma altura para os seis de propósito. Antes cada canal tinha a sua, e
+ * uma fileira de faders em alturas diferentes é lida como nota mesmo sem número
+ * nenhum na tela — foi o que aconteceu com a primeira pessoa que olhou a página
+ * de fora. Nota de proficiência precisa de fonte; enquanto não existe, a mesa
+ * fica calibrada em vez de opinativa. Ver `SkillChannel` em @/types/content.
+ *
+ * 72% e não 100%: fader no topo lê como "estourado", e a faixa vazia acima do
+ * knob é o que faz o controle parecer um controle.
+ */
+const UNIDADE = 72
+
+/**
  * Canal vertical da mesa de som.
  *
- * O trilho, o preenchimento e o knob são decoração: a altura é composição
- * visual, não nota. Quem lê com leitor de tela recebe só o rótulo, que é a
- * informação de verdade.
+ * **O rótulo fica deitado nunca mais.** Ele era `writing-mode: vertical-rl` com
+ * `rotate(180deg)`, o que economizava largura e custava a leitura: em teste com
+ * leitor humano, a primeira reação a esta seção foi "texto deitado não dá pra
+ * ler". Texto de interface se lê na horizontal. A largura que faltava veio de
+ * deixar a mesa refluir — três canais por linha no celular, seis a partir de
+ * `sm` (ver a grade em Skills).
  *
- * Ao entrar na tela o fader sobe de 0 até a posição, escalonado pelo índice —
- * a mesa "se ajusta" canal a canal, da esquerda para a direita.
+ * O trilho, o preenchimento e o knob são decoração e `aria-hidden`: quem usa
+ * leitor de tela recebe só o rótulo, que é a informação — e o botão de foco.
  */
-export function Fader({ label, value, index }: FaderProps) {
+export function Fader({ label, index }: FaderProps) {
   const prefersReducedMotion = useReducedMotion()
-  const fill = `${value}%`
+  const fill = `${UNIDADE}%`
 
   const transition = { ...FILL_TRANSITION, delay: index * STAGGER_STEP }
 
   return (
-    <div className="flex min-w-0 flex-1 flex-col items-center gap-[10px] self-stretch">
+    <div className="flex min-w-0 flex-col items-center gap-2.5">
       <div
         aria-hidden="true"
-        className="border-line bg-panel-2 relative w-2 flex-1 rounded-full border"
+        className="border-line bg-panel-2 relative min-h-[104px] w-2 flex-1 rounded-full border"
       >
         <m.span
           className="fill-vertical absolute inset-x-0 bottom-0 rounded-full"
@@ -58,16 +75,14 @@ export function Fader({ label, value, index }: FaderProps) {
         />
       </div>
 
+      {/*
+       * `min-h-8` com duas linhas cabendo: "EMBEDDINGS" quebra em coluna
+       * estreita e "RAG" não, e sem a altura reservada a fileira de rótulos
+       * ficava com os trilhos terminando em alturas diferentes.
+       */}
       <BotaoTecnologia
         termo={label}
-        className="text-ink-muted hover:text-ink flex h-[86px] min-w-6 items-center justify-end overflow-hidden font-mono text-[11px] tracking-[0.1em] uppercase transition-colors duration-300 [transform:rotate(180deg)] [writing-mode:vertical-rl]"
-        /*
-         * `justify-end` e nao `center`: em writing-mode vertical o eixo principal
-         * e o vertical, e com o rotate(180deg) o fim logico vira o topo visual.
-         * Centralizado, rotulo curto (RAG) e longo (EMBEDDINGS) terminavam em
-         * alturas diferentes e a fileira ficava irregular. Ancorado, todos
-         * mantem a mesma distancia do trilho do fader.
-         */
+        className="text-ink-muted hover:text-ink flex min-h-8 w-full items-start justify-center text-center font-mono text-[11px] leading-[1.35] tracking-[0.04em] break-words uppercase transition-colors duration-300"
         classNameAtivo="text-accent-text"
       >
         {label}

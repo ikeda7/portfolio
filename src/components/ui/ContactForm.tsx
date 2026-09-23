@@ -121,7 +121,10 @@ export function ContactForm() {
   const enviando = status === 'enviando'
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-[26px]">
+    // `h-full`: o formulario mora num painel que estica ate a altura do
+    // painel de Canais ao lado. Sem isso ele para na altura natural dos
+    // campos e sobra um vao morto embaixo.
+    <form onSubmit={handleSubmit} noValidate className="flex h-full flex-col gap-[26px]">
       {/* Armadilha: fora da tela e fora da ordem de tabulação. Quem preenche é bot. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
         <label>
@@ -166,7 +169,12 @@ export function ContactForm() {
         />
       </label>
 
-      <label className="flex flex-col gap-2">
+      {/*
+       * A altura que sobra no painel vai toda para a mensagem: e o unico
+       * campo que fica melhor maior, e absorver aqui evita distribuir o
+       * respiro entre campos, que deixaria o formulario esparramado.
+       */}
+      <label className="flex flex-1 flex-col gap-2">
         <span className={LABEL_CLASS}>Mensagem</span>
         <textarea
           name="mensagem"
@@ -176,14 +184,24 @@ export function ContactForm() {
           required
           maxLength={5000}
           disabled={enviando}
-          className={`${FIELD_CLASS} resize-y`}
+          className={`${FIELD_CLASS} min-h-[112px] flex-1 resize-y`}
         />
       </label>
 
+      {/*
+       * `sm:self-end` nao e estetica: o atalho flutuante de proxima secao
+       * e `fixed` no centro do rodape da janela, e com o botao alinhado a
+       * esquerda desta coluna os dois caiam exatamente um sobre o outro —
+       * o atalho cobria o "Enviar mensagem" e ficava com o clique. A
+       * esquerda desta coluna e perto demais do centro da tela.
+       *
+       * No celular volta para a esquerda: ali nao ha duas colunas, o botao
+       * ja ocupa a largura util e o alinhamento a direita lia como erro.
+       */}
       <button
         type="submit"
         disabled={enviando}
-        className="border-accent bg-accent hover:glow-cta flex items-center gap-2.5 self-start rounded-lg border px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+        className="border-accent bg-accent hover:glow-cta flex items-center gap-2.5 self-start rounded-lg border px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:self-end"
       >
         {enviando && (
           <span

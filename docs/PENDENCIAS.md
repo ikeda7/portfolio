@@ -42,6 +42,38 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
 - Zero texto abaixo de **11px** (era 10px) e zero falha de contraste
 - Bundle ~113 kB gzip
 
+### O que entrou em 23/09 — resposta ao feedback de fora
+
+Primeira leitura da pagina por alguem que nao participou dela. Vale registrar
+o que ela pegou, porque foram coisas que nenhum dos portoes pega e que eu
+tinha deixado passar duas vezes:
+
+- **"texto deitado nao da pra ler"** — os rotulos dos faders eram
+  `writing-mode: vertical-rl`. Agora sao horizontais, e a mesa reflui em 3
+  colunas ate `sm` para caberem.
+- **"slider pras hard skills nao e legal"** — os faders tinham altura
+  variavel vinda de um `value` inventado. O campo saiu do tipo; todo canal
+  sobe ate a mesma marca e o rack virou cabo + LED. Ver a pendencia 7: nivel
+  por tecnologia agora depende do dono.
+- **"o grafico dos cards e redundante com as tags"** — terceiro sinal na
+  mesma direcao, e o mais preciso. As seis capas de espectro viraram seis
+  capas diferentes.
+- **"a secao de contato tem uma disposicao esquisita"** — o titulo saiu de
+  dentro da coluna e virou cabecalho de largura cheia; os dois blocos viraram
+  paineis irmaos, CANAIS/OUT e MENSAGEM/IN. O formulario era o unico bloco
+  sem moldura da pagina, encostado num painel.
+- **"efeito neon saturado"** e **"estilo com cara de gerado por IA"** — os
+  alfas dos glows cairam ~40%. Quando tudo brilha, nada destaca.
+
+Entrou junto, ja identificado antes: link dos dois curriculos em PDF, margem
+de contraste na auditoria e a colisao do atalho flutuante com o botao de
+enviar.
+
+**Ficou como esta, de proposito:** a fita animada da Stack. O comentario foi
+que a animacao agrada mas a stack como conteudo "nao agrega" — so que a fita
+virou controle depois daquela leitura: cada termo e botao, clicar acende a
+tecnologia na pagina inteira e para a fita. Ela deixou de ser enfeite.
+
 ### O que entrou em 22/09 (noite)
 
 - **Retrato novo** no Sobre, com vinheta em CSS: o fundo de estudio quase
@@ -85,7 +117,7 @@ Ordem correta, e a ordem importa:
    remove as tags de `og:image` e o link no LinkedIn fica sem card.
 5. Quando o dominio .br existir, trocar `VITE_SITE_URL` e redeployar de novo.
 
-### 2. Curriculo em PDF — ARQUIVO CHEGOU, falta ligar
+### 2. Curriculo em PDF — CONCLUIDA
 
 Os PDFs ja estao versionados em `public/`:
 
@@ -96,18 +128,16 @@ Eles entraram por acidente no commit `6a5cbe7`, arrastados por um `git add -A`
 enquanto o dono os colocava na pasta. Sao os arquivos certos; so a mensagem
 daquele commit nao os menciona.
 
-**Falta fazer** (nao depende de mais nada do dono):
+**FEITO em 23/09.** O painel "Canais" virou lista vertical e ganhou uma quinta
+linha, "Curriculo", com dois botoes de download: PT-BR e EN. Os anchors usam
+`download` e o rotulo acessivel diz que e PDF, para o visitante saber que vai
+baixar um arquivo em vez de abrir uma pagina.
 
-1. Botao de download no Hero e/ou na secao Contato, apontando para
-   `/curriculo-lucas-ikeda-pt.pdf`.
-2. Quinto canal no painel Contato — "Curriculo" — o que fecha a grade que hoje
-   tem 4 numa 2x2.
-3. Decidir o que fazer com a versao em ingles. O **site** em ingles foi
-   cancelado, mas o PDF existir muda a conversa: da para oferecer o curriculo
-   em ingles sem traduzir o site inteiro. Perguntar antes de expor.
-
-Usar `download` no anchor e um rotulo que diga o formato, para o visitante
-saber que e um arquivo e nao uma pagina.
+**O PDF em ingles entrou.** O _site_ em ingles continua cancelado — sao coisas
+diferentes: traduzir a pagina inteira e manutencao permanente, oferecer um
+arquivo que ja existe nao custa nada depois de subido. Se o dono preferir nao
+expor a versao EN, e apagar uma entrada de `CURRICULOS` em
+`src/components/ui/ContactChannels.tsx`.
 
 ### 3. EmailJS — BLOQUEADA, precisa das 3 credenciais
 
@@ -134,20 +164,45 @@ dominio na Vercel.
 
 Decisao de 22/09: nao precisa por enquanto, porque o dominio sera .br.
 
-### 7. Polimento aberto (nao bloqueado)
+### 7. Nivel por tecnologia — DECISAO DO DONO
 
-- **A auditoria so responde passa/nao passa no WCAG AA**, que e o piso legal.
-  Foi assim que 96 elementos em 10px a 5,04:1 passaram despercebidos ate o dono
-  reclamar que estava "muito dark". Vale a auditoria passar a reportar a
-  **razao** de cada estilo e alertar quando a folga for menor que ~1,5.
-- **As 6 capas de espectro sao monotonas** — quatro dominadas por TypeScript.
-  Decisao explicita e ja reafirmada duas vezes. Os prints do Inhouse LoL e do X9
-  seguem em `src/assets/`, e as variantes `shot` e `terminal` continuam no tipo:
-  voltar um card e trocar a linha `cover`.
-- **O botao de proxima secao continua sobre o conteudo** em Projetos, a unica
-  secao mais alta que a viewport. Virou pilula com fundo, entao le como
-  controle flutuante — mas a sobreposicao existe. A saida honesta seria
-  esconde-lo quando a secao nao cabe na tela.
+Os faders da Stack nao tem mais altura variavel. Cada canal tinha um `value` de
+0 a 100 que desenhava a altura; o numero nunca apareceu na tela, mas o desenho
+sim, e **fader parado em altura diferente e lido como nota**. Nota de
+proficiencia e afirmacao sobre o dono, e nao tinha fonte nenhuma: os numeros
+foram escolhidos para a mesa ficar bonita.
+
+Hoje todos sobem ate a mesma marca e o rack usa cabo + LED. Para ter nivel de
+volta, **a fonte precisa vir do Lucas**, no mesmo formato que Idiomas ja usa:
+um rotulo por tecnologia ("intermediario", "avancado"). Com isso em maos, o
+caminho e devolver um campo a `SkillChannel` — desta vez categorico e com
+fonte — e mostrar o rotulo escrito em vez de uma barra: foi a barra que gerou a
+leitura errada em primeiro lugar.
+
+Se ele preferir nao declarar nivel, nao ha nada a fazer: a mesa reta ja e a
+resposta honesta.
+
+### 8. Polimento aberto (nao bloqueado)
+
+- ~~A auditoria so responde passa/nao passa no WCAG AA.~~ **FEITO em 23/09.**
+  Ela agora agrupa por estilo (cor + fundo + tamanho + peso), ordena pela
+  margem e imprime as cinco combinacoes mais justas. Margem curta sai como
+  `aviso` e nao como falha — 4,6:1 passa no AA, e reprovar ali daria um portao
+  que ninguem consegue fechar. Hoje o estilo mais justo esta em 1,2x o minimo.
+- ~~As 6 capas de espectro sao monotonas.~~ **FEITO em 23/09**, depois do
+  terceiro sinal independente apontando para a mesma coisa — este de fora e mais
+  preciso que os meus: o grafico era _redundante com as tags_. Hoje sao seis
+  capas diferentes: print no Inhouse LoL e no X9 (os `.webp` estavam
+  versionados e sem uso nenhum), terminal com os comandos reais do README no
+  Sports Control, espectro so no TCC (onde o TeX conta o que as tags nao
+  contam) e placa cega no LexTrack e no Flowers2.
+- ~~O botao de proxima secao sobre o conteudo.~~ **MITIGADO em 23/09.** Ele
+  cobria o "Enviar mensagem" e ficava com o clique — o controle mais importante
+  da pagina. Duas mudancas: a pastilha deitou (de ~60px de altura para ~32px, o
+  que a faz caber no respiro que toda secao ja tem embaixo) e o botao de enviar
+  foi para a direita da coluna, longe do centro horizontal da janela. Em
+  Projetos ele ainda passa por cima de card, o que e inerente a elemento
+  `fixed`; o posicionamento central foi pedido explicito do dono.
 - **Dois botoes com a mesma palavra**: "TYPESCRIPT" na waveform do hero
   redesenha as barras; na Stack acende a tecnologia na pagina. Avaliei unificar
   e **nao recomendo**: Projetos fica ~4 telas abaixo, entao o efeito
