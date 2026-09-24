@@ -2,9 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import * as m from 'motion/react-m'
 
 import { LabelCover } from '@/components/ui/LabelCover'
-import { useFocoTecnico } from '@/hooks/useFocoTecnico'
 import { usePointerGlow } from '@/hooks/usePointerGlow'
-import { algumEmFoco } from '@/lib/foco'
 import type { Project } from '@/types/content'
 
 /**
@@ -33,27 +31,9 @@ export function ProjectCard({ track, title, description, tags, href, estado, rep
     smooth: false,
   })
 
-  /*
-   * Com uma tecnologia em foco, os cards que a usam ficam em evidencia e os
-   * outros recuam — nao somem. Esconder daria a impressao de que o Setlist
-   * encolheu; recuar diz "estes tres, entre os seis".
-   */
-  const { foco } = useFocoTecnico()
-  const combina = algumEmFoco(tags, foco)
-  const recuado = foco !== null && !combina
-
   return (
-    <article
-      {...bind}
-      className={`group relative h-full min-w-0 transition-all duration-500 ${
-        recuado ? 'opacity-40 saturate-50' : 'opacity-100'
-      }`}
-    >
-      <div
-        className={`bg-panel group-hover:border-accent group-hover:glow-card group-focus-within:border-accent flex h-full flex-col overflow-hidden rounded-[14px] border transition-all duration-300 group-hover:-translate-y-2 group-focus-within:-translate-y-2 ${
-          combina ? 'border-accent glow-soft' : 'border-line'
-        }`}
-      >
+    <article {...bind} className="group relative h-full min-w-0">
+      <div className="bg-panel border-line group-hover:border-accent group-hover:glow-card group-focus-within:border-accent flex h-full flex-col overflow-hidden rounded-[14px] border transition-all duration-300 group-hover:-translate-y-2 group-focus-within:-translate-y-2">
         <div className="border-line relative aspect-[16/7] overflow-hidden border-b">
           <LabelCover track={track} estado={estado} repo={repo} />
         </div>

@@ -11,9 +11,8 @@ import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
 import { BrilhoDoCursor } from '@/components/ui/BrilhoDoCursor'
 import { Marquee } from '@/components/ui/Marquee'
-import { FocoTecnicoProvider } from '@/hooks/useFocoTecnico'
 import { ScrollHint } from '@/components/ui/ScrollHint'
-import { marqueeItems } from '@/data/skills'
+import { bibliotecasDosProjetos } from '@/data/skills'
 
 export default function App() {
   return (
@@ -27,38 +26,36 @@ export default function App() {
      * no bundle.
      */
     <LazyMotion features={domAnimation} strict>
-      <FocoTecnicoProvider>
-        <a
-          href="#conteudo"
-          className="bg-accent sr-only rounded-lg px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
-        >
-          Pular para o conteúdo
-        </a>
+      <a
+        href="#conteudo"
+        className="bg-accent sr-only rounded-lg px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
+      >
+        Pular para o conteúdo
+      </a>
 
-        {/*
-         * Uma luz de cursor para a página inteira, antes de todo o resto na
-         * árvore para pintar por baixo. Aqui e não dentro das seções: uma por
-         * seção media a posição relativa a si mesma e apagava ao sair, então o
-         * brilho se partia na fronteira entre uma e outra.
-         */}
-        <BrilhoDoCursor />
+      {/*
+       * Uma luz de cursor para a página inteira, antes de todo o resto na
+       * árvore para pintar por baixo. Aqui e não dentro das seções: uma por
+       * seção media a posição relativa a si mesma e apagava ao sair, então o
+       * brilho se partia na fronteira entre uma e outra.
+       */}
+      <BrilhoDoCursor />
 
-        <Header />
-        <SectionNav />
-        <ScrollHint />
+      <Header />
+      <SectionNav />
+      <ScrollHint />
 
-        <main id="conteudo">
-          <Hero />
-          <About />
-          <Experience />
-          <Skills />
-          <Marquee items={marqueeItems} />
-          <Projects />
-          <Contact />
-        </main>
+      <main id="conteudo">
+        <Hero />
+        <About />
+        <Experience />
+        <Skills />
+        <Marquee items={bibliotecasDosProjetos} legenda="Nos projetos" />
+        <Projects />
+        <Contact />
+      </main>
 
-        <Footer />
-      </FocoTecnicoProvider>
+      <Footer />
     </LazyMotion>
   )
 }

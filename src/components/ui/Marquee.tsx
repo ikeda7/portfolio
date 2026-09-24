@@ -1,121 +1,73 @@
 import { useReducedMotion } from 'motion/react'
-import { Fragment } from 'react'
-
-import { BotaoTecnologia } from '@/components/ui/BotaoTecnologia'
-import { useFocoTecnico } from '@/hooks/useFocoTecnico'
-import type { GrupoDaFita } from '@/data/skills'
-import { estaEmFoco } from '@/lib/foco'
 
 interface MarqueeProps {
-  /** Os termos, agrupados por nicho — o título do grupo corre antes deles. */
-  readonly items: readonly GrupoDaFita[]
+  /** O que corre na fita. */
+  readonly items: readonly string[]
+  /** Legenda fixa à esquerda: diz o que a fita é, sem precisar ler os termos. */
+  readonly legenda: string
   /** Segundos para a fita completar uma volta. Maior = mais lento. */
   readonly duration?: number
 }
 
 /**
- * Fita rolando em loop — a metáfora do transporte de tape / display de LED de
- * um equipamento de rack.
+ * Fita rolando em loop — o transporte de tape / display de LED de um rack.
  *
  * O loop é perfeito porque a lista é renderizada duas vezes e a animação
  * translada exatamente -50%: quando a primeira cópia sai, a segunda está no
  * lugar exato onde a primeira começou.
  *
- * Cada termo é um botão: clicar acende a tecnologia na página inteira, igual
- * aos canais da Stack. A fita **para** enquanto houver algo em foco — perseguir
- * um alvo que se move é a definição de interface hostil — e volta a correr
- * quando o foco sai. Também pausa no hover e vira lista estática sob
- * `prefers-reduced-motion`.
+ * **Não é mais interativa.** Cada termo era um botão do foco técnico, que
+ * acendia a tecnologia nos projetos; o foco saiu em 24/09 (ver Projects.tsx)
+ * e a fita voltou a ser o que parecia: um letreiro. Também deixou de repetir
+ * a Stack — hoje carrega as bibliotecas dos projetos, que a Stack não tem —,
+ * e por isso perdeu as etiquetas de nicho, que só existiam para situar um
+ * termo da Stack.
  *
- * A volta leva 90s. Eram 38s no protótipo e 60s depois do primeiro pedido;
- * a 60s ainda corria mais que a leitura, e os títulos de nicho que entraram
- * junto alongaram a fita. O número é por volta inteira, então fita mais longa
- * a 90s anda na mesma velocidade que a antiga andaria a ~80s.
+ * Pausa no hover, e vira lista estática sob `prefers-reduced-motion`. A volta
+ * leva 90s: o texto precisa ser lido, não perseguido.
  */
-export function Marquee({ items, duration = 90 }: MarqueeProps) {
+export function Marquee({ items, legenda, duration = 90 }: MarqueeProps) {
   const prefersReducedMotion = useReducedMotion()
-  const { foco } = useFocoTecnico()
   const track = [...items, ...items]
-  const metade = items.length
-
-  const parada = prefersReducedMotion || foco !== null
 
   return (
-    <div
-      className="border-line group relative overflow-hidden border-y py-4 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]"
-      role="presentation"
-    >
-      <ul
-        className={`flex w-max items-center gap-10 ${
-          prefersReducedMotion
-            ? 'flex-wrap justify-center'
-            : 'group-hover:[animation-play-state:paused]'
-        }`}
-        /*
-         * A pausa por foco vai no style, não em classe: o atalho `animation`
-         * inline reinicia `animation-play-state` para `running`, e inline
-         * ganha de classe — a fita continuava correndo.
-         */
-        style={
-          prefersReducedMotion
-            ? undefined
-            : {
-                animation: `marquee ${duration}s linear infinite`,
-                animationPlayState: parada ? 'paused' : 'running',
-              }
-        }
-      >
-        {track.map((grupo, indiceGrupo) => {
-          // A segunda copia e puramente visual: some para leitores de tela e
-          // sai da ordem de tabulacao, senao cada termo apareceria duas vezes
-          // para quem navega por teclado.
-          const copia = indiceGrupo >= metade
+    <div className="border-line group relative flex items-center overflow-hidden border-y">
+      {/*
+       * A legenda fica parada, com fundo, por cima do começo da fita: sem
+       * ela, uma fita de nomes de biblioteca logo depois da Stack seria lida
+       * como a Stack repetida — que era exatamente o problema.
+       */}
+      <p className="border-line bg-bg text-accent-text relative z-10 shrink-0 border-r px-4 py-4 font-mono text-[11px] tracking-[0.18em] uppercase sm:px-6">
+        {legenda}
+      </p>
 
-          return (
-            <Fragment key={`${grupo.titulo}-${indiceGrupo}`}>
-              <li
-                aria-hidden={copia ? 'true' : undefined}
-                className="flex shrink-0 items-center gap-10 whitespace-nowrap"
-              >
-                {/*
-                 * O titulo do nicho: mesmo corpo dos termos, em acento e entre
-                 * colchetes, para ler como etiqueta de grupo e nao como mais um
-                 * termo. Nao e botao — nicho nao e tecnologia.
-                 */}
-                <span className="text-accent-text font-mono text-[11px] tracking-[0.18em] uppercase">
-                  [ {grupo.titulo} ]
-                </span>
-              </li>
-              {grupo.termos.map((item) => (
-                <li
-                  key={`${item}-${indiceGrupo}`}
-                  aria-hidden={copia ? 'true' : undefined}
-                  className="flex shrink-0 items-center gap-10 whitespace-nowrap"
-                >
-                  {copia ? (
-                    <span
-                      className={`font-mono text-[11px] tracking-[0.18em] uppercase ${
-                        estaEmFoco(item, foco) ? 'text-accent-text' : 'text-ink-faint'
-                      }`}
-                    >
-                      {item}
-                    </span>
-                  ) : (
-                    <BotaoTecnologia
-                      termo={item}
-                      className="text-ink-faint hover:text-accent-text flex min-h-6 min-w-6 items-center justify-center font-mono text-[11px] tracking-[0.18em] whitespace-nowrap uppercase transition-colors duration-300"
-                      classNameAtivo="text-accent-text"
-                    >
-                      {item}
-                    </BotaoTecnologia>
-                  )}
-                  <span aria-hidden="true" className="bg-accent/40 size-1 shrink-0 rounded-full" />
-                </li>
-              ))}
-            </Fragment>
-          )
-        })}
-      </ul>
+      <div className="min-w-0 flex-1 overflow-hidden py-4 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_88%,transparent)]">
+        <ul
+          aria-label={legenda}
+          className={`flex w-max items-center gap-10 ${
+            prefersReducedMotion
+              ? 'flex-wrap justify-center'
+              : 'group-hover:[animation-play-state:paused]'
+          }`}
+          style={
+            prefersReducedMotion ? undefined : { animation: `marquee ${duration}s linear infinite` }
+          }
+        >
+          {track.map((item, index) => (
+            <li
+              key={`${item}-${index}`}
+              // A segunda copia e puramente visual: some para leitores de tela.
+              aria-hidden={index >= items.length ? 'true' : undefined}
+              className="flex shrink-0 items-center gap-10 whitespace-nowrap"
+            >
+              <span className="text-ink-faint font-mono text-[11px] tracking-[0.18em] uppercase">
+                {item}
+              </span>
+              <span aria-hidden="true" className="bg-accent/40 size-1 shrink-0 rounded-full" />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

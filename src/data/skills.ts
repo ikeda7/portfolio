@@ -47,7 +47,7 @@ export const linguagens: SkillNiche = {
 export const frontend: SkillNiche = {
   id: 'frontend',
   title: 'Front-end & mobile',
-  unidade: ['termo', 'termos'],
+  unidade: ['pedal', 'pedais'],
   terms: [
     { label: 'React' },
     { label: 'Next.js' },
@@ -63,7 +63,7 @@ export const frontend: SkillNiche = {
 export const backend: SkillNiche = {
   id: 'backend',
   title: 'Back-end & dados',
-  unidade: ['termo', 'termos'],
+  unidade: ['módulo', 'módulos'],
   terms: [
     { label: 'Node.js' },
     { label: 'NestJS' },
@@ -79,23 +79,25 @@ export const backend: SkillNiche = {
 /**
  * Nicho 4 — IA aplicada.
  *
- * Aqui moram **técnicas**, não bibliotecas: engenharia de prompt, RAG,
- * embeddings e agentes são como se usa um modelo. PyTorch e as APIs de LLM
- * entram porque o currículo as lista nesta linha, e porque são a ferramenta
- * concreta por trás das técnicas — sem elas o painel nomearia método sem dizer
- * em que é feito.
+ * Aqui moram **técnicas**: engenharia de prompt, RAG, embeddings e agentes
+ * são como se usa um modelo, e as APIs de LLM são por onde.
+ *
+ * **PyTorch saiu em 24/09** e foi para a fita, com as outras bibliotecas dos
+ * projetos. Era a única biblioteca Python da Stack inteira, e no meio de
+ * técnicas lia deslocada (leitura do dono). No lugar entrou Transformers, que
+ * é técnica e tem fonte: é a arquitetura do TCC (music-ai-generator).
  */
 export const iaAplicada: SkillNiche = {
   id: 'ia-aplicada',
   title: 'IA aplicada',
-  unidade: ['termo', 'termos'],
+  unidade: ['pad', 'pads'],
   terms: [
     { label: 'Engenharia de prompt' },
     { label: 'RAG' },
     { label: 'Embeddings' },
     { label: 'Agentes' },
-    { label: 'PyTorch' },
     { label: 'APIs de LLM' },
+    { label: 'Transformers' },
   ],
 }
 
@@ -110,7 +112,7 @@ export const iaAplicada: SkillNiche = {
 export const ferramentas: SkillNiche = {
   id: 'ferramentas',
   title: 'Ferramentas & processos',
-  unidade: ['termo', 'termos'],
+  unidade: ['pista', 'pistas'],
   terms: [
     { label: 'Git/GitHub' },
     { label: 'Docker' },
@@ -125,54 +127,37 @@ export const ferramentas: SkillNiche = {
 }
 
 /**
- * Os cinco nichos na ordem do currículo.
+ * A fita entre a Stack e os Projetos: as bibliotecas **dos projetos**.
  *
- * Linguagens sai na frente porque é o único com tratamento próprio (a mesa, com o selo
- * de extensão no rótulo); os outros quatro dividem a grade abaixo.
+ * Ela repetia a Stack termo a termo, e com a Stack inteira na tela logo
+ * acima isso era redundância (leitura do dono, 24/09). Agora carrega o que a
+ * Stack não tem: as bibliotecas e ferramentas que aparecem no código dos
+ * projetos mas não na lista do currículo — a camada de baixo, que um
+ * currículo de uma página não comporta.
+ *
+ * Cada uma foi conferida no repositório (import, requirements, package.json
+ * ou pubspec), e o comentário diz onde. Nenhuma entra "porque combina".
  */
-export const nichos: readonly SkillNiche[] = [
-  linguagens,
-  frontend,
-  backend,
-  iaAplicada,
-  ferramentas,
+export const bibliotecasDosProjetos: readonly string[] = [
+  'PyTorch', // music-ai-generator (TCC)
+  'NumPy', // music-ai-generator, desafio_indicium_imdb
+  'pandas', // desafio_indicium_imdb, intuitivecare
+  'scikit-learn', // desafio_indicium_imdb
+  'SciPy', // desafio_indicium_imdb
+  'Matplotlib', // music-ai-generator, desafio_indicium_imdb
+  'seaborn', // desafio_indicium_imdb
+  'pretty_midi', // music-ai-generator
+  'mido', // music-ai-generator
+  'Flask', // intuitivecare
+  'Beautiful Soup', // intuitivecare
+  'pdfplumber', // intuitivecare
+  'Vue.js', // intuitivecare (api/index.html)
+  'Tailwind CSS', // intuitivecare, este portfolio
+  'React Router', // pokedex-capacitacao-ejcomp
+  'Three.js', // flowers2
+  'Drift', // sports-control (pubspec.yaml)
+  'Motion', // este portfolio
 ]
-
-/**
- * Fita de tecnologias exibida entre Habilidades e Projetos.
- *
- * Deriva dos nichos para não duplicar a fonte da verdade — e por isso ela
- * repete, por construção, tudo que a Stack mostra. Isso é reforço e não
- * redundância porque a função é outra: na Stack o termo é catálogo, na fita ele
- * é o controle que acende a tecnologia na página inteira.
- *
- * Fica de fora o que não é tecnologia: processo não é termo de foco, e
- * "Levantamento de requisitos" passando numa fita de stack só faria ruído.
- */
-const NAO_SAO_TECNOLOGIA = new Set([
-  'Levantamento de requisitos',
-  'Mapeamento de processos',
-  'QA e homologação',
-  'Gestão de chamados',
-])
-
-export interface GrupoDaFita {
-  readonly titulo: string
-  readonly termos: readonly string[]
-}
-
-/*
- * Em grupos, e nao numa lista corrida. A ordem sempre foi a dos nichos, mas
- * sem nada marcando onde um termina e o outro comeca ela lia como aleatoria —
- * "React" logo depois de "SQL" parecia sorteio. O titulo de cada nicho corre
- * junto, antes dos termos dele.
- */
-export const marqueeItems: readonly GrupoDaFita[] = nichos
-  .map((nicho) => ({
-    titulo: nicho.title,
-    termos: nicho.terms.map((termo) => termo.label).filter((l) => !NAO_SAO_TECNOLOGIA.has(l)),
-  }))
-  .filter((grupo) => grupo.termos.length > 0)
 
 /**
  * A extensão é **selo ao lado do nome**, e não `python.py` colado.
