@@ -13,9 +13,6 @@ import { contagem } from '@/lib/contagem'
  * para quem busca posição, portfólio sem linha do tempo de trabalho lê como
  * incompleto. Tudo aqui vem do currículo.
  *
- * A coluna lateral usa `self-start`: sem isso ela estica até a altura da linha
- * da grade, os painéis herdam essa altura e sobra um vão morto embaixo do
- * menor — que era exatamente o problema do painel de Idiomas.
  */
 export function Experience() {
   return (
@@ -49,12 +46,21 @@ export function Experience() {
           </Panel>
         </Reveal>
 
-        <Reveal delay={0.14} className="flex h-full flex-col justify-between gap-5">
-          <Panel title="Formação" code={contagem(education.length, 'curso', 'cursos')}>
-            <div className="px-[18px] py-[22px]">
-              <Timeline entries={education} compact />
-            </div>
-          </Panel>
+        {/*
+         * Formação estica até a base da coluna (`flex-1`) e distribui as duas
+         * entradas na altura dela. A coluna da esquerda é ~100px mais alta, e
+         * com `justify-between` entre os painéis essa diferença virava um vão
+         * solto entre Formação e Idiomas; agora ela vira trilho da linha do
+         * tempo, entre a pós e o bacharelado.
+         */}
+        <Reveal delay={0.14} className="flex h-full flex-col gap-5">
+          <div className="flex flex-1 flex-col">
+            <Panel title="Formação" code={contagem(education.length, 'curso', 'cursos')} fill>
+              <div className="flex-1 px-[18px] py-[22px]">
+                <Timeline entries={education} compact espalhar />
+              </div>
+            </Panel>
+          </div>
 
           <Panel title="Idiomas" code={contagem(languages.length, 'idioma', 'idiomas')}>
             <ul className="divide-line divide-y">
