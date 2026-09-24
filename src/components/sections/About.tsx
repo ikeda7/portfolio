@@ -9,23 +9,32 @@ export function About() {
   return (
     <Section id="sobre" index="01" label="Sobre">
       {/*
-       * `items-stretch` e nao `items-center`: e o que permite a foto casar com
-       * a altura do texto em vez de sobrar dos dois lados.
+       * **A foto é quadrada e inteira, sempre.** Em 23/09 ela saiu do fluxo e
+       * passou a acompanhar a altura do texto; alinhava, mas cortava a imagem
+       * (até ~17% a 1920px), e o dono preferiu a foto como era.
        *
-       * A foto era `aspect-square w-full`, entao a altura dela saia da LARGURA
-       * da coluna enquanto a altura do texto sai do CONTEUDO. As duas nunca
-       * batiam, e o desencontro mudava de tamanho a cada largura de tela —
-       * por isso nenhum numero fixo resolvia. Em 1400px sobravam ~25px em cima
-       * e ~25px embaixo.
+       * Então quem se ajusta agora é a LARGURA da coluna da foto, não o
+       * recorte: a partir de `lg` ela é `--foto`, uma fração da linha com
+       * teto, escolhida medindo para o quadrado ficar da altura do texto. O
+       * que sobrar de diferença a grade absorve: a linha do texto é `1fr`,
+       * então o vão fica entre os parágrafos e os stats, e a foto começa e
+       * termina junto com o bloco.
        *
-       * Da coluna de duas para cima a foto sai do fluxo (`md:absolute`) e
-       * preenche a celula. Fora do fluxo ela nao empurra mais a altura da
-       * linha, entao quem manda na altura passa a ser o texto — que e o que se
-       * queria. Empilhado, volta a ser quadrada em fluxo, porque ali a celula
-       * nao tem altura propria para preencher.
+       * Entre `lg` e `xl` a foto ENCOLHE conforme a tela alarga, ao contrário
+       * do resto: é a faixa em que o texto mais perde altura ao ganhar
+       * largura, e com a foto fixa em 440px ela chegava a sobrar 105px abaixo
+       * do último parágrafo a 1279px. `700px - 28vw` saiu da medição em 1024,
+       * 1152 e 1279.
+       *
+       * `my-auto`: a seção tem a altura da janela, e o bloco inteiro mede
+       * ~500px. Sem centralizar, a 1440x900 sobravam ~170px mortos embaixo;
+       * centralizado, o respiro se divide entre o rótulo e o atalho de rolagem.
+       *
+       * Abaixo de `lg` empilha, com a foto limitada a 440px: quadrada na
+       * largura inteira de um tablet ela passava de 700px de altura.
        */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-stretch gap-12">
-        <Reveal>
+      <div className="my-auto grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_var(--foto)] lg:grid-rows-[1fr_auto] lg:[--foto:clamp(320px,calc(700px-28vw),440px)] xl:[--foto:min(500px,42%)]">
+        <Reveal className="lg:col-start-1 lg:row-start-1">
           <h2
             id="sobre-title"
             className="text-[clamp(26px,3.4vw,38px)] leading-[1.12] font-semibold tracking-[-0.03em]"
@@ -38,8 +47,17 @@ export function About() {
               {paragraph}
             </p>
           ))}
+        </Reveal>
 
-          <dl className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(min(120px,100%),1fr))] gap-3">
+        {/*
+         * Os stats são item próprio da grade para poderem trocar de lugar: de
+         * `xl` para cima ficam na coluna do texto, sob os parágrafos, e a foto
+         * desce as duas linhas; entre `lg` e `xl` o texto ficava 80–125px mais
+         * alto que a foto, então ali eles vão para uma linha inteira embaixo
+         * das duas colunas.
+         */}
+        <Reveal className="lg:col-span-2 lg:row-start-2 xl:col-span-1 xl:col-start-1">
+          <dl className="grid grid-cols-[repeat(auto-fit,minmax(min(120px,100%),1fr))] gap-3">
             {aboutStats.map((stat) => (
               <div
                 key={stat.label}
@@ -62,14 +80,17 @@ export function About() {
           </dl>
         </Reveal>
 
-        <Reveal delay={0.14} className="relative">
+        <Reveal
+          delay={0.14}
+          className="relative mx-auto w-full max-w-[440px] self-start lg:col-start-2 lg:row-start-1 lg:max-w-none xl:row-span-2"
+        >
           <div
             aria-hidden="true"
             className="absolute inset-y-[18px] -right-[18px] left-[18px] rounded-2xl bg-[radial-gradient(circle_at_70%_70%,rgb(var(--accent-rgb)/0.45),transparent_70%)] blur-3xl"
           />
 
           {about.photo.src ? (
-            <div className="border-line glow-photo relative aspect-square w-full overflow-hidden rounded-2xl border md:absolute md:inset-0 md:aspect-auto md:h-full">
+            <div className="border-line glow-photo relative aspect-square w-full overflow-hidden rounded-2xl border">
               <img
                 src={about.photo.src}
                 alt={about.photo.alt}
@@ -77,18 +98,7 @@ export function About() {
                 height={1000}
                 loading="lazy"
                 decoding="async"
-                /*
-                 * O corte puxa para cima (`20%`), nao para o centro.
-                 *
-                 * Agora que o quadro acompanha a altura do texto, ele fica
-                 * cada vez mais deitado quanto mais larga a tela — a 1920px o
-                 * texto tem 454px e o quadro precisa esconder ~17% da imagem.
-                 * Com o padrao `50%`, esses 17% saem metade de cima e metade
-                 * de baixo, e a cabeca ficava decepada no topo. Puxando o foco
-                 * para 20% quase tudo o que sai e rodape, que e fundo de
-                 * estudio.
-                 */
-                className="h-full w-full object-cover object-[50%_20%]"
+                className="h-full w-full object-cover"
               />
 
               {/*
@@ -109,7 +119,7 @@ export function About() {
             </div>
           ) : (
             // Regra de Ouro: sem a foto real, mantemos o placeholder do design.
-            <div className="border-line bg-panel glow-photo relative flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-2xl border md:absolute md:inset-0 md:aspect-auto md:h-full">
+            <div className="border-line bg-panel glow-photo relative flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-2xl border">
               <span
                 aria-hidden="true"
                 className="size-16 rounded-[14px] border border-[rgb(var(--accent-rgb)/0.5)] bg-[rgb(var(--accent-rgb)/0.12)]"
