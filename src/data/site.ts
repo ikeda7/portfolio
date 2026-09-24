@@ -23,10 +23,6 @@ export const site = {
     primaryCta: { label: 'Ver projetos', href: '#projetos' },
     secondaryCta: { label: 'Falar comigo', href: '#contato' },
     waveform: {
-      // O canto direito do painel mostra em que trilha se está ("01 / 03"),
-      // calculado pelo Waveform. Já foi '00:00:00 / 00:03:24' (sem fonte) e
-      // depois '48 bandas · CSS', que era verdade e não dizia nada a quem lê.
-      meta: 'Waveform · trilha',
       /**
        * As três trilhas de atuação, nas palavras do Lucas (23/09). Cada uma
        * é um **botão de verdade**: redesenha a waveform e troca a cor do neon
@@ -56,8 +52,10 @@ export const site = {
      * foco do portfólio, e elas estão na Experiência.
      */
     paragraphs: [
-      'Sou bacharel em Ciência da Computação pela FCT-UNESP e pós-graduando em Engenharia de Software em IA Aplicada na UniPDS. Já passei pelas duas pontas de um ERP: desenvolvi módulos em PHP, JavaScript e Oracle PL/SQL, e hoje atuo na implantação de um, numa operação de medicina diagnóstica.',
-      'No dia a dia uso Python, TypeScript, C#, PostgreSQL e Docker, e aplico IA generativa — engenharia de prompt, RAG e agentes — para automatizar levantamento, documentação e testes. É justamente o que a pós aprofunda.',
+      // Um parágrafo só de carreira. Até 24/09 eram dois, e o segundo listava
+      // Python, TypeScript, C#, PostgreSQL e Docker — a Stack, duas seções
+      // abaixo, já diz isso melhor ("menos é mais").
+      'Sou bacharel em Ciência da Computação pela FCT-UNESP e pós-graduando em Engenharia de Software em IA Aplicada na UniPDS. Já passei pelas duas pontas de um ERP: desenvolvi módulos em PHP, JavaScript e Oracle PL/SQL, e hoje atuo na implantação de um, numa operação de medicina diagnóstica, usando IA generativa para automatizar levantamento, documentação e testes — justamente o que a pós aprofunda.',
       'A música veio antes do código, e os dois acabaram se encontrando. Sou multi-instrumentista, toco na igreja e sirvo em missões por ela, o que já me levou a várias cidades. Em meu home studio estudo produção musical e teoria — e foi desse cruzamento que nasceram o meu TCC, uma IA que compõe música, e a estética deste site.',
       'O esporte e os games também viraram projeto. Sempre gostei de futsal e basquete, mas hoje o vôlei é o que mais jogo, e o Sports Control nasceu para organizar os nossos rachões. Nos games sou dos competitivos — League of Legends, CS e Valorant, com passagem por lives na Twitch —, e o Inhouse LoL veio daí.',
     ],

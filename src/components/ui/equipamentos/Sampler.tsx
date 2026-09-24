@@ -79,14 +79,6 @@ export function Sampler({ termos }: SamplerProps) {
               }`}
             >
               <span
-                aria-hidden="true"
-                className={`absolute top-2 left-2.5 font-mono text-[11px] tabular-nums sm:left-3 ${
-                  aceso ? 'text-white/80' : 'text-ink-faint'
-                }`}
-              >
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <span
                 className={`font-mono text-[11px] leading-[1.25] tracking-[0.04em] break-words hyphens-auto transition-colors duration-200 ${
                   aceso ? 'text-white' : 'text-ink'
                 }`}

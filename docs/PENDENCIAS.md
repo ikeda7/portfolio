@@ -183,8 +183,8 @@ auditoria limpa.
 - **Contato** — canais na altura natural, embaixo do convite, na coluna da
   esquerda; formulario sozinho na direita.
 - **Cantos dos paineis** — os codigos (LANG, EDU, OUT, IN, "UI · 07") viraram
-  contagem por extenso ("8 linguagens", "3 idiomas"), calculada da lista
-  (`lib/contagem.ts`). Na waveform, a trilha ativa ("01 / 03").
+  contagem por extenso ("8 linguagens", "3 idiomas"), e em 24/09 a contagem
+  tambem saiu (ver "Menos é mais" em Decisões).
 
 **Ainda com o dono:** a Stack (ideias mandadas em 24/09, nenhuma escolhida),
 o foco tecnico (ele questionou se faz sentido com 6 projetos), projetos
@@ -1036,6 +1036,18 @@ entao um parser que falha nao estoura — ele reporta silencio.
 ## Decisões já tomadas (com motivo)
 
 Nenhuma é irreversível; estão aqui para não serem refeitas por engano.
+
+**Menos é mais (24/09).** Auditoria de elementos que repetiam o que a página
+já diz, decidida item a item pelo dono. Saíram: a contagem no canto dos
+painéis ("8 pads", "3 idiomas" — o olho conta sozinho), a linha de legenda da
+waveform ("Waveform · trilha" e "01 / 03" — os botões acesos já dizem a
+trilha), "Presidente Prudente, SP" das duas entradas de Atuação acadêmica (o
+Bacharelado mantém a cidade), a numeração dos pads, o índice do rack e a
+régua de compassos da DAW. O Sobre juntou os dois parágrafos de carreira e
+tirou a lista de tecnologias (a Stack diz melhor), e a Pós ficou com a ementa
+em uma linha. **Ficaram de propósito:** o formulário (entra com o EmailJS), a
+fita de bibliotecas (enriquece) e as trilhas coloridas (a distinção importa).
+A foto do Sobre encolheu junto (500/520px) para não abrir vão.
 
 **Faders e rack sem nota numérica.** Auto-avaliação não é verificável e convida
 a pergunta que ninguém responde ("por que 82 e não 90?"). A altura é composição

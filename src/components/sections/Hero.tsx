@@ -105,7 +105,7 @@ export function Hero() {
           variants={revealVariants}
           transition={REVEAL_TRANSITION}
         >
-          <Waveform meta={hero.waveform.meta} canais={hero.waveform.canais} />
+          <Waveform canais={hero.waveform.canais} />
         </m.div>
       </m.div>
     </section>

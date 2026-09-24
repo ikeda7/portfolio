@@ -41,8 +41,6 @@ export interface SkillTerm {
 export interface SkillNiche {
   readonly id: string
   readonly title: string
-  /** Palavra da contagem no canto do painel: a peça do equipamento do nicho ("7 pedais"). */
-  readonly unidade: readonly [singular: string, plural: string]
   readonly terms: readonly SkillTerm[]
 }
 

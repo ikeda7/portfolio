@@ -46,9 +46,6 @@ export function Rack({ termos }: RackProps) {
           </span>
 
           <span aria-hidden="true" className="flex items-center gap-1.5">
-            <span className="text-ink-faint mr-1 font-mono text-[11px] leading-none">
-              {String(index + 1).padStart(2, '0')}
-            </span>
             {[0, 1, 2, 3, 4].map((led) => (
               <span
                 key={led}
