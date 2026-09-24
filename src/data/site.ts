@@ -1,6 +1,4 @@
 import retrato from '@/assets/lucas-ikeda.webp'
-import { bibliotecasDoGithub } from '@/data/skills'
-import type { AboutStat } from '@/types/content'
 
 /**
  * Conteúdo da página. Tudo aqui vem do currículo de Lucas Ikeda
@@ -108,30 +106,6 @@ export const navLinks = [
  * que alguém mexesse em uma delas.
  */
 export const destinos = [{ label: 'Topo', href: '#top' }, ...navLinks] as const
-
-/**
- * Os quatro números do Sobre — todos do GitHub, e nenhum repetido em outra
- * seção. Eram "2026 · Ciência da Computação" e "B2 · Inglês", que a Formação e
- * os Idiomas já mostram (leitura do dono, 24/09).
- *
- * Conferidos em 24/09/2026: 35 repositórios públicos e conta criada em
- * junho de 2021 (API do GitHub, perfil ikeda7), e 583 commits públicos (busca
- * de commits `author:ikeda7`, que conta a branch principal de cada repo).
- * Repositórios e commits envelhecem: ver a ideia de gerar no build em
- * docs/PENDENCIAS.md. Os anos no GitHub já são calculados.
- */
-const CONTA_GITHUB_CRIADA = Date.UTC(2021, 5, 11) // 11/06/2021, API do GitHub
-const ANOS_NO_GITHUB = Math.floor((Date.now() - CONTA_GITHUB_CRIADA) / (365.25 * 24 * 3600 * 1000))
-
-export const aboutStats: readonly AboutStat[] = [
-  { value: '35', label: 'Repositórios públicos' },
-  { value: '583', label: 'Commits públicos' },
-  // Calculado na hora, a partir da data de criação da conta: não envelhece.
-  { value: `${ANOS_NO_GITHUB} anos`, label: 'No GitHub' },
-  // O tamanho da lista da fita: a varredura dos repositórios públicos. Sai da
-  // própria lista, então os dois nunca discordam.
-  { value: String(bibliotecasDoGithub.length), label: 'Bibliotecas usadas no GitHub' },
-]
 
 /**
  * Alturas (em %) das 48 barras da waveform do hero.

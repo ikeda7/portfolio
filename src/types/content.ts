@@ -92,11 +92,6 @@ export interface SocialChannel {
   readonly icon: 'github' | 'linkedin' | 'instagram' | 'mail'
 }
 
-export interface AboutStat {
-  readonly value: string
-  readonly label: string
-}
-
 /**
  * Uma entrada da linha do tempo — trabalho, atuacao academica ou formacao.
  *
