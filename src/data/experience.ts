@@ -96,7 +96,17 @@ export const experience: readonly TimelineEntry[] = [
 export const education: readonly TimelineEntry[] = [
   {
     period: 'Set/2026 — Atual',
-    title: 'Pós em Engenharia de IA Aplicada',
+    /*
+     * "Engenharia de SOFTWARE em IA Aplicada", com o "Software". Confirmado
+     * pelo dono em 23/09, depois de eu ter trocado por "Engenharia de IA
+     * Aplicada" e ele reverter.
+     *
+     * O site da UniPDS chama o curso de "Engenharia de IA Aplicada" e a
+     * organizacao dos alunos no GitHub e `unipds-engenharia-de-ia-aplicada`.
+     * Nada disso manda aqui: quem diz o nome do proprio curso e ele. Nao
+     * "corrija" de novo com base na pagina da escola.
+     */
+    title: 'Pós em Engenharia de Software em IA Aplicada',
     org: 'UniPDS',
     current: true,
     bullets: [

@@ -1,7 +1,8 @@
 # Pendências — portfólio Lucas Ikeda
 
 Última atualização: **23/09/2026**, madrugada. Da leva de 16 pontos do dono,
-**5 estão feitos** (2, 5, 11, 14 e a metade concreta do 16) e os outros 11
+**4 estão feitos** (2, 5, 14 e a metade concreta do 16), o **11 caiu — não era
+erro, o nome da pós estava certo desde sempre** — e os outros 11
 continuam abertos — a seção logo antes de "Pendencias, em ordem" marca cada um.
 Este arquivo existe para retomar o trabalho de outra máquina — leia a pendência
 1 antes de tentar o deploy.
@@ -52,10 +53,10 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
 Cinco dos 16 pontos, escolhidos por nao dependerem de decisao do dono. Um PR
 por assunto, todos com CI verde.
 
-- **Ponto 11 (#26)** — o nome da pos estava **errado no ar**. "Engenharia de
-  Software em IA Aplicada" -> "Engenharia de IA Aplicada", em `experience.ts`
-  e no primeiro paragrafo do Sobre. A ementa **nao** mudou: ela sai do
-  curriculo, nao do site da escola.
+- **Ponto 11 (#26, revertido em #31)** — troquei o nome da pos por
+  "Engenharia de IA Aplicada" e **estava errado**. O nome certo e
+  "Engenharia de **Software** em IA Aplicada", como sempre esteve. Ver o
+  ponto 11 na lista, que virou o registro do erro.
 - **Pontos 5, 14 e 16 (#27)** — fita de 38s para 60s; LED "em andamento"
   pulsando (keyframe `ledpulse`, CSS, entao o kill switch de movimento
   reduzido ja o cobre); tags e "Abrir" dos cards descendo juntos com
@@ -195,14 +196,17 @@ tecnologia na pagina inteira e para a fita. Ela deixou de ser enfeite.
 
 ---
 
-## Leva de 23/09 (noite) — 16 pontos do dono, 5 feitos e 11 abertos
+## Leva de 23/09 (noite) — 16 pontos do dono, 4 feitos, 1 caiu, 11 abertos
 
 Ele pediu para **anotar e nao resolver**, porque ia trocar de maquina. Na
 sessao seguinte liberou ("mete marcha"), e sairam os cinco que nao dependiam de
 decisao dele. Esta tudo aqui, na ordem em que ele falou, com o que eu ja sei
 sobre cada um — arquivo, causa provavel, e onde eu discordo.
 
-**FEITOS:** 2, 5, 11, 14 e a metade concreta do 16.
+**FEITOS:** 2, 5, 14 e a metade concreta do 16.
+
+**CAIU:** o 11. Nao era erro — o nome da pos estava certo, e eu o quebrei. Ver
+o registro no proprio ponto, que ficou como aviso.
 
 **ABERTOS, e por que:** 1, 6 e 9 esperam ele dizer o que quer; 3, 12 e 15 sao
 decisao de posicionamento ou de gosto que eu nao devo tomar sozinho; 4, 7, 8,
@@ -308,38 +312,45 @@ aberta. "Bauru – SP" aparece em tres lugares: `site.hero.statusLabel`,
 e nao e o mesmo risco de um telefone. Talvez manter no Contato e tirar do hero
 e do rodape. Perguntar.
 
-### 11. ERRO FACTUAL — o nome da pos esta errado no site — FEITO (#26)
+### 11. O nome da pos — NAO ERA ERRO. REVERTIDO (#31)
 
-Corrigido nos dois lugares. A ementa **nao** mudou, pelo motivo descrito no
-fim desta secao. O que continua aberto e a reescrita do Sobre, que ele pediu e
-que depende da conversa do ponto 9 — nao confunda uma coisa com a outra.
+> **NAO MEXA NISSO DE NOVO.** O nome certo e
+> **"Pos em Engenharia de Software em IA Aplicada"**, com o "Software".
+> Confirmado pelo dono em 23/09, depois de eu trocar (#26) e ele reverter.
 
-O registro original:
+Historia completa, porque a armadilha vai se repetir:
 
-A pagina diz **"Pos em Engenharia de Software em IA Aplicada"**. O certo,
-segundo ele, e **"Engenharia de IA Aplicada"**, na UniPDS. Confere com o site
-da instituicao (unipds.com.br/org-pos-ia e ia.unipds.com.br), que chama o
-curso de Engenharia de IA Aplicada.
+1. Em 23/09 o dono disse que o nome estava errado e que o certo era
+   "Engenharia de IA Aplicada". Eu registrei aqui como **erro factual no ar**
+   e marquei como a coisa mais urgente da lista.
+2. Eu confirmei contra o site da UniPDS (`unipds.com.br/org-pos-ia`,
+   `ia.unipds.com.br`), que de fato chama o curso de "Engenharia de IA
+   Aplicada". Isso me deu confianca a mais — e era confianca na fonte errada.
+3. Troquei nos dois lugares em #26.
+4. O dono leu e corrigiu: **"o nome e Engenharia de Software em IA Aplicada
+   msm"**. Revertido em #31.
 
-O nome errado provavelmente veio do curriculo: a organizacao dos alunos no
-GitHub se chama `unipds-engenharia-de-ia-aplicada` e tem um repositorio
-`engenharia-de-software-com-ia-aplicada` — nomenclatura antiga convivendo com
-a nova.
+**A licao, que vale para todo o resto do site:** a pagina da instituicao **nao
+e a fonte**. A fonte e o dono e o curriculo dele. A
+[Regra de Ouro](../DIRETRIZES_CLAUDE.MD) ja diz isso, e mesmo assim eu tratei
+um site externo como confirmacao porque ele concordava com o que eu queria
+ouvir. O `unipds-engenharia-de-ia-aplicada` do GitHub e o
+`ia.unipds.com.br` sao nomes de divulgacao; o nome do curso que ele cursa e o
+que ele diz que e.
 
-Onde corrigir:
+Os dois lugares, para quem for conferir:
 
-- `src/data/experience.ts` -> `education[0].title`
-- `src/data/site.ts` -> primeiro paragrafo do Sobre ("pos-graduando em
-  Engenharia de Software em IA Aplicada")
+- `src/data/experience.ts` -> `education[0].title` (tem um comentario travando)
+- `src/data/site.ts` -> primeiro paragrafo do Sobre
 
-**Nao troque a ementa junto.** Os topicos (LLMs, RAG, embeddings, vector
-databases, multiagente, MCP, fine-tuning, governanca) saem do curriculo dele e
-continuam validos. A pagina do curso lista outra grade (AIOps, Kubernetes,
-IaC) que pode ser outra turma ou outro recorte — **o curriculo do dono e a
-fonte, nao o site da escola**.
+**A ementa nunca mudou, e continua certa.** Os topicos (LLMs, RAG, embeddings,
+vector databases, multiagente, MCP, fine-tuning, governanca) saem do curriculo.
+A pagina do curso lista outra grade (AIOps, Kubernetes, IaC) — mais um motivo
+para nao usar o site da escola como fonte de nada aqui.
 
-Ele disse que isso "afeta bastante o sobre mim" e pediu atencao aos textos.
-Reescrever o Sobre e tarefa propria, e depende da conversa do ponto 9.
+**Continua aberto:** ele disse que o assunto "afeta bastante o sobre mim" e
+pediu atencao aos textos. Isso nao era sobre o nome — e reescrita do Sobre, que
+depende da conversa do ponto 9.
 
 ### 12. Justificar o texto, no portfolio inteiro
 
