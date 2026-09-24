@@ -1,11 +1,16 @@
 import { ContactChannels } from '@/components/ui/ContactChannels'
 import { ContactForm } from '@/components/ui/ContactForm'
+import { CopiarEmail } from '@/components/ui/CopiarEmail'
 import { Panel } from '@/components/ui/Panel'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { site } from '@/data/site'
+import { socialChannels } from '@/data/social'
 
 const { contact } = site
+
+// O endereco sai do canal de e-mail, e nao de uma string repetida aqui.
+const email = socialChannels.find((canal) => canal.icon === 'mail')?.handle
 
 /**
  * Booking: o convite e os canais à esquerda, o formulário à direita.
@@ -35,6 +40,11 @@ export function Contact() {
             <p className="text-ink-muted texto-justo mt-5 max-w-[620px] text-[15px] leading-[1.7]">
               {contact.description}
             </p>
+            {email && (
+              <div className="mt-6 max-w-[620px]">
+                <CopiarEmail email={email} />
+              </div>
+            )}
           </div>
 
           <ContactChannels />
