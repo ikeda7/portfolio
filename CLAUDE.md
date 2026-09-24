@@ -151,9 +151,9 @@ Camadas:
 coordenada de viewport. Já foi uma por seção e o brilho se partia na fronteira —
 cada uma media relativo a si mesma e apagava no `onPointerLeave`. Não volte a
 pôr `usePointerGlow` numa `<section>`: o hook é para brilho **com dono** (um
-card), onde apagar ao sair é o certo. O pulso ambiente (`animate-driftglow`)
-continua por seção de propósito, porque alterna de lado conforme o número da
-faixa.
+card), onde apagar ao sair é o certo. **Não há mais pulso ambiente nas
+seções** (saiu em 24/09): uma mancha azul parada num canto, com a luz do
+cursor andando pela página, lia como defeito. Só o hero mantém o dele.
 
 - `lib/` — [motion.ts](src/lib/motion.ts) (tempos/curvas) e
   [contact.ts](src/lib/contact.ts) (envio do formulário). Lógica sem JSX.
@@ -296,16 +296,15 @@ nota. **Não volte a amarrar altura a número** sem uma fonte: nível por
 tecnologia é conteúdo do Lucas, como já é em Idiomas. Ver
 [docs/PENDENCIAS.md](docs/PENDENCIAS.md).
 
-## As duas luzes moram no `Section`
+## Altura das seções
 
-[Section.tsx](src/components/ui/Section.tsx) carrega o pulso ambiente
-(`animate-driftglow`) e o brilho que segue o cursor (`usePointerGlow`). Elas
-existiam só no hero, e a página perdia energia depois da primeira tela.
-
-Ficam no container e não em cada seção para que ninguém precise lembrar de
-repetir — e o ambiente **alterna de lado** conforme o número da faixa, para a
-página não parecer o mesmo quadro colado seis vezes. Nenhuma das duas
-sobrevive a `prefers-reduced-motion`.
+[Section.tsx](src/components/ui/Section.tsx) tem `fill`: com ele a seção
+ocupa no mínimo uma tela. **Só a Stack usa** (e o hero, que é à parte). Sobre,
+Experiência, Projetos e Contato têm a altura do conteúdo desde 24/09: com a
+tela forçada, o conteúdo mais baixo que a janela ficava centralizado com vão
+em cima e embaixo, ou esticava um painel além do vizinho (o Idiomas). No
+Sobre, quem faz o conteúdo caber numa tela é a foto, dimensionada pela altura
+da janela.
 
 ## Formulário de contato
 

@@ -38,48 +38,25 @@ interface SectionProps {
  * do conteúdo em vez de sobrar em volta: o miolo recebe `h-full` e cada seção
  * distribui o que tem na altura disponível.
  *
- * **O pulso ambiente mora aqui; a luz do cursor não.** As duas existiam só no
- * hero, e quem descia a página entrava numa sequência de blocos parados — o
- * site parecia perder energia depois da primeira tela. O pulso continua por
- * seção de propósito: é ele que **alterna de lado** conforme o número da
- * faixa, para a página não parecer o mesmo quadro colado seis vezes.
- *
- * A luz do cursor saiu daqui. Com uma por seção, cada uma media a posição
- * relativa a si mesma e zerava no `onPointerLeave`: a luz morria de um lado da
- * fronteira e renascia do outro. Agora é uma só, `fixed` na raiz — ver
- * [BrilhoDoCursor](./BrilhoDoCursor.tsx). Esta seção voltou a não saber de luz
- * de cursor, e por isso também não precisa mais de handler de ponteiro.
- *
- * O pulso não sobrevive a `prefers-reduced-motion`: morre no kill switch CSS
- * do `index.css`.
+ * **Nenhuma luz mora aqui.** Já moraram duas: a do cursor (hoje uma só,
+ * `fixed` na raiz — ver [BrilhoDoCursor](./BrilhoDoCursor.tsx)) e um pulso
+ * ambiente fixo num canto de cada seção, alternando de lado pelo número da
+ * faixa. O pulso saiu em 24/09: com a luz do cursor andando pela página, uma
+ * mancha azul parada num canto lia como "uma luz que não é a do meu cursor"
+ * (print do dono, atrás da Stack). O hero mantém o dele, centralizado no topo,
+ * que é parte do desenho da primeira tela.
  */
 export function Section({ id, index, label, children, fill = true }: SectionProps) {
-  const daEsquerda = Number(index) % 2 === 1
-
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
       className={`relative flex items-stretch overflow-hidden px-6 ${
-        fill ? 'min-h-[calc(100svh-var(--header-h))] py-[clamp(2.5rem,6vh,5rem)]' : 'py-12'
+        fill
+          ? 'py-9 sm:min-h-[calc(100svh-var(--header-h))] sm:py-[clamp(2.5rem,6vh,5rem)]'
+          : 'py-9 sm:py-12'
       }`}
     >
-      {/*
-       * O pulso nasce 220px ACIMA da seção, e a seção corta o que passa da
-       * borda (`overflow-hidden`). Sem a máscara, o corte caía perto do
-       * centro do brilho — a parte mais forte — e virava uma linha reta na
-       * fronteira com a seção de cima; o brilho do cursor, passando por ali,
-       * parecia mudar de intensidade (leitura do dono, 24/09). A máscara faz
-       * o pulso começar transparente exatamente na borda (220px) e chegar à
-       * força total 160px abaixo dela.
-       */}
-      <div
-        aria-hidden="true"
-        className={`animate-driftglow pointer-events-none absolute -top-[220px] [mask-image:linear-gradient(to_bottom,transparent_220px,#000_380px)] h-[min(520px,62vw)] w-[min(860px,120%)] bg-[radial-gradient(ellipse_at_center,rgb(var(--accent-rgb)/0.16),rgb(13_13_13/0)_70%)] blur-[14px] ${
-          daEsquerda ? '-left-[12%]' : '-right-[12%]'
-        }`}
-      />
-
       <div className="relative mx-auto flex w-full max-w-[1200px] flex-col 2xl:max-w-[1440px]">
         <SectionHeading index={index} label={label} />
         {/*

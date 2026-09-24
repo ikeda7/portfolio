@@ -1037,6 +1037,24 @@ entao um parser que falha nao estoura — ele reporta silencio.
 
 Nenhuma é irreversível; estão aqui para não serem refeitas por engano.
 
+**Sem pulso ambiente nas seções (24/09).** Cada seção tinha um brilho azul
+parado num canto, alternando de lado. Com a luz do cursor andando pela página,
+ele lia como mancha ("uma luz que não é a do meu cursor", print do dono). Só o
+hero mantém o dele. Ideias para decorar o fundo estão em discussão com o dono —
+nada implementado.
+
+**Reveal com `amount: 0` (24/09).** Com `0.2`, a grade de Projetos no celular
+(~3500px) nunca tinha 20% na tela e ficava invisível. Ver `VIEWPORT` em
+`lib/motion.ts`.
+
+**Experiência também tem a altura do conteúdo (24/09)**, pelo mesmo motivo do
+Sobre e do Contato: a grade esticava até o fim da tela e o Idiomas passava da
+base da Atuação acadêmica. Hoje só a Stack usa `fill`.
+
+**Celular: 20px entre painéis, respiro menor nas seções (24/09).** Os faders da
+mesa são botões (tocar prende o canal em cima), e o pad toca a nota caindo uma
+oitava ao desligar.
+
 **Sobre e Contato têm a altura do conteúdo (24/09).** As duas eram "uma tela
 no mínimo" com o bloco centralizado, e o vão em cima e embaixo crescia com o
 monitor (~190px + ~220px a 1920x1080). Agora usam `fill={false}`, como
