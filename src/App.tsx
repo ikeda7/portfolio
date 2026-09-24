@@ -12,7 +12,7 @@ import { Skills } from '@/components/sections/Skills'
 import { BrilhoDoCursor } from '@/components/ui/BrilhoDoCursor'
 import { Marquee } from '@/components/ui/Marquee'
 import { ScrollHint } from '@/components/ui/ScrollHint'
-import { bibliotecasDosProjetos } from '@/data/skills'
+import { bibliotecasDoGithub } from '@/data/skills'
 
 export default function App() {
   return (
@@ -50,7 +50,7 @@ export default function App() {
         <About />
         <Experience />
         <Skills />
-        <Marquee items={bibliotecasDosProjetos} legenda="Nos projetos" />
+        <Marquee items={bibliotecasDoGithub} />
         <Projects />
         <Contact />
       </main>
