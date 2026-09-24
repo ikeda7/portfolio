@@ -3,7 +3,6 @@ import * as m from 'motion/react-m'
 
 import { Waveform } from '@/components/ui/Waveform'
 import { site } from '@/data/site'
-import { usePointerGlow } from '@/hooks/usePointerGlow'
 import { REVEAL_TRANSITION, VIEWPORT, revealVariants, staggerVariants } from '@/lib/motion'
 
 const { hero } = site
@@ -11,16 +10,20 @@ const { hero } = site
 /**
  * Palco principal: pill de status, título, CTAs e painel de waveform.
  *
- * A entrada é escalonada na montagem (não no scroll — o hero já nasce visível)
- * e um brilho de acento persegue o cursor pela seção inteira.
+ * A entrada é escalonada na montagem — não no scroll, porque o hero já nasce
+ * visível.
+ *
+ * A luz que segue o cursor **não mora mais aqui**: é uma só para a página
+ * inteira, `fixed` na raiz, em
+ * [BrilhoDoCursor](../ui/BrilhoDoCursor.tsx). Com uma por seção, ela morria na
+ * fronteira entre o hero e o Sobre. O pulso ambiente abaixo continua sendo do
+ * hero, porque é a única luz que precisa nascer centrada.
  */
 export function Hero() {
   const prefersReducedMotion = useReducedMotion()
-  const { bind, background } = usePointerGlow<HTMLElement>({ size: 460, alpha: 0.14 })
 
   return (
     <section
-      {...bind}
       id="top"
       /*
        * O header e sticky, entao ocupa espaco no fluxo e o hero comeca abaixo
@@ -36,14 +39,6 @@ export function Hero() {
         aria-hidden="true"
         className="animate-driftglow pointer-events-none absolute -top-[180px] left-1/2 h-[min(460px,60vw)] w-[min(760px,130%)] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgb(var(--accent-rgb)/0.22),rgb(13_13_13/0)_70%)] blur-[10px]"
       />
-
-      {background && (
-        <m.div
-          aria-hidden="true"
-          style={{ background }}
-          className="pointer-events-none absolute inset-0"
-        />
-      )}
 
       <m.div
         className="relative mx-auto flex w-full max-w-[1200px] flex-col items-center text-center"

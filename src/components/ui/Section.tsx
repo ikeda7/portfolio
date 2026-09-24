@@ -1,8 +1,6 @@
-import * as m from 'motion/react-m'
 import type { ReactNode } from 'react'
 
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { usePointerGlow } from '@/hooks/usePointerGlow'
 
 interface SectionProps {
   /** Id da âncora, sem `#`. O título da seção precisa usar `<id>-title`. */
@@ -36,24 +34,26 @@ interface SectionProps {
  * do conteúdo em vez de sobrar em volta: o miolo recebe `h-full` e cada seção
  * distribui o que tem na altura disponível.
  *
- * **As duas luzes moram aqui, e não em cada seção.** Elas existiam só no hero:
- * um pulso ambiente e um brilho de acento que persegue o cursor. Quem descia a
- * página entrava numa sequência de blocos parados e o site parecia perder
- * energia depois da primeira tela. Implementadas no container, toda seção
- * recebe as duas sem que ninguém precise lembrar de repetir o código — e o
- * ambiente **alterna de lado** conforme o número da faixa, para a página não
- * parecer o mesmo quadro colado seis vezes.
+ * **O pulso ambiente mora aqui; a luz do cursor não.** As duas existiam só no
+ * hero, e quem descia a página entrava numa sequência de blocos parados — o
+ * site parecia perder energia depois da primeira tela. O pulso continua por
+ * seção de propósito: é ele que **alterna de lado** conforme o número da
+ * faixa, para a página não parecer o mesmo quadro colado seis vezes.
  *
- * Nenhuma das duas sobrevive a `prefers-reduced-motion`: o pulso morre no kill
- * switch CSS do `index.css`, e `usePointerGlow` devolve `background: null`.
+ * A luz do cursor saiu daqui. Com uma por seção, cada uma media a posição
+ * relativa a si mesma e zerava no `onPointerLeave`: a luz morria de um lado da
+ * fronteira e renascia do outro. Agora é uma só, `fixed` na raiz — ver
+ * [BrilhoDoCursor](./BrilhoDoCursor.tsx). Esta seção voltou a não saber de luz
+ * de cursor, e por isso também não precisa mais de handler de ponteiro.
+ *
+ * O pulso não sobrevive a `prefers-reduced-motion`: morre no kill switch CSS
+ * do `index.css`.
  */
 export function Section({ id, index, label, children, fill = true }: SectionProps) {
-  const { bind, background } = usePointerGlow<HTMLElement>({ size: 520, alpha: 0.1 })
   const daEsquerda = Number(index) % 2 === 1
 
   return (
     <section
-      {...bind}
       id={id}
       aria-labelledby={`${id}-title`}
       className={`relative flex items-stretch overflow-hidden px-6 ${
@@ -66,14 +66,6 @@ export function Section({ id, index, label, children, fill = true }: SectionProp
           daEsquerda ? '-left-[12%]' : '-right-[12%]'
         }`}
       />
-
-      {background && (
-        <m.div
-          aria-hidden="true"
-          style={{ background }}
-          className="pointer-events-none absolute inset-0"
-        />
-      )}
 
       <div className="relative mx-auto flex w-full max-w-[1200px] flex-col 2xl:max-w-[1440px]">
         <SectionHeading index={index} label={label} />

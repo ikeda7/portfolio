@@ -9,6 +9,7 @@ import { Experience } from '@/components/sections/Experience'
 import { Hero } from '@/components/sections/Hero'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
+import { BrilhoDoCursor } from '@/components/ui/BrilhoDoCursor'
 import { Marquee } from '@/components/ui/Marquee'
 import { FocoTecnicoProvider } from '@/hooks/useFocoTecnico'
 import { ScrollHint } from '@/components/ui/ScrollHint'
@@ -33,6 +34,14 @@ export default function App() {
         >
           Pular para o conteúdo
         </a>
+
+        {/*
+         * Uma luz de cursor para a página inteira, antes de todo o resto na
+         * árvore para pintar por baixo. Aqui e não dentro das seções: uma por
+         * seção media a posição relativa a si mesma e apagava ao sair, então o
+         * brilho se partia na fronteira entre uma e outra.
+         */}
+        <BrilhoDoCursor />
 
         <Header />
         <SectionNav />

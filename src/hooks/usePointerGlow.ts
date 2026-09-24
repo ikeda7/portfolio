@@ -29,11 +29,17 @@ interface PointerGlow<T extends HTMLElement> {
 const SPRING = { stiffness: 60, damping: 20, mass: 0.6 }
 
 /**
- * Brilho de acento que acompanha o cursor dentro de um elemento.
+ * Brilho de acento que acompanha o cursor **dentro de um elemento**.
  *
  * O brilho vive em uma camada `absolute inset-0` própria, então nunca compete
  * com o hover dos filhos. Retorna `background: null` quando o visitante pede
  * menos movimento — aí o componente simplesmente não renderiza a camada.
+ *
+ * Isto é para brilho com dono: um card, uma caixa. A coordenada é relativa ao
+ * elemento e a opacidade zera quando o cursor sai dele, o que é o
+ * comportamento certo num card e **errado** numa seção — ali o brilho se
+ * partia na fronteira. A luz da página inteira é outra coisa e mora em
+ * [BrilhoDoCursor](../components/ui/BrilhoDoCursor.tsx).
  */
 export function usePointerGlow<T extends HTMLElement>({
   size = 420,
