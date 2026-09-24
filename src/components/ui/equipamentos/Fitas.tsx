@@ -20,7 +20,7 @@ const RAIOS =
  * estúdio — a metáfora é a mais literal da Stack, de propósito. Clicar põe a
  * fita para tocar: os dois carretéis giram e o LED acende; clicar de novo
  * para, e os carretéis ficam no ângulo em que pararam (a animação só troca
- * de `paused` para `running`, como o vinil dos Projetos).
+ * de `paused` para `running`).
  *
  * Duas colunas em qualquer largura: são quatro fitas, e 2x2 fecha.
  */

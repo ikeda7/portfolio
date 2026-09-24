@@ -75,9 +75,8 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
        * sem ele, a rotação no hover seria matematicamente real e visualmente
        * invisível. O desenho do brilho está em `BRILHO`, acima.
        *
-       * Gira sem parar enquanto o card está sob o mouse ou com foco, e congela
-       * no ângulo em que estava quando sai — o próximo hover continua dali.
-       * O mecanismo está no `@utility vinil-gira`, em `index.css`.
+       * Gira sempre, em qualquer aparelho (no celular não existe hover, e o
+       * disco ficava parado). Ver `@utility vinil-gira`, em `index.css`.
        */}
       <div
         aria-hidden="true"
