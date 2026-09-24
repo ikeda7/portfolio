@@ -97,6 +97,37 @@
 }
 
 /*
+ * LEDs de atividade do rack (Back-end & dados) e medidor das pistas de DAW
+ * (Ferramentas & processos). Fora do `@theme` pelo mesmo motivo dos outros:
+ * quem os referencia e um `@utility`, com duracao e atraso inline por indice.
+ */
+@keyframes rackpisca {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+
+@keyframes nivel {
+  0%,
+  100% {
+    transform: scaleX(0.35);
+  }
+  30% {
+    transform: scaleX(0.9);
+  }
+  60% {
+    transform: scaleX(0.55);
+  }
+  80% {
+    transform: scaleX(0.75);
+  }
+}
+
+/*
  * LED da entrada atual da linha do tempo.
  *
  * Vive fora do `@theme` pelo mesmo motivo de `wavepulse` e `marquee`: quem
@@ -267,6 +298,14 @@
   hyphens: auto;
   hyphenate-limit-chars: 7 3 3;
   text-wrap: pretty;
+}
+
+@utility led-atividade {
+  animation: rackpisca 1.4s ease-in-out infinite;
+}
+
+@utility medidor {
+  animation: nivel 1.4s ease-in-out infinite;
 }
 
 @utility glow-input {

@@ -1,7 +1,6 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
-import { BotaoTecnologia } from '@/components/ui/BotaoTecnologia'
 import { selo } from '@/data/skills'
 import { FILL_TRANSITION, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
 import type { SkillTerm } from '@/types/content'
@@ -41,7 +40,10 @@ const UNIDADE = 72
  * mesa refluir (ver a grade em Skills).
  *
  * O trilho, o preenchimento e o knob são decoração e `aria-hidden`: quem usa
- * leitor de tela recebe só o rótulo, que é a informação — e o botão de foco.
+ * leitor de tela recebe só o rótulo, que é a informação.
+ *
+ * No hover o knob sobe um pouco e acende — é a mão no fader. Volta ao sair:
+ * a altura parada continua sendo a mesma para todos (ver `UNIDADE`).
  */
 export function Fader({ termo, index }: FaderProps) {
   const prefersReducedMotion = useReducedMotion()
@@ -51,7 +53,7 @@ export function Fader({ termo, index }: FaderProps) {
   const transition = { ...FILL_TRANSITION, delay: index * STAGGER_STEP }
 
   return (
-    <div className="flex min-w-0 flex-col items-center gap-2.5">
+    <div className="group/canal flex min-w-0 flex-col items-center gap-2.5">
       <div
         aria-hidden="true"
         className="border-line bg-panel-2 relative min-h-[104px] w-2 flex-1 rounded-full border"
@@ -69,7 +71,7 @@ export function Fader({ termo, index }: FaderProps) {
               })}
         />
         <m.span
-          className="bg-knob border-knob-line glow-knob absolute left-1/2 h-3 w-[26px] -translate-x-1/2 translate-y-1/2 rounded-[3px] border"
+          className="bg-knob border-knob-line glow-knob group-hover/canal:border-accent absolute left-1/2 h-3 w-[26px] -translate-x-1/2 translate-y-1/2 rounded-[3px] border transition-[translate,border-color] duration-300 group-hover/canal:-translate-y-2"
           style={prefersReducedMotion ? { bottom: fill } : undefined}
           {...(prefersReducedMotion
             ? {}
@@ -87,11 +89,7 @@ export function Fader({ termo, index }: FaderProps) {
        * extensão desce, e sem a altura reservada a fileira de rótulos deixaria
        * os trilhos terminando em alturas diferentes.
        */}
-      <BotaoTecnologia
-        termo={termo.label}
-        className="text-ink-muted hover:text-ink flex min-h-9 w-full flex-col items-center justify-start gap-0.5 text-center font-mono text-[11px] leading-[1.3] tracking-[0.04em] break-words uppercase transition-colors duration-300"
-        classNameAtivo="text-accent-text"
-      >
+      <span className="text-ink-muted group-hover/canal:text-ink flex min-h-9 w-full flex-col items-center justify-start gap-0.5 text-center font-mono text-[11px] leading-[1.3] tracking-[0.04em] break-words uppercase transition-colors duration-300">
         {termo.label}
         {extensao && (
           <span
@@ -101,7 +99,7 @@ export function Fader({ termo, index }: FaderProps) {
             {extensao}
           </span>
         )}
-      </BotaoTecnologia>
+      </span>
     </div>
   )
 }

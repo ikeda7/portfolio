@@ -1,28 +1,38 @@
+import type { ReactNode } from 'react'
+
 import { Fader } from '@/components/ui/Fader'
-import { NichePanel } from '@/components/ui/NichePanel'
 import { Panel } from '@/components/ui/Panel'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
+import { Pedaleira } from '@/components/ui/equipamentos/Pedaleira'
+import { PistasDaw } from '@/components/ui/equipamentos/PistasDaw'
+import { Rack } from '@/components/ui/equipamentos/Rack'
+import { Sampler } from '@/components/ui/equipamentos/Sampler'
 import { backend, ferramentas, frontend, iaAplicada, linguagens } from '@/data/skills'
 import { contagem } from '@/lib/contagem'
+import type { SkillNiche } from '@/types/content'
 
 /**
- * Stack, separada pelos cinco nichos do currículo.
+ * Stack: os cinco nichos do currículo, **um equipamento por nicho**.
  *
- * A seção já teve três painéis que misturavam linguagem, framework, banco,
- * técnica de IA e ferramenta nos mesmos blocos — e a leitura de fora foi "fica
- * tudo muito bagunçado". A taxonomia que resolve isso já existia na seção
- * "Competências técnicas" do currículo; ver [skills.ts](src/data/skills.ts).
+ * A taxonomia é a da seção "Competências técnicas" do currículo; ver
+ * [skills.ts](src/data/skills.ts). O que mudou em 24/09 foi a forma: era uma
+ * mesa (Linguagens) e quatro listas iguais, e a leitura do dono foi que
+ * faltava dinâmica — só as linguagens tinham um equipamento. Agora cada nicho
+ * é uma peça diferente de estúdio, e cada peça tem uma interação própria:
  *
- * **Linguagens sobe para a mesa, sozinha e na largura inteira.** É o único
- * nicho com tratamento próprio, e por um motivo: é o único onde a extensão de
- * arquivo (`.py`, `.ts`) significa alguma coisa. Num framework ela não marca
- * nada, e usar a mesa nos cinco apagaria a distinção que a seção existe para
- * fazer.
+ * - Linguagens → mesa de som: o fader sobe sob a mão.
+ * - Front-end & mobile → pedaleira: pisar liga o pedal.
+ * - IA aplicada → sampler: bater no pad dispara o flash.
+ * - Back-end & dados → rack: os módulos rodam sozinhos, LEDs piscando.
+ * - Ferramentas & processos → pistas de DAW: mute e solo funcionam.
  *
- * Os outros quatro entram numa grade 2x2 como listas de uma coluna. Coluna
- * única não produz linha órfã: a grade anterior quebrava sozinha e deixava o
- * último item isolado embaixo de uma linha cheia.
+ * Nenhuma interação diz nível nem filtra nada. Nível por tecnologia continua
+ * sendo conteúdo do dono (ver docs/PENDENCIAS.md), e o foco técnico que
+ * ligava a Stack aos Projetos saiu no mesmo dia.
+ *
+ * Os pares da grade são montados por tamanho: pedaleira e sampler têm alturas
+ * parecidas (dois andares de peças), rack e DAW também (8 e 9 linhas).
  */
 export function Skills() {
   return (
@@ -33,10 +43,7 @@ export function Skills() {
 
       <div className="flex flex-1 flex-col gap-5">
         <Reveal>
-          <Panel
-            title={linguagens.title}
-            code={contagem(linguagens.terms.length, ...linguagens.unidade)}
-          >
+          <Painel nicho={linguagens}>
             {/*
              * Quatro colunas ate `sm`, oito depois — e as duas contas fecham:
              * sao oito linguagens, entao nenhuma largura deixa fileira pela
@@ -48,25 +55,49 @@ export function Skills() {
                 <Fader key={termo.label} index={index} termo={termo} />
               ))}
             </div>
-          </Panel>
+          </Painel>
         </Reveal>
 
         <div className="grid flex-1 items-stretch gap-5 lg:grid-cols-2">
-          {/*
-           * Os pares sao montados por TAMANHO, nao pela ordem do curriculo.
-           * As linhas sao `flex-1` e paineis irmaos esticam ate a altura do
-           * mais alto: com 6 ao lado de 9, as seis linhas do menor ficavam
-           * gordas e as nove do maior apertadas, e a grade inteira lia
-           * desalinhada. 7+6 em cima e 8+9 embaixo mantem a diferenca em uma
-           * linha.
-           */}
-          {[frontend, iaAplicada, backend, ferramentas].map((nicho, index) => (
-            <Reveal key={nicho.id} delay={0.08 * (index + 1)} className="h-full">
-              <NichePanel nicho={nicho} />
-            </Reveal>
-          ))}
+          <Reveal delay={0.08} className="h-full">
+            <Painel nicho={frontend} fill>
+              <Pedaleira termos={frontend.terms} />
+            </Painel>
+          </Reveal>
+          <Reveal delay={0.16} className="h-full">
+            <Painel nicho={iaAplicada} fill>
+              <Sampler termos={iaAplicada.terms} />
+            </Painel>
+          </Reveal>
+          <Reveal delay={0.24} className="h-full">
+            <Painel nicho={backend} fill>
+              <Rack termos={backend.terms} />
+            </Painel>
+          </Reveal>
+          <Reveal delay={0.32} className="h-full">
+            <Painel nicho={ferramentas} fill>
+              <PistasDaw termos={ferramentas.terms} />
+            </Painel>
+          </Reveal>
         </div>
       </div>
     </Section>
+  )
+}
+
+/** O painel de um nicho: título dele e a contagem na unidade do equipamento. */
+function Painel({
+  nicho,
+  fill = false,
+  children,
+}: {
+  readonly nicho: SkillNiche
+  readonly fill?: boolean
+  readonly children: ReactNode
+}) {
+  return (
+    <Panel title={nicho.title} code={contagem(nicho.terms.length, ...nicho.unidade)} fill={fill}>
+      {children}
+    </Panel>
   )
 }
