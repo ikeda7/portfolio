@@ -45,23 +45,22 @@ export const site = {
   },
   about: {
     heading: 'Da engenharia de software para a IA aplicada',
+    /*
+     * Reescrito em 24/09 a pedido do Lucas: menos engessado, e mostrando como
+     * os hobbies se ligam ao perfil profissional. As ligações são as que
+     * existem no próprio portfólio — o TCC é IA que gera música, o Sports
+     * Control organiza rachão de vôlei, o Inhouse LoL organiza partidas de LoL
+     * — e nada além do que ele contou (música, igreja e missões, home studio,
+     * vôlei, futsal e basquete, LoL/CS/Valorant, lives na Twitch).
+     *
+     * O primeiro parágrafo não lista mais as tarefas da implantação: não é o
+     * foco do portfólio, e elas estão na Experiência.
+     */
     paragraphs: [
-      'Sou bacharel em Ciência da Computação pela FCT-UNESP e pós-graduando em Engenharia de Software em IA Aplicada na UniPDS. Trabalho com sistemas ERP nas duas pontas: desenvolvi módulos em PHP, JavaScript e Oracle PL/SQL, e hoje atuo na implantação do ERP de uma operação de medicina diagnóstica.',
-      'Em back-end e dados uso Python, TypeScript, C#, PostgreSQL e Docker. Aplico IA generativa — engenharia de prompt, RAG e agentes — para automatizar levantamento, documentação e testes — que é exatamente onde a pós se aprofunda.',
-      /*
-       * O primeiro parágrafo perdeu, em 24/09, a lista de tarefas da
-       * implantação (mapeamento, requisitos, parametrização, QA,
-       * sustentação): implantação não é o foco do portfólio, e as mesmas
-       * tarefas estão na Experiência. O espaço foi para este parágrafo.
-       *
-       * Os dois últimos parágrafos foram ditados pelo Lucas em 24/09. A
-       * primeira versão resumiu demais e ele pediu "mais carinho": as
-       * missões pela igreja, o estudo de produção e teoria, o vôlei como o
-       * esporte de hoje e as lives na Twitch. Nada além do que ele disse — a
-       * música é também a explicação da estética do site e do tema do TCC.
-       */
-      'A música veio antes do código. Sou multi-instrumentista, toco na igreja e sirvo em missões por ela, o que já me levou a várias cidades; e estudo produção musical, teoria e home studio — é daí que vêm o tema do meu TCC e a estética deste site.',
-      'Fora da música, o esporte: sempre gostei de futsal e basquete, mas hoje o vôlei é o que mais jogo. E nos games, os competitivos — League of Legends, CS e Valorant —, que já renderam lives na Twitch.',
+      'Sou bacharel em Ciência da Computação pela FCT-UNESP e pós-graduando em Engenharia de Software em IA Aplicada na UniPDS. Já passei pelas duas pontas de um ERP: desenvolvi módulos em PHP, JavaScript e Oracle PL/SQL, e hoje atuo na implantação de um, numa operação de medicina diagnóstica.',
+      'No dia a dia uso Python, TypeScript, C#, PostgreSQL e Docker, e aplico IA generativa — engenharia de prompt, RAG e agentes — para automatizar levantamento, documentação e testes. É justamente o que a pós aprofunda.',
+      'A música veio antes do código, e os dois acabaram se encontrando. Sou multi-instrumentista, toco na igreja e sirvo em missões por ela, o que já me levou a várias cidades. Em meu home studio estudo produção musical e teoria — e foi desse cruzamento que nasceram o meu TCC, uma IA que compõe música, e a estética deste site.',
+      'O esporte e os games também viraram projeto. Sempre gostei de futsal e basquete, mas hoje o vôlei é o que mais jogo, e o Sports Control nasceu para organizar os nossos rachões. Nos games sou dos competitivos — League of Legends, CS e Valorant, com passagem por lives na Twitch —, e o Inhouse LoL veio daí.',
     ],
     photo: {
       src: retrato as string,
@@ -103,14 +102,24 @@ export const navLinks = [
 export const destinos = [{ label: 'Topo', href: '#top' }, ...navLinks] as const
 
 /**
- * Números verificáveis — currículo e perfil público do GitHub, conferidos em
- * 21/09/2026. Os 35 repositórios incluem trabalhos de disciplina, então o
- * número diz volume, não curadoria; os projetos escolhidos estão no Setlist.
+ * Os três números do Sobre — todos do GitHub, e nenhum repetido em outra
+ * seção. Eram "2026 · Ciência da Computação" e "B2 · Inglês", que a Formação e
+ * os Idiomas já mostram (leitura do dono, 24/09).
+ *
+ * Conferidos em 24/09/2026: 35 repositórios públicos e conta criada em
+ * junho de 2021 (API do GitHub, perfil ikeda7), e 583 commits públicos (busca
+ * de commits `author:ikeda7`, que conta a branch principal de cada repo).
+ * Repositórios e commits envelhecem: ver a ideia de gerar no build em
+ * docs/PENDENCIAS.md. Os anos no GitHub já são calculados.
  */
+const CONTA_GITHUB_CRIADA = Date.UTC(2021, 5, 11) // 11/06/2021, API do GitHub
+const ANOS_NO_GITHUB = Math.floor((Date.now() - CONTA_GITHUB_CRIADA) / (365.25 * 24 * 3600 * 1000))
+
 export const aboutStats: readonly AboutStat[] = [
-  { value: '2026', label: 'Ciência da Computação' },
   { value: '35', label: 'Repositórios públicos' },
-  { value: 'B2', label: 'Inglês · Linguaskill' },
+  { value: '583', label: 'Commits públicos' },
+  // Calculado na hora, a partir da data de criação da conta: não envelhece.
+  { value: `${ANOS_NO_GITHUB} anos`, label: 'No GitHub' },
 ]
 
 /**
