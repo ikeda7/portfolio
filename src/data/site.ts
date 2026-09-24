@@ -73,6 +73,13 @@ export const site = {
     heading: 'Vamos conversar',
     description:
       'Estou em Bauru – SP. Para falar sobre um projeto, uma vaga ou qualquer coisa que envolva software e IA, é só chamar por e-mail ou LinkedIn.',
+    /*
+     * Segundo parágrafo, de 24/09: ocupa o vão entre o convite e os canais
+     * dizendo o que ele procura — as três trilhas do subtítulo — e amarra a
+     * música, que é o fio do site inteiro. Rascunho para o dono validar.
+     */
+    interesse:
+      'Tenho interesse em oportunidades de desenvolvimento full stack, dados e IA aplicada — e em qualquer projeto que junte tecnologia e música.',
   },
   /*
    * A cidade aparece só no Contato. Estava também no hero e no rodapé, e
