@@ -40,6 +40,11 @@ export const linguagens: SkillNiche = {
     { label: 'Java', ext: 'java' },
     { label: 'Dart', ext: 'dart' },
     { label: 'SQL', ext: 'sql' },
+    // O README do perfil (github.com/ikeda7) classifica HTML5 e CSS3 como
+    // linguagens; o currículo os punha em front-end. Vale o perfil, que é
+    // fonte dele e mais recente (24/09).
+    { label: 'HTML5', ext: 'html' },
+    { label: 'CSS3', ext: 'css' },
   ],
 }
 
@@ -48,14 +53,17 @@ export const frontend: SkillNiche = {
   id: 'frontend',
   title: 'Front-end & mobile',
   unidade: ['pedal', 'pedais'],
+  // Angular, Tailwind CSS e jQuery vêm do README do perfil; HTML5 e CSS3
+  // foram para Linguagens. Oito, para a pedaleira fechar 4+4.
   terms: [
     { label: 'React' },
     { label: 'Next.js' },
+    { label: 'Angular' },
     { label: 'Vite' },
     { label: 'Flutter' },
-    { label: 'HTML5' },
-    { label: 'CSS3' },
+    { label: 'Tailwind CSS' },
     { label: 'Bootstrap' },
+    { label: 'jQuery' },
   ],
 }
 
@@ -73,6 +81,9 @@ export const backend: SkillNiche = {
     { label: 'Oracle Database' },
     { label: 'SQL Server' },
     { label: 'PostgreSQL' },
+    // Do README do perfil (24/09): Flask em Back-end, SQLite em Databases.
+    { label: 'Flask' },
+    { label: 'SQLite' },
   ],
 }
 
@@ -105,28 +116,28 @@ export const iaAplicada: SkillNiche = {
   ],
 }
 
-/**
- * Nicho 5 — ferramentas e processos.
- *
- * O currículo junta os dois numa linha só, e faz sentido: são as duas metades
- * do trabalho de implantação. Ferramenta é o que se abre; processo é o que se
- * conduz. Um portfólio de dev que mostra só ferramenta esconde metade do que
- * este currículo tem.
- */
+/** Nicho 5 — ferramentas do dia a dia, do versionamento ao design. */
 export const ferramentas: SkillNiche = {
   id: 'ferramentas',
-  title: 'Ferramentas & processos',
+  title: 'Ferramentas',
   unidade: ['pista', 'pistas'],
+  /*
+   * Exatamente a seção "DevOps & Tools" do README do perfil. Até 24/09 o
+   * nicho era "Ferramentas & processos", com levantamento de requisitos,
+   * mapeamento de processos, QA e gestão de chamados — processo da
+   * implantação, que não é o foco do portfólio e já está nas entregas da 3S,
+   * na Experiência. Jupyter foi para a fita.
+   */
   terms: [
     { label: 'Git/GitHub' },
+    { label: 'GitHub Actions' },
     { label: 'Docker' },
     { label: 'Vercel' },
+    { label: 'Linux' },
+    { label: 'Postman' },
     { label: 'DBeaver' },
-    { label: 'Jupyter' },
-    { label: 'Levantamento de requisitos' },
-    { label: 'Mapeamento de processos' },
-    { label: 'QA e homologação' },
-    { label: 'Gestão de chamados' },
+    { label: 'VS Code' },
+    { label: 'Figma' },
   ],
 }
 
@@ -159,15 +170,13 @@ export const bibliotecasDoGithub: readonly string[] = [
   'SymPy', // calc-numeric
   'pretty_midi', // music-ai-generator
   'mido', // music-ai-generator
+  'Jupyter', // desafio_indicium_imdb (saiu da Stack em 24/09)
   // Python web e automacao
-  'Flask', // intuitivecare
   'Beautiful Soup', // intuitivecare
   'Requests', // intuitivecare
   'pdfplumber', // intuitivecare
   // Front-end
   'React Router', // banco-dados, inhouse-lol, linguagens-formais-automatos, pokedex-capacitacao-ejcomp
-  'Tailwind CSS', // inhouse-lol, x9-game, intuitivecare, este portfolio
-  'Angular', // desafiowebfullstack
   'Angular Material', // desafiowebfullstack
   'Material UI', // banco-dados
   'Vue.js', // intuitivecare
@@ -176,7 +185,6 @@ export const bibliotecasDoGithub: readonly string[] = [
   'ApexCharts', // banco-dados
   'styled-components', // banco-dados
   'JointJS', // linguagens-formais-automatos
-  'jQuery', // seguranca-informacao
   'Motion', // este portfolio
   // Back-end
   'Express', // desafiowebfullstack, inhouse-lol
