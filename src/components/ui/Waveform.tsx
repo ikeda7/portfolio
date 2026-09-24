@@ -1,12 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { waveformHeights } from '@/data/site'
 
 interface WaveformProps {
   readonly meta: string
   readonly timecode: string
-  /** Rótulos dos canais. O índice escolhido redesenha as barras. */
-  readonly canais: readonly string[]
+  /** Os canais. O escolhido redesenha as barras e pinta a página. */
+  readonly canais: readonly CanalWaveform[]
+}
+
+/** O tom de acento de cada trilha — os valores vivem em `index.css`. */
+type Tom = 'azul' | 'roxo' | 'vermelho'
+
+interface CanalWaveform {
+  readonly label: string
+  readonly tom: Tom
 }
 
 /**
@@ -23,7 +31,7 @@ function barrasDoCanal(canal: number): readonly number[] {
 
 /**
  * Painel de waveform do hero: 48 barras pulsando fora de fase, e um seletor de
- * canal que as redesenha.
+ * trilha que as redesenha e troca a cor de acento da página inteira.
  *
  * Os canais eram três etiquetas com uma marcada como ativa e **nenhuma
  * clicável** — o visual prometia uma interação que não existia. Agora são
@@ -32,8 +40,24 @@ function barrasDoCanal(canal: number): readonly number[] {
  * Duração e delay da animação derivam do índice, reproduzindo o protótipo.
  */
 export function Waveform({ meta, timecode, canais }: WaveformProps) {
-  const [canalAtivo, setCanalAtivo] = useState(canais.length - 1)
+  const [canalAtivo, setCanalAtivo] = useState(0)
   const barras = barrasDoCanal(canalAtivo)
+  const tom = canais[canalAtivo]?.tom ?? 'azul'
+
+  /*
+   * O acento é da página, não do painel: escrever no <html> é o que deixa
+   * header, cards, glows e o brilho do cursor trocarem juntos, sem nenhum
+   * deles saber que a waveform existe. Azul é o padrão do `@theme`, então ele
+   * não escreve atributo — tira.
+   */
+  useEffect(() => {
+    const raiz = document.documentElement
+    if (tom === 'azul') delete raiz.dataset.trilha
+    else raiz.dataset.trilha = tom
+    return () => {
+      delete raiz.dataset.trilha
+    }
+  }, [tom])
 
   return (
     <div className="border-line glow-panel mx-auto mt-18 w-full max-w-[880px] rounded-[14px] border bg-gradient-to-b from-[#141414] to-[#101010] p-[22px]">
@@ -69,7 +93,7 @@ export function Waveform({ meta, timecode, canais }: WaveformProps) {
 
           return (
             <button
-              key={canal}
+              key={canal.label}
               type="button"
               aria-pressed={ativo}
               onClick={() => setCanalAtivo(index)}
@@ -79,7 +103,7 @@ export function Waveform({ meta, timecode, canais }: WaveformProps) {
                   : 'bg-panel-2 text-ink-muted hover:text-ink border border-transparent hover:border-[rgb(var(--accent-rgb)/0.3)]'
               }`}
             >
-              {canal}
+              {canal.label}
             </button>
           )
         })}
