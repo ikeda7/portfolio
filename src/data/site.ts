@@ -11,11 +11,16 @@ export const site = {
     lastName: 'Ikeda',
   },
   hero: {
-    statusLabel: 'Bauru – SP · Brasil',
     title: 'Lucas Ikeda',
-    subtitle: 'Desenvolvedor de Software · Implantação e IA Aplicada',
+    /*
+     * As três trilhas, na ordem dos canais da waveform logo abaixo. Era
+     * "Desenvolvedor de Software · Implantação e IA Aplicada": implantação
+     * é o cargo atual e continua na Experiência, mas não é o foco do
+     * portfólio (decisão do Lucas, 24/09).
+     */
+    subtitle: 'Full Stack · Data Science · IA Aplicada',
     description:
-      'Sistemas ERP nas duas pontas, back-end e dados — e IA generativa aplicada para automatizar levantamento, documentação e testes.',
+      'Do front-end ao banco de dados, com IA generativa aplicada para automatizar levantamento, documentação e testes.',
     primaryCta: { label: 'Ver projetos', href: '#projetos' },
     secondaryCta: { label: 'Falar comigo', href: '#contato' },
     waveform: {
@@ -56,9 +61,13 @@ export const site = {
     description:
       'Estou em Bauru – SP. Para falar sobre um projeto, uma vaga ou qualquer coisa que envolva software e IA, é só chamar por e-mail ou LinkedIn.',
   },
+  /*
+   * A cidade aparece só no Contato. Estava também no hero e no rodapé, e
+   * saiu dos dois em 24/09: dado pessoal repetido numa página aberta. No
+   * Contato ela fica porque é onde recrutador procura.
+   */
   footer: {
     left: '© 2026 Lucas Ikeda',
-    right: 'Bauru – SP · Brasil',
   },
 } as const
 
