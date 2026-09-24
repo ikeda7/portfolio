@@ -1,6 +1,7 @@
 import { ScrollProgress } from '@/components/ui/ScrollProgress'
 import { useActiveSection } from '@/hooks/useActiveSection'
-import { navLinks, site } from '@/data/site'
+import { Marca } from '@/components/ui/Marca'
+import { navLinks } from '@/data/site'
 
 const SECTION_IDS = navLinks.map((link) => link.href.slice(1))
 
@@ -25,24 +26,7 @@ export function Header() {
   return (
     <header className="border-line sticky top-0 z-20 border-b bg-[rgb(13_13_13/0.82)] backdrop-blur-[14px]">
       <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center gap-1 px-6 py-2 sm:flex-row sm:justify-between sm:gap-6 sm:py-3.5">
-        {/*
-         * A marca e link para o topo e nao respondia ao mouse. Sonda de hover
-         * pegou: dos 114 interativos da pagina, ela e o rodape eram os unicos
-         * clicaveis mudos. O sobrenome acende porque ja e a parte em acento —
-         * o nome em branco nao tem para onde clarear.
-         */}
-        <a
-          href="#top"
-          className="group flex items-baseline gap-2 py-1 sm:py-0"
-          aria-label="Voltar ao topo"
-        >
-          <span className="text-ink text-base font-bold tracking-[-0.02em]">
-            {site.brand.firstName}
-          </span>
-          <span className="text-accent-text group-hover:text-ink font-mono text-[11px] tracking-[0.08em] transition-colors duration-300">
-            /{site.brand.lastName.toUpperCase()}
-          </span>
-        </a>
+        <Marca className="py-1.5 sm:py-0" />
 
         <nav
           aria-label="Navegação principal"
