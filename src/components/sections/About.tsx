@@ -43,7 +43,10 @@ export function About() {
           </h2>
 
           {about.paragraphs.map((paragraph) => (
-            <p key={paragraph} className="text-ink-muted mt-5 text-[15px] leading-[1.75]">
+            <p
+              key={paragraph}
+              className="text-ink-muted texto-justo mt-5 text-[15px] leading-[1.75]"
+            >
               {paragraph}
             </p>
           ))}

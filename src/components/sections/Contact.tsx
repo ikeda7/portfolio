@@ -32,7 +32,7 @@ export function Contact() {
           >
             {contact.heading}
           </h2>
-          <p className="text-ink-muted mt-5 max-w-[620px] text-[15px] leading-[1.7]">
+          <p className="text-ink-muted texto-justo mt-5 max-w-[620px] text-[15px] leading-[1.7]">
             {contact.description}
           </p>
         </Reveal>

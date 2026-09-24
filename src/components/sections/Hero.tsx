@@ -74,7 +74,7 @@ export function Hero() {
 
         <m.p
           variants={revealVariants}
-          className="text-ink-muted mt-[22px] max-w-[560px] text-base leading-[1.65] text-pretty"
+          className="text-ink-muted texto-justo-centro mt-[22px] max-w-[560px] text-base leading-[1.65]"
         >
           {hero.description}
         </m.p>
