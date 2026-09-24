@@ -32,7 +32,7 @@ export function Footer() {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8 2xl:max-w-[1440px]">
         <div className="flex flex-col items-center gap-6 text-center lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:text-left">
           <div className="flex flex-col items-center gap-2.5 lg:items-start">
-            <Marca />
+            <Marca className="py-1" />
             <p className="text-accent-text font-mono text-[11px] tracking-[0.14em] uppercase">
               <Trilhas texto={site.hero.subtitle} />
             </p>

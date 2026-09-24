@@ -12,6 +12,9 @@ interface MarcaProps {
  * Subiu para 20/13px, e virou componente para as duas não saírem de
  * sincronia na próxima mudança.
  *
+ * `leading-none` deixa o link com 20px de altura, abaixo do alvo mínimo de
+ * 24px: quem usa passa `py-1` ou mais pelo `className`.
+ *
  * O sobrenome acende no hover porque já é a parte em acento; o nome em branco
  * não tem para onde clarear. Foi a sonda de hover da auditoria que pegou as
  * duas marcas como os únicos clicáveis mudos da página.
