@@ -1037,6 +1037,20 @@ entao um parser que falha nao estoura — ele reporta silencio.
 
 Nenhuma é irreversível; estão aqui para não serem refeitas por engano.
 
+**Sobre e Contato têm a altura do conteúdo (24/09).** As duas eram "uma tela
+no mínimo" com o bloco centralizado, e o vão em cima e embaixo crescia com o
+monitor (~190px + ~220px a 1920x1080). Agora usam `fill={false}`, como
+Projetos. No Sobre a foto segue a altura da janela (`100svh` menos header e
+respiros, até 44% da largura) e o texto vai a 18px no `2xl`: a seção inteira
+cabe numa tela de 1280x720 a 1920x1080, com foto e texto terminando juntos.
+
+**O vinil gira pelo ângulo do brilho, não por `transform` (24/09).** Girando
+o elemento, o navegador com GPU o redesenhava como imagem em blocos de
+resolução menor: os sulcos sumiam e o brilho virava uma faixa de borda reta,
+pior no hover do card. O Chrome sem GPU das capturas não mostra o defeito —
+conferir num navegador de verdade. Motivo completo no `@property
+--vinil-angulo`, em `index.css`.
+
 **Menos é mais (24/09).** Auditoria de elementos que repetiam o que a página
 já diz, decidida item a item pelo dono. Saíram: a contagem no canto dos
 painéis ("8 pads", "3 idiomas" — o olho conta sozinho), a linha de legenda da
