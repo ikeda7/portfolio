@@ -142,10 +142,8 @@ Camadas:
 - `components/sections/` — dona da `<section id>`, do container e do
   `aria-labelledby`.
 - `components/ui/` — primitivos sem conhecimento de conteúdo, tudo por props.
-- `hooks/` — `useActiveSection` (seção corrente, usada pelo header e pela régua),
-  `usePointerGlow` e
-  [useFocoTecnico](src/hooks/useFocoTecnico.tsx) (provider do foco técnico; é o
-  único `.tsx` de `hooks/`, porque um contexto precisa de JSX).
+- `hooks/` — `useActiveSection` (seção corrente, usada pelo header e pela régua)
+  e `usePointerGlow`.
 
 **Duas luzes, e cada uma tem um dono diferente.** A que segue o cursor é
 **uma só para a página inteira**:
@@ -159,17 +157,18 @@ faixa.
 
 - `lib/` — [motion.ts](src/lib/motion.ts) (tempos/curvas),
   [contact.ts](src/lib/contact.ts) (envio do formulário) e
-  [foco.ts](src/lib/foco.ts) (normaliza rótulos para comparar "Node.js" com
-  "NODE.JS"). Lógica sem JSX.
+  [contagem.ts](src/lib/contagem.ts) ("8 linguagens", no canto dos painéis).
+  Lógica sem JSX.
 
 - Exports **nomeados** em todo lugar; `export default` só em `App.tsx`.
 
-**Foco técnico.** Todo nome de tecnologia na Stack e na fita é um
-[`BotaoTecnologia`](src/components/ui/BotaoTecnologia.tsx): clicar acende o
-termo na página inteira — os cards de projeto que o usam ganham destaque, os
-outros recuam, a fita para e a seção Projetos diz quantos casaram. Se parece
-clicável, é clicável: foi por isso que os canais da waveform e os termos da
-Stack viraram botões de verdade.
+**Não existe mais foco técnico** (saiu em 24/09). Clicar numa tecnologia da
+Stack ou da fita acendia os projetos que a usavam; com nove projetos e ~35
+termos, a maioria dos cliques respondia "nenhum projeto usa", e isso lia
+como falta de prática em algo que o currículo mostra ter sido usado no
+trabalho. Não reintroduza ligação Stack → Projetos sem resolver essa conta.
+A regra que ficou: se parece clicável, é clicável — os equipamentos da Stack
+e os canais da waveform são botões de verdade.
 
 Âncoras em pt-BR (`#sobre`, `#experiencia`, `#habilidades`, `#projetos`,
 `#contato`). **Ao adicionar seção, entre em `navLinks` e o resto acompanha** —
@@ -257,7 +256,7 @@ animações e transições CSS de uma vez.
 
 ## Capas de projeto e Stack: dois contratos com intenção
 
-**As seis capas são iguais.** `LabelCover` — o selo de vinil — é a capa de
+**As capas são todas iguais** (são nove projetos desde 24/09). `LabelCover` — o selo de vinil — é a capa de
 todo projeto, e só o número da faixa, o `estado` e o `repo` mudam. Não existe
 mais campo de capa em `Project`.
 
@@ -279,16 +278,18 @@ A taxonomia **não foi inventada**: é a seção "Competências técnicas" do PD
 com os mesmos termos e a mesma ordem. Antes a página misturava linguagem,
 framework, banco e técnica de IA nos mesmos três blocos.
 
-- **Linguagens é o único nicho na mesa** ([Fader.tsx](src/components/ui/Fader.tsx)),
-  e o único com `ext`. A extensão vira selo ao lado do nome (`.py`), não
-  `python.py` colado — colada ela produz `java.java` e `sql.sql`, que leem
-  como erro de digitação.
-- **Os outros quatro são listas de UMA coluna**
-  ([NichePanel.tsx](src/components/ui/NichePanel.tsx)). Não é estética: grade
-  que quebra sozinha deixa órfão, e um painel de 7 itens em 2 colunas saía
-  2+2+2+1. Coluna única não tem última linha incompleta em largura nenhuma.
-- Os pares da grade 2x2 são montados **por tamanho** (7+6, depois 8+9), não
-  pela ordem do currículo: painéis irmãos esticam até a altura do mais alto.
+- **Um equipamento por nicho** (24/09), cada um com interação própria e
+  nenhuma que indique nível: Linguagens → mesa ([Fader.tsx](src/components/ui/Fader.tsx));
+  Front-end → pedaleira; IA → sampler; Back-end → rack; Ferramentas →
+  pistas de DAW (mute e solo funcionam). Os quatro últimos moram em
+  [ui/equipamentos/](src/components/ui/equipamentos/).
+- Linguagens é o único nicho com `ext`. A extensão vira selo ao lado do nome
+  (`.py`), não `python.py` colado — colada ela produz `java.java` e `sql.sql`.
+- Os pares da grade são montados **por tamanho**: pedaleira e sampler (dois
+  andares de peças), rack e DAW (8 e 9 linhas).
+- **A fita não repete a Stack.** Ela corre as bibliotecas que estão no código
+  dos projetos e não no currículo (`bibliotecasDosProjetos` em skills.ts),
+  cada uma com o repositório de origem comentado. PyTorch mora lá, não na Stack.
 
 `SkillTerm` tem **só `label` e `ext`**. Havia um `value` de 0 a 100 que
 desenhava a altura do fader; o número nunca aparecia na tela, mas o desenho

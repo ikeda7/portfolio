@@ -53,6 +53,32 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
   cada uma como padrao. Margem mais justa: 1,2x (azul), 1,23x (roxo), 1,22x
   (vermelho)
 
+### O que entrou em 24/09 (noite) — segunda rodada de respostas do dono
+
+- **Header e rodape: FINALIZADOS** pelo dono. Nao mexer sem pedido.
+- **Stack** — um equipamento por nicho (mesa, pedaleira, sampler, rack, pistas
+  de DAW), cada um com interacao propria e nenhuma que indique nivel.
+- **Foco tecnico removido** inteiro (a Stack e a fita nao acendem mais
+  projetos). Motivo no CLAUDE.md.
+- **Fita** — deixou de repetir a Stack: corre as bibliotecas dos projetos
+  (PyTorch, pandas, scikit-learn, Flask...), cada uma conferida no repo, com
+  legenda fixa "Nos projetos". No nicho de IA, PyTorch deu lugar a
+  Transformers (a arquitetura do TCC).
+- **Projetos 07-09** — Analise Preditiva IMDB, IntuitiveCare, PokeSite
+  (capacitacao EJCOMP). Descricoes tiradas dos READMEs. Grade 3x3.
+- **Vinil** — de volta aos borroes largos do original, dos dois lados.
+- **Sobre** — dois paragrafos pessoais ditados pelo dono (musica, missoes
+  pela igreja, producao e teoria; volei; games e lives na Twitch). Lado a
+  lado so de `xl` para cima; stats numa linha inteira embaixo.
+- **Experiencia** — Idiomas estica ate a base da coluna, com a escala CEFR
+  do ingles (B2, Linguaskill/Cambridge). As notas por habilidade nao tem
+  fonte; se o dono mandar o relatorio, entram em `languages`.
+- **Contato** — e-mail com botao de copiar no vao entre convite e canais.
+
+**Aberto:** os tres cards do Sobre (2026 / 35 repositorios / B2) repetem o
+que Formacao e Idiomas ja mostram — o dono perguntou o que fazer; opcoes
+mandadas em 24/09.
+
 ### O que entrou em 24/09 (tarde) — respostas do dono aos pontos abertos
 
 Um merge `--no-ff` por assunto em `develop`, todos com os quatro portoes e a
