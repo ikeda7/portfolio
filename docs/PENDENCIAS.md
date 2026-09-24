@@ -53,6 +53,53 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
   cada uma como padrao. Margem mais justa: 1,2x (azul), 1,23x (roxo), 1,22x
   (vermelho)
 
+### O que entrou em 24/09 (tarde) — respostas do dono aos pontos abertos
+
+Um merge `--no-ff` por assunto em `develop`, todos com os quatro portoes e a
+auditoria limpa.
+
+- **Pontos 9 e 10** — subtitulo virou **"Full Stack · Data Science · IA
+  Aplicada"**; implantacao segue na Experiencia, fora do destaque. A cidade
+  saiu do hero (a pill inteira), do rodape, das meta tags e da linha da 3S;
+  **fica so no Contato**. `og.png` regenerado.
+- **Vinil em X** — o reflexo eram uma cunha so (lia como V). Agora dois
+  feixes cruzando o centro, a 47deg para apontarem aos cantos da capa larga.
+- **Fita** — 90s por volta e o titulo de cada nicho (`[ LINGUAGENS ]`) antes
+  dos termos. A ordem ja era a dos nichos; faltava a marca de grupo.
+- **Tags dos cards** — contorno e fundo em acento, acendem no hover do card.
+  Por tag nao da: o `::after` do "Abrir" cobre o card inteiro.
+- **Pontos 3 e 15** — EJCOMP e CACiC num painel "Atuacao academica" abaixo da
+  linha do tempo profissional, lado a lado, so cargo/entidade/periodo (o
+  CACiC perdeu os bullets, a pedido).
+- **Ponto 1 (rodape)** — faixa unica: marca e trilhas | navegacao | icones
+  dos canais. De ~350 para ~190px. Marca "Lucas /IKEDA" virou componente
+  (`Marca`) e subiu de 16/11px para 20/13px nos dois lugares.
+- **Navegacao** — secao de tela cheia tinha `min-h: 100svh` e passava 66px da
+  dobra ao chegar pelo menu. Agora e `100svh - --header-h`, e o
+  `scroll-margin` e exatamente o header (os +4px mostravam uma lasca da
+  secao anterior). Medido: 0px entre header e secao.
+- **Hero em notebook** — respiros, titulo e waveform escalam com a altura da
+  janela. Num 1366x657 (area util de um 1366x768) a waveform terminava 137px
+  abaixo do atalho de rolagem; agora cabe de 1280x610 para cima.
+- **Sobre** — foto de volta a quadrada e inteira; quem se ajusta e a largura
+  da coluna dela. Alinha 0px de `xl` para cima; entre `lg` e `xl` os stats
+  descem para uma linha inteira.
+- **Ponto 12** — texto corrido justificado com `hyphens: auto` (`lang=pt-BR`).
+  **O Chromium headless deste ambiente nao tem o dicionario de hifenizacao
+  em portugues**, entao as capturas daqui mostram rios que o navegador real
+  (Chrome Win/Mac/Android, Safari) nao deveria mostrar. Conferir num aparelho
+  de verdade.
+- **Contato** — canais na altura natural, embaixo do convite, na coluna da
+  esquerda; formulario sozinho na direita.
+- **Cantos dos paineis** — os codigos (LANG, EDU, OUT, IN, "UI · 07") viraram
+  contagem por extenso ("8 linguagens", "3 idiomas"), calculada da lista
+  (`lib/contagem.ts`). Na waveform, a trilha ativa ("01 / 03").
+
+**Ainda com o dono:** a Stack (ideias mandadas em 24/09, nenhuma escolhida),
+o foco tecnico (ele questionou se faz sentido com 6 projetos), projetos
+novos (candidato de Data Science: `desafio_indicium_imdb`, publico) e um
+paragrafo pessoal para o Sobre (o vao entre texto e stats e o lugar dele).
+
 ### O que entrou em 24/09 — tudo o que nao dependia de pergunta
 
 Merges `--no-ff` direto em `develop`, um por assunto, cada um com os quatro
