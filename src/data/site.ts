@@ -36,7 +36,7 @@ export const site = {
   about: {
     heading: 'Da engenharia de software para a IA aplicada',
     paragraphs: [
-      'Sou bacharel em Ciência da Computação pela FCT-UNESP e pós-graduando em Engenharia de IA Aplicada na UniPDS. Trabalho com sistemas ERP nas duas pontas: desenvolvi módulos em PHP, JavaScript e Oracle PL/SQL, e hoje atuo na implantação do ERP de uma operação de medicina diagnóstica — mapeamento de processos, levantamento de requisitos, parametrização, QA e sustentação.',
+      'Sou bacharel em Ciência da Computação pela FCT-UNESP e pós-graduando em Engenharia de Software em IA Aplicada na UniPDS. Trabalho com sistemas ERP nas duas pontas: desenvolvi módulos em PHP, JavaScript e Oracle PL/SQL, e hoje atuo na implantação do ERP de uma operação de medicina diagnóstica — mapeamento de processos, levantamento de requisitos, parametrização, QA e sustentação.',
       'Em back-end e dados uso Python, TypeScript, C#, PostgreSQL e Docker. Aplico IA generativa — engenharia de prompt, RAG e agentes — para automatizar levantamento, documentação e testes — que é exatamente onde a pós se aprofunda.',
     ],
     photo: {
