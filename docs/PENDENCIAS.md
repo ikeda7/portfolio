@@ -53,6 +53,20 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
   cada uma como padrao. Margem mais justa: 1,2x (azul), 1,23x (roxo), 1,22x
   (vermelho)
 
+### O que entrou em 24/09 (depois de ver no celular)
+
+- **Sobre** — quarto card (bibliotecas no GitHub, o tamanho da lista da
+  fita); ordem foto, texto, numeros; 2x2 no celular, quatro numa linha do
+  tablet para cima.
+- **Vinil** — gira sempre (no celular nao ha hover).
+- **Header no celular** — botao "Menu" no lugar da faixa rolavel que
+  escondia o Contato. `--header-h` virou 62px em qualquer largura. Desktop
+  igual.
+- **Fader** — o preenchimento cresce junto com o knob no hover, sem emenda.
+- **Contato** — sai a caixa de copiar e-mail (repetia os canais); entra um
+  paragrafo com o que ele procura. **Rascunho: o dono valida o texto.**
+  Twitch/Spotify nos canais: recomendei nao (fora do escopo de contato).
+
 ### Secoes FINALIZADAS pelo dono (24/09) — nao mexer sem pedido
 
 **Header, rodape, Experiencia e Projetos.** Qualquer ajuste nessas quatro so
