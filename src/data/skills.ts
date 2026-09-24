@@ -98,6 +98,10 @@ export const iaAplicada: SkillNiche = {
     { label: 'Agentes' },
     { label: 'APIs de LLM' },
     { label: 'Transformers' },
+    // Da ementa da pós (ver `education` em experience.ts), para a grade de
+    // pads fechar 4x2 — pedido do dono em 24/09.
+    { label: 'MCP' },
+    { label: 'Fine-tuning' },
   ],
 }
 

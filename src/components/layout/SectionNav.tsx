@@ -15,6 +15,12 @@ const IDS = destinos.map((d) => d.href.slice(1))
  *
  * Os rótulos ficam escondidos até o hover ou o foco, mas sempre existem no DOM:
  * são o nome acessível de cada link.
+ *
+ * **O rótulo é `absolute` e `pointer-events-none`.** Em fluxo, ele ocupava a
+ * largura de "EXPERIÊNCIA" mesmo invisível, e essa faixa transparente ficava
+ * por cima do conteúdo da direita recebendo o clique — os botões M/S da Stack
+ * paravam de responder perto da borda. Agora o alvo é só o traço (32px de
+ * largura, 24 de altura), e o rótulo aparece ao lado sem capturar nada.
  */
 export function SectionNav() {
   const activeId = useActiveSection(IDS)
@@ -35,10 +41,10 @@ export function SectionNav() {
                 aria-current={isActive ? 'true' : undefined}
                 // min-h-6: com `py-1` o link fechava em 23px de altura, 1px
                 // abaixo do minimo de 24x24 da WCAG 2.5.8.
-                className="group flex min-h-6 items-center justify-end gap-3 py-1"
+                className="group relative flex min-h-6 min-w-8 items-center justify-end py-1 pl-2"
               >
                 <span
-                  className={`font-mono text-[11px] tracking-[0.14em] uppercase opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 ${
+                  className={`pointer-events-none absolute right-full mr-3 font-mono text-[11px] tracking-[0.14em] whitespace-nowrap uppercase opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 ${
                     isActive ? 'text-accent-text' : 'text-ink-muted'
                   }`}
                 >

@@ -23,16 +23,16 @@ import type { SkillNiche } from '@/types/content'
  *
  * - Linguagens → mesa de som: o fader sobe sob a mão.
  * - Front-end & mobile → pedaleira: pisar liga o pedal.
- * - IA aplicada → sampler: bater no pad dispara o flash.
+ * - IA aplicada → sampler: o pad liga, fica aceso e toca uma nota.
  * - Back-end & dados → rack: os módulos rodam sozinhos, LEDs piscando.
- * - Ferramentas & processos → pistas de DAW: mute e solo funcionam.
+ * - Ferramentas & processos → arranjo de DAW: mute e solo funcionam.
  *
  * Nenhuma interação diz nível nem filtra nada. Nível por tecnologia continua
  * sendo conteúdo do dono (ver docs/PENDENCIAS.md), e o foco técnico que
  * ligava a Stack aos Projetos saiu no mesmo dia.
  *
- * Os pares da grade são montados por tamanho: pedaleira e sampler têm alturas
- * parecidas (dois andares de peças), rack e DAW também (8 e 9 linhas).
+ * Na linha de cima, sampler e pedaleira têm dois andares de peças cada; na
+ * de baixo, arranjo (9 pistas) e rack (4 andares de módulos) esticam juntos.
  */
 export function Skills() {
   return (
@@ -58,25 +58,34 @@ export function Skills() {
           </Painel>
         </Reveal>
 
+        {/*
+         * Duas colunas com intenção: a da DIREITA é o full stack (front em
+         * cima, back embaixo), a da esquerda é IA e o dia a dia de
+         * ferramentas. A troca também tirou as pistas de DAW, com os botões
+         * M/S, de perto da borda direita, onde fica a régua de seções.
+         *
+         * Ordem no DOM = ordem de leitura no celular (uma coluna): IA,
+         * front, ferramentas, back. No `lg` a grade posiciona explicitamente.
+         */}
         <div className="grid flex-1 items-stretch gap-5 lg:grid-cols-2">
-          <Reveal delay={0.08} className="h-full">
-            <Painel nicho={frontend} fill>
-              <Pedaleira termos={frontend.terms} />
-            </Painel>
-          </Reveal>
-          <Reveal delay={0.16} className="h-full">
+          <Reveal delay={0.08} className="h-full lg:col-start-1 lg:row-start-1">
             <Painel nicho={iaAplicada} fill>
               <Sampler termos={iaAplicada.terms} />
             </Painel>
           </Reveal>
-          <Reveal delay={0.24} className="h-full">
-            <Painel nicho={backend} fill>
-              <Rack termos={backend.terms} />
+          <Reveal delay={0.16} className="h-full lg:col-start-2 lg:row-start-1">
+            <Painel nicho={frontend} fill>
+              <Pedaleira termos={frontend.terms} />
             </Painel>
           </Reveal>
-          <Reveal delay={0.32} className="h-full">
+          <Reveal delay={0.24} className="h-full lg:col-start-1 lg:row-start-2">
             <Painel nicho={ferramentas} fill>
               <PistasDaw termos={ferramentas.terms} />
+            </Painel>
+          </Reveal>
+          <Reveal delay={0.32} className="h-full lg:col-start-2 lg:row-start-2">
+            <Painel nicho={backend} fill>
+              <Rack termos={backend.terms} />
             </Painel>
           </Reveal>
         </div>

@@ -111,6 +111,16 @@
   }
 }
 
+/* Cursor de reprodução das pistas de DAW: atravessa o clipe e volta. */
+@keyframes cabecote {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
+}
+
 @keyframes nivel {
   0%,
   100% {
@@ -302,6 +312,10 @@
 
 @utility led-atividade {
   animation: rackpisca 1.4s ease-in-out infinite;
+}
+
+@utility cabecote {
+  animation: cabecote 6s linear infinite;
 }
 
 @utility medidor {
