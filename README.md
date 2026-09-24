@@ -6,14 +6,14 @@ de processamento, capas de vinil nos cards de projeto).
 
 ## Stack
 
-| Camada    | Ferramenta                                                                  |
-| --------- | --------------------------------------------------------------------------- |
-| Build     | Vite 8                                                                      |
-| UI        | React 19 + TypeScript 6 (strict)                                            |
-| Estilo    | Tailwind CSS 4 (`@tailwindcss/vite`, tokens em `@theme`)                    |
-| Animação  | CSS/Tailwind + `motion` via `LazyMotion` (bundle enxuto); `gsap` disponível |
-| Ícones    | `lucide-react`                                                              |
-| Qualidade | oxlint + Prettier                                                           |
+| Camada    | Ferramenta                                               |
+| --------- | -------------------------------------------------------- |
+| Build     | Vite 8                                                   |
+| UI        | React 19 + TypeScript 6 (strict)                         |
+| Estilo    | Tailwind CSS 4 (`@tailwindcss/vite`, tokens em `@theme`) |
+| Animação  | CSS/Tailwind + `motion` via `LazyMotion` (bundle enxuto) |
+| Ícones    | `lucide-react`                                           |
+| Qualidade | oxlint + Prettier                                        |
 
 ## Scripts
 
