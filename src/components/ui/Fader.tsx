@@ -58,8 +58,16 @@ export function Fader({ termo, index }: FaderProps) {
         aria-hidden="true"
         className="border-line bg-panel-2 relative min-h-[104px] w-2 flex-1 rounded-full border"
       >
+        {/*
+         * O preenchimento é uma peça só. O contêiner (`m.span`) tem a altura da
+         * marca da unidade, animada pelo `motion`; o azul dentro dele é
+         * `absolute bottom-0` e, no hover, cresce 14px ACIMA do contêiner —
+         * os mesmos 14px que o knob sobe (de `translate-y-1/2` para
+         * `-translate-y-2`). Era um segmento separado por cima, e a emenda dos
+         * dois arredondados aparecia como um corte nas laterais.
+         */}
         <m.span
-          className="fill-vertical absolute inset-x-0 bottom-0 rounded-full"
+          className="absolute inset-x-0 bottom-0"
           style={prefersReducedMotion ? { height: fill } : undefined}
           {...(prefersReducedMotion
             ? {}
@@ -69,17 +77,9 @@ export function Fader({ termo, index }: FaderProps) {
                 viewport: VIEWPORT,
                 transition,
               })}
-        />
-        {/*
-         * O knob sobe 14px no hover (de `translate-y-1/2` para `-translate-y-2`),
-         * e o preenchimento precisa subir junto — sem isto o azul parava na
-         * marca e o knob flutuava acima de um trilho vazio. É um segmento que
-         * nasce na marca da unidade e cresce os mesmos 14px.
-         */}
-        <span
-          className="bg-accent absolute inset-x-0 h-0 rounded-full transition-[height] duration-300 group-hover/canal:h-[14px]"
-          style={{ bottom: `calc(${fill} - 2px)` }}
-        />
+        >
+          <span className="fill-vertical absolute inset-x-0 bottom-0 h-full rounded-full transition-[height] duration-300 group-hover/canal:h-[calc(100%+14px)]" />
+        </m.span>
         <m.span
           className="bg-knob border-knob-line glow-knob group-hover/canal:border-accent absolute left-1/2 h-3 w-[26px] -translate-x-1/2 translate-y-1/2 rounded-[3px] border transition-[translate,border-color] duration-300 group-hover/canal:-translate-y-2"
           style={prefersReducedMotion ? { bottom: fill } : undefined}
