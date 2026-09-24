@@ -77,7 +77,7 @@ export function Timeline({ entries, headingLevel = 'h3', compact = false }: Time
               {entry.bullets.map((bullet) => (
                 <li
                   key={bullet}
-                  className={`text-ink-muted relative text-[13px] leading-[1.65] ${
+                  className={`text-ink-muted texto-justo relative text-[13px] leading-[1.65] ${
                     compact ? '' : 'pl-4'
                   }`}
                 >

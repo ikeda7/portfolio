@@ -70,7 +70,7 @@ export function ProjectCard({ track, title, description, tags, href, estado, rep
           <h3 className="text-ink group-hover:text-accent-text text-[17px] font-semibold tracking-[-0.01em] transition-colors duration-300">
             {title}
           </h3>
-          <p className="text-ink-muted mt-2 text-[13px] leading-[1.6]">{description}</p>
+          <p className="text-ink-muted texto-justo mt-2 text-[13px] leading-[1.6]">{description}</p>
 
           {/*
            * Tags e "Abrir" descem juntos. Alinhar so o "Abrir" deixaria as

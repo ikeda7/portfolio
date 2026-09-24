@@ -233,6 +233,42 @@
   }
 }
 
+/*
+ * Texto corrido justificado, a pedido do dono (24/09): alinhado dos dois
+ * lados em qualquer tela.
+ *
+ * Justificar sozinho, na web, abre "rios" de espaco entre palavras — e pior
+ * em coluna estreita, que e o caso do card de projeto e de todo paragrafo no
+ * celular. O que segura isso e a hifenizacao: `hyphens: auto` usa o `lang` do
+ * documento (`pt-BR`, no <html>) para quebrar a palavra na silaba, e a linha
+ * deixa de ter que esticar os espacos. `text-wrap: pretty` evita a ultima
+ * linha com uma palavra so.
+ *
+ * So em texto corrido. Rotulo mono, titulo e chip nao entram: justificar
+ * uma linha so nao faz nada, e hifenizar rotulo em caixa alta le como erro.
+ */
+@utility texto-justo {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;
+  text-wrap: pretty;
+}
+
+/*
+ * A mesma coisa para texto centralizado (a descricao do hero): o corpo
+ * justifica e a ultima linha, que e mais curta, fica no centro em vez de
+ * grudar na esquerda.
+ */
+@utility texto-justo-centro {
+  text-align: justify;
+  text-align-last: center;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;
+  text-wrap: pretty;
+}
+
 @utility glow-input {
   box-shadow: 0 10px 24px -18px var(--color-accent);
 }
