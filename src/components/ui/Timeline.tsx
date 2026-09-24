@@ -1,0 +1,115 @@
+import type { TimelineEntry } from '@/types/content'
+
+interface TimelineProps {
+  readonly entries: readonly TimelineEntry[]
+  /** Nivel do titulo de cada entrada, para nao quebrar a hierarquia da pagina. */
+  readonly headingLevel?: 'h3' | 'h4'
+  /** Texto menor e sem marcadores — usado na coluna de Formacao. */
+  readonly compact?: boolean
+  /**
+   * Distribuir as entradas na altura do contêiner, em vez de empilhar do
+   * topo. Para a Formação, que estica até a base da coluna: o espaço que
+   * sobra vai para o trilho entre as entradas, e não para um vão embaixo.
+   */
+  readonly espalhar?: boolean
+}
+
+/**
+ * Linha do tempo vertical, no formato de uma track lane de DAW: um trilho
+ * contínuo à esquerda e um marcador por entrada.
+ *
+ * O marcador da posição atual acende no acento; os anteriores ficam no cinza
+ * do knob. O trilho é `aria-hidden` — quem usa leitor de tela recebe uma lista
+ * ordenada comum, que já carrega a sequência.
+ */
+export function Timeline({
+  entries,
+  headingLevel = 'h3',
+  compact = false,
+  espalhar = false,
+}: TimelineProps) {
+  const Heading = headingLevel
+
+  return (
+    <ol
+      className={`relative pl-7 ${espalhar ? 'flex h-full flex-col justify-between gap-8' : 'space-y-8'}`}
+    >
+      <span aria-hidden="true" className="bg-line absolute top-2 bottom-2 left-[3.5px] w-px" />
+
+      {entries.map((entry) => (
+        <li key={`${entry.org}-${entry.period}`} className="relative">
+          {/*
+           * Todo marcador acende. O apagado (cinza do knob) era o unico LED
+           * escuro da pagina — hero, canais, PatchBay e Idiomas acendem todos —
+           * e por isso lia como defeito, nao como "posicao anterior".
+           *
+           * A distincao entre atual e passado estava so no halo, e halo contra
+           * halo-um-pouco-menor nao le como diferenca nenhuma. Agora o atual
+           * pulsa: movimento e a unica diferenca que o olho pega sem comparar
+           * lado a lado, e os dois marcadores ficam longe um do outro.
+           *
+           * Quem carrega a informacao de verdade continua sendo a etiqueta
+           * "Em andamento", em texto, ao lado — o LED e `aria-hidden`.
+           *
+           * O keyframe e CSS, nao `motion`, entao o bloco
+           * `prefers-reduced-motion` do `index.css` ja o desliga sozinho.
+           */}
+          <span
+            aria-hidden="true"
+            className={`bg-accent absolute top-[7px] -left-7 size-2 rounded-full ${
+              entry.current ? 'glow-led-atual' : 'opacity-70'
+            }`}
+          />
+
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="text-accent-text font-mono text-[11px] tracking-[0.14em] uppercase">
+              {entry.period}
+            </span>
+            {entry.current && (
+              <span className="border-line bg-panel text-ink-faint rounded-full border px-2 py-0.5 font-mono text-[11px] tracking-[0.12em] uppercase">
+                Em andamento
+              </span>
+            )}
+          </div>
+
+          <Heading
+            className={`text-ink mt-2 font-semibold tracking-[-0.01em] ${
+              compact ? 'text-[15px]' : 'text-[17px]'
+            }`}
+          >
+            {entry.title}
+          </Heading>
+
+          <p className="text-ink-muted mt-1 text-[14px] leading-[1.5]">
+            {entry.org}
+            {entry.context && <span className="text-ink-faint"> · {entry.context}</span>}
+          </p>
+
+          {entry.bullets && (
+            <ul className={compact ? 'mt-2' : 'mt-3 space-y-2'}>
+              {entry.bullets.map((bullet) => (
+                <li
+                  key={bullet}
+                  className={`text-ink-muted relative text-[13px] leading-[1.65] ${
+                    // Justificado so nas entregas, que sao frases. A ementa
+                    // compacta e lista de topicos curtos: justificada, uma
+                    // linha como "Agentes autonomos e" abria buracos enormes.
+                    compact ? '' : 'texto-justo pl-4'
+                  }`}
+                >
+                  {!compact && (
+                    <span
+                      aria-hidden="true"
+                      className="bg-accent/60 absolute top-[0.62em] left-0 size-1 rounded-full"
+                    />
+                  )}
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ol>
+  )
+}

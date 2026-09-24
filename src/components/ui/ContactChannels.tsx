@@ -1,43 +1,80 @@
+import { ArrowUpRight } from 'lucide-react'
+
+import { IconeCanal } from '@/components/ui/IconeCanal'
 import { Panel } from '@/components/ui/Panel'
 import { socialChannels } from '@/data/social'
+import { contagem } from '@/lib/contagem'
 
-const ITEM_CLASS =
-  'border-line bg-panel-sunken hover:border-accent flex flex-col items-center gap-2 rounded-lg border p-3.5 transition-all duration-300 hover:bg-[rgb(var(--accent-rgb)/0.08)]'
+const LINHA_CLASS =
+  'flex items-center gap-3 px-[18px] py-4 transition-all duration-300 hover:bg-[rgb(var(--accent-rgb)/0.07)]'
 
 /**
- * Painel "Canais": botões de rede estilizados como controles de painel.
+ * Painel "Canais": os contatos como linhas de um patchbay.
  *
- * O LED redondo vem do protótipo aprovado. TODO(design): trocar por ícones de
- * marca — `lucide-react@1` removeu Github/Linkedin/X, então a fonte será
- * Simple Icons (SVG inline, 16px, `currentColor`).
+ * Eram quatro cartões numa grade 2x2, cada um com o identificador centralizado
+ * e `break-all` — o que picava "lucasvikeda@gmail.com" no meio da palavra para
+ * caber na coluna. Em linha o endereço cabe inteiro e a leitura vira uma
+ * varredura vertical em vez de quatro paradas. Cada linha tem a altura
+ * natural: o painel já esticou até a altura do formulário ao lado, e virou o
+ * bloco mais vazio da página.
+ *
+ * **Sem currículo em PDF, de propósito.** Ele chegou a ficar aqui, com
+ * download em PT-BR e EN, e foi removido em 23/09: o PDF traz o telefone,
+ * e o telefone é justamente o dado que `socialChannels` mantém fora da
+ * página para não virar alvo de robô de spam. Publicar o arquivo desfazia
+ * em silêncio uma decisão que o resto do arquivo documenta. As experiências
+ * que o currículo carrega já estão na seção Experiência.
+ *
+ * Cada linha abre com o ícone do canal. Era um LED redondo, o mesmo nas
+ * quatro, herdado do protótipo — e um LED igual em tudo não diferencia nada.
+ * O ícone troca o LED no mesmo lugar e no mesmo tamanho, de propósito: o
+ * pedido foi deixar o painel mais legível sem encolhê-lo e perder o
+ * alinhamento com o formulário. De onde vem cada desenho está em
+ * [IconeCanal](./IconeCanal.tsx).
  */
 export function ContactChannels() {
   return (
-    <Panel title="Canais" code="OUT">
-      <ul className="grid grid-cols-[repeat(auto-fit,minmax(110px,1fr))] gap-2.5 p-3.5">
+    <Panel title="Canais" code={contagem(socialChannels.length, 'canal', 'canais')}>
+      <ul className="divide-line flex flex-col divide-y">
         {socialChannels.map((channel) => (
-          <li key={channel.label}>
-            {channel.href ? (
-              <a
-                href={channel.href}
-                target="_blank"
-                rel="noreferrer noopener"
-                className={ITEM_CLASS}
-                aria-label={`Abrir ${channel.label} em uma nova aba`}
-              >
-                <span aria-hidden="true" className="bg-accent glow-led size-2 rounded-full" />
-                <span className="text-ink font-mono text-[11px] uppercase">{channel.label}</span>
-              </a>
-            ) : (
-              // Regra de Ouro: sem URL confirmada, o canal fica visivelmente pendente.
-              <div className={`${ITEM_CLASS} opacity-50`} aria-disabled="true">
-                <span aria-hidden="true" className="bg-ink-faint size-2 rounded-full" />
-                <span className="text-ink-faint font-mono text-[11px] uppercase">
+          <li key={channel.label} className="group/canal">
+            <a
+              href={channel.href ?? undefined}
+              target={channel.href?.startsWith('mailto:') ? undefined : '_blank'}
+              rel="noreferrer noopener"
+              className={LINHA_CLASS}
+              aria-label={`${channel.label}: ${channel.handle}`}
+            >
+              {/*
+               * O icone ocupa o lugar exato do LED (so a coluna da esquerda
+               * muda), entao a altura das linhas e o alinhamento com o
+               * formulario ao lado ficam onde estavam. `text-accent-text` e
+               * nao `text-accent`: o azul cheio reprova como traco fino.
+               */}
+              <IconeCanal
+                icon={channel.icon}
+                className="text-accent-text size-4 shrink-0 transition-all duration-300 group-hover/canal:scale-110"
+              />
+
+              {/*
+               * `flex-wrap` e nao largura fixa: em 320px o rotulo e o endereco
+               * nao cabem na mesma linha, e truncar esconderia justamente o
+               * e-mail. Quebrando, ele desce inteiro para a linha de baixo.
+               */}
+              <span className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5">
+                <span className="text-ink font-mono text-[11px] tracking-[0.1em] uppercase">
                   {channel.label}
                 </span>
-                <span className="text-ink-faint font-mono text-[9px]">[INSERIR URL]</span>
-              </div>
-            )}
+                <span className="text-ink-faint font-mono text-[11px] tracking-[0.04em] break-all">
+                  {channel.handle}
+                </span>
+              </span>
+
+              <ArrowUpRight
+                aria-hidden="true"
+                className="text-ink-faint group-hover/canal:text-accent-text size-3.5 shrink-0 transition-all duration-300"
+              />
+            </a>
           </li>
         ))}
       </ul>

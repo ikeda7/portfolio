@@ -10,11 +10,23 @@
   --color-panel-2: #1a1a1a;
   --color-panel-sunken: #101010;
   --color-line: #262626;
+  /* Borda de controle: 3.81:1 sobre --bg. Usada onde a borda e a UNICA
+     afordancia do componente (campos de formulario). WCAG 1.4.11. */
+  --color-line-strong: #6e6e6e;
   --color-ink: #ededed;
-  --color-ink-muted: #a3a3a3;
-  --color-ink-faint: #787878;
-  --color-accent: #9d00ff;
-  --color-accent-2: #8a2be2;
+  --color-ink-muted: #b0b0b0;
+  /* 6.18:1 no pior fundo (--panel-2). O #787878 do prototipo dava 3.94:1 e o
+     #8a8a8a anterior, 5.04:1 — passava no AA e ainda assim sumia, porque e a
+     cor do rotulo mono, o estilo mais repetido da pagina. */
+  --color-ink-faint: #9a9a9a;
+  /* Acento para PREENCHIMENTO, glow, borda e LED — 3.2:1+, suficiente para
+     componente nao-textual. NAO usar como cor de texto.
+     Matiz 219, amostrado da camiseta da foto da secao Sobre (#072C6F, que
+     sozinho da 1.48:1 e sumiria no carvao — mesma cor, mais clara). */
+  --color-accent: #0059ff;
+  /* Acento para TEXTO — 7.56:1 sobre o fundo. Mesmo matiz (219), so mais claro. */
+  --color-accent-text: #6ba1ff;
+  --color-accent-2: #2e6de0;
   --color-knob: #2a2a2a;
   --color-knob-line: #3a3a3a;
 
@@ -26,10 +38,10 @@
   @keyframes driftglow {
     0%,
     100% {
-      opacity: 0.35;
+      opacity: 0.22;
     }
     50% {
-      opacity: 0.7;
+      opacity: 0.45;
     }
   }
 }
@@ -51,47 +63,272 @@
   }
 }
 
+/*
+ * Fita de tecnologias. A lista e renderizada duas vezes e transladamos -50%,
+ * entao o ponto final coincide exatamente com o inicial e o loop nao "pula".
+ */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/*
+ * Giro do vinil nas capas de projeto.
+ *
+ * O disco gira sempre que o mouse (ou o foco) esta no card, e para onde
+ * estiver quando sai. Antes era uma `transition` de 38deg que parava em ~1s:
+ * o movimento acabava antes de o olho chegar a capa.
+ *
+ * Por isso a animacao roda o tempo todo em `paused` e o hover so troca o
+ * `animation-play-state` (ver `@utility vinil-gira`): trocar a animacao em si
+ * no hover faria o disco voltar ao zero de estalo toda vez que o mouse sai.
+ *
+ * Vive fora do `@theme` pelo mesmo motivo de `wavepulse` e `ledpulse`: quem o
+ * referencia e um `@utility`, nao um `animate-*`.
+ */
+@keyframes vinilgira {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+ * LEDs de atividade do rack (Back-end & dados) e medidor das pistas de DAW
+ * (Ferramentas & processos). Fora do `@theme` pelo mesmo motivo dos outros:
+ * quem os referencia e um `@utility`, com duracao e atraso inline por indice.
+ */
+@keyframes rackpisca {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+
+/* Cursor de reprodução das pistas de DAW: atravessa o clipe e volta. */
+@keyframes cabecote {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+@keyframes nivel {
+  0%,
+  100% {
+    transform: scaleX(0.35);
+  }
+  30% {
+    transform: scaleX(0.9);
+  }
+  60% {
+    transform: scaleX(0.55);
+  }
+  80% {
+    transform: scaleX(0.75);
+  }
+}
+
+/*
+ * LED da entrada atual da linha do tempo.
+ *
+ * Vive fora do `@theme` pelo mesmo motivo de `wavepulse` e `marquee`: quem
+ * referencia este keyframe e o `@utility glow-led-atual`, nao um utilitario
+ * `animate-*` gerado pelo Tailwind — sem isso ele sairia do bundle.
+ *
+ * So `transform` e `box-shadow` mudam; a cor sai de `--accent-rgb` como todo
+ * o resto, entao trocar o acento continua custando as duas variaveis do
+ * `:root`. O bloco `prefers-reduced-motion` no fim do arquivo desliga a
+ * animacao, e sobra o halo forte do utilitario — que e o estado de repouso.
+ */
+@keyframes ledpulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgb(var(--accent-rgb) / 0.7);
+  }
+  50% {
+    transform: scale(1.22);
+    box-shadow: 0 0 18px rgb(var(--accent-rgb) / 1);
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Glows — todos derivados de --accent-rgb.                            */
 /* Trocar a cor de acento = trocar apenas as duas variaveis abaixo.     */
+/*                                                                     */
+/* Os alfas cairam ~40% em 23/09/2026. A leitura de fora foi "efeito    */
+/* neon saturado", e o diagnostico junto dela foi mais duro: o estilo   */
+/* inteiro lia como gerado. Halo forte em tudo ao mesmo tempo e uma     */
+/* das assinaturas disso — quando todo elemento brilha, nenhum          */
+/* destaca, e a pagina vira efeito em vez de hierarquia.                */
+/*                                                                     */
+/* O acento nao mudou e os contrastes nao dependem daqui: glow e        */
+/* box-shadow, nao cor de texto. O que muda e a intensidade.           */
 /* ------------------------------------------------------------------ */
 :root {
-  --accent-rgb: 157 0 255;
-  --accent-2-rgb: 138 43 226;
+  --accent-rgb: 0 89 255;
+  --accent-2-rgb: 46 109 224;
+}
+
+/*
+ * As tres trilhas da waveform do hero. Cada canal pinta a pagina inteira:
+ * o `Waveform` escreve `data-trilha` no <html> e estes blocos trocam o
+ * acento. Azul e o padrao e nao tem bloco — sem atributo, vale o `@theme`.
+ *
+ * Cada cor vem com o PAR de tokens, como o azul, e os numeros foram medidos
+ * antes de entrar (sobre --bg / --panel-2, que e o pior fundo):
+ *
+ *            accent (UI, >=3:1)   branco sobre accent   accent-text (>=4.5:1)
+ *   azul     3.58 / 3.21          5.42                  7.56 / 6.77
+ *   roxo     3.52 / 3.16          5.52                  7.53 / 6.74
+ *   vermelho 3.53 / 3.16          5.50                  9.21 / 8.24
+ *
+ * A coluna do meio e a que decide: o botao de acento tem texto branco. A
+ * primeira versao (#8b3dff / #e11d2e) passava com 4.99 e 4.75, mas deixava a
+ * margem em 1.06x contra os 1.2x do azul — as cores foram escurecidas ate o
+ * mesmo equilibrio dele. Um vermelho mais vivo (#ff2638) cai para 3.76 e
+ * reprova de vez.
+ *
+ * `:root[data-trilha]` ganha do `:root` do `@theme` por especificidade, e
+ * nao por ordem — mover este bloco nao quebra nada.
+ */
+:root[data-trilha='roxo'] {
+  --accent-rgb: 128 53 250;
+  --accent-2-rgb: 118 78 224;
+  --color-accent: #8035fa;
+  --color-accent-text: #b48cff;
+  --color-accent-2: #764ee0;
+}
+
+:root[data-trilha='vermelho'] {
+  --accent-rgb: 208 20 42;
+  --accent-2-rgb: 208 52 63;
+  --color-accent: #d0142a;
+  --color-accent-text: #ff9499;
+  --color-accent-2: #d0343f;
 }
 
 @utility glow-cta {
-  box-shadow: 0 0 34px rgb(var(--accent-rgb) / 0.75);
+  box-shadow: 0 0 30px rgb(var(--accent-rgb) / 0.42);
 }
 
 @utility glow-soft {
-  box-shadow: 0 0 22px rgb(var(--accent-rgb) / 0.25);
+  box-shadow: 0 0 20px rgb(var(--accent-rgb) / 0.16);
 }
 
 @utility glow-card {
   box-shadow:
     0 18px 40px rgb(0 0 0 / 0.5),
-    0 0 30px rgb(var(--accent-rgb) / 0.28);
+    0 0 26px rgb(var(--accent-rgb) / 0.18);
 }
 
 @utility glow-panel {
-  box-shadow: 0 0 60px rgb(var(--accent-rgb) / 0.12);
+  box-shadow: 0 0 52px rgb(var(--accent-rgb) / 0.07);
 }
 
 @utility glow-photo {
-  box-shadow: 0 0 40px rgb(var(--accent-rgb) / 0.18);
+  box-shadow: 0 0 36px rgb(var(--accent-rgb) / 0.12);
 }
 
 @utility glow-knob {
-  box-shadow: 0 0 12px rgb(var(--accent-rgb) / 0.5);
+  box-shadow: 0 0 10px rgb(var(--accent-rgb) / 0.3);
 }
 
 @utility glow-bar {
-  box-shadow: 0 0 14px rgb(var(--accent-rgb) / 0.6);
+  box-shadow: 0 0 12px rgb(var(--accent-rgb) / 0.38);
 }
 
 @utility glow-led {
-  box-shadow: 0 0 10px var(--color-accent);
+  box-shadow: 0 0 8px rgb(var(--accent-rgb) / 0.65);
+}
+
+/*
+ * O LED da posicao atual, que pulsa. O halo parado e mais forte que o de
+ * `glow-led` de proposito: sob `prefers-reduced-motion` a animacao morre e
+ * este valor e tudo o que sobra para distinguir o atual do passado.
+ */
+@utility glow-led-atual {
+  box-shadow: 0 0 14px rgb(var(--accent-rgb) / 0.85);
+  animation: ledpulse 2.4s ease-in-out infinite;
+}
+
+/*
+ * 33 1/3 rpm dariam 1,8s por volta, e isso num disco que ocupa o card inteiro
+ * vira borrao. 8s e lento o bastante para os sulcos e o brilho conico serem
+ * lidos girando, e nao so "mudando".
+ */
+@utility vinil-gira {
+  animation: vinilgira 8s linear infinite paused;
+  :where(.group):hover &,
+  :where(.group):focus-within & {
+    animation-play-state: running;
+  }
+}
+
+/*
+ * Texto corrido justificado, a pedido do dono (24/09): alinhado dos dois
+ * lados em qualquer tela.
+ *
+ * Justificar sozinho, na web, abre "rios" de espaco entre palavras — e pior
+ * em coluna estreita, que e o caso do card de projeto e de todo paragrafo no
+ * celular. O que segura isso e a hifenizacao: `hyphens: auto` usa o `lang` do
+ * documento (`pt-BR`, no <html>) para quebrar a palavra na silaba, e a linha
+ * deixa de ter que esticar os espacos. `text-wrap: pretty` evita a ultima
+ * linha com uma palavra so.
+ *
+ * So em texto corrido. Rotulo mono, titulo e chip nao entram: justificar
+ * uma linha so nao faz nada, e hifenizar rotulo em caixa alta le como erro.
+ */
+@utility texto-justo {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;
+  text-wrap: pretty;
+}
+
+/*
+ * A mesma coisa para texto centralizado (a descricao do hero): o corpo
+ * justifica e a ultima linha, que e mais curta, fica no centro em vez de
+ * grudar na esquerda.
+ */
+@utility texto-justo-centro {
+  text-align: justify;
+  text-align-last: center;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;
+  text-wrap: pretty;
+}
+
+@utility led-atividade {
+  animation: rackpisca 1.4s ease-in-out infinite;
+}
+
+/*
+ * Carretel das fitas cassete (Bancos de dados). Reaproveita o keyframe do
+ * vinil; o componente troca `animation-play-state` inline, entao a fita para
+ * no angulo em que estava.
+ */
+@utility carretel {
+  animation: vinilgira 1.8s linear infinite paused;
+}
+
+@utility cabecote {
+  animation: cabecote 6s linear infinite;
+}
+
+@utility medidor {
+  animation: nivel 1.4s ease-in-out infinite;
 }
 
 @utility glow-input {
@@ -119,9 +356,31 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Header sticky de 80px: garante que a ancora nao fique escondida. */
+  /*
+   * Altura real do header sticky, medida no navegador: 97px ate `sm` (marca e
+   * nav empilhadas) e 62px a partir dai, quando volta a ser uma linha so.
+   *
+   * Vira variavel porque tres coisas dependem dela e estavam com o numero
+   * cravado em lugares diferentes: a compensacao da ancora, a altura util do
+   * hero e a posicao da indicacao de rolagem. Mudou o header, muda aqui.
+   */
+  :root {
+    --header-h: 97px;
+  }
+
+  @media (min-width: 40rem) {
+    :root {
+      --header-h: 62px;
+    }
+  }
+
+  /*
+   * Sem isso a ancora para atras do header e o topo da secao fica escondido.
+   * Exatamente a altura do header, sem folga: os 4px que havia aqui deixavam
+   * uma lasca da secao anterior aparecendo entre o header e a secao nova.
+   */
   section[id] {
-    scroll-margin-top: 80px;
+    scroll-margin-top: var(--header-h);
   }
 
   ::selection {

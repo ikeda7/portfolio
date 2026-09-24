@@ -1,0 +1,110 @@
+name: CI
+
+# Os mesmos quatro portoes que o CLAUDE.md manda rodar antes de commitar.
+# Ate agora eles dependiam de alguem lembrar; aqui passam a rodar sozinhos em
+# todo PR e em todo push para develop e main.
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+
+# Push novo na mesma branch cancela a execucao anterior: o resultado do commit
+# antigo nao interessa mais e so ocuparia a fila.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  portoes:
+    name: typecheck · lint · format · build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # `npm ci` e nao `npm install`: instala exatamente o que esta no
+      # package-lock e falha se ele estiver fora de sincronia com o
+      # package.json, em vez de corrigir em silencio.
+      - run: npm ci
+
+      # Sem `continue-on-error`: o primeiro portao que falhar derruba o job.
+      # Mas cada um tem nome proprio, entao a aba de checks diz qual foi sem
+      # precisar abrir o log.
+      - name: typecheck
+        run: npm run typecheck
+
+      - name: lint
+        run: npm run lint
+
+      - name: format
+        run: npm run format:check
+
+      # O build fica por ultimo por ser o mais lento: os tres anteriores pegam
+      # a maioria dos erros em segundos.
+      - name: build
+        run: npm run build
+
+  auditoria:
+    name: auditoria visual
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # So roda se os quatro portoes passarem: nao adianta medir contraste de um
+    # build que nem compila, e economiza um runner quando o PR ja esta vermelho.
+    needs: portoes
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # O runner nao traz Chrome garantido; esta action instala e devolve o
+      # caminho, que a auditoria le por BROWSER_PATH.
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+        with:
+          chrome-version: stable
+
+      # Preview e auditoria no MESMO step de proposito: um servidor iniciado em
+      # background num step nao tem vida garantida no step seguinte.
+      - name: preview + auditoria
+        env:
+          BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          BROWSER_FLAGS: --no-sandbox
+          AUDIT_URL: http://localhost:4173/
+        run: |
+          npm run preview -- --port 4173 --strictPort &
+          PREVIEW_PID=$!
+
+          for _ in $(seq 1 60); do
+            if curl -sf http://localhost:4173/ > /dev/null; then break; fi
+            sleep 1
+          done
+
+          if ! curl -sf http://localhost:4173/ > /dev/null; then
+            echo "O preview nao subiu em 60s."
+            kill "$PREVIEW_PID" 2>/dev/null || true
+            exit 1
+          fi
+
+          npm run auditar
+          CODIGO=$?
+
+          kill "$PREVIEW_PID" 2>/dev/null || true
+          exit $CODIGO

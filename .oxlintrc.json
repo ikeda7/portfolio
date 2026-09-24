@@ -4,8 +4,26 @@
   "ignorePatterns": ["dist", "node_modules", "docs/design-reference"],
   "rules": {
     "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }],
-    "eslint/no-console": ["warn", { "allow": ["warn", "error"] }],
+    "react/only-export-components": [
+      "warn",
+      {
+        "allowConstantExport": true
+      }
+    ],
+    "eslint/no-console": [
+      "warn",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
     "typescript/no-explicit-any": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["scripts/**"],
+      "rules": {
+        "eslint/no-console": "off"
+      }
+    }
+  ]
 }

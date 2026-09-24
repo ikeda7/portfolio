@@ -1,59 +1,129 @@
 import type { Project } from '@/types/content'
 
 /**
- * Setlist de projetos.
+ * Setlist. Seis projetos do currículo e do github.com/ikeda7, na ordem que
+ * conta a história: IA generativa primeiro, depois a engenharia que a sustenta.
  *
- * Regra de Ouro: os TÍTULOS vieram do planejamento do dono do portfólio.
- * Descrições, tags e links estão como placeholder visível até serem mapeados
- * do GitHub (github.com/ikeda7) e do currículo atualizado.
+ * **Os seis têm a mesma capa: o selo de vinil.** Muda só o que já é diferente
+ * entre eles — número da faixa, nome e estado.
+ *
+ * As capas já foram quatro tratamentos diferentes, cada projeto com o que tinha
+ * para mostrar: print do site, terminal com os comandos do README, espectro de
+ * linguagens, placa cega. Era defensável um a um e ficou ruim junto — seis
+ * cards lado a lado com seis linguagens visuais leem como falta de padrão, não
+ * como cuidado.
+ *
+ * E "print em todos" não era opção: três destes seis **não têm tela nenhuma**.
+ * O TCC é linha de comando, o LexTrack é trabalho de cliente sem site público e
+ * o Flowers2 abre numa página pessoal que o dono pediu para não fotografar. Com
+ * três impossíveis, qualquer mistura vira exceção — e exceção era o problema.
+ *
+ * `estado` e `repo` são os únicos campos que a capa mostra além do número, e
+ * os dois são **fato verificável**. Visibilidade dos repositórios conferida em 23/09/2026:
+ *
+ *     gh api repos/ikeda7/<repo> --jq .visibility
  */
 export const projects: readonly Project[] = [
   {
     track: '01',
-    title: 'IA de Geração Musical (TCC)',
-    description: '[INSERIR DESCRIÇÃO — treinamento de modelos generativos de áudio em RTX local]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
-    cover: null,
+    title: 'Geração de Música com IA',
+    description:
+      'TCC: Transformer em PyTorch treinado sobre MAESTRO, POP909 e Groove MIDI. Gera MIDI multi-instrumental com filtragem por teoria musical.',
+    tags: ['PYTORCH', 'PYTHON', 'TRANSFORMER'],
+    href: 'https://github.com/ikeda7/music-ai-generator',
+    estado: 'TCC',
+    repo: 'Repositório público',
   },
   {
     track: '02',
-    title: 'Análise Exploratória de Dados',
-    description: '[INSERIR DESCRIÇÃO — scripts Python/Jupyter de tratamento e visualização]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
+    title: 'LexTrack',
+    description:
+      'Gestão para escritório de advocacia previdenciário: controle de prazos, casos e prestação de contas. Em produção.',
+    tags: ['REACT', 'NODE.JS', 'POSTGRESQL'],
+    // Trabalho de cliente: nao ha site publico nem repositorio aberto.
     href: null,
-    cover: null,
+    estado: 'Em produção',
+    repo: 'Código fechado',
   },
   {
     track: '03',
-    title: 'LexTrack',
-    description: '[INSERIR DESCRIÇÃO — plataforma cloud de gestão jurídica]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
-    cover: null,
+    title: 'Inhouse LoL',
+    description:
+      'Gerenciador de partidas 5x5 com sorteio por funções, Fearless Draft em MD3 e importação automática de partidas pela Riot API.',
+    tags: ['REACT', 'TYPESCRIPT', 'PRISMA'],
+    href: 'https://inhouse-lol.vercel.app',
+    estado: 'Site no ar',
+    repo: 'Repositório público',
   },
   {
     track: '04',
-    title: 'VolleyControl',
-    description: '[INSERIR DESCRIÇÃO — app mobile/web em Flutter]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
-    cover: null,
+    title: 'Sports Control',
+    description:
+      'Gestão de rachão de vôlei: cadastro, check-in, sorteio equilibrado de times e placar ao vivo. Roda em Windows, Android e web.',
+    tags: ['FLUTTER', 'DART', 'DRIFT'],
+    href: 'https://sportscontrol.vercel.app',
+    estado: 'Site no ar',
+    repo: 'Repositório público',
   },
   {
     track: '05',
-    title: 'x9-game',
-    description: '[INSERIR DESCRIÇÃO — multiplayer local single-device]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
-    cover: null,
+    title: 'X9 — Jogo do Impostor',
+    description:
+      'Party game de dedução social para jogar com amigos em um único celular, passando o aparelho de mão em mão.',
+    tags: ['REACT', 'VITE', 'TYPESCRIPT'],
+    href: 'https://x9.dev.br',
+    estado: 'Site no ar',
+    repo: 'Repositório público',
   },
   {
     track: '06',
-    title: 'Flowers Two',
-    description: '[INSERIR DESCRIÇÃO — experimento criativo 3D interativo / 8-bit]',
-    tags: ['[TAG 1]', '[TAG 2]', '[TAG 3]'],
-    href: null,
-    cover: null,
+    title: 'Flowers2',
+    description:
+      'Buquê de flores em 3D voxel montado por código: o arranjo é resolvido por simulação de encaixe, não posicionado a mão.',
+    tags: ['THREE.JS', 'TYPESCRIPT', '3D VOXEL'],
+    /*
+     * O deploy publico abre em "Flores para Rebeca ♥" — e um presente pessoal.
+     * O dono do portfolio foi avisado do destino e decidiu publicar assim mesmo
+     * em 22/09/2026, e pediu para o card nao levar print.
+     */
+    href: 'https://flowers2.dev',
+    estado: 'Site no ar',
+    repo: 'Repositório privado',
+  },
+  /*
+   * 07 a 09 entraram em 24/09, escolhidos pelo dono. Descricao, tags e estado
+   * sairam do README e das dependencias de cada repositorio, lidos na hora —
+   * nenhum numero de resultado, porque nenhum README declara um.
+   */
+  {
+    track: '07',
+    title: 'Análise Preditiva IMDB',
+    description:
+      'Desafio de ciência de dados da Indicium: análise exploratória do Top 1000 do IMDB e modelo que prevê a nota de um filme, comparando regressão linear, random forest e gradient boosting.',
+    // requirements.txt e os imports dos dois notebooks.
+    tags: ['PYTHON', 'PANDAS', 'SCIKIT-LEARN'],
+    href: 'https://github.com/ikeda7/desafio_indicium_imdb',
+    estado: 'Processo seletivo',
+    repo: 'Repositório público',
+  },
+  {
+    track: '08',
+    title: 'IntuitiveCare',
+    description:
+      'Teste técnico: scraping de dados da ANS, extração de tabelas de PDF, carga em MySQL e busca de operadoras por uma API Flask com interface em Vue.js.',
+    tags: ['PYTHON', 'FLASK', 'MYSQL'],
+    href: 'https://github.com/ikeda7/intuitivecare',
+    estado: 'Processo seletivo',
+    repo: 'Repositório público',
+  },
+  {
+    track: '09',
+    title: 'PokéSite — Capacitação',
+    description:
+      'Material de capacitação da EJCOMP: site de Pokémon com NestJS como proxy da PokeAPI e front em React, para treinar a stack dos projetos da empresa júnior.',
+    tags: ['NESTJS', 'REACT', 'VITE'],
+    href: 'https://github.com/ikeda7/pokedex-capacitacao-ejcomp',
+    estado: 'Capacitação',
+    repo: 'Repositório público',
   },
 ]
