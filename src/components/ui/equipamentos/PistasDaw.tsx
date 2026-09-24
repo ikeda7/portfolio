@@ -54,19 +54,6 @@ export function PistasDaw({ termos }: PistasDawProps) {
 
   return (
     <div className="flex flex-1 flex-col py-2">
-      {/* Régua de compassos, alinhada à coluna dos clipes. */}
-      <div
-        aria-hidden="true"
-        className="grid grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] gap-3 px-[18px] pb-1 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
-      >
-        <span />
-        <span className="text-ink-faint flex justify-between font-mono text-[11px] tabular-nums">
-          {[1, 2, 3, 4].map((compasso) => (
-            <span key={compasso}>{compasso}</span>
-          ))}
-        </span>
-      </div>
-
       <ul className="flex flex-1 flex-col">
         {termos.map((termo) => {
           const muda = mudas.has(termo.label)

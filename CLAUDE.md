@@ -155,10 +155,8 @@ card), onde apagar ao sair é o certo. O pulso ambiente (`animate-driftglow`)
 continua por seção de propósito, porque alterna de lado conforme o número da
 faixa.
 
-- `lib/` — [motion.ts](src/lib/motion.ts) (tempos/curvas),
-  [contact.ts](src/lib/contact.ts) (envio do formulário) e
-  [contagem.ts](src/lib/contagem.ts) ("8 linguagens", no canto dos painéis).
-  Lógica sem JSX.
+- `lib/` — [motion.ts](src/lib/motion.ts) (tempos/curvas) e
+  [contact.ts](src/lib/contact.ts) (envio do formulário). Lógica sem JSX.
 
 - Exports **nomeados** em todo lugar; `export default` só em `App.tsx`.
 

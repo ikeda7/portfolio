@@ -58,13 +58,13 @@ export const academica: readonly TimelineEntry[] = [
     period: 'Nov/2024 — Ago/2026',
     title: 'Gerente de Recursos Humanos',
     org: 'EJCOMP — Empresa Júnior de Computação',
-    context: 'FCT-UNESP · Presidente Prudente, SP',
+    context: 'FCT-UNESP',
   },
   {
     period: 'Abr/2024 — Abr/2025',
     title: 'Diretor de Marketing',
     org: 'CACiC — Centro Acadêmico de Ciência da Computação',
-    context: 'FCT-UNESP · Presidente Prudente, SP',
+    context: 'FCT-UNESP',
   },
 ]
 
@@ -99,11 +99,15 @@ export const education: readonly TimelineEntry[] = [
     title: 'Pós em Engenharia de Software em IA Aplicada',
     org: 'UniPDS',
     current: true,
-    bullets: [
-      'LLMs e engenharia de prompt; RAG, embeddings e vector databases.',
-      'Agentes autônomos e multiagente (LangChain/LangGraph); MCP.',
-      'Fine-tuning (LoRA/PEFT) e governança em IA.',
-    ],
+    /*
+     * Uma linha, e não a ementa em três. Os termos já estão no nicho IA
+     * aplicada da Stack; aqui basta dizer do que o curso trata (24/09,
+     * "menos é mais"). A ementa inteira, que é a fonte de MCP e Fine-tuning
+     * na Stack: LLMs e engenharia de prompt; RAG, embeddings e vector
+     * databases; agentes autônomos e multiagente (LangChain/LangGraph); MCP;
+     * fine-tuning (LoRA/PEFT) e governança em IA.
+     */
+    bullets: ['LLMs, RAG, agentes, MCP, fine-tuning e governança em IA.'],
   },
   {
     period: 'Concluído em Ago/2026',

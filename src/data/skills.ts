@@ -30,7 +30,6 @@ import type { SkillNiche, SkillTerm } from '@/types/content'
 export const linguagens: SkillNiche = {
   id: 'linguagens',
   title: 'Linguagens',
-  unidade: ['linguagem', 'linguagens'],
   terms: [
     { label: 'Python', ext: 'py' },
     { label: 'TypeScript', ext: 'ts' },
@@ -52,7 +51,6 @@ export const linguagens: SkillNiche = {
 export const frontend: SkillNiche = {
   id: 'frontend',
   title: 'Front-end & mobile',
-  unidade: ['pedal', 'pedais'],
   // Angular, Tailwind CSS e jQuery vêm do README do perfil; HTML5 e CSS3
   // foram para Linguagens. Oito, para a pedaleira fechar 4+4.
   terms: [
@@ -78,7 +76,6 @@ export const frontend: SkillNiche = {
 export const backend: SkillNiche = {
   id: 'backend',
   title: 'Back-end',
-  unidade: ['pista', 'pistas'],
   terms: [
     { label: 'Node.js' },
     { label: 'NestJS' },
@@ -99,7 +96,6 @@ export const backend: SkillNiche = {
 export const bancos: SkillNiche = {
   id: 'bancos',
   title: 'Bancos de dados',
-  unidade: ['fita', 'fitas'],
   terms: [
     { label: 'PostgreSQL' },
     { label: 'Oracle Database' },
@@ -122,7 +118,6 @@ export const bancos: SkillNiche = {
 export const iaAplicada: SkillNiche = {
   id: 'ia-aplicada',
   title: 'IA aplicada',
-  unidade: ['pad', 'pads'],
   terms: [
     { label: 'Engenharia de prompt' },
     { label: 'RAG' },
@@ -141,7 +136,6 @@ export const iaAplicada: SkillNiche = {
 export const ferramentas: SkillNiche = {
   id: 'ferramentas',
   title: 'Ferramentas',
-  unidade: ['módulo', 'módulos'],
   /*
    * Exatamente a seção "DevOps & Tools" do README do perfil. Até 24/09 o
    * nicho era "Ferramentas & processos", com levantamento de requisitos,

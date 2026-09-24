@@ -10,7 +10,6 @@ import { PistasDaw } from '@/components/ui/equipamentos/PistasDaw'
 import { Rack } from '@/components/ui/equipamentos/Rack'
 import { Sampler } from '@/components/ui/equipamentos/Sampler'
 import { bancos, backend, ferramentas, frontend, iaAplicada, linguagens } from '@/data/skills'
-import { contagem } from '@/lib/contagem'
 import type { SkillNiche } from '@/types/content'
 
 /**
@@ -100,7 +99,7 @@ export function Skills() {
   )
 }
 
-/** O painel de um nicho: título dele e a contagem na unidade do equipamento. */
+/** O painel de um nicho, com o título dele. */
 function Painel({
   nicho,
   fill = false,
@@ -111,7 +110,7 @@ function Painel({
   readonly children: ReactNode
 }) {
   return (
-    <Panel title={nicho.title} code={contagem(nicho.terms.length, ...nicho.unidade)} fill={fill}>
+    <Panel title={nicho.title} fill={fill}>
       {children}
     </Panel>
   )

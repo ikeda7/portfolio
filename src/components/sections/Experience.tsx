@@ -3,7 +3,6 @@ import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { Timeline } from '@/components/ui/Timeline'
 import { academica, education, experience, languages } from '@/data/experience'
-import { contagem } from '@/lib/contagem'
 
 /**
  * Trajetória: a linha do tempo profissional e, embaixo dela, a atuação
@@ -32,7 +31,7 @@ export function Experience() {
         <Reveal className="flex flex-col gap-10">
           <Timeline entries={experience} />
 
-          <Panel title="Atuação acadêmica" code={contagem(academica.length, 'cargo', 'cargos')}>
+          <Panel title="Atuação acadêmica">
             {/*
              * Lado a lado a partir de `sm`: empilhadas, as duas deixavam a
              * coluna da esquerda ~170px mais alta que a da direita, e o vao
@@ -55,14 +54,14 @@ export function Experience() {
          * inglês ganha a escala do Quadro Europeu da certificação dele.
          */}
         <Reveal delay={0.14} className="flex h-full flex-col gap-5">
-          <Panel title="Formação" code={contagem(education.length, 'curso', 'cursos')}>
+          <Panel title="Formação">
             <div className="px-[18px] py-[22px]">
               <Timeline entries={education} compact />
             </div>
           </Panel>
 
           <div className="flex flex-1 flex-col">
-            <Panel title="Idiomas" code={contagem(languages.length, 'idioma', 'idiomas')} fill>
+            <Panel title="Idiomas" fill>
               <ul className="divide-line flex flex-1 flex-col divide-y">
                 {languages.map((idioma) => (
                   <li

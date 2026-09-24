@@ -41,8 +41,6 @@ export interface SkillTerm {
 export interface SkillNiche {
   readonly id: string
   readonly title: string
-  /** Palavra da contagem no canto do painel: a peça do equipamento do nicho ("7 pedais"). */
-  readonly unidade: readonly [singular: string, plural: string]
   readonly terms: readonly SkillTerm[]
 }
 
@@ -90,11 +88,6 @@ export interface SocialChannel {
   /** Identificador mostrado ao lado do rotulo: "/ikeda7", "@_ikedaz", o e-mail. */
   readonly handle: string
   readonly icon: 'github' | 'linkedin' | 'instagram' | 'mail'
-}
-
-export interface AboutStat {
-  readonly value: string
-  readonly label: string
 }
 
 /**
