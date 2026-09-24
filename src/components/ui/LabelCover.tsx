@@ -43,10 +43,14 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
        * O brilho é cônico e assimétrico porque sulco concêntrico é radialmente
        * simétrico: sem ele, a rotação no hover seria matematicamente real e
        * visualmente invisível.
+       *
+       * Gira sem parar enquanto o card está sob o mouse ou com foco, e congela
+       * no ângulo em que estava quando sai — o próximo hover continua dali.
+       * O mecanismo está no `@utility vinil-gira`, em `index.css`.
        */}
       <div
         aria-hidden="true"
-        className="absolute aspect-square h-[240%] rounded-full ring-1 ring-white/[0.07] transition-transform duration-[1200ms] ease-out group-hover:rotate-[38deg]"
+        className="absolute aspect-square h-[240%] rounded-full ring-1 ring-white/[0.07] vinil-gira"
         style={{
           backgroundImage: [
             'conic-gradient(from 210deg, rgb(var(--accent-rgb) / 0.16), transparent 22%, transparent 66%, rgb(var(--accent-rgb) / 0.1) 84%, transparent)',
