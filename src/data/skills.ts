@@ -67,22 +67,43 @@ export const frontend: SkillNiche = {
   ],
 }
 
-/** Nicho 3 — o que roda no servidor e o que guarda o dado. */
+/**
+ * Nicho 3 — o que roda no servidor.
+ *
+ * Até 24/09 era "Back-end & dados", com os bancos junto. Separados, do mesmo
+ * jeito que ferramentas e processos foram separados: o servidor fica na
+ * coluna do full stack, ao lado do front-end, e os bancos vão para a coluna
+ * de Dados & IA.
+ */
 export const backend: SkillNiche = {
   id: 'backend',
-  title: 'Back-end & dados',
-  unidade: ['módulo', 'módulos'],
+  title: 'Back-end',
+  unidade: ['pista', 'pistas'],
   terms: [
     { label: 'Node.js' },
     { label: 'NestJS' },
     { label: 'Prisma' },
     { label: 'ASP.NET MVC' },
     { label: 'Entity Framework' },
+    // Do README do perfil (24/09).
+    { label: 'Flask' },
+  ],
+}
+
+/**
+ * Nicho 3b — bancos de dados, separados do back-end em 24/09.
+ *
+ * Os quatro do README do perfil ("Databases"). SQLite entrou por lá; os
+ * outros três já estavam no currículo.
+ */
+export const bancos: SkillNiche = {
+  id: 'bancos',
+  title: 'Bancos de dados',
+  unidade: ['fita', 'fitas'],
+  terms: [
+    { label: 'PostgreSQL' },
     { label: 'Oracle Database' },
     { label: 'SQL Server' },
-    { label: 'PostgreSQL' },
-    // Do README do perfil (24/09): Flask em Back-end, SQLite em Databases.
-    { label: 'Flask' },
     { label: 'SQLite' },
   ],
 }
@@ -120,7 +141,7 @@ export const iaAplicada: SkillNiche = {
 export const ferramentas: SkillNiche = {
   id: 'ferramentas',
   title: 'Ferramentas',
-  unidade: ['pista', 'pistas'],
+  unidade: ['módulo', 'módulos'],
   /*
    * Exatamente a seção "DevOps & Tools" do README do perfil. Até 24/09 o
    * nicho era "Ferramentas & processos", com levantamento de requisitos,
@@ -129,7 +150,9 @@ export const ferramentas: SkillNiche = {
    * na Experiência. Jupyter foi para a fita.
    */
   terms: [
-    { label: 'Git/GitHub' },
+    // "Git" e não "Git/GitHub": o badge do perfil é Git, e com GitHub
+    // Actions logo abaixo o GitHub aparecia duas vezes.
+    { label: 'Git' },
     { label: 'GitHub Actions' },
     { label: 'Docker' },
     { label: 'Vercel' },

@@ -5,21 +5,23 @@ interface RackProps {
 }
 
 /**
- * Back-end & dados como rack: cada tecnologia é um módulo de equipamento, com
- * parafusos nos cantos, nome serigrafado e um medidor de atividade.
+ * Ferramentas como rack: cada uma é um módulo de equipamento, com parafusos
+ * nos cantos, nome serigrafado e um medidor de atividade.
  *
- * É o equipamento que não se toca — servidor e banco ficam no rack, rodando.
+ * Até 24/09 o rack era do Back-end; o dono inverteu (ferramenta é
+ * infraestrutura — Docker, Linux, CI — e é isso que fica no rack, rodando).
+ * É o equipamento que não se toca.
  * A vida é a atividade: cinco LEDs por módulo, piscando em ritmos diferentes
  * (`@utility led-atividade` + atraso por índice), e o módulo acende no hover.
  * Os LEDs são CSS, então o `prefers-reduced-motion` os para.
  *
- * **Grade de blocos, não lista.** A primeira versão era uma coluna de linhas,
- * e ao lado das pistas de DAW (também linhas) os dois painéis liam iguais.
- * Em blocos 2x4 o rack tem outra silhueta. Uma coluna só no celular estreito.
+ * **Grade de blocos, não lista**, para não ler igual às pistas de DAW. São
+ * nove ferramentas, então 3x3 a partir de `sm` (o painel ocupa a largura
+ * inteira da Stack); uma coluna no celular.
  */
 export function Rack({ termos }: RackProps) {
   return (
-    <ul className="grid flex-1 auto-rows-fr gap-2 p-3 min-[420px]:grid-cols-2">
+    <ul className="grid flex-1 auto-rows-fr gap-2 p-3 sm:grid-cols-3">
       {termos.map((termo, index) => (
         <li
           key={termo.label}
