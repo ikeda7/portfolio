@@ -129,7 +129,7 @@ export function ContactForm() {
     // `h-full`: o formulario mora num painel que estica ate a altura do
     // painel de Canais ao lado. Sem isso ele para na altura natural dos
     // campos e sobra um vao morto embaixo.
-    <form onSubmit={handleSubmit} noValidate className="flex h-full flex-col gap-[26px]">
+    <form onSubmit={handleSubmit} noValidate className="flex h-full flex-col gap-5">
       {/* Armadilha: fora da tela e fora da ordem de tabulação. Quem preenche é bot. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
         <label>
@@ -183,13 +183,13 @@ export function ContactForm() {
         <span className={LABEL_CLASS}>Mensagem</span>
         <textarea
           name="mensagem"
-          rows={4}
+          rows={3}
           value={values.mensagem}
           onChange={handleChange}
           required
           maxLength={5000}
           disabled={enviando}
-          className={`${FIELD_CLASS} min-h-[112px] flex-1 resize-y`}
+          className={`${FIELD_CLASS} min-h-24 flex-1 resize-y`}
         />
       </label>
 

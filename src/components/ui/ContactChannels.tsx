@@ -5,16 +5,17 @@ import { Panel } from '@/components/ui/Panel'
 import { socialChannels } from '@/data/social'
 
 const LINHA_CLASS =
-  'flex h-full items-center gap-3 px-[18px] py-3.5 transition-all duration-300 hover:bg-[rgb(var(--accent-rgb)/0.07)]'
+  'flex items-center gap-3 px-[18px] py-4 transition-all duration-300 hover:bg-[rgb(var(--accent-rgb)/0.07)]'
 
 /**
  * Painel "Canais": os contatos como linhas de um patchbay.
  *
  * Eram quatro cartões numa grade 2x2, cada um com o identificador centralizado
  * e `break-all` — o que picava "lucasvikeda@gmail.com" no meio da palavra para
- * caber na coluna. Em linha o endereço cabe inteiro, o painel ganha altura o
- * bastante para encostar no formulário ao lado, e a leitura vira uma varredura
- * vertical em vez de quatro paradas.
+ * caber na coluna. Em linha o endereço cabe inteiro e a leitura vira uma
+ * varredura vertical em vez de quatro paradas. Cada linha tem a altura
+ * natural: o painel já esticou até a altura do formulário ao lado, e virou o
+ * bloco mais vazio da página.
  *
  * **Sem currículo em PDF, de propósito.** Ele chegou a ficar aqui, com
  * download em PT-BR e EN, e foi removido em 23/09: o PDF traz o telefone,
@@ -32,10 +33,10 @@ const LINHA_CLASS =
  */
 export function ContactChannels() {
   return (
-    <Panel title="Canais" code="OUT" fill>
-      <ul className="divide-line flex flex-1 flex-col divide-y">
+    <Panel title="Canais" code="OUT">
+      <ul className="divide-line flex flex-col divide-y">
         {socialChannels.map((channel) => (
-          <li key={channel.label} className="group/canal flex-1">
+          <li key={channel.label} className="group/canal">
             <a
               href={channel.href ?? undefined}
               target={channel.href?.startsWith('mailto:') ? undefined : '_blank'}
