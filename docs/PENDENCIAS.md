@@ -817,7 +817,18 @@ Se um dia fizer sentido voltar, o caminho honesto e um PDF **sem telefone**,
 gerado so para o site. Os arquivos originais continuam no historico do git
 (commit `6a5cbe7`), entao nada se perdeu.
 
-### 3. EmailJS — BLOQUEADA, e e a ULTIMA da fila
+### 3. EmailJS — CONFIGURADO em 24/09, falta o teste do dono
+
+As tres variaveis `VITE_EMAILJS_*` estao na Vercel (producao, preview e
+desenvolvimento), com o servico Gmail e o template do dono, e a producao foi
+publicada de novo para o build embuti-las. **Falta:** o dono enviar uma
+mensagem de teste pelo site e confirmar que a allowlist de dominios esta
+ligada no painel do EmailJS (Account > Security). Daqui nao da para testar: a
+rede deste ambiente bloqueia `api.emailjs.com` e os dominios `*.vercel.app`.
+Se o envio falhar, o motivo aparece no console do navegador
+("EmailJS recusou o envio: <status>").
+
+Historico abaixo.
 
 > Decisao do dono em 23/09: **"email depois vemos, vai ser o ultimo dos
 > ultimos"**. Nao e esquecimento — e ordem de prioridade. O formulario ja
