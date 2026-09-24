@@ -11,6 +11,7 @@ import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
 import { BrilhoDoCursor } from '@/components/ui/BrilhoDoCursor'
 import { Marquee } from '@/components/ui/Marquee'
+import { OndaDeFundo } from '@/components/ui/OndaDeFundo'
 import { ScrollHint } from '@/components/ui/ScrollHint'
 import { bibliotecasDoGithub } from '@/data/skills'
 
@@ -40,6 +41,12 @@ export default function App() {
        * brilho se partia na fronteira entre uma e outra.
        */}
       <BrilhoDoCursor />
+
+      {/*
+       * A onda sonora do fundo, também por baixo de tudo: começa depois do
+       * hero e liga uma seção à outra. Ver OndaDeFundo.
+       */}
+      <OndaDeFundo />
 
       <Header />
       <SectionNav />

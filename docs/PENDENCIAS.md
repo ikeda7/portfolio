@@ -1040,8 +1040,9 @@ Nenhuma é irreversível; estão aqui para não serem refeitas por engano.
 **Sem pulso ambiente nas seções (24/09).** Cada seção tinha um brilho azul
 parado num canto, alternando de lado. Com a luz do cursor andando pela página,
 ele lia como mancha ("uma luz que não é a do meu cursor", print do dono). Só o
-hero mantém o dele. Ideias para decorar o fundo estão em discussão com o dono —
-nada implementado.
+hero mantém o dele. Das quatro ideias para o fundo (liso, grão de filme, grade
+de DAW, onda contínua), o dono escolheu a onda: `OndaDeFundo`, uma waveform
+vertical apagada que liga as seções e reage à rolagem.
 
 **Reveal com `amount: 0` (24/09).** Com `0.2`, a grade de Projetos no celular
 (~3500px) nunca tinha 20% na tela e ficava invisível. Ver `VIEWPORT` em
