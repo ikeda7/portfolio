@@ -138,6 +138,44 @@
   --accent-2-rgb: 46 109 224;
 }
 
+/*
+ * As tres trilhas da waveform do hero. Cada canal pinta a pagina inteira:
+ * o `Waveform` escreve `data-trilha` no <html> e estes blocos trocam o
+ * acento. Azul e o padrao e nao tem bloco — sem atributo, vale o `@theme`.
+ *
+ * Cada cor vem com o PAR de tokens, como o azul, e os numeros foram medidos
+ * antes de entrar (sobre --bg / --panel-2, que e o pior fundo):
+ *
+ *            accent (UI, >=3:1)   branco sobre accent   accent-text (>=4.5:1)
+ *   azul     3.58 / 3.21          5.42                  7.56 / 6.77
+ *   roxo     3.52 / 3.16          5.52                  7.53 / 6.74
+ *   vermelho 3.53 / 3.16          5.50                  9.21 / 8.24
+ *
+ * A coluna do meio e a que decide: o botao de acento tem texto branco. A
+ * primeira versao (#8b3dff / #e11d2e) passava com 4.99 e 4.75, mas deixava a
+ * margem em 1.06x contra os 1.2x do azul — as cores foram escurecidas ate o
+ * mesmo equilibrio dele. Um vermelho mais vivo (#ff2638) cai para 3.76 e
+ * reprova de vez.
+ *
+ * `:root[data-trilha]` ganha do `:root` do `@theme` por especificidade, e
+ * nao por ordem — mover este bloco nao quebra nada.
+ */
+:root[data-trilha='roxo'] {
+  --accent-rgb: 128 53 250;
+  --accent-2-rgb: 118 78 224;
+  --color-accent: #8035fa;
+  --color-accent-text: #b48cff;
+  --color-accent-2: #764ee0;
+}
+
+:root[data-trilha='vermelho'] {
+  --accent-rgb: 208 20 42;
+  --accent-2-rgb: 208 52 63;
+  --color-accent: #d0142a;
+  --color-accent-text: #ff9499;
+  --color-accent-2: #d0343f;
+}
+
 @utility glow-cta {
   box-shadow: 0 0 30px rgb(var(--accent-rgb) / 0.42);
 }

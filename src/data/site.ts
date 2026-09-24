@@ -25,12 +25,18 @@ export const site = {
       // `waveformHeights`, logo abaixo, e são desenhadas em CSS puro.
       timecode: '48 bandas · CSS',
       /**
-       * Canais do painel. São **botões de verdade**: trocar de canal redesenha
-       * a waveform. Antes eram três etiquetas com uma marcada como ativa e
-       * nenhuma clicável — o visual prometia interação que não existia, que é
-       * o pior tipo de afordância.
+       * As três trilhas de atuação, nas palavras do Lucas (23/09). Cada uma
+       * é um **botão de verdade**: redesenha a waveform e troca a cor do neon
+       * da página inteira. O primeiro é o padrão.
+       *
+       * Eram PYTHON / TYPESCRIPT / IA APLICADA — linguagem, linguagem e área
+       * misturadas no mesmo seletor.
        */
-      canais: ['PYTHON', 'TYPESCRIPT', 'IA APLICADA'],
+      canais: [
+        { label: 'DESENVOLVIMENTO FULL STACK', tom: 'azul' },
+        { label: 'DATA SCIENCE', tom: 'roxo' },
+        { label: 'IA APLICADA', tom: 'vermelho' },
+      ],
     },
   },
   about: {
