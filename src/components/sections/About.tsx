@@ -8,7 +8,23 @@ const { about } = site
 export function About() {
   return (
     <Section id="sobre" index="01" label="Sobre">
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-center gap-12">
+      {/*
+       * `items-stretch` e nao `items-center`: e o que permite a foto casar com
+       * a altura do texto em vez de sobrar dos dois lados.
+       *
+       * A foto era `aspect-square w-full`, entao a altura dela saia da LARGURA
+       * da coluna enquanto a altura do texto sai do CONTEUDO. As duas nunca
+       * batiam, e o desencontro mudava de tamanho a cada largura de tela —
+       * por isso nenhum numero fixo resolvia. Em 1400px sobravam ~25px em cima
+       * e ~25px embaixo.
+       *
+       * Da coluna de duas para cima a foto sai do fluxo (`md:absolute`) e
+       * preenche a celula. Fora do fluxo ela nao empurra mais a altura da
+       * linha, entao quem manda na altura passa a ser o texto — que e o que se
+       * queria. Empilhado, volta a ser quadrada em fluxo, porque ali a celula
+       * nao tem altura propria para preencher.
+       */}
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-stretch gap-12">
         <Reveal>
           <h2
             id="sobre-title"
@@ -53,7 +69,7 @@ export function About() {
           />
 
           {about.photo.src ? (
-            <div className="border-line glow-photo relative aspect-square w-full overflow-hidden rounded-2xl border">
+            <div className="border-line glow-photo relative aspect-square w-full overflow-hidden rounded-2xl border md:absolute md:inset-0 md:aspect-auto md:h-full">
               <img
                 src={about.photo.src}
                 alt={about.photo.alt}
@@ -61,7 +77,18 @@ export function About() {
                 height={1000}
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-cover"
+                /*
+                 * O corte puxa para cima (`20%`), nao para o centro.
+                 *
+                 * Agora que o quadro acompanha a altura do texto, ele fica
+                 * cada vez mais deitado quanto mais larga a tela — a 1920px o
+                 * texto tem 454px e o quadro precisa esconder ~17% da imagem.
+                 * Com o padrao `50%`, esses 17% saem metade de cima e metade
+                 * de baixo, e a cabeca ficava decepada no topo. Puxando o foco
+                 * para 20% quase tudo o que sai e rodape, que e fundo de
+                 * estudio.
+                 */
+                className="h-full w-full object-cover object-[50%_20%]"
               />
 
               {/*
@@ -82,7 +109,7 @@ export function About() {
             </div>
           ) : (
             // Regra de Ouro: sem a foto real, mantemos o placeholder do design.
-            <div className="border-line bg-panel glow-photo relative flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-2xl border">
+            <div className="border-line bg-panel glow-photo relative flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-2xl border md:absolute md:inset-0 md:aspect-auto md:h-full">
               <span
                 aria-hidden="true"
                 className="size-16 rounded-[14px] border border-[rgb(var(--accent-rgb)/0.5)] bg-[rgb(var(--accent-rgb)/0.12)]"

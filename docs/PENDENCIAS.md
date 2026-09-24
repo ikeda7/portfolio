@@ -1,8 +1,8 @@
 # Pendências — portfólio Lucas Ikeda
 
 Última atualização: **23/09/2026**, madrugada. Da leva de 16 pontos do dono,
-**4 estão feitos** (2, 5, 14 e a metade concreta do 16), o **11 caiu — não era
-erro, o nome da pós estava certo desde sempre** — e os outros 11
+**5 estão feitos** (2, 5, 13, 14 e a metade concreta do 16), o **11 caiu — não era
+erro, o nome da pós estava certo desde sempre** — e os outros 10
 continuam abertos — a seção logo antes de "Pendencias, em ordem" marca cada um.
 Este arquivo existe para retomar o trabalho de outra máquina — leia a pendência
 1 antes de tentar o deploy.
@@ -196,24 +196,26 @@ tecnologia na pagina inteira e para a fita. Ela deixou de ser enfeite.
 
 ---
 
-## Leva de 23/09 (noite) — 16 pontos do dono, 4 feitos, 1 caiu, 11 abertos
+## Leva de 23/09 (noite) — 16 pontos do dono, 5 feitos, 1 caiu, 10 abertos
 
 Ele pediu para **anotar e nao resolver**, porque ia trocar de maquina. Na
 sessao seguinte liberou ("mete marcha"), e sairam os cinco que nao dependiam de
 decisao dele. Esta tudo aqui, na ordem em que ele falou, com o que eu ja sei
 sobre cada um — arquivo, causa provavel, e onde eu discordo.
 
-**FEITOS:** 2, 5, 14 e a metade concreta do 16.
+**FEITOS:** 2, 5, 13, 14 e a metade concreta do 16.
 
 **CAIU:** o 11. Nao era erro — o nome da pos estava certo, e eu o quebrei. Ver
 o registro no proprio ponto, que ficou como aviso.
 
 **ABERTOS, e por que:** 1, 6 e 9 esperam ele dizer o que quer; 3, 12 e 15 sao
 decisao de posicionamento ou de gosto que eu nao devo tomar sozinho; 4, 7, 8,
-10, 13 e a outra metade do 16 sao trabalho de verdade que ainda nao comecou.
+10 e a outra metade do 16 sao trabalho de verdade que ainda nao comecou.
 
-> **Se for pegar um agora**, os mais baratos e sem pergunta pendente sao o 7
-> (icone no lugar do LED, ja com TODO no componente) e o 13 (foto do Sobre).
+> **Se for pegar um agora**, o unico que nao depende de pergunta nem de gosto e
+> o **7** — icone no lugar do LED no painel Canais, ja com TODO no componente.
+> Ele precisa dos SVGs do Simple Icons: **nao escreva os `path` de memoria**,
+> baixe do pacote ou do CDN. Inventar caminho de icone e inventar conteudo.
 
 ### 1. Footer precisa de atencao
 
@@ -364,14 +366,34 @@ paragrafos largos — nunca nos cards de projeto, que tem 3 linhas.
 
 Se ele reafirmar depois de ler isso, e decisao dele e se faz.
 
-### 13. Foto do Sobre desalinhada com o texto
+### 13. Foto do Sobre desalinhada com o texto — FEITO (#32)
 
-Duas saidas que ele mesmo deu: encolher a foto para casar com a altura do
-texto, ou **adicionar mais uma linha de cards** para o texto crescer. A
-segunda e melhor se houver conteudo real para os cards — hoje `aboutStats` tem
-tres (2026 / 35 repositorios / B2). Uma quarta so entra com fonte.
+Saiu pela primeira das duas opcoes dele (encolher a foto). A segunda —
+**mais uma linha de cards** — continua barrada pela Regra de Ouro: `aboutStats`
+tem tres (2026 / 35 repositorios / B2) e uma quarta so entra com fonte.
 
-`src/components/sections/About.tsx`, `src/data/site.ts`.
+**A causa era estrutural, e por isso nenhum numero resolvia.** A foto era
+`aspect-square w-full`: a altura dela saia da LARGURA da coluna, e a do texto
+saia do CONTEUDO. O desencontro mudava de tamanho a cada largura de tela.
+
+A saida foi inverter quem manda: da coluna de duas para cima (`md:`) a foto sai
+do fluxo com `absolute inset-0` dentro da celula esticada (`items-stretch`).
+Fora do fluxo ela nao empurra mais a altura da linha, entao quem dimensiona
+passa a ser o texto. Empilhado ela volta a ser quadrada em fluxo, porque ali a
+celula nao tem altura propria para preencher.
+
+Medido em 6 larguras: **0px de diferenca** no topo e na base de 900 a 1920,
+empilhado abaixo disso.
+
+**A armadilha que so apareceu olhando.** Com o quadro acompanhando o texto, ele
+fica mais deitado quanto mais larga a tela — a 1920px o texto tem 454px e o
+quadro esconde ~17% da imagem. Com o `object-cover` padrao (`50%`) esses 17%
+saiam metade de cima, e a **cabeca ficava decepada**. A auditoria passou limpa
+nessa versao: nada estava cortado no sentido de `overflow`, e recorte de foto
+nao e coisa que ela meca. Resolvido com `object-[50%_20%]`, que puxa o foco
+para cima e faz sair rodape, que e fundo de estudio.
+
+`src/components/sections/About.tsx`.
 
 ### 14. LED "em andamento" deve piscar e brilhar mais — FEITO (#27)
 
