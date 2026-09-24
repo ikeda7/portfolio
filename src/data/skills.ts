@@ -127,36 +127,75 @@ export const ferramentas: SkillNiche = {
 }
 
 /**
- * A fita entre a Stack e os Projetos: as bibliotecas **dos projetos**.
+ * A fita entre a Stack e os Projetos: bibliotecas e frameworks do **GitHub
+ * inteiro** que a Stack não lista.
  *
- * Ela repetia a Stack termo a termo, e com a Stack inteira na tela logo
- * acima isso era redundância (leitura do dono, 24/09). Agora carrega o que a
- * Stack não tem: as bibliotecas e ferramentas que aparecem no código dos
- * projetos mas não na lista do currículo — a camada de baixo, que um
- * currículo de uma página não comporta.
+ * Ela repetia a Stack termo a termo, e com a Stack inteira logo acima isso
+ * era redundância (leitura do dono, 24/09). Agora carrega a camada de baixo —
+ * o que um currículo de uma página não comporta.
  *
- * Cada uma foi conferida no repositório (import, requirements, package.json
- * ou pubspec), e o comentário diz onde. Nenhuma entra "porque combina".
+ * **Fonte:** varredura de todos os repositórios públicos de github.com/ikeda7
+ * em 24/09 (33 repos): `package.json`, `requirements.txt`, `pubspec.yaml`,
+ * `pom.xml`, imports de `.py` e `.ipynb`, e bibliotecas por CDN em HTML.
+ * Ficaram de fora tipagens (`@types/*`), linters, plugins de build e o que a
+ * Stack já mostra. O comentário de cada linha diz em que repositório está.
+ *
+ * Refazer a varredura: clonar os repos públicos e rodar o script descrito em
+ * docs/PENDENCIAS.md ("Fita: de onde vem cada biblioteca").
  */
-export const bibliotecasDosProjetos: readonly string[] = [
+export const bibliotecasDoGithub: readonly string[] = [
+  // Dados e ML
+  'NumPy', // calc-numeric, computacao-grafica, data-science, desafio_indicium_imdb, music-ai-generator...
+  'pandas', // data-science, desafio_indicium_imdb, intuitivecare, projeto-analise-algoritmos
+  'Matplotlib', // calc-numeric, computacao-grafica, data-science, desafio_indicium_imdb, music-ai-generator
   'PyTorch', // music-ai-generator (TCC)
-  'NumPy', // music-ai-generator, desafio_indicium_imdb
-  'pandas', // desafio_indicium_imdb, intuitivecare
-  'scikit-learn', // desafio_indicium_imdb
-  'SciPy', // desafio_indicium_imdb
-  'Matplotlib', // music-ai-generator, desafio_indicium_imdb
-  'seaborn', // desafio_indicium_imdb
+  'scikit-learn', // data-science, desafio_indicium_imdb
+  'SciPy', // calc-numeric, desafio_indicium_imdb, music-ai-generator
+  'seaborn', // data-science, desafio_indicium_imdb
+  'SymPy', // calc-numeric
   'pretty_midi', // music-ai-generator
   'mido', // music-ai-generator
+  // Python web e automacao
   'Flask', // intuitivecare
   'Beautiful Soup', // intuitivecare
+  'Requests', // intuitivecare
   'pdfplumber', // intuitivecare
-  'Vue.js', // intuitivecare (api/index.html)
-  'Tailwind CSS', // intuitivecare, este portfolio
-  'React Router', // pokedex-capacitacao-ejcomp
-  'Three.js', // flowers2
-  'Drift', // sports-control (pubspec.yaml)
+  // Front-end
+  'React Router', // banco-dados, inhouse-lol, linguagens-formais-automatos, pokedex-capacitacao-ejcomp
+  'Tailwind CSS', // inhouse-lol, x9-game, intuitivecare, este portfolio
+  'Angular', // desafiowebfullstack
+  'Angular Material', // desafiowebfullstack
+  'Material UI', // banco-dados
+  'Vue.js', // intuitivecare
+  'Three.js', // seguranca-informacao, flowers2
+  'Leaflet', // banco-dados
+  'ApexCharts', // banco-dados
+  'styled-components', // banco-dados
+  'JointJS', // linguagens-formais-automatos
+  'jQuery', // seguranca-informacao
   'Motion', // este portfolio
+  // Back-end
+  'Express', // desafiowebfullstack, inhouse-lol
+  'Zod', // inhouse-lol
+  'JWT', // inhouse-lol (jsonwebtoken)
+  'libSQL', // inhouse-lol
+  'Spring Boot', // introducao-java
+  'Spring Security', // introducao-java
+  'Thymeleaf', // introducao-java
+  'JPA', // introducao-java (EclipseLink)
+  'PDFBox', // engenharia-software
+  'pdf-lib', // merge-pdf
+  // Mobile
+  'Drift', // sports-control
+  'Signals', // sports-control
+  // Testes e qualidade
+  'Vitest', // inhouse-lol, x9-game
+  'Jest', // pokedex-capacitacao-ejcomp
+  'Testing Library', // banco-dados, inhouse-lol, x9-game
+  'Playwright', // inhouse-lol
+  'Jasmine', // desafiowebfullstack
+  'Biome', // x9-game
+  'Husky', // linguagens-formais-automatos, x9-game
 ]
 
 /**
