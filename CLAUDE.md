@@ -153,7 +153,12 @@ cada uma media relativo a si mesma e apagava no `onPointerLeave`. Não volte a
 pôr `usePointerGlow` numa `<section>`: o hook é para brilho **com dono** (um
 card), onde apagar ao sair é o certo. **Não há mais pulso ambiente nas
 seções** (saiu em 24/09): uma mancha azul parada num canto, com a luz do
-cursor andando pela página, lia como defeito. Só o hero mantém o dele.
+cursor andando pela página, lia como defeito. Só o hero mantém o dele. O que
+decora o fundo agora é a [OndaDeFundo](src/components/ui/OndaDeFundo.tsx):
+uma waveform vertical e bem apagada, em canvas `fixed`, que atravessa a
+página do fim do hero ao rodapé e reage à rolagem (a agulha acende o meio da
+janela; rolar rápido sobe o nível). É igual na página toda, e por isso não
+lê como mancha.
 
 - `lib/` — [motion.ts](src/lib/motion.ts) (tempos/curvas) e
   [contact.ts](src/lib/contact.ts) (envio do formulário). Lógica sem JSX.
