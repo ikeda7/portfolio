@@ -63,6 +63,14 @@ const BRILHO = [
   `${FORTE} 100%`,
 ].join(', ')
 
+/*
+ * Raios dos sulcos, no `viewBox` de 400 do disco. O disco tem ~2,4x a altura
+ * da capa (~440px num card comum), então 3,6 unidades dão ~4px entre um
+ * sulco e o outro — o mesmo passo do gradiente que eles substituem. Começam
+ * embaixo do selo, que cobre o miolo, e param na borda.
+ */
+const SULCOS = Array.from({ length: 38 }, (_, i) => 64 + i * 3.6)
+
 export function LabelCover({ track, estado, repo }: LabelCoverProps) {
   return (
     <div className="bg-panel-sunken relative flex h-full w-full items-center justify-center overflow-hidden">
@@ -84,10 +92,14 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
        * uma faixa de borda reta (print do dono, 24/09). O motivo completo está
        * junto do `@property`, em `index.css`.
        *
-       * Sulcos a 9% de branco e 1,25px, e não 5% e 1px: desde que a luz do
-       * cursor passa POR CIMA do card (`mix-blend-screen`), ela clareia o
-       * fundo do disco e come o pouco contraste que os sulcos tinham — numa
-       * tela a 100% de escala eles sumiam de novo (dono, 24/09).
+       * **Os sulcos são círculos de SVG, e não gradiente.** Eram um
+       * `repeating-radial-gradient` com listras de ~1px, e sumiram três vezes
+       * na tela do dono (24/09), mesmo reforçados: com placa de vídeo, o
+       * navegador tira a média de listras finas de gradiente e elas viram um
+       * cinza liso. Traço de SVG é desenhado como linha — com
+       * `vector-effect: non-scaling-stroke` fica em 1px de tela, nítido em
+       * qualquer escala. Ficam por cima do brilho, que é o que um sulco de
+       * verdade faz com o reflexo.
        */}
       <div
         aria-hidden="true"
@@ -95,11 +107,25 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
         style={{
           backgroundImage: [
             `conic-gradient(from var(--vinil-angulo), ${BRILHO})`,
-            'repeating-radial-gradient(circle, rgb(255 255 255 / 0.09) 0 1.25px, transparent 1.25px 4px)',
             'radial-gradient(circle at 38% 32%, #232323, #141414 62%, #0f0f0f)',
           ].join(','),
         }}
-      />
+      >
+        <svg viewBox="0 0 400 400" className="absolute inset-0 size-full">
+          {SULCOS.map((raio) => (
+            <circle
+              key={raio}
+              cx="200"
+              cy="200"
+              r={raio}
+              fill="none"
+              stroke="rgb(255 255 255 / 0.08)"
+              strokeWidth="1"
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
+        </svg>
+      </div>
 
       {/*
        * `h-[96%]` e `px-3`: "Repositório público" mede ~134px em mono de 11px, e

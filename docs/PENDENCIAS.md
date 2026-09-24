@@ -1058,6 +1058,16 @@ entao um parser que falha nao estoura — ele reporta silencio.
 
 Nenhuma é irreversível; estão aqui para não serem refeitas por engano.
 
+**Repositório (24/09).** O dono preencheu a descrição, o site e os tópicos.
+**Proteção de branch: decidido não fazer** — ele não achou necessário. A
+`develop` continua sendo apagada pelo GitHub a cada merge de PR
+("Automatically delete head branches"); quem publica recria com
+`git push -u origin develop` logo depois do merge.
+
+**Sulcos do vinil em SVG (24/09).** O `repeating-radial-gradient` sumiu três
+vezes numa tela com placa de vídeo, mesmo reforçado. Ver o comentário em
+`LabelCover`.
+
 **Sem pulso ambiente nas seções (24/09).** Cada seção tinha um brilho azul
 parado num canto, alternando de lado. Com a luz do cursor andando pela página,
 ele lia como mancha ("uma luz que não é a do meu cursor", print do dono). Só o
