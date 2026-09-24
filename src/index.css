@@ -77,6 +77,26 @@
 }
 
 /*
+ * Giro do vinil nas capas de projeto.
+ *
+ * O disco gira sempre que o mouse (ou o foco) esta no card, e para onde
+ * estiver quando sai. Antes era uma `transition` de 38deg que parava em ~1s:
+ * o movimento acabava antes de o olho chegar a capa.
+ *
+ * Por isso a animacao roda o tempo todo em `paused` e o hover so troca o
+ * `animation-play-state` (ver `@utility vinil-gira`): trocar a animacao em si
+ * no hover faria o disco voltar ao zero de estalo toda vez que o mouse sai.
+ *
+ * Vive fora do `@theme` pelo mesmo motivo de `wavepulse` e `ledpulse`: quem o
+ * referencia e um `@utility`, nao um `animate-*`.
+ */
+@keyframes vinilgira {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
  * LED da entrada atual da linha do tempo.
  *
  * Vive fora do `@theme` pelo mesmo motivo de `wavepulse` e `marquee`: quem
@@ -160,6 +180,19 @@
 @utility glow-led-atual {
   box-shadow: 0 0 14px rgb(var(--accent-rgb) / 0.85);
   animation: ledpulse 2.4s ease-in-out infinite;
+}
+
+/*
+ * 33 1/3 rpm dariam 1,8s por volta, e isso num disco que ocupa o card inteiro
+ * vira borrao. 8s e lento o bastante para os sulcos e o brilho conico serem
+ * lidos girando, e nao so "mudando".
+ */
+@utility vinil-gira {
+  animation: vinilgira 8s linear infinite paused;
+  :where(.group):hover &,
+  :where(.group):focus-within & {
+    animation-play-state: running;
+  }
 }
 
 @utility glow-input {
