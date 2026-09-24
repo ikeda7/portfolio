@@ -2,8 +2,12 @@ import type { ReactNode } from 'react'
 
 interface PanelProps {
   readonly title: string
-  /** Código mono exibido à direita do cabeçalho (estética de equipamento). */
-  readonly code: string | undefined
+  /**
+   * Detalhe à direita do cabeçalho — hoje, a contagem do que o painel lista
+   * (ver `contagem` em `lib/`). Opcional: onde contar não significa nada, como
+   * no formulário, o canto fica vazio.
+   */
+  readonly code?: string
   /**
    * Esticar até a altura do irmão mais alto.
    *

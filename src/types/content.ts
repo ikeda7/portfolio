@@ -41,8 +41,8 @@ export interface SkillTerm {
 export interface SkillNiche {
   readonly id: string
   readonly title: string
-  /** Codigo mono no canto do cabecalho (estetica de equipamento). */
-  readonly code: string
+  /** Palavra da contagem no canto do painel, no plural: "termos", "linguagens". */
+  readonly unidade: readonly [singular: string, plural: string]
   readonly terms: readonly SkillTerm[]
 }
 

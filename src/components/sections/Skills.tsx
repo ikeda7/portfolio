@@ -4,6 +4,7 @@ import { Panel } from '@/components/ui/Panel'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { backend, ferramentas, frontend, iaAplicada, linguagens } from '@/data/skills'
+import { contagem } from '@/lib/contagem'
 
 /**
  * Stack, separada pelos cinco nichos do currículo.
@@ -32,7 +33,10 @@ export function Skills() {
 
       <div className="flex flex-1 flex-col gap-5">
         <Reveal>
-          <Panel title={linguagens.title} code={linguagens.code}>
+          <Panel
+            title={linguagens.title}
+            code={contagem(linguagens.terms.length, ...linguagens.unidade)}
+          >
             {/*
              * Quatro colunas ate `sm`, oito depois — e as duas contas fecham:
              * sao oito linguagens, entao nenhuma largura deixa fileira pela

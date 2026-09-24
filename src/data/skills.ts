@@ -30,7 +30,7 @@ import type { SkillNiche, SkillTerm } from '@/types/content'
 export const linguagens: SkillNiche = {
   id: 'linguagens',
   title: 'Linguagens',
-  code: 'LANG',
+  unidade: ['linguagem', 'linguagens'],
   terms: [
     { label: 'Python', ext: 'py' },
     { label: 'TypeScript', ext: 'ts' },
@@ -47,7 +47,7 @@ export const linguagens: SkillNiche = {
 export const frontend: SkillNiche = {
   id: 'frontend',
   title: 'Front-end & mobile',
-  code: 'UI',
+  unidade: ['termo', 'termos'],
   terms: [
     { label: 'React' },
     { label: 'Next.js' },
@@ -63,7 +63,7 @@ export const frontend: SkillNiche = {
 export const backend: SkillNiche = {
   id: 'backend',
   title: 'Back-end & dados',
-  code: 'SRV',
+  unidade: ['termo', 'termos'],
   terms: [
     { label: 'Node.js' },
     { label: 'NestJS' },
@@ -88,7 +88,7 @@ export const backend: SkillNiche = {
 export const iaAplicada: SkillNiche = {
   id: 'ia-aplicada',
   title: 'IA aplicada',
-  code: 'AI',
+  unidade: ['termo', 'termos'],
   terms: [
     { label: 'Engenharia de prompt' },
     { label: 'RAG' },
@@ -110,7 +110,7 @@ export const iaAplicada: SkillNiche = {
 export const ferramentas: SkillNiche = {
   id: 'ferramentas',
   title: 'Ferramentas & processos',
-  code: 'OPS',
+  unidade: ['termo', 'termos'],
   terms: [
     { label: 'Git/GitHub' },
     { label: 'Docker' },

@@ -41,7 +41,7 @@ export function Contact() {
         </Reveal>
 
         <Reveal delay={0.12} className="h-full">
-          <Panel title="Mensagem" code="IN" fill>
+          <Panel title="Mensagem" fill>
             <div className="flex flex-1 flex-col px-[18px] py-[22px]">
               <ContactForm />
             </div>

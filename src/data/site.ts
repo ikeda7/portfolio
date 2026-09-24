@@ -24,11 +24,10 @@ export const site = {
     primaryCta: { label: 'Ver projetos', href: '#projetos' },
     secondaryCta: { label: 'Falar comigo', href: '#contato' },
     waveform: {
-      meta: 'Waveform · master',
-      // Era '00:00:00 / 00:03:24' — a única coisa na tela sem fonte, num site
-      // cuja regra é não inventar nada. As 48 bandas existem de verdade em
-      // `waveformHeights`, logo abaixo, e são desenhadas em CSS puro.
-      timecode: '48 bandas · CSS',
+      // O canto direito do painel mostra em que trilha se está ("01 / 03"),
+      // calculado pelo Waveform. Já foi '00:00:00 / 00:03:24' (sem fonte) e
+      // depois '48 bandas · CSS', que era verdade e não dizia nada a quem lê.
+      meta: 'Waveform · trilha',
       /**
        * As três trilhas de atuação, nas palavras do Lucas (23/09). Cada uma
        * é um **botão de verdade**: redesenha a waveform e troca a cor do neon
