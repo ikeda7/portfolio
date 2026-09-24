@@ -15,12 +15,12 @@ import { academica, education, experience, languages } from '@/data/experience'
  */
 export function Experience() {
   return (
-    <Section id="experiencia" index="02" label="Experiência">
+    <Section id="experiencia" index="02" label="Experiência" fill={false}>
       <h2 id="experiencia-title" className="sr-only">
         Experiência profissional e formação
       </h2>
 
-      <div className="grid h-full items-stretch gap-12 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
+      <div className="grid items-stretch gap-5 lg:gap-12 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
         {/*
          * Tres blocos: profissional (a linha do tempo, com entregas),
          * academica (painel compacto, so cargo e entidade) e, na coluna ao
@@ -52,6 +52,12 @@ export function Experience() {
          * Agora ela vai para Idiomas, que tem o que mostrar com o espaço: o
          * painel estica até a base (`flex-1`), as linhas se distribuem, e o
          * inglês ganha a escala do Quadro Europeu da certificação dele.
+         *
+         * **A seção tem a altura do conteúdo** (`fill={false}`, 24/09). Com uma
+         * tela no mínimo, a grade esticava até o fim da seção, mas a coluna da
+         * esquerda não: o Idiomas, que estica, passava ~40px da base da
+         * Atuação acadêmica (print do dono). Sem a altura forçada, a linha da
+         * grade é a da coluna da esquerda e o Idiomas fecha rente com ela.
          */}
         <Reveal delay={0.14} className="flex h-full flex-col gap-5">
           <Panel title="Formação">
