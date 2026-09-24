@@ -1,4 +1,5 @@
 import retrato from '@/assets/lucas-ikeda.webp'
+import { bibliotecasDoGithub } from '@/data/skills'
 import type { AboutStat } from '@/types/content'
 
 /**
@@ -72,6 +73,13 @@ export const site = {
     heading: 'Vamos conversar',
     description:
       'Estou em Bauru – SP. Para falar sobre um projeto, uma vaga ou qualquer coisa que envolva software e IA, é só chamar por e-mail ou LinkedIn.',
+    /*
+     * Segundo parágrafo, de 24/09: ocupa o vão entre o convite e os canais
+     * dizendo o que ele procura — as três trilhas do subtítulo — e amarra a
+     * música, que é o fio do site inteiro. Rascunho para o dono validar.
+     */
+    interesse:
+      'Tenho interesse em oportunidades de desenvolvimento full stack, dados e IA aplicada — e em qualquer projeto que junte tecnologia e música.',
   },
   /*
    * A cidade aparece só no Contato. Estava também no hero e no rodapé, e
@@ -102,7 +110,7 @@ export const navLinks = [
 export const destinos = [{ label: 'Topo', href: '#top' }, ...navLinks] as const
 
 /**
- * Os três números do Sobre — todos do GitHub, e nenhum repetido em outra
+ * Os quatro números do Sobre — todos do GitHub, e nenhum repetido em outra
  * seção. Eram "2026 · Ciência da Computação" e "B2 · Inglês", que a Formação e
  * os Idiomas já mostram (leitura do dono, 24/09).
  *
@@ -120,6 +128,9 @@ export const aboutStats: readonly AboutStat[] = [
   { value: '583', label: 'Commits públicos' },
   // Calculado na hora, a partir da data de criação da conta: não envelhece.
   { value: `${ANOS_NO_GITHUB} anos`, label: 'No GitHub' },
+  // O tamanho da lista da fita: a varredura dos repositórios públicos. Sai da
+  // própria lista, então os dois nunca discordam.
+  { value: String(bibliotecasDoGithub.length), label: 'Bibliotecas no GitHub' },
 ]
 
 /**

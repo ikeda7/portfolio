@@ -53,6 +53,20 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
   cada uma como padrao. Margem mais justa: 1,2x (azul), 1,23x (roxo), 1,22x
   (vermelho)
 
+### O que entrou em 24/09 (depois de ver no celular)
+
+- **Sobre** — quarto card (bibliotecas no GitHub, o tamanho da lista da
+  fita); ordem foto, texto, numeros; 2x2 no celular, quatro numa linha do
+  tablet para cima.
+- **Vinil** — gira sempre (no celular nao ha hover).
+- **Header no celular** — botao "Menu" no lugar da faixa rolavel que
+  escondia o Contato. `--header-h` virou 62px em qualquer largura. Desktop
+  igual.
+- **Fader** — o preenchimento cresce junto com o knob no hover, sem emenda.
+- **Contato** — sai a caixa de copiar e-mail (repetia os canais); entra um
+  paragrafo com o que ele procura. **Rascunho: o dono valida o texto.**
+  Twitch/Spotify nos canais: recomendei nao (fora do escopo de contato).
+
 ### Secoes FINALIZADAS pelo dono (24/09) — nao mexer sem pedido
 
 **Header, rodape, Experiencia e Projetos.** Qualquer ajuste nessas quatro so
@@ -634,7 +648,24 @@ a fazer antes e: destacar o que as tags ja dizem, ou o que elas nao dizem?
 
 ## Pendencias, em ordem
 
-### 1. DEPLOY NA VERCEL — PROJETO CRIADO (24/09), falta publicar o site
+### 1. DEPLOY NA VERCEL — PUBLICADO (24/09), falta abrir o dominio de producao
+
+**24/09, noite:** PR #33 (`develop` -> `main`) mesclado com o CI verde, e o
+deploy de producao (`e3ade5b`) ficou READY em
+`portfolio-ikeda7s-projects.vercel.app`.
+
+**Mas a protecao do projeto esta em `all_except_custom_domains`**: tudo que
+nao e dominio proprio pede login na Vercel — inclusive o endereco de producao
+`*.vercel.app`. O dono pediu para **nao abrir os previews**; a opcao que
+publica so a producao e "Standard Protection" (Settings -> Deployment
+Protection -> Vercel Authentication), que continua protegendo os previews.
+Aguardando a decisao dele. Com o `lucasikeda.dev` apontado, o dominio proprio
+ja fica aberto mesmo na configuracao atual.
+
+**Fluxo daqui para frente:** trabalho em `develop`; publicar e abrir PR
+`develop` -> `main` e mesclar com o CI verde (autorizado pelo dono em 24/09).
+
+#### Estado anterior (24/09, tarde)
 
 **Estado em 24/09:** o dono importou o repo na Vercel e o conector desta
 sessao passou a enxergar o projeto (`prj_8C4tIzs8YslCwKIPAU6Kc6DnMyqc`,

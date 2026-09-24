@@ -186,8 +186,8 @@ página inteira, não de um bloco. O `ScrollHint` aponta para a seção seguinte
 na última, vira "voltar ao topo" — sumir deixaria no DOM um link sem destino e
 sem nome acessível.
 
-**A altura do header é `--header-h`** em [src/index.css](src/index.css): 97px até
-`sm`, 62px depois. Três coisas dependem dela — o `scroll-margin-top` das âncoras,
+**A altura do header é `--header-h`** em [src/index.css](src/index.css): 62px em
+qualquer largura (no celular a navegação é um botão "Menu" desde 24/09). Três coisas dependem dela — o `scroll-margin-top` das âncoras,
 a altura útil do hero e a posição da indicação de rolagem. Como o header é
 _sticky_, ele ocupa espaço no fluxo e a primeira seção começa abaixo dele; por
 isso o hero é `min-h-[calc(100svh-var(--header-h))]` e não `100svh` cheios, senão

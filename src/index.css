@@ -79,13 +79,10 @@
 /*
  * Giro do vinil nas capas de projeto.
  *
- * O disco gira sempre que o mouse (ou o foco) esta no card, e para onde
- * estiver quando sai. Antes era uma `transition` de 38deg que parava em ~1s:
- * o movimento acabava antes de o olho chegar a capa.
- *
- * Por isso a animacao roda o tempo todo em `paused` e o hover so troca o
- * `animation-play-state` (ver `@utility vinil-gira`): trocar a animacao em si
- * no hover faria o disco voltar ao zero de estalo toda vez que o mouse sai.
+ * O disco gira **sempre**, desde 24/09 (pedido do dono). Girava so com o
+ * mouse no card, e no celular — sem hover — o disco ficava parado para
+ * sempre. No computador o hover continua fazendo o resto (card sobe, borda e
+ * titulo acendem). O kill switch de `prefers-reduced-motion` para o giro.
  *
  * Vive fora do `@theme` pelo mesmo motivo de `wavepulse` e `ledpulse`: quem o
  * referencia e um `@utility`, nao um `animate-*`.
@@ -267,11 +264,7 @@
  * lidos girando, e nao so "mudando".
  */
 @utility vinil-gira {
-  animation: vinilgira 8s linear infinite paused;
-  :where(.group):hover &,
-  :where(.group):focus-within & {
-    animation-play-state: running;
-  }
+  animation: vinilgira 8s linear infinite;
 }
 
 /*
@@ -357,21 +350,16 @@
   }
 
   /*
-   * Altura real do header sticky, medida no navegador: 97px ate `sm` (marca e
-   * nav empilhadas) e 62px a partir dai, quando volta a ser uma linha so.
+   * Altura real do header sticky, medida no navegador: 62px em qualquer
+   * largura. Ate 24/09 eram 97px no celular (marca e nav empilhadas); o menu
+   * do celular pos tudo numa linha so.
    *
-   * Vira variavel porque tres coisas dependem dela e estavam com o numero
-   * cravado em lugares diferentes: a compensacao da ancora, a altura util do
-   * hero e a posicao da indicacao de rolagem. Mudou o header, muda aqui.
+   * Vira variavel porque tres coisas dependem dela: a compensacao da ancora,
+   * a altura util do hero e das secoes, e a posicao da indicacao de rolagem.
+   * Mudou o header, muda aqui.
    */
   :root {
-    --header-h: 97px;
-  }
-
-  @media (min-width: 40rem) {
-    :root {
-      --header-h: 62px;
-    }
+    --header-h: 62px;
   }
 
   /*
