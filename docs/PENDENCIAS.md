@@ -819,9 +819,9 @@ gerado so para o site. Os arquivos originais continuam no historico do git
 
 ### 3. EmailJS — FUNCIONANDO (testado pelo dono em 24/09)
 
-O envio chegou no Gmail. So o corpo do template ainda era o padrao do EmailJS
-(usa `{{name}}` e nao mostra a mensagem): o dono vai trocar pelo corpo com
-`{{nome}}`, `{{email}}` e `{{mensagem}}`.
+**CONCLUIDA.** O envio chega no Gmail com nome, e-mail e mensagem; o template
+usa `{{nome}}`, `{{email}}` e `{{mensagem}}`, e o "Responder" vai para quem
+escreveu. O site mostra "Mensagem enviada. Obrigado!" e limpa os campos.
 
 #### Como ficou configurado
 
