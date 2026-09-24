@@ -2,10 +2,11 @@ import { Panel } from '@/components/ui/Panel'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { Timeline } from '@/components/ui/Timeline'
-import { education, experience, languages } from '@/data/experience'
+import { academica, education, experience, languages } from '@/data/experience'
 
 /**
- * Trajetória: a linha do tempo profissional, com formação e idiomas ao lado.
+ * Trajetória: a linha do tempo profissional e, embaixo dela, a atuação
+ * acadêmica; formação e idiomas na coluna ao lado.
  *
  * O site tinha a carreira inteira espremida num parágrafo da seção Sobre —
  * para quem busca posição, portfólio sem linha do tempo de trabalho lê como
@@ -23,8 +24,28 @@ export function Experience() {
       </h2>
 
       <div className="grid h-full items-stretch gap-12 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
-        <Reveal>
+        {/*
+         * Tres blocos: profissional (a linha do tempo, com entregas),
+         * academica (painel compacto, so cargo e entidade) e, na coluna ao
+         * lado, formacao e idiomas. A academica fica embaixo da profissional,
+         * e nao na coluna da direita, para as duas colunas fecharem com
+         * alturas parecidas.
+         */}
+        <Reveal className="flex flex-col gap-10">
           <Timeline entries={experience} />
+
+          <Panel title="Atuação acadêmica" code="ACAD">
+            {/*
+             * Lado a lado a partir de `sm`: empilhadas, as duas deixavam a
+             * coluna da esquerda ~170px mais alta que a da direita, e o vao
+             * sobrava entre Formacao e Idiomas.
+             */}
+            <div className="grid gap-6 px-[18px] py-[22px] sm:grid-cols-2">
+              {academica.map((entrada) => (
+                <Timeline key={entrada.org} entries={[entrada]} compact />
+              ))}
+            </div>
+          </Panel>
         </Reveal>
 
         <Reveal delay={0.14} className="flex h-full flex-col justify-between gap-5">

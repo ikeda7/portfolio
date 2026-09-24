@@ -82,11 +82,21 @@ export function ProjectCard({ track, title, description, tags, href, estado, rep
            * encolheria do card inteiro para este bloco.
            */}
           <div className="mt-auto pt-2.5">
+            {/*
+             * As tags liam apagadas: `ink-faint` sobre `panel-2`, sem borda,
+             * pareciam desabilitadas. Agora tem contorno em acento e texto um
+             * degrau acima, e acendem juntas no hover do card.
+             *
+             * O hover e do card e nao de cada tag de proposito: o `::after`
+             * do "Abrir" cobre o card inteiro (z-20), entao uma tag sob o
+             * mouse nunca recebe o ponteiro. Subir a tag acima dele criaria
+             * pontos mortos no clique do card, que e o que importa.
+             */}
             <ul className="flex flex-wrap gap-1.5">
               {tags.map((tag) => (
                 <li
                   key={tag}
-                  className="bg-panel-2 text-ink-faint rounded px-2 py-1 font-mono text-[11px] tracking-[0.12em]"
+                  className="text-ink-muted group-hover:text-accent-text group-hover:border-accent rounded border border-[rgb(var(--accent-rgb)/0.35)] bg-[rgb(var(--accent-rgb)/0.06)] px-2 py-1 font-mono text-[11px] tracking-[0.12em] transition-all duration-300 group-hover:bg-[rgb(var(--accent-rgb)/0.14)]"
                 >
                   {tag}
                 </li>

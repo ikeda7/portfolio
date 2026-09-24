@@ -19,7 +19,8 @@ export const experience: readonly TimelineEntry[] = [
     period: 'Ago/2026 — Atual',
     title: 'Analista Administrativo · Implantação de ERP',
     org: '3S Gestão em Saúde',
-    context: 'Alocado na CDA Medicina Diagnóstica — Bauru, SP',
+    // Sem a cidade: desde 24/09 ela aparece so no Contato.
+    context: 'Alocado na CDA Medicina Diagnóstica',
     current: true,
     bullets: [
       'Implantação do novo ERP da operação: mapeamento dos fluxos de trabalho de cada setor, levantamento de requisitos junto às áreas de negócio e parametrização dos módulos.',
@@ -27,23 +28,6 @@ export const experience: readonly TimelineEntry[] = [
       'Sustentação da operação: atendimento de chamados, suporte remoto (AnyDesk), treinamento de key-users e documentação de procedimentos.',
       'Automação de rotinas e prototipagem de ajustes com IA generativa, reduzindo o tempo de levantamento e de documentação.',
     ],
-  },
-  {
-    /*
-     * Entra na linha do tempo principal, e nao num bloco separado de "atuacao
-     * academica": e cargo de gestao numa empresa junior, com periodo e
-     * responsabilidade — le como experiencia porque e experiencia.
-     *
-     * **Sem bullets de proposito.** O curriculo tem uma linha de entregas aqui,
-     * mas a extracao do PDF perde o comeco de cada bullet nos dois idiomas (so
-     * sobra "...-focused team meetings and 1-on-1s"). Reconstruir a frase seria
-     * inventar entrega, que e exatamente o que a Regra de Ouro proibe. Entrada
-     * sem bullets e honesta; as de formacao ja sao assim.
-     */
-    period: 'Nov/2024 — Ago/2026',
-    title: 'Gerente de Recursos Humanos',
-    org: 'EJCOMP — Empresa Júnior de Computação',
-    context: 'FCT-UNESP · Presidente Prudente, SP',
   },
   {
     period: 'Nov/2024 — Abr/2025',
@@ -54,27 +38,33 @@ export const experience: readonly TimelineEntry[] = [
       'Manutenção e otimização de banco Oracle PL/SQL, com foco em performance de queries (DBeaver).',
     ],
   },
+]
+
+/**
+ * Atuação acadêmica — separada da profissional a pedido do Lucas (24/09).
+ *
+ * Estavam as quatro na mesma linha do tempo, e duas delas (empresa júnior e
+ * centro acadêmico) disputavam atenção com o cargo e o estágio. Aqui ficam só
+ * cargo, entidade e período: nenhuma das duas é da área de tecnologia, e a
+ * descrição que o CACiC tinha não acrescentava ao que o portfólio mostra.
+ *
+ * O que já estava registrado sobre cada uma continua valendo: a EJCOMP nunca
+ * teve bullets (a extração do PDF perde o começo de cada um e reconstruir
+ * seria inventar), e o CACiC é a única entrada ditada pelo dono em vez de
+ * sair do currículo.
+ */
+export const academica: readonly TimelineEntry[] = [
   {
-    /*
-     * Unica entrada da pagina que NAO sai do curriculo nem do GitHub: o dono
-     * ditou cargo, periodo e atividades, e fonte direta dele e fonte valida.
-     * Por isso o texto fica proximo do que ele disse — "social media,
-     * postagens, comunicacao, canal de comunicacao no WhatsApp" —, arrumado
-     * no mesmo registro das outras entradas.
-     *
-     * Ele pediu para "dar uma embelezada nas palavras", e embelezar aqui e
-     * escolher verbo e ordem, nao acrescentar resultado. Nenhum numero, nenhum
-     * alcance, nenhum "aumentou X%": nada disso foi dito, e inventar entrega e
-     * exatamente o que a Regra de Ouro proibe.
-     */
+    period: 'Nov/2024 — Ago/2026',
+    title: 'Gerente de Recursos Humanos',
+    org: 'EJCOMP — Empresa Júnior de Computação',
+    context: 'FCT-UNESP · Presidente Prudente, SP',
+  },
+  {
     period: 'Abr/2024 — Abr/2025',
     title: 'Diretor de Marketing',
     org: 'CACiC — Centro Acadêmico de Ciência da Computação',
     context: 'FCT-UNESP · Presidente Prudente, SP',
-    bullets: [
-      'Comunicação do centro acadêmico com o corpo discente: pauta, redação e publicação das postagens.',
-      'Gestão das redes sociais e do canal de comunicação no WhatsApp.',
-    ],
   },
 ]
 
