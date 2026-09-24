@@ -32,6 +32,36 @@ interface LabelCoverProps {
  * do disco. A diferença que faz o desenho ler não é a que passa no teste, é a
  * que se enxerga.
  */
+/*
+ * O reflexo do disco, em X: dois feixes que atravessam o centro, cada um com
+ * as duas pontas opostas acesas. Era uma cunha só de um lado, que lia como V.
+ *
+ * O selo cobre quase toda a altura da capa, então o X só aparece nas laterais
+ * — e a capa é larga (~2.3:1). Por isso os feixes cruzam a 47deg e não a 90:
+ * parados, cada ponta aponta para um canto da capa (23.5deg acima e abaixo da
+ * horizontal), e o par dos dois lados do selo lê como um X aberto. Em 90 as
+ * pontas batiam no topo e na base, escondidas atrás do selo.
+ *
+ * `from 66.5deg`: o zero do conic é 12h, então 90 - 23.5 põe o primeiro feixe
+ * no canto de cima à direita.
+ */
+const FEIXE = 'rgb(var(--accent-rgb) / 0.22)'
+const BRILHO_EM_X = [
+  `${FEIXE} 0deg`,
+  'transparent 11deg',
+  'transparent 36deg',
+  `${FEIXE} 47deg`,
+  'transparent 58deg',
+  'transparent 169deg',
+  `${FEIXE} 180deg`,
+  'transparent 191deg',
+  'transparent 216deg',
+  `${FEIXE} 227deg`,
+  'transparent 238deg',
+  'transparent 349deg',
+  `${FEIXE} 360deg`,
+].join(', ')
+
 export function LabelCover({ track, estado, repo }: LabelCoverProps) {
   return (
     <div className="bg-panel-sunken relative flex h-full w-full items-center justify-center overflow-hidden">
@@ -40,9 +70,9 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
        * irmão dele. Num vinil de verdade o selo roda junto, mas aqui ele carrega
        * o número e o estado, e texto girando não se lê. Preferi a legibilidade.
        *
-       * O brilho é cônico e assimétrico porque sulco concêntrico é radialmente
-       * simétrico: sem ele, a rotação no hover seria matematicamente real e
-       * visualmente invisível.
+       * O brilho é cônico porque sulco concêntrico é radialmente simétrico:
+       * sem ele, a rotação no hover seria matematicamente real e visualmente
+       * invisível. O desenho do brilho está em `BRILHO_EM_X`, acima.
        *
        * Gira sem parar enquanto o card está sob o mouse ou com foco, e congela
        * no ângulo em que estava quando sai — o próximo hover continua dali.
@@ -53,7 +83,7 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
         className="absolute aspect-square h-[240%] rounded-full ring-1 ring-white/[0.07] vinil-gira"
         style={{
           backgroundImage: [
-            'conic-gradient(from 210deg, rgb(var(--accent-rgb) / 0.16), transparent 22%, transparent 66%, rgb(var(--accent-rgb) / 0.1) 84%, transparent)',
+            `conic-gradient(from 66.5deg, ${BRILHO_EM_X})`,
             'repeating-radial-gradient(circle, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4px)',
             'radial-gradient(circle at 38% 32%, #232323, #141414 62%, #0f0f0f)',
           ].join(','),
