@@ -22,9 +22,9 @@ export function About() {
        *
        * Entre `lg` e `xl` a foto ENCOLHE conforme a tela alarga, ao contrário
        * do resto: é a faixa em que o texto mais perde altura ao ganhar
-       * largura, e com a foto fixa em 440px ela chegava a sobrar 105px abaixo
-       * do último parágrafo a 1279px. `700px - 28vw` saiu da medição em 1024,
-       * 1152 e 1279.
+       * largura. `740px - 30vw` saiu da medição em 1024, 1100, 1152 e 1279
+       * (diferença de até 13px de 1100 em diante; a 1024, ~70px). Mudou o
+       * texto do Sobre, remeça — o parágrafo pessoal de 24/09 exigiu isso.
        *
        * `my-auto`: a seção tem a altura da janela, e o bloco inteiro mede
        * ~500px. Sem centralizar, a 1440x900 sobravam ~170px mortos embaixo;
@@ -33,7 +33,7 @@ export function About() {
        * Abaixo de `lg` empilha, com a foto limitada a 440px: quadrada na
        * largura inteira de um tablet ela passava de 700px de altura.
        */}
-      <div className="my-auto grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_var(--foto)] lg:grid-rows-[1fr_auto] lg:[--foto:clamp(320px,calc(700px-28vw),440px)] xl:[--foto:min(500px,42%)]">
+      <div className="my-auto grid gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,1fr)_var(--foto)] lg:grid-rows-[1fr_auto] lg:[--foto:clamp(340px,calc(740px-30vw),440px)] xl:[--foto:min(500px,42%)]">
         <Reveal className="lg:col-start-1 lg:row-start-1">
           <h2
             id="sobre-title"
@@ -45,7 +45,7 @@ export function About() {
           {about.paragraphs.map((paragraph) => (
             <p
               key={paragraph}
-              className="text-ink-muted texto-justo mt-5 text-[15px] leading-[1.75]"
+              className="text-ink-muted texto-justo mt-4 text-[15px] leading-[1.75]"
             >
               {paragraph}
             </p>
