@@ -660,6 +660,14 @@ hash de cada deploy continuam pedindo login na Vercel.
 Publicado ate o PR #34. Para publicar de novo: PR `develop` -> `main`,
 mesclar com o CI verde.
 
+> **Cuidado: o GitHub apaga a `develop` depois do merge.** O repositorio esta
+> com "Automatically delete head branches" ligado, e a `develop` e a branch de
+> origem desses PRs. Depois do #34 ela sumiu do remoto e so voltou porque o
+> push seguinte a recriou a partir do clone local. Desligar em Settings ->
+> General -> Pull Requests -> "Automatically delete head branches" (decisao do
+> dono). Ate la: depois de cada merge para `main`, conferir
+> `git ls-remote --heads origin` e repor a `develop` com `git push origin develop`.
+
 #### Registro de quando ainda estava fechado
 
 **24/09, noite:** PR #33 (`develop` -> `main`) mesclado com o CI verde, e o
