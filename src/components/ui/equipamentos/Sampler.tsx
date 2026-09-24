@@ -34,10 +34,24 @@ export function Sampler({ termos }: SamplerProps) {
   const [ligados, setLigados] = useState<ReadonlySet<string>>(new Set())
   const audio = useRef<AudioContext | null>(null)
 
-  function tocar(index: number, ligar: boolean) {
+  /*
+   * No celular o som precisa de dois cuidados (os pads ficavam mudos no
+   * celular do dono, 24/09):
+   *
+   * - O `AudioContext` pode nascer `suspended`, e só volta com `resume()`
+   *   chamado DENTRO do toque. O `resume()` sai aqui antes de qualquer
+   *   `await`, ainda no gesto, e a nota só é agendada depois dele.
+   * - No iPhone, a Web Audio respeita a chave de silencioso, como som de
+   *   notificação. `navigator.audioSession.type = 'playback'` (Safari 16.4+)
+   *   a trata como mídia, igual a um vídeo, que toca com a chave ligada.
+   */
+  async function tocar(index: number, ligar: boolean) {
     try {
+      const sessao = (navigator as Navigator & { audioSession?: { type: string } }).audioSession
+      if (sessao) sessao.type = 'playback'
       audio.current ??= new AudioContext()
       const ctx = audio.current
+      if (ctx.state !== 'running') await ctx.resume()
       const agora = ctx.currentTime
       const osc = ctx.createOscillator()
       const ganho = ctx.createGain()
@@ -59,7 +73,7 @@ export function Sampler({ termos }: SamplerProps) {
   }
 
   function alternar(label: string, index: number) {
-    tocar(index, !ligados.has(label))
+    void tocar(index, !ligados.has(label))
     setLigados((atual) => {
       const novo = new Set(atual)
       if (novo.has(label)) novo.delete(label)
