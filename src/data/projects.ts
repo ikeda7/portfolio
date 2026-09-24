@@ -90,4 +90,40 @@ export const projects: readonly Project[] = [
     estado: 'Site no ar',
     repo: 'Repositório privado',
   },
+  /*
+   * 07 a 09 entraram em 24/09, escolhidos pelo dono. Descricao, tags e estado
+   * sairam do README e das dependencias de cada repositorio, lidos na hora —
+   * nenhum numero de resultado, porque nenhum README declara um.
+   */
+  {
+    track: '07',
+    title: 'Análise Preditiva IMDB',
+    description:
+      'Desafio de ciência de dados da Indicium: análise exploratória do Top 1000 do IMDB e modelo que prevê a nota de um filme, comparando regressão linear, random forest e gradient boosting.',
+    // requirements.txt e os imports dos dois notebooks.
+    tags: ['PYTHON', 'PANDAS', 'SCIKIT-LEARN'],
+    href: 'https://github.com/ikeda7/desafio_indicium_imdb',
+    estado: 'Processo seletivo',
+    repo: 'Repositório público',
+  },
+  {
+    track: '08',
+    title: 'IntuitiveCare',
+    description:
+      'Teste técnico: scraping de dados da ANS, extração de tabelas de PDF, carga em MySQL e busca de operadoras por uma API Flask com interface em Vue.js.',
+    tags: ['PYTHON', 'FLASK', 'MYSQL'],
+    href: 'https://github.com/ikeda7/intuitivecare',
+    estado: 'Processo seletivo',
+    repo: 'Repositório público',
+  },
+  {
+    track: '09',
+    title: 'PokéSite — Capacitação',
+    description:
+      'Material de capacitação da EJCOMP: site de Pokémon com NestJS como proxy da PokeAPI e front em React, para treinar a stack dos projetos da empresa júnior.',
+    tags: ['NESTJS', 'REACT', 'VITE'],
+    href: 'https://github.com/ikeda7/pokedex-capacitacao-ejcomp',
+    estado: 'Capacitação',
+    repo: 'Repositório público',
+  },
 ]
