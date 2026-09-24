@@ -53,6 +53,57 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
   cada uma como padrao. Margem mais justa: 1,2x (azul), 1,23x (roxo), 1,22x
   (vermelho)
 
+### Secoes FINALIZADAS pelo dono (24/09) — nao mexer sem pedido
+
+**Header, rodape, Experiencia e Projetos.** Qualquer ajuste nessas quatro so
+com pedido explicito dele; se uma mudanca em outro lugar mexer nelas (token,
+`Section`, `Panel`, `Timeline`, `ProjectCard`), conferir em captura antes do
+merge.
+
+### O que entrou em 24/09 (terceira rodada)
+
+- **Fita** — sem legenda fixa e mais rapida (2s por termo, a volta sai do
+  tamanho da lista). Agora corre **46 bibliotecas do GitHub inteiro**:
+  varredura dos 33 repositorios publicos (package.json, requirements.txt,
+  pubspec.yaml, pom.xml, imports de .py/.ipynb, CDN em HTML), menos tipagens,
+  linters, build e o que a Stack ja mostra. Origem de cada uma comentada em
+  `bibliotecasDoGithub` (skills.ts).
+- **Regua de secoes** — o rotulo invisivel ocupava largura e roubava clique
+  do conteudo a direita (era o conflito com os botoes M/S). Agora e
+  `absolute` + `pointer-events-none`; alvo so no traco.
+- **Stack v2** — coluna direita = full stack (front/back), esquerda = IA e
+  ferramentas. Pedais sempre 4+3 do tablet para cima. Sampler com 8 pads
+  (MCP e Fine-tuning da ementa), que **ligam e tocam uma nota** (Web Audio,
+  sem arquivo). Rack em blocos; ferramentas como tela de arranjo de DAW.
+- **Sobre** — texto reescrito ligando hobbies e trabalho (musica → TCC e
+  estetica; volei → Sports Control; games → Inhouse LoL). Cards novos, so do
+  GitHub: 35 repositorios, 583 commits publicos, anos no GitHub (calculado).
+  Os cards ficam embaixo da foto.
+
+### Fita: de onde vem cada biblioteca
+
+Para refazer a varredura: clonar os repos publicos de `ikeda7` (lista via
+API ou `list_repos`) e ler, em cada um, `package.json` (dependencies e
+devDependencies), `requirements.txt`, `pubspec.yaml`, `pom.xml`, imports de
+`.py` e `.ipynb` e `<script src>` de CDN em HTML. Fica de fora: `@types/*`,
+eslint/prettier e plugins, ferramentas de build, e o que ja esta na Stack.
+Repositorios privados (lextrack, flowers2, dados-pco, desenvolvimento-web)
+nao entram — a varredura anonima nao os le.
+
+### Dominio e versao em ingles — ANOTADO, nao e prioridade
+
+- O dono pensa em **lucasikeda.dev**. `.dev` **nao** e vendido pelo
+  Registro.br (so vende `.br`); a Cloudflare Registrar vende `.dev` a preco
+  de custo. `.dev` exige HTTPS em tudo (HSTS preload do dominio), o que a
+  Vercel ja entrega. Comprado, e so apontar na Vercel e trocar
+  `VITE_SITE_URL`.
+- **Versao em ingles** (cancelada em 22/09 porque o dominio seria `.br`)
+  volta a fazer sentido com dominio global. Duas saidas, a discutir: (a)
+  traducao de verdade, com o conteudo de `src/data/` em dois idiomas e um
+  seletor PT/EN — da trabalho, mas o texto fica sob controle; (b) tradutor
+  automatico embutido — mais rapido, mas traduz mal texto de portfolio e nao
+  respeita a Regra de Ouro (o texto deixa de ser o dele). Recomendo (a).
+
 ### O que entrou em 24/09 (noite) — segunda rodada de respostas do dono
 
 - **Header e rodape: FINALIZADOS** pelo dono. Nao mexer sem pedido.
