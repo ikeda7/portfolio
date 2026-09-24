@@ -13,28 +13,27 @@ export function About() {
        * passou a acompanhar a altura do texto; alinhava, mas cortava a imagem
        * (até ~17% a 1920px), e o dono preferiu a foto como era.
        *
-       * Então quem se ajusta agora é a LARGURA da coluna da foto, não o
-       * recorte: a partir de `lg` ela é `--foto`, uma fração da linha com
-       * teto, escolhida medindo para o quadrado ficar da altura do texto. O
-       * que sobrar de diferença a grade absorve: a linha do texto é `1fr`,
-       * então o vão fica entre os parágrafos e os stats, e a foto começa e
-       * termina junto com o bloco.
+       * Então quem se ajusta é a LARGURA da coluna da foto (`--foto`), medida
+       * para o quadrado ficar da altura do texto. Com os quatro parágrafos de
+       * 24/09 o texto ficou longo, e duas decisões saíram da medição:
        *
-       * Entre `lg` e `xl` a foto ENCOLHE conforme a tela alarga, ao contrário
-       * do resto: é a faixa em que o texto mais perde altura ao ganhar
-       * largura. `740px - 30vw` saiu da medição em 1024, 1100, 1152 e 1279
-       * (diferença de até 13px de 1100 em diante; a 1024, ~70px). Mudou o
-       * texto do Sobre, remeça — o parágrafo pessoal de 24/09 exigiu isso.
+       * - Lado a lado só de `xl` para cima. Entre `lg` e `xl` o texto ficava
+       *   100–190px mais alto que qualquer foto que coubesse ao lado — e
+       *   alargar a foto estreita o texto, que cresce de novo. Abaixo de `xl`
+       *   empilha, como no celular, com a foto limitada a 440px.
+       * - Os stats ficam numa linha inteira embaixo das duas colunas. Na
+       *   coluna do texto eles o deixavam ~100px mais alto que a foto.
        *
-       * `my-auto`: a seção tem a altura da janela, e o bloco inteiro mede
-       * ~500px. Sem centralizar, a 1440x900 sobravam ~170px mortos embaixo;
-       * centralizado, o respiro se divide entre o rótulo e o atalho de rolagem.
+       * - No `2xl` a coluna do texto tem teto (720px) e a foto, 490px: sem o
+       *   teto o texto alargava, encurtava, e a foto sobrava embaixo.
        *
-       * Abaixo de `lg` empilha, com a foto limitada a 440px: quadrada na
-       * largura inteira de um tablet ela passava de 700px de altura.
+       * `my-auto` centraliza o bloco na altura da seção, para o respiro que
+       * sobrar se dividir entre o rótulo e o atalho de rolagem.
+       *
+       * Mudou o texto do Sobre, remeça (script em docs/PENDENCIAS.md).
        */}
-      <div className="my-auto grid gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,1fr)_var(--foto)] lg:grid-rows-[1fr_auto] lg:[--foto:clamp(340px,calc(740px-30vw),440px)] xl:[--foto:min(500px,42%)]">
-        <Reveal className="lg:col-start-1 lg:row-start-1">
+      <div className="my-auto grid gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,1fr)_var(--foto)] xl:[--foto:min(500px,42%)] 2xl:[--foto:490px] 2xl:grid-cols-[minmax(0,720px)_var(--foto)] 2xl:justify-between">
+        <Reveal className="xl:col-start-1 xl:row-start-1">
           <h2
             id="sobre-title"
             className="text-[clamp(26px,3.4vw,38px)] leading-[1.12] font-semibold tracking-[-0.03em]"
@@ -53,13 +52,10 @@ export function About() {
         </Reveal>
 
         {/*
-         * Os stats são item próprio da grade para poderem trocar de lugar: de
-         * `xl` para cima ficam na coluna do texto, sob os parágrafos, e a foto
-         * desce as duas linhas; entre `lg` e `xl` o texto ficava 80–125px mais
-         * alto que a foto, então ali eles vão para uma linha inteira embaixo
-         * das duas colunas.
+         * Os stats são item próprio da grade para poderem ocupar a linha
+         * inteira embaixo das duas colunas (ver o comentário da grade).
          */}
-        <Reveal className="lg:col-span-2 lg:row-start-2 xl:col-span-1 xl:col-start-1">
+        <Reveal className="xl:col-span-2 xl:row-start-2">
           <dl className="grid grid-cols-[repeat(auto-fit,minmax(min(120px,100%),1fr))] gap-3">
             {aboutStats.map((stat) => (
               <div
@@ -85,7 +81,7 @@ export function About() {
 
         <Reveal
           delay={0.14}
-          className="relative mx-auto w-full max-w-[440px] self-start lg:col-start-2 lg:row-start-1 lg:max-w-none xl:row-span-2"
+          className="relative mx-auto w-full max-w-[440px] self-start xl:col-start-2 xl:row-start-1 xl:max-w-none"
         >
           <div
             aria-hidden="true"
