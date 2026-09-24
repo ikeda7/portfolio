@@ -8,7 +8,11 @@ import { REVEAL_TRANSITION, VIEWPORT, revealVariants, staggerVariants } from '@/
 const { hero } = site
 
 /**
- * Palco principal: pill de status, título, CTAs e painel de waveform.
+ * Palco principal: título, as três trilhas, CTAs e painel de waveform.
+ *
+ * Abria com uma pill "Bauru – SP · Brasil". A cidade saiu do hero em 24/09
+ * (fica só no Contato), e a pill saiu junto: sem ela o título sobe e o
+ * primeiro quadro fica menos carregado.
  *
  * A entrada é escalonada na montagem — não no scroll, porque o hero já nasce
  * visível.
@@ -46,18 +50,10 @@ export function Hero() {
         animate={prefersReducedMotion ? undefined : 'visible'}
         variants={staggerVariants}
       >
-        <m.p
-          variants={revealVariants}
-          className="border-line bg-panel text-ink-muted flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[11px] tracking-[0.12em] uppercase"
-        >
-          <span aria-hidden="true" className="bg-accent glow-led size-1.5 rounded-full" />
-          {hero.statusLabel}
-        </m.p>
-
         <m.h1
           variants={revealVariants}
           id="hero-title"
-          className="mt-7 max-w-[900px] text-[clamp(40px,7vw,76px)] leading-[1.02] font-bold tracking-[-0.035em] text-balance"
+          className="max-w-[900px] text-[clamp(40px,7vw,76px)] leading-[1.02] font-bold tracking-[-0.035em] text-balance"
         >
           {hero.title}
         </m.h1>

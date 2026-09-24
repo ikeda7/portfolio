@@ -44,7 +44,6 @@ export function Footer() {
             <p className="text-ink-muted mt-3 max-w-[280px] text-[13px] leading-[1.6]">
               {site.hero.subtitle}
             </p>
-            <p className={`${ROTULO} mt-3`}>{site.footer.right}</p>
           </div>
 
           <nav aria-labelledby="rodape-nav">
