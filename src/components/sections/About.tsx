@@ -23,15 +23,17 @@ export function About() {
        *   decidiu tirar: o texto já fecha a seção.
        * - Lado a lado só do `xl` para cima: abaixo disso o texto fica
        *   100–190px mais alto que qualquer foto que caiba ao lado.
-       * - `xl`: foto de 540px e entrelinha um pouco menor (1.65); fecha em
-       *   14px. `2xl`: o texto sobe para 17px — em tela larga ele ficava baixo
-       *   demais para a foto — e a foto vai a 580px; fecha em 15px.
+       * - `xl`: foto de até 500px e entrelinha um pouco menor (1.65); fecha
+       *   em 7px. `2xl`: o texto sobe para 17px — em tela larga ele ficava
+       *   baixo demais para a foto — e a foto vai a 520px; fecha em 1px.
+       *   Eram 540/580px com dois parágrafos de carreira; o segundo saiu em
+       *   24/09 e a foto encolheu junto, para não abrir vão embaixo do texto.
        *
        * `my-auto` centraliza o bloco na altura da seção. Mudou o texto do
-       * Sobre, remeça (o script está no histórico da conversa de 24/09 e a
-       * regra é: base da foto contra a base do último parágrafo).
+       * Sobre, remeça (base da foto contra a base do último parágrafo, em
+       * 1280, 1440 e 1920px).
        */}
-      <div className="my-auto grid gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,1fr)_var(--foto)] xl:[--foto:min(540px,45%)] 2xl:[--foto:580px]">
+      <div className="my-auto grid gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,1fr)_var(--foto)] xl:[--foto:min(500px,42%)] 2xl:[--foto:520px]">
         <Reveal
           delay={0}
           className="relative mx-auto w-full max-w-[440px] self-start xl:col-start-2 xl:row-start-1 xl:max-w-none"

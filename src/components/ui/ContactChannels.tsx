@@ -3,7 +3,6 @@ import { ArrowUpRight } from 'lucide-react'
 import { IconeCanal } from '@/components/ui/IconeCanal'
 import { Panel } from '@/components/ui/Panel'
 import { socialChannels } from '@/data/social'
-import { contagem } from '@/lib/contagem'
 
 const LINHA_CLASS =
   'flex items-center gap-3 px-[18px] py-4 transition-all duration-300 hover:bg-[rgb(var(--accent-rgb)/0.07)]'
@@ -34,7 +33,7 @@ const LINHA_CLASS =
  */
 export function ContactChannels() {
   return (
-    <Panel title="Canais" code={contagem(socialChannels.length, 'canal', 'canais')}>
+    <Panel title="Canais">
       <ul className="divide-line flex flex-col divide-y">
         {socialChannels.map((channel) => (
           <li key={channel.label} className="group/canal">
