@@ -9,86 +9,28 @@ export function About() {
   return (
     <Section id="sobre" index="01" label="Sobre">
       {/*
-       * **A foto é quadrada e inteira, sempre.** Em 23/09 ela saiu do fluxo e
-       * passou a acompanhar a altura do texto; alinhava, mas cortava a imagem
-       * (até ~17% a 1920px), e o dono preferiu a foto como era.
+       * **A foto é quadrada e inteira, sempre**, e quem se ajusta é a
+       * largura da coluna dela (`--foto`), medida para o quadrado ter a
+       * altura do texto. Histórico em docs/PENDENCIAS.md; o estado de 24/09:
        *
-       * Então quem se ajusta é a LARGURA da coluna da foto (`--foto`), medida
-       * para o quadrado ficar da altura do texto. Com os quatro parágrafos de
-       * 24/09 o texto ficou longo, e duas decisões saíram da medição:
+       * - **Ordem: foto, texto, números.** É a ordem do DOM, e é a que o
+       *   celular mostra (pedido do dono). Do `xl` em diante a grade põe
+       *   texto e foto lado a lado e os números numa linha inteira embaixo.
+       * - Lado a lado só do `xl` para cima: abaixo disso o texto fica
+       *   100–190px mais alto que qualquer foto que caiba ao lado.
+       * - `xl`: foto de 540px e entrelinha um pouco menor (1.65); fecha em
+       *   14px. `2xl`: o texto sobe para 17px — em tela larga ele ficava baixo
+       *   demais para a foto — e a foto vai a 580px; fecha em 15px.
+       * - Os números: 2x2 no celular, quatro numa linha do tablet para cima.
        *
-       * - Lado a lado só de `xl` para cima. Entre `lg` e `xl` o texto ficava
-       *   100–190px mais alto que qualquer foto que coubesse ao lado — e
-       *   alargar a foto estreita o texto, que cresce de novo. Abaixo de `xl`
-       *   empilha, como no celular, com a foto limitada a 440px.
-       * - Os stats ficam **embaixo da foto**, na coluna dela (desde 24/09):
-       *   texto de um lado, foto + números do outro, cada coluna com o que
-       *   tem. Com eles numa linha inteira embaixo, o texto passava ~60px da
-       *   foto; embaixo da foto, as duas colunas fecham em 3–14px.
-       *
-       * - No `2xl` (1536px+, que é um 1920 com zoom de 125%) a distribuição
-       *   inverte: texto largo fica baixo demais para a coluna foto+números
-       *   (190–230px de diferença), então os números voltam para baixo do
-       *   texto e a foto fica sozinha à direita, com 540px. Fecha em 8px. A
-       *   versão anterior limitava o texto a 720px e deixava um vão de 310px
-       *   entre texto e foto.
-       *
-       * `my-auto` centraliza o bloco na altura da seção, para o respiro que
-       * sobrar se dividir entre o rótulo e o atalho de rolagem.
-       *
-       * Mudou o texto do Sobre, remeça (script em docs/PENDENCIAS.md).
+       * `my-auto` centraliza o bloco na altura da seção. Mudou o texto do
+       * Sobre, remeça (o script está no histórico da conversa de 24/09 e a
+       * regra é: base da foto contra a base do último parágrafo).
        */}
-      <div className="my-auto grid gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,1fr)_var(--foto)] xl:[--foto:min(430px,36%)] 2xl:[--foto:540px]">
-        <Reveal className="xl:col-start-1 xl:row-span-2 xl:row-start-1 2xl:row-span-1">
-          <h2
-            id="sobre-title"
-            className="text-[clamp(26px,3.4vw,38px)] leading-[1.12] font-semibold tracking-[-0.03em]"
-          >
-            {about.heading}
-          </h2>
-
-          {about.paragraphs.map((paragraph) => (
-            <p
-              key={paragraph}
-              className="text-ink-muted texto-justo mt-4 text-[15px] leading-[1.75]"
-            >
-              {paragraph}
-            </p>
-          ))}
-        </Reveal>
-
-        {/*
-         * Os stats são item próprio da grade para, do `xl` para cima, ficarem
-         * embaixo da foto (ver o comentário da grade). Empilhado, vêm depois
-         * do texto e antes da foto.
-         */}
-        <Reveal className="xl:col-start-2 xl:row-start-2 2xl:col-start-1">
-          <dl className="grid grid-cols-[repeat(auto-fit,minmax(min(120px,100%),1fr))] gap-3">
-            {aboutStats.map((stat) => (
-              <div
-                key={stat.label}
-                className="border-line bg-panel hover:border-accent rounded-[10px] border p-4 transition-all duration-300"
-              >
-                <dt className="sr-only">{stat.label}</dt>
-                <dd>
-                  <span className="text-accent-text block font-mono text-2xl font-bold">
-                    {stat.value}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="text-ink-faint mt-1 block font-mono text-[11px] tracking-[0.12em] uppercase"
-                  >
-                    {stat.label}
-                  </span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </Reveal>
-
+      <div className="my-auto grid gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,1fr)_var(--foto)] xl:[--foto:min(540px,45%)] 2xl:[--foto:580px]">
         <Reveal
-          delay={0.14}
-          className="relative mx-auto w-full max-w-[440px] self-start xl:col-start-2 xl:row-start-1 xl:max-w-none 2xl:row-span-2"
+          delay={0}
+          className="relative mx-auto w-full max-w-[440px] self-start xl:col-start-2 xl:row-start-1 xl:max-w-none"
         >
           <div
             aria-hidden="true"
@@ -135,6 +77,53 @@ export function About() {
               </span>
             </div>
           )}
+        </Reveal>
+
+        <Reveal delay={0.08} className="xl:col-start-1 xl:row-start-1">
+          <h2
+            id="sobre-title"
+            className="text-[clamp(26px,3.4vw,38px)] leading-[1.12] font-semibold tracking-[-0.03em]"
+          >
+            {about.heading}
+          </h2>
+
+          {about.paragraphs.map((paragraph) => (
+            <p
+              key={paragraph}
+              className="text-ink-muted texto-justo mt-4 text-[15px] leading-[1.75] xl:mt-3 xl:leading-[1.65] 2xl:mt-4 2xl:text-[17px] 2xl:leading-[1.75]"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </Reveal>
+
+        {/*
+         * Quatro números: 2x2 no celular, uma linha de quatro do tablet para
+         * cima — do `xl` em diante, numa linha inteira embaixo do texto e da
+         * foto.
+         */}
+        <Reveal className="xl:col-span-2 xl:row-start-2">
+          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {aboutStats.map((stat) => (
+              <div
+                key={stat.label}
+                className="border-line bg-panel hover:border-accent rounded-[10px] border p-4 transition-all duration-300"
+              >
+                <dt className="sr-only">{stat.label}</dt>
+                <dd>
+                  <span className="text-accent-text block font-mono text-2xl font-bold">
+                    {stat.value}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="text-ink-faint mt-1 block font-mono text-[11px] tracking-[0.12em] uppercase"
+                  >
+                    {stat.label}
+                  </span>
+                </dd>
+              </div>
+            ))}
+          </dl>
         </Reveal>
       </div>
     </Section>
