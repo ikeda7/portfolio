@@ -75,11 +75,11 @@ export const site = {
       'Estou em Bauru – SP. Para falar sobre um projeto, uma vaga ou qualquer coisa que envolva software e IA, é só chamar por e-mail ou LinkedIn.',
     /*
      * Segundo parágrafo, de 24/09: ocupa o vão entre o convite e os canais
-     * dizendo o que ele procura — as três trilhas do subtítulo — e amarra a
-     * música, que é o fio do site inteiro. Rascunho para o dono validar.
+     * dizendo o que ele procura: as três trilhas do subtítulo, cada uma
+     * com uma linha do que é. A frase da música saiu a pedido dele (24/09).
      */
     interesse:
-      'Tenho interesse em oportunidades de desenvolvimento full stack, dados e IA aplicada — e em qualquer projeto que junte tecnologia e música.',
+      'Tenho interesse em oportunidades nas três frentes em que atuo: desenvolvimento full stack, construindo produtos de ponta a ponta, do front-end ao banco de dados; data science, explorando e modelando dados para apoiar decisões; e IA aplicada, colocando LLMs, RAG e agentes para resolver problemas reais.',
   },
   /*
    * A cidade aparece só no Contato. Estava também no hero e no rodapé, e
@@ -130,7 +130,7 @@ export const aboutStats: readonly AboutStat[] = [
   { value: `${ANOS_NO_GITHUB} anos`, label: 'No GitHub' },
   // O tamanho da lista da fita: a varredura dos repositórios públicos. Sai da
   // própria lista, então os dois nunca discordam.
-  { value: String(bibliotecasDoGithub.length), label: 'Bibliotecas no GitHub' },
+  { value: String(bibliotecasDoGithub.length), label: 'Bibliotecas usadas no GitHub' },
 ]
 
 /**
