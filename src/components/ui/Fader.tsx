@@ -70,6 +70,16 @@ export function Fader({ termo, index }: FaderProps) {
                 transition,
               })}
         />
+        {/*
+         * O knob sobe 14px no hover (de `translate-y-1/2` para `-translate-y-2`),
+         * e o preenchimento precisa subir junto — sem isto o azul parava na
+         * marca e o knob flutuava acima de um trilho vazio. É um segmento que
+         * nasce na marca da unidade e cresce os mesmos 14px.
+         */}
+        <span
+          className="bg-accent absolute inset-x-0 h-0 rounded-full transition-[height] duration-300 group-hover/canal:h-[14px]"
+          style={{ bottom: `calc(${fill} - 2px)` }}
+        />
         <m.span
           className="bg-knob border-knob-line glow-knob group-hover/canal:border-accent absolute left-1/2 h-3 w-[26px] -translate-x-1/2 translate-y-1/2 rounded-[3px] border transition-[translate,border-color] duration-300 group-hover/canal:-translate-y-2"
           style={prefersReducedMotion ? { bottom: fill } : undefined}
@@ -89,12 +99,18 @@ export function Fader({ termo, index }: FaderProps) {
        * extensão desce, e sem a altura reservada a fileira de rótulos deixaria
        * os trilhos terminando em alturas diferentes.
        */}
+      {/*
+       * Com dez linguagens, abaixo de `lg` a mesa tem cinco colunas estreitas
+       * demais para "JAVASCRIPT": ali aparece só a extensão, em destaque
+       * (sugestão do dono), e o nome fica para o leitor de tela. De `lg` para
+       * cima, nome e extensão.
+       */}
       <span className="text-ink-muted group-hover/canal:text-ink flex min-h-9 w-full flex-col items-center justify-start gap-0.5 text-center font-mono text-[11px] leading-[1.3] tracking-[0.04em] break-words uppercase transition-colors duration-300">
-        {termo.label}
+        <span className="sr-only lg:not-sr-only">{termo.label}</span>
         {extensao && (
           <span
             aria-hidden="true"
-            className="text-ink-faint text-[11px] tracking-[0.06em] lowercase"
+            className="text-ink text-[13px] tracking-[0.04em] lowercase lg:text-ink-faint lg:text-[11px] lg:tracking-[0.06em]"
           >
             {extensao}
           </span>

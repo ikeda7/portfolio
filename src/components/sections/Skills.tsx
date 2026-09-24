@@ -25,7 +25,7 @@ import type { SkillNiche } from '@/types/content'
  * - Front-end & mobile → pedaleira: pisar liga o pedal.
  * - IA aplicada → sampler: o pad liga, fica aceso e toca uma nota.
  * - Back-end & dados → rack: os módulos rodam sozinhos, LEDs piscando.
- * - Ferramentas & processos → arranjo de DAW: mute e solo funcionam.
+ * - Ferramentas → arranjo de DAW: mute e solo funcionam.
  *
  * Nenhuma interação diz nível nem filtra nada. Nível por tecnologia continua
  * sendo conteúdo do dono (ver docs/PENDENCIAS.md), e o foco técnico que
@@ -45,12 +45,11 @@ export function Skills() {
         <Reveal>
           <Painel nicho={linguagens}>
             {/*
-             * Quatro colunas ate `sm`, oito depois — e as duas contas fecham:
-             * sao oito linguagens, entao nenhuma largura deixa fileira pela
-             * metade. Rotulo horizontal precisa de largura, e em 320px oito
-             * colunas dariam ~31px cada.
+             * Dez linguagens: cinco colunas ate `lg` (2x5, so a extensao no
+             * rotulo) e dez de `lg` para cima. As duas contas fecham, entao
+             * nenhuma largura deixa fileira pela metade.
              */}
-            <div className="grid auto-rows-fr grid-cols-4 gap-x-2.5 gap-y-7 px-[18px] py-[26px] sm:grid-cols-8 sm:gap-y-0">
+            <div className="grid auto-rows-fr grid-cols-5 gap-x-2.5 gap-y-7 px-[18px] py-[26px] lg:grid-cols-10 lg:gap-y-0">
               {linguagens.terms.map((termo, index) => (
                 <Fader key={termo.label} index={index} termo={termo} />
               ))}
