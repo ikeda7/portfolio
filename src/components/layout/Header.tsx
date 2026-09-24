@@ -26,7 +26,7 @@ export function Header() {
   return (
     <header className="border-line sticky top-0 z-20 border-b bg-[rgb(13_13_13/0.82)] backdrop-blur-[14px]">
       <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center gap-1 px-6 py-2 sm:flex-row sm:justify-between sm:gap-6 sm:py-3.5">
-        <Marca className="py-1.5 sm:py-0" />
+        <Marca className="py-1.5 sm:py-1" />
 
         <nav
           aria-label="Navegação principal"
