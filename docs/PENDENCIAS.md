@@ -648,7 +648,19 @@ a fazer antes e: destacar o que as tags ja dizem, ou o que elas nao dizem?
 
 ## Pendencias, em ordem
 
-### 1. DEPLOY NA VERCEL — PUBLICADO (24/09), falta abrir o dominio de producao
+### 1. DEPLOY NA VERCEL — NO AR E PUBLICO (24/09)
+
+**Estado atual:** o site esta publico em
+**https://portfolio-ikeda7s-projects.vercel.app**. A protecao do projeto foi
+para **Standard** (`ssoProtection.deploymentType =
+prod_deployment_urls_and_all_previews`), a pedido do dono: o dominio de
+producao abre para qualquer pessoa; os previews de `develop` e as URLs de
+hash de cada deploy continuam pedindo login na Vercel.
+
+Publicado ate o PR #34. Para publicar de novo: PR `develop` -> `main`,
+mesclar com o CI verde.
+
+#### Registro de quando ainda estava fechado
 
 **24/09, noite:** PR #33 (`develop` -> `main`) mesclado com o CI verde, e o
 deploy de producao (`e3ade5b`) ficou READY em
