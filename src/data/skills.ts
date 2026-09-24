@@ -156,9 +156,23 @@ const NAO_SAO_TECNOLOGIA = new Set([
   'Gestão de chamados',
 ])
 
-export const marqueeItems: readonly string[] = nichos
-  .flatMap((nicho) => nicho.terms.map((termo) => termo.label))
-  .filter((label) => !NAO_SAO_TECNOLOGIA.has(label))
+export interface GrupoDaFita {
+  readonly titulo: string
+  readonly termos: readonly string[]
+}
+
+/*
+ * Em grupos, e nao numa lista corrida. A ordem sempre foi a dos nichos, mas
+ * sem nada marcando onde um termina e o outro comeca ela lia como aleatoria —
+ * "React" logo depois de "SQL" parecia sorteio. O titulo de cada nicho corre
+ * junto, antes dos termos dele.
+ */
+export const marqueeItems: readonly GrupoDaFita[] = nichos
+  .map((nicho) => ({
+    titulo: nicho.title,
+    termos: nicho.terms.map((termo) => termo.label).filter((l) => !NAO_SAO_TECNOLOGIA.has(l)),
+  }))
+  .filter((grupo) => grupo.termos.length > 0)
 
 /**
  * A extensão é **selo ao lado do nome**, e não `python.py` colado.

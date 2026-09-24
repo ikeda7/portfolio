@@ -1,11 +1,14 @@
 import { useReducedMotion } from 'motion/react'
+import { Fragment } from 'react'
 
 import { BotaoTecnologia } from '@/components/ui/BotaoTecnologia'
 import { useFocoTecnico } from '@/hooks/useFocoTecnico'
+import type { GrupoDaFita } from '@/data/skills'
 import { estaEmFoco } from '@/lib/foco'
 
 interface MarqueeProps {
-  readonly items: readonly string[]
+  /** Os termos, agrupados por nicho — o título do grupo corre antes deles. */
+  readonly items: readonly GrupoDaFita[]
   /** Segundos para a fita completar uma volta. Maior = mais lento. */
   readonly duration?: number
 }
@@ -24,15 +27,16 @@ interface MarqueeProps {
  * quando o foco sai. Também pausa no hover e vira lista estática sob
  * `prefers-reduced-motion`.
  *
- * A volta leva 60s, não os 38s originais: a 38s o termo atravessava a tela
- * rápido demais para ser lido e clicado, e as três saídas que já existiam
- * (pausa no hover, pausa no foco, lista estática) só ajudam quem já decidiu
- * mirar. Quem ainda está lendo precisa é de tempo.
+ * A volta leva 90s. Eram 38s no protótipo e 60s depois do primeiro pedido;
+ * a 60s ainda corria mais que a leitura, e os títulos de nicho que entraram
+ * junto alongaram a fita. O número é por volta inteira, então fita mais longa
+ * a 90s anda na mesma velocidade que a antiga andaria a ~80s.
  */
-export function Marquee({ items, duration = 60 }: MarqueeProps) {
+export function Marquee({ items, duration = 90 }: MarqueeProps) {
   const prefersReducedMotion = useReducedMotion()
   const { foco } = useFocoTecnico()
   const track = [...items, ...items]
+  const metade = items.length
 
   const parada = prefersReducedMotion || foco !== null
 
@@ -61,37 +65,54 @@ export function Marquee({ items, duration = 60 }: MarqueeProps) {
               }
         }
       >
-        {track.map((item, index) => {
-          const copia = index >= items.length
+        {track.map((grupo, indiceGrupo) => {
+          // A segunda copia e puramente visual: some para leitores de tela e
+          // sai da ordem de tabulacao, senao cada termo apareceria duas vezes
+          // para quem navega por teclado.
+          const copia = indiceGrupo >= metade
 
           return (
-            <li
-              key={`${item}-${index}`}
-              // A segunda copia e puramente visual: some para leitores de tela
-              // e sai da ordem de tabulacao, senao cada termo apareceria duas
-              // vezes para quem navega por teclado.
-              aria-hidden={copia ? 'true' : undefined}
-              className="flex shrink-0 items-center gap-10 whitespace-nowrap"
-            >
-              {copia ? (
-                <span
-                  className={`font-mono text-[11px] tracking-[0.18em] uppercase ${
-                    estaEmFoco(item, foco) ? 'text-accent-text' : 'text-ink-faint'
-                  }`}
-                >
-                  {item}
+            <Fragment key={`${grupo.titulo}-${indiceGrupo}`}>
+              <li
+                aria-hidden={copia ? 'true' : undefined}
+                className="flex shrink-0 items-center gap-10 whitespace-nowrap"
+              >
+                {/*
+                 * O titulo do nicho: mesmo corpo dos termos, em acento e entre
+                 * colchetes, para ler como etiqueta de grupo e nao como mais um
+                 * termo. Nao e botao — nicho nao e tecnologia.
+                 */}
+                <span className="text-accent-text font-mono text-[11px] tracking-[0.18em] uppercase">
+                  [ {grupo.titulo} ]
                 </span>
-              ) : (
-                <BotaoTecnologia
-                  termo={item}
-                  className="text-ink-faint hover:text-accent-text flex min-h-6 min-w-6 items-center justify-center font-mono text-[11px] tracking-[0.18em] whitespace-nowrap uppercase transition-colors duration-300"
-                  classNameAtivo="text-accent-text"
+              </li>
+              {grupo.termos.map((item) => (
+                <li
+                  key={`${item}-${indiceGrupo}`}
+                  aria-hidden={copia ? 'true' : undefined}
+                  className="flex shrink-0 items-center gap-10 whitespace-nowrap"
                 >
-                  {item}
-                </BotaoTecnologia>
-              )}
-              <span aria-hidden="true" className="bg-accent/40 size-1 shrink-0 rounded-full" />
-            </li>
+                  {copia ? (
+                    <span
+                      className={`font-mono text-[11px] tracking-[0.18em] uppercase ${
+                        estaEmFoco(item, foco) ? 'text-accent-text' : 'text-ink-faint'
+                      }`}
+                    >
+                      {item}
+                    </span>
+                  ) : (
+                    <BotaoTecnologia
+                      termo={item}
+                      className="text-ink-faint hover:text-accent-text flex min-h-6 min-w-6 items-center justify-center font-mono text-[11px] tracking-[0.18em] whitespace-nowrap uppercase transition-colors duration-300"
+                      classNameAtivo="text-accent-text"
+                    >
+                      {item}
+                    </BotaoTecnologia>
+                  )}
+                  <span aria-hidden="true" className="bg-accent/40 size-1 shrink-0 rounded-full" />
+                </li>
+              ))}
+            </Fragment>
           )
         })}
       </ul>
