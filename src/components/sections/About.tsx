@@ -26,16 +26,20 @@ export function About() {
        *   tem. Com eles numa linha inteira embaixo, o texto passava ~60px da
        *   foto; embaixo da foto, as duas colunas fecham em 3–14px.
        *
-       * - No `2xl` a coluna do texto tem teto (720px): sem ele o texto
-       *   alargava, encurtava, e a foto sobrava embaixo.
+       * - No `2xl` (1536px+, que é um 1920 com zoom de 125%) a distribuição
+       *   inverte: texto largo fica baixo demais para a coluna foto+números
+       *   (190–230px de diferença), então os números voltam para baixo do
+       *   texto e a foto fica sozinha à direita, com 540px. Fecha em 8px. A
+       *   versão anterior limitava o texto a 720px e deixava um vão de 310px
+       *   entre texto e foto.
        *
        * `my-auto` centraliza o bloco na altura da seção, para o respiro que
        * sobrar se dividir entre o rótulo e o atalho de rolagem.
        *
        * Mudou o texto do Sobre, remeça (script em docs/PENDENCIAS.md).
        */}
-      <div className="my-auto grid gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,1fr)_var(--foto)] xl:[--foto:min(430px,36%)] 2xl:[--foto:410px] 2xl:grid-cols-[minmax(0,720px)_var(--foto)] 2xl:justify-between">
-        <Reveal className="xl:col-start-1 xl:row-span-2 xl:row-start-1">
+      <div className="my-auto grid gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,1fr)_var(--foto)] xl:[--foto:min(430px,36%)] 2xl:[--foto:540px]">
+        <Reveal className="xl:col-start-1 xl:row-span-2 xl:row-start-1 2xl:row-span-1">
           <h2
             id="sobre-title"
             className="text-[clamp(26px,3.4vw,38px)] leading-[1.12] font-semibold tracking-[-0.03em]"
@@ -58,7 +62,7 @@ export function About() {
          * embaixo da foto (ver o comentário da grade). Empilhado, vêm depois
          * do texto e antes da foto.
          */}
-        <Reveal className="xl:col-start-2 xl:row-start-2">
+        <Reveal className="xl:col-start-2 xl:row-start-2 2xl:col-start-1">
           <dl className="grid grid-cols-[repeat(auto-fit,minmax(min(120px,100%),1fr))] gap-3">
             {aboutStats.map((stat) => (
               <div
@@ -84,7 +88,7 @@ export function About() {
 
         <Reveal
           delay={0.14}
-          className="relative mx-auto w-full max-w-[440px] self-start xl:col-start-2 xl:row-start-1 xl:max-w-none"
+          className="relative mx-auto w-full max-w-[440px] self-start xl:col-start-2 xl:row-start-1 xl:max-w-none 2xl:row-span-2"
         >
           <div
             aria-hidden="true"
