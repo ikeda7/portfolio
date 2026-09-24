@@ -634,7 +634,26 @@ a fazer antes e: destacar o que as tags ja dizem, ou o que elas nao dizem?
 
 ## Pendencias, em ordem
 
-### 1. DEPLOY NA VERCEL — BLOQUEADO, e a solucao e no navegador
+### 1. DEPLOY NA VERCEL — PROJETO CRIADO (24/09), falta publicar o site
+
+**Estado em 24/09:** o dono importou o repo na Vercel e o conector desta
+sessao passou a enxergar o projeto (`prj_8C4tIzs8YslCwKIPAU6Kc6DnMyqc`,
+conta pessoal — **nao passe `teamId`**, com ele a API devolve 403; sem ele,
+funciona).
+
+- Producao (`portfolio-ikeda7s-projects.vercel.app`) serve a `main`, que ainda
+  tem so o commit de setup: **o que esta no ar e o site vazio**.
+- Cada push em `develop` gera preview (`portfolio-git-develop-ikeda7s-projects.vercel.app`),
+  mas a **Vercel Authentication** esta ligada: so abre logado na Vercel.
+- `VITE_SITE_URL` configurada para a URL de producao (3 ambientes).
+
+**Falta, e depende do dono:** (1) autorizar o merge `develop` -> `main` (Passo 0
+abaixo), que publica o site de verdade; (2) decidir se desliga a protecao dos
+previews (Settings -> Deployment Protection). O ambiente desta sessao bloqueia
+`*.vercel.app` na rede, entao a auditoria contra producao (`AUDIT_URL=...`)
+tem que rodar da maquina dele.
+
+#### Historico — o bloqueio anterior
 
 Combinado com o dono em 22/09: publicar primeiro na Vercel, dominio .br
 depois.
