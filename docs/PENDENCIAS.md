@@ -1042,7 +1042,15 @@ parado num canto, alternando de lado. Com a luz do cursor andando pela página,
 ele lia como mancha ("uma luz que não é a do meu cursor", print do dono). Só o
 hero mantém o dele. Das quatro ideias para o fundo (liso, grão de filme, grade
 de DAW, onda contínua), o dono escolheu a onda: `OndaDeFundo`, uma waveform
-vertical apagada que liga as seções e reage à rolagem.
+vertical apagada que liga as seções e reage à rolagem. Depois, a pedido dele,
+ela passou a tocar sozinha (as componentes correm com o tempo), a responder ao
+ponteiro (incha sob o cursor; clique ou toque solta um pulso) e a mudar de
+**forma** com a trilha do hero — equilibrada no azul, curvas longas no roxo,
+picos nervosos no vermelho, com transição de 700ms.
+
+**Uma luz de cursor só, por cima de tudo (24/09).** Ver `BrilhoDoCursor`:
+`z-[15]` com `mix-blend-screen`. O card de projeto perdeu a luz própria, que
+desalinhava quando ele subia no hover, e o `usePointerGlow` saiu junto.
 
 **Reveal com `amount: 0` (24/09).** Com `0.2`, a grade de Projetos no celular
 (~3500px) nunca tinha 20% na tela e ficava invisível. Ver `VIEWPORT` em
