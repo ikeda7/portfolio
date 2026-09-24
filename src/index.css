@@ -350,21 +350,16 @@
   }
 
   /*
-   * Altura real do header sticky, medida no navegador: 97px ate `sm` (marca e
-   * nav empilhadas) e 62px a partir dai, quando volta a ser uma linha so.
+   * Altura real do header sticky, medida no navegador: 62px em qualquer
+   * largura. Ate 24/09 eram 97px no celular (marca e nav empilhadas); o menu
+   * do celular pos tudo numa linha so.
    *
-   * Vira variavel porque tres coisas dependem dela e estavam com o numero
-   * cravado em lugares diferentes: a compensacao da ancora, a altura util do
-   * hero e a posicao da indicacao de rolagem. Mudou o header, muda aqui.
+   * Vira variavel porque tres coisas dependem dela: a compensacao da ancora,
+   * a altura util do hero e das secoes, e a posicao da indicacao de rolagem.
+   * Mudou o header, muda aqui.
    */
   :root {
-    --header-h: 97px;
-  }
-
-  @media (min-width: 40rem) {
-    :root {
-      --header-h: 62px;
-    }
+    --header-h: 62px;
   }
 
   /*
