@@ -20,7 +20,11 @@ interface SectionProps {
 /**
  * Container padrão de uma seção — o que faz as cinco terem o mesmo ritmo.
  *
- * Cada seção ocupa **no mínimo** uma tela. É mínimo e não altura fixa: Projetos
+ * Cada seção ocupa **no mínimo** uma tela — a tela que sobra embaixo do
+ * header, e não `100svh` cheios. Com a tela cheia, toda seção passava 66px da
+ * dobra ao chegar pela navegação: a âncora pousa abaixo do header, então a
+ * base da seção sempre caía fora da janela, e ela nunca cabia de uma vez.
+ * É a mesma conta que o hero já fazia. É mínimo e não altura fixa: Projetos
  * passa disso e simplesmente cresce, em vez de espremer os cards. Usamos `svh`
  * (small viewport height) porque no mobile a barra do navegador recolhe, e com
  * `vh` a seção daria um salto de altura no meio da rolagem.
@@ -57,7 +61,7 @@ export function Section({ id, index, label, children, fill = true }: SectionProp
       id={id}
       aria-labelledby={`${id}-title`}
       className={`relative flex items-stretch overflow-hidden px-6 ${
-        fill ? 'min-h-[100svh] py-[clamp(3.5rem,7vh,6rem)]' : 'py-12'
+        fill ? 'min-h-[calc(100svh-var(--header-h))] py-[clamp(2.5rem,6vh,5rem)]' : 'py-12'
       }`}
     >
       <div

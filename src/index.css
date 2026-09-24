@@ -276,9 +276,13 @@
     }
   }
 
-  /* Sem isso a ancora para atras do header e o topo da secao fica escondido. */
+  /*
+   * Sem isso a ancora para atras do header e o topo da secao fica escondido.
+   * Exatamente a altura do header, sem folga: os 4px que havia aqui deixavam
+   * uma lasca da secao anterior aparecendo entre o header e a secao nova.
+   */
   section[id] {
-    scroll-margin-top: calc(var(--header-h) + 4px);
+    scroll-margin-top: var(--header-h);
   }
 
   ::selection {

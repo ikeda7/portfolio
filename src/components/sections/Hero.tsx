@@ -36,8 +36,14 @@ export function Hero() {
        * header abaixo da dobra — e a indicacao de rolagem, ancorada no rodape
        * da secao, nascia fora da tela. Descontar `--header-h` faz o primeiro
        * quadro conter o hero inteiro.
+       *
+       * **Os respiros escalam com a ALTURA da janela** (`vh` nos clamps daqui,
+       * do titulo e da waveform). Com valores fixos o hero media ~760px, e um
+       * notebook de 1366x768 com o navegador aberto tem ~650px uteis: a
+       * waveform saia cortada no meio. O `pb` nunca desce de 72px porque o
+       * atalho de rolagem, `fixed` no rodape da janela, precisa desse chao.
        */
-      className="relative flex min-h-[calc(100svh-var(--header-h))] items-center overflow-hidden px-6 pt-16 pb-20"
+      className="relative flex min-h-[calc(100svh-var(--header-h))] items-center overflow-hidden px-6 pt-[clamp(1.5rem,5vh,4rem)] pb-[clamp(4.5rem,10vh,5.5rem)]"
       aria-labelledby="hero-title"
     >
       <div
@@ -54,7 +60,7 @@ export function Hero() {
         <m.h1
           variants={revealVariants}
           id="hero-title"
-          className="max-w-[900px] text-[clamp(40px,7vw,76px)] leading-[1.02] font-bold tracking-[-0.035em] text-balance"
+          className="max-w-[900px] text-[clamp(40px,min(7vw,9vh),76px)] leading-[1.02] font-bold tracking-[-0.035em] text-balance"
         >
           {hero.title}
         </m.h1>
@@ -75,7 +81,7 @@ export function Hero() {
 
         <m.div
           variants={revealVariants}
-          className="mt-10 flex flex-wrap items-center justify-center gap-3"
+          className="mt-[clamp(1.25rem,4vh,2.5rem)] flex flex-wrap items-center justify-center gap-3"
         >
           <a
             href={hero.primaryCta.href}
