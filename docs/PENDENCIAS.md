@@ -1,9 +1,10 @@
 # Pendências — portfólio Lucas Ikeda
 
-Última atualização: **23/09/2026**, fim do dia. Há uma leva de 16 pontos do
-dono ainda **não implementada** — a seção logo antes de "Pendencias, em ordem". Este arquivo existe para
-retomar o trabalho de outra máquina — leia a pendência 1 antes de tentar o
-deploy.
+Última atualização: **23/09/2026**, madrugada. Da leva de 16 pontos do dono,
+**5 estão feitos** (2, 5, 11, 14 e a metade concreta do 16) e os outros 11
+continuam abertos — a seção logo antes de "Pendencias, em ordem" marca cada um.
+Este arquivo existe para retomar o trabalho de outra máquina — leia a pendência
+1 antes de tentar o deploy.
 
 Antes de mexer em qualquer coisa, leia nesta ordem:
 [`DIRETRIZES_CLAUDE.MD`](../DIRETRIZES_CLAUDE.MD) (a Regra de Ouro),
@@ -23,7 +24,7 @@ npm install
 npm run dev            # http://localhost:5173
 ```
 
-> **`develop` é o estado completo do site.** Todos os PRs (#1 a #22) foram
+> **`develop` é o estado completo do site.** Todos os PRs (#1 a #29) foram
 > mergeados. Nenhum PR aberto, nenhuma branch órfã — só `main` e `develop`.
 >
 > **`main` continua com só o commit de setup, de propósito** — é espelho de
@@ -44,7 +45,42 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
 - Zero texto abaixo de **11px** (era 10px) e zero falha de contraste
 - Estilo de texto mais justo em **1,2x** o minimo do AA (a auditoria agora
   reporta a margem, nao so passa/nao passa)
-- Bundle ~114 kB gzip
+- Bundle ~114 kB gzip (356,03 kB cru / 113,64 kB gzip)
+
+### O que entrou na madrugada de 23/09 — a leva comecou a sair
+
+Cinco dos 16 pontos, escolhidos por nao dependerem de decisao do dono. Um PR
+por assunto, todos com CI verde.
+
+- **Ponto 11 (#26)** — o nome da pos estava **errado no ar**. "Engenharia de
+  Software em IA Aplicada" -> "Engenharia de IA Aplicada", em `experience.ts`
+  e no primeiro paragrafo do Sobre. A ementa **nao** mudou: ela sai do
+  curriculo, nao do site da escola.
+- **Pontos 5, 14 e 16 (#27)** — fita de 38s para 60s; LED "em andamento"
+  pulsando (keyframe `ledpulse`, CSS, entao o kill switch de movimento
+  reduzido ja o cobre); tags e "Abrir" dos cards descendo juntos com
+  `mt-auto`, o que alinha a fileira para qualquer descricao futura.
+- **Ponto 2 (#29)** — a luz do cursor virou **uma so**, `fixed` na raiz
+  ([BrilhoDoCursor](../src/components/ui/BrilhoDoCursor.tsx)). Ver abaixo.
+- **Faxina (#28)** — `gsap` saiu. Estava em `dependencies` desde o setup e
+  nunca foi importado; o README o dava como "disponivel". O bundle **nao
+  muda** (o Vite nunca empacotou o que ninguem importou) — o que sai e peso
+  de install. Reverter e `npm i gsap`.
+
+### O brilho que dividia, medido
+
+O ponto 2 foi o unico que exigiu prova, porque "parece que divide" nao e
+critério. Uma sonda por CDP varreu o ponteiro atraves da fronteira hero/Sobre.
+
+**Antes**, 20px depois da fronteira: a luz do hero caiu para **0,152** e a do
+Sobre estava em **0,848** — e nascia em _outra posicao_, porque cada
+coordenada era relativa a uma caixa diferente. Duas luzes trocando de posto.
+
+**Depois**: uma camada `fixed`, opacidade minima **0,997** na travessia,
+centro do gradiente andando **1:1** com o cursor.
+
+A sonda ficou na pasta temporaria de propósito — ela responde uma pergunta que
+ja foi respondida. Se precisar de novo, o caminho esta em "Coisas do ambiente".
 
 **Duas ferramentas, nao uma.** `npm run auditar` mede; `npm run capturar`
 fotografa. As duas precisam do `npm run preview` no ar. A segunda nasceu em
@@ -159,20 +195,32 @@ tecnologia na pagina inteira e para a fita. Ela deixou de ser enfeite.
 
 ---
 
-## Leva de 23/09 (noite) — 16 pontos do dono, NENHUM implementado
+## Leva de 23/09 (noite) — 16 pontos do dono, 5 feitos e 11 abertos
 
-Ele pediu explicitamente para **anotar e nao resolver**, porque ia trocar de
-maquina. Esta tudo aqui, na ordem em que ele falou, com o que eu ja sei sobre
-cada um — arquivo, causa provavel, e onde eu discordo.
+Ele pediu para **anotar e nao resolver**, porque ia trocar de maquina. Na
+sessao seguinte liberou ("mete marcha"), e sairam os cinco que nao dependiam de
+decisao dele. Esta tudo aqui, na ordem em que ele falou, com o que eu ja sei
+sobre cada um — arquivo, causa provavel, e onde eu discordo.
 
-> **Comece pelo ponto 11.** Ele nao e preferencia, e **erro factual no ar**.
+**FEITOS:** 2, 5, 11, 14 e a metade concreta do 16.
+
+**ABERTOS, e por que:** 1, 6 e 9 esperam ele dizer o que quer; 3, 12 e 15 sao
+decisao de posicionamento ou de gosto que eu nao devo tomar sozinho; 4, 7, 8,
+10, 13 e a outra metade do 16 sao trabalho de verdade que ainda nao comecou.
+
+> **Se for pegar um agora**, os mais baratos e sem pergunta pendente sao o 7
+> (icone no lugar do LED, ja com TODO no componente) e o 13 (foto do Sobre).
 
 ### 1. Footer precisa de atencao
 
 Sem detalhe do que incomoda. Perguntar antes de mexer.
 `src/components/layout/Footer.tsx`.
 
-### 2. O brilho do cursor "divide" entre secoes
+### 2. O brilho do cursor "divide" entre secoes — FEITO (#29)
+
+Virou um `BrilhoDoCursor` `fixed` na raiz, que e exatamente a saida descrita
+aqui embaixo. Medido antes e depois — os numeros estao em "O brilho que
+dividia, medido". O diagnostico original estava certo e fica registrado:
 
 **Causa conhecida, e e minha.** Hoje cada `<section>` tem o seu
 `usePointerGlow` (mudanca de 23/09). Cada um mede a posicao **relativa a
@@ -203,11 +251,10 @@ Linguagens virou oito faders identicos e nao carrega informacao nenhuma.
 termos em faders verticais e muita coluna. Um nicho de 9 termos numa mesa so
 pode nao caber em 320px. Testar em 320 antes de comprar a ideia.
 
-### 5. Fita muito rapida
+### 5. Fita muito rapida — FEITO (#27)
 
-Facil: `duration = 38` em `src/components/ui/Marquee.tsx`. Ele quer tempo de
-clicar no termo que passa. Subir para ~60s e medir. Vale lembrar que a fita ja
-pausa no hover e quando ha algo em foco.
+`duration` de 38s para 60s em `src/components/ui/Marquee.tsx`. Se ainda estiver
+rapida (ou ficar lenta demais), e um numero so.
 
 ### 6. Projetos — ele gostou, e quer sugestoes
 
@@ -261,7 +308,13 @@ aberta. "Bauru – SP" aparece em tres lugares: `site.hero.statusLabel`,
 e nao e o mesmo risco de um telefone. Talvez manter no Contato e tirar do hero
 e do rodape. Perguntar.
 
-### 11. ERRO FACTUAL — o nome da pos esta errado no site
+### 11. ERRO FACTUAL — o nome da pos esta errado no site — FEITO (#26)
+
+Corrigido nos dois lugares. A ementa **nao** mudou, pelo motivo descrito no
+fim desta secao. O que continua aberto e a reescrita do Sobre, que ele pediu e
+que depende da conversa do ponto 9 — nao confunda uma coisa com a outra.
+
+O registro original:
 
 A pagina diz **"Pos em Engenharia de Software em IA Aplicada"**. O certo,
 segundo ele, e **"Engenharia de IA Aplicada"**, na UniPDS. Confere com o site
@@ -309,14 +362,16 @@ tres (2026 / 35 repositorios / B2). Uma quarta so entra com fonte.
 
 `src/components/sections/About.tsx`, `src/data/site.ts`.
 
-### 14. LED "em andamento" deve piscar e brilhar mais
+### 14. LED "em andamento" deve piscar e brilhar mais — FEITO (#27)
 
-Facil e bom. Hoje todo marcador acende e a diferenca entre atual e passado e
-so o halo (`glow-led` contra `opacity-70`) — pouco. Um pulso no atual resolve.
+Keyframe `ledpulse` no `index.css`, aplicado pelo `@utility glow-led-atual`.
+E CSS e nao `motion`, entao o bloco `prefers-reduced-motion` ja o desliga
+sozinho — e o halo parado subiu de `8px/0.65` para `14px/0.85`, que e o que
+sobra para distinguir atual de passado quando a animacao morre.
 
-**Nao esquecer:** animacao em JS nao morre no kill switch CSS. Se for
-keyframe CSS, o bloco `prefers-reduced-motion` do `index.css` ja cobre; se for
-`motion`, tem que checar `useReducedMotion()`.
+O keyframe vive **fora do `@theme`**, como `wavepulse` e `marquee`: quem o
+referencia e um `@utility` e nao um utilitario `animate-*`, entao o Tailwind o
+removeria do bundle. Conferido no CSS compilado.
 
 `src/components/ui/Timeline.tsx`.
 
@@ -333,18 +388,21 @@ header, que ja teve problema de altura no celular.
 Proposta a validar: manter uma secao, com **tres blocos** — profissional,
 academico (EJCOMP + CACiC), e a coluna de Formacao + Idiomas.
 
-### 16. Cards de projeto: palavras-chave e a descricao de 3 linhas
+### 16. Cards de projeto: palavras-chave e a descricao de 3 linhas — METADE
 
-Duas coisas:
+**FEITO (#27) — o alinhamento.** Tags e "Abrir" descem juntos num bloco com
+`mt-auto`, entao a fileira fecha mesmo com o card 01 em 3 linhas e os vizinhos
+em 2. Conferido em captura a 1920, que e a largura onde a diferenca aparece.
 
-- **Destacar palavras-chave** na descricao. Cuidado para nao colidir com as
-  tags logo abaixo — foi exatamente essa redundancia que derrubou as capas de
-  espectro.
-- **O projeto 01 tem 3 linhas de descricao e os outros tem 2**, entao tags e
-  "Abrir" descem e quebram o alinhamento da fileira. Duas saidas: encurtar a
-  descricao do TCC para duas linhas, ou dar `min-h` a descricao e empurrar o
-  rodape do card com `mt-auto`. **A segunda e mais robusta** — resolve para
-  qualquer descricao futura em vez de calibrar texto a mao.
+Detalhe que custa uma hora se esquecer: esse bloco **nao pode ganhar
+`relative`**. O `::after` do stretched link se ancora no ancestral posicionado
+mais proximo, e a area clicavel encolheria do card inteiro para ele.
+
+**ABERTO — destacar palavras-chave na descricao.** Nao fiz de proposito, por
+dois motivos que se somam: escolher quais palavras e decisao de conteudo, e o
+proprio registro avisa que isso **colide com as tags logo abaixo** — foi essa
+redundancia que derrubou as capas de espectro. Se ele quiser mesmo, a pergunta
+a fazer antes e: destacar o que as tags ja dizem, ou o que elas nao dizem?
 
 `src/components/ui/ProjectCard.tsx`, `src/data/projects.ts`.
 
@@ -433,16 +491,16 @@ Dados da conta, para nao redescobrir:
 | `list_teams`      | devolve vazio — e conta pessoal, use o accountId acima como `teamId`  |
 | Projetos ja la    | inhouse-lol, sportscontrol, lextrack, flowers2, x9-game, ikeda7-stats |
 
-### 2. Curriculo em PDF — REMOVIDO DO SITE
+### 2. Curriculo em PDF — REMOVIDO DO SITE E DO REPOSITORIO
 
-Os PDFs ja estao versionados em `public/`:
+> Esta secao se contradizia: abria dizendo que os PDFs "ja estao versionados em
+> `public/`" e tres paragrafos depois dizia que sairam. Conferido: **nao estao**
+> mais versionados. A abertura tinha sobrado da versao anterior do arquivo.
 
-- `curriculo-lucas-ikeda-pt.pdf` (273 kB)
-- `curriculo-lucas-ikeda-en.pdf`
-
-Eles entraram por acidente no commit `6a5cbe7`, arrastados por um `git add -A`
-enquanto o dono os colocava na pasta. Sao os arquivos certos; so a mensagem
-daquele commit nao os menciona.
+Os PDFs entraram por acidente no commit `6a5cbe7`, arrastados por um
+`git add -A` enquanto o dono os colocava na pasta — `curriculo-lucas-ikeda-pt.pdf`
+(273 kB) e `curriculo-lucas-ikeda-en.pdf`. Eram os arquivos certos; so a
+mensagem daquele commit nao os mencionava.
 
 **REVERTIDO no mesmo dia, e com motivo tecnico.** Os PDFs chegaram a ficar no
 painel "Canais", com download em PT-BR e EN. Sairam do site **e do
@@ -555,6 +613,17 @@ resposta honesta.
   aconteceria fora da tela.
 - **Sem runner de teste.** Ausencia deliberada desta fase.
 
+### 10. Dependencias — `gsap` saiu (#28)
+
+Estava em `dependencies` desde o setup, nunca foi importado, e o README o dava
+como "disponivel". O bundle **nao mudou** — o Vite nunca empacotou o que
+ninguem importou; o que saiu foi peso de install e uma dependencia a menos na
+superficie de supply-chain. Reverter e `npm i gsap`.
+
+Fica o metodo, que vale para a proxima: `grep -rn "<pacote>"` em `src/`,
+`scripts/`, `index.html` e nos configs **antes** de concluir que algo e usado.
+A tabela do README dizia que era.
+
 ---
 
 ## Ideias para discutir (nenhuma foi implementada)
@@ -619,6 +688,20 @@ node node_modules/vite/bin/vite.js preview --port 4173 --strictPort
 
 Foi assim que altura de seção e overflow foram medidos em 6 larguras. Não usei
 Playwright de propósito: não está instalado e não vale a dependência.
+
+**Para medir o que depende do cursor, dispare o ponteiro pelo CDP.** Nem a
+auditoria nem a captura movem mouse, entao brilho de cursor e hover nao
+aparecem em nenhuma das duas. `Input.dispatchMouseEvent` com
+`type: 'mouseMoved'` resolve; depois leia `element.style.background` e extraia
+o centro do gradiente com regex. Tres armadilhas ja pagas:
+
+- **Espere o spring assentar.** Sem uns 600ms entre o disparo e a leitura voce
+  mede o caminho, nao o destino — e conclui que o brilho nao acompanha.
+- **A coordenada do CDP nao e exatamente a `clientY`.** Deu 24px de diferenca
+  constante no headless. Compare _deslocamento_ (andou 300px?) em vez de
+  posicao absoluta.
+- **Um ponto fora da viewport dispara `pointerleave`** e apaga o brilho, o que
+  parece bug e e a sonda mirando errado. Leia `window.innerHeight` antes.
 
 **Não existe Python nesta máquina.** Scripts utilitários em Node.
 

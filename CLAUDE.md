@@ -133,7 +133,7 @@ Footer.
 
 **Conteúdo é dado, não JSX.** Nenhum texto fica hardcoded em componente. Copy,
 listas e números vivem em [src/data/](src/data/) (`site.ts`, `skills.ts`,
-`projects.ts`, `social.ts`), tipados pelos contratos `readonly` de
+`projects.ts`, `experience.ts`, `social.ts`), tipados pelos contratos `readonly` de
 [src/types/content.ts](src/types/content.ts). Mudança de texto → `src/data/`;
 mudança de forma → o tipo primeiro.
 
@@ -146,6 +146,17 @@ Camadas:
   `usePointerGlow` e
   [useFocoTecnico](src/hooks/useFocoTecnico.tsx) (provider do foco técnico; é o
   único `.tsx` de `hooks/`, porque um contexto precisa de JSX).
+
+**Duas luzes, e cada uma tem um dono diferente.** A que segue o cursor é
+**uma só para a página inteira**:
+[BrilhoDoCursor](src/components/ui/BrilhoDoCursor.tsx), `fixed` na raiz, em
+coordenada de viewport. Já foi uma por seção e o brilho se partia na fronteira —
+cada uma media relativo a si mesma e apagava no `onPointerLeave`. Não volte a
+pôr `usePointerGlow` numa `<section>`: o hook é para brilho **com dono** (um
+card), onde apagar ao sair é o certo. O pulso ambiente (`animate-driftglow`)
+continua por seção de propósito, porque alterna de lado conforme o número da
+faixa.
+
 - `lib/` — [motion.ts](src/lib/motion.ts) (tempos/curvas),
   [contact.ts](src/lib/contact.ts) (envio do formulário) e
   [foco.ts](src/lib/foco.ts) (normaliza rótulos para comparar "Node.js" com
