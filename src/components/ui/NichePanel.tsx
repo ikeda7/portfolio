@@ -4,6 +4,7 @@ import * as m from 'motion/react-m'
 import { BotaoTecnologia } from '@/components/ui/BotaoTecnologia'
 import { Panel } from '@/components/ui/Panel'
 import { VIEWPORT, revealVariants, staggerVariants } from '@/lib/motion'
+import { contagem } from '@/lib/contagem'
 import type { SkillNiche } from '@/types/content'
 
 interface NichePanelProps {
@@ -38,15 +39,11 @@ export function NichePanel({ nicho }: NichePanelProps) {
 
   return (
     /*
-     * O codigo conta os termos em vez de ser string cravada: "UI · 07". Numero
-     * que descreve uma lista sai da lista — ja erramos isso antes, com um
-     * painel dizendo "CH 01–05" com seis canais na tela.
+     * O canto conta os termos ("7 termos") em vez de ser string cravada.
+     * Numero que descreve uma lista sai da lista — ja erramos isso antes, com
+     * um painel dizendo "CH 01–05" com seis canais na tela.
      */
-    <Panel
-      title={nicho.title}
-      code={`${nicho.code} · ${String(nicho.terms.length).padStart(2, '0')}`}
-      fill
-    >
+    <Panel title={nicho.title} code={contagem(nicho.terms.length, ...nicho.unidade)} fill>
       <m.ul
         className="divide-line flex flex-1 flex-col divide-y"
         initial={prefersReducedMotion ? undefined : 'hidden'}

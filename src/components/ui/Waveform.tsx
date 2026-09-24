@@ -4,7 +4,6 @@ import { waveformHeights } from '@/data/site'
 
 interface WaveformProps {
   readonly meta: string
-  readonly timecode: string
   /** Os canais. O escolhido redesenha as barras e pinta a página. */
   readonly canais: readonly CanalWaveform[]
 }
@@ -43,7 +42,7 @@ function barrasDoCanal(canal: number): readonly number[] {
  * é o maior bloco do hero, e com 120px fixos ele era o que empurrava o painel
  * para fora da dobra num notebook. Ver o comentário da `<section>` no Hero.
  */
-export function Waveform({ meta, timecode, canais }: WaveformProps) {
+export function Waveform({ meta, canais }: WaveformProps) {
   const [canalAtivo, setCanalAtivo] = useState(0)
   const barras = barrasDoCanal(canalAtivo)
   const tom = canais[canalAtivo]?.tom ?? 'azul'
@@ -67,7 +66,10 @@ export function Waveform({ meta, timecode, canais }: WaveformProps) {
     <div className="border-line glow-panel mx-auto mt-[clamp(1.25rem,5vh,4.5rem)] w-full max-w-[880px] rounded-[14px] border bg-gradient-to-b from-[#141414] to-[#101010] p-[clamp(14px,2.6vh,22px)]">
       <div className="text-ink-faint flex items-center justify-between font-mono text-[11px] tracking-[0.14em] uppercase">
         <span>{meta}</span>
-        <span>{timecode}</span>
+        {/* Posição da trilha ativa: é o que muda quando se clica embaixo. */}
+        <span className="tabular-nums">
+          {String(canalAtivo + 1).padStart(2, '0')} / {String(canais.length).padStart(2, '0')}
+        </span>
       </div>
 
       <div
