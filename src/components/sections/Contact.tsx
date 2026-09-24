@@ -19,11 +19,16 @@ const { contact } = site
  *
  * Abaixo de `lg` tudo empilha na ordem de leitura: convite, canais,
  * formulário.
+ *
+ * **A seção tem a altura do conteúdo** (`fill={false}`), como o Sobre. Com
+ * uma tela no mínimo e o bloco centralizado, sobrava vão em cima e embaixo
+ * — ~190px e ~220px a 1920x1080 (leitura do dono, 24/09). Última seção antes
+ * do rodapé, ela não precisa ocupar a janela sozinha.
  */
 export function Contact() {
   return (
-    <Section id="contato" index="05" label="Contato">
-      <div className="my-auto grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+    <Section id="contato" index="05" label="Contato" fill={false}>
+      <div className="grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         <Reveal className="flex flex-col justify-between gap-8">
           <div>
             <h2
