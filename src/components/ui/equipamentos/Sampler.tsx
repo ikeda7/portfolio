@@ -19,10 +19,14 @@ const NOTAS = [220, 261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25]
  * olho registrar; agora clicar acende e clicar de novo apaga, como um pad em
  * modo latch.
  *
- * **E toca uma nota ao ligar.** Som gerado na hora pela Web Audio API — um
- * oscilador com envelope curto, sem arquivo de áudio nenhum. Só toca em
- * resposta ao clique (nunca sozinho), é baixo, e o `AudioContext` só nasce no
- * primeiro clique, que é o que os navegadores exigem. Desligar não toca.
+ * **E toca uma nota ao ligar e ao desligar.** Som gerado na hora pela Web
+ * Audio API — um oscilador com envelope curto, sem arquivo de áudio nenhum.
+ * Só toca em resposta ao clique (nunca sozinho), é baixo, e o `AudioContext`
+ * só nasce no primeiro clique, que é o que os navegadores exigem.
+ *
+ * Desligar toca a mesma nota **caindo uma oitava**, mais curta e mais baixa
+ * (sugestão do dono, 24/09): o ouvido distingue "ligou" de "desligou" sem
+ * olhar, e a nota continua sendo a do pad.
  *
  * Quatro colunas a partir de `sm` (4x2, fecha); duas no celular (2x4).
  */
@@ -30,7 +34,7 @@ export function Sampler({ termos }: SamplerProps) {
   const [ligados, setLigados] = useState<ReadonlySet<string>>(new Set())
   const audio = useRef<AudioContext | null>(null)
 
-  function tocar(index: number) {
+  function tocar(index: number, ligar: boolean) {
     try {
       audio.current ??= new AudioContext()
       const ctx = audio.current
@@ -38,21 +42,24 @@ export function Sampler({ termos }: SamplerProps) {
       const osc = ctx.createOscillator()
       const ganho = ctx.createGain()
       osc.type = 'triangle'
-      osc.frequency.value = NOTAS[index % NOTAS.length] ?? 440
+      const nota = NOTAS[index % NOTAS.length] ?? 440
+      // Ligar: a nota sustentada. Desligar: a nota descendo uma oitava.
+      const duracao = ligar ? 0.6 : 0.3
+      osc.frequency.setValueAtTime(nota, agora)
+      if (!ligar) osc.frequency.exponentialRampToValueAtTime(nota / 2, agora + duracao)
       ganho.gain.setValueAtTime(0.0001, agora)
-      ganho.gain.exponentialRampToValueAtTime(0.09, agora + 0.01)
-      ganho.gain.exponentialRampToValueAtTime(0.0001, agora + 0.6)
+      ganho.gain.exponentialRampToValueAtTime(ligar ? 0.09 : 0.06, agora + 0.01)
+      ganho.gain.exponentialRampToValueAtTime(0.0001, agora + duracao)
       osc.connect(ganho).connect(ctx.destination)
       osc.start(agora)
-      osc.stop(agora + 0.65)
+      osc.stop(agora + duracao + 0.05)
     } catch {
       // Sem Web Audio (navegador antigo, politica do sistema): o pad liga mudo.
     }
   }
 
   function alternar(label: string, index: number) {
-    const ligar = !ligados.has(label)
-    if (ligar) tocar(index)
+    tocar(index, !ligados.has(label))
     setLigados((atual) => {
       const novo = new Set(atual)
       if (novo.has(label)) novo.delete(label)

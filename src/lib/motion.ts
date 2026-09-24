@@ -50,5 +50,16 @@ export const staggerVariants: Variants = {
   visible: { transition: { staggerChildren: STAGGER_STEP } },
 }
 
-/** Configuração de viewport usada em todos os reveals atrelados ao scroll. */
-export const VIEWPORT = { once: true, amount: 0.2, margin: '-64px 0px' } as const
+/**
+ * Configuração de viewport usada em todos os reveals atrelados ao scroll.
+ *
+ * **`amount: 0`, e não uma fração.** Com `0.2`, o reveal esperava 20% da
+ * altura do bloco dentro da tela — e no celular a grade de Projetos (nove
+ * cards em uma coluna, ~3500px) precisaria de ~700px visíveis ao mesmo
+ * tempo, mais do que cabe numa tela de 664px ou 740px. O gatilho nunca
+ * disparava e a seção inteira ficava em `opacity: 0` (achado do dono,
+ * 24/09). Fração de altura não serve para bloco de altura variável; quem
+ * segura o reveal para não disparar "cedo demais" é a `margin`: o bloco
+ * precisa entrar 64px na tela.
+ */
+export const VIEWPORT = { once: true, amount: 0, margin: '-64px 0px' } as const

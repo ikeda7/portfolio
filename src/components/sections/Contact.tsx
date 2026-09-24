@@ -28,7 +28,7 @@ const { contact } = site
 export function Contact() {
   return (
     <Section id="contato" index="05" label="Contato" fill={false}>
-      <div className="grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+      <div className="grid gap-x-12 gap-y-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         <Reveal className="flex flex-col justify-between gap-8">
           <div>
             <h2

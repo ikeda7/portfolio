@@ -1,4 +1,5 @@
 import { useReducedMotion } from 'motion/react'
+import { useState } from 'react'
 import * as m from 'motion/react-m'
 
 import { selo } from '@/data/skills'
@@ -44,16 +45,29 @@ const UNIDADE = 72
  *
  * No hover o knob sobe um pouco e acende — é a mão no fader. Volta ao sair:
  * a altura parada continua sendo a mesma para todos (ver `UNIDADE`).
+ *
+ * **E o canal é um botão.** Tocar (ou clicar) prende o knob em cima e acende,
+ * e tocar de novo solta. Era um `<div>` que só respondia a hover — no
+ * celular, sem mouse, a mesa inteira era de enfeite (achado do dono, 24/09).
+ * Ligar um canal não diz nada sobre a linguagem: todos sobem a mesma altura,
+ * como no hover.
  */
 export function Fader({ termo, index }: FaderProps) {
   const prefersReducedMotion = useReducedMotion()
   const fill = `${UNIDADE}%`
   const extensao = selo(termo)
 
+  const [ligado, setLigado] = useState(false)
+
   const transition = { ...FILL_TRANSITION, delay: index * STAGGER_STEP }
 
   return (
-    <div className="group/canal flex min-w-0 flex-col items-center gap-2.5">
+    <button
+      type="button"
+      aria-pressed={ligado}
+      onClick={() => setLigado((atual) => !atual)}
+      className="group/canal flex min-w-0 cursor-pointer flex-col items-center gap-2.5"
+    >
       <div
         aria-hidden="true"
         className="border-line bg-panel-2 relative min-h-[104px] w-2 flex-1 rounded-full border"
@@ -78,10 +92,16 @@ export function Fader({ termo, index }: FaderProps) {
                 transition,
               })}
         >
-          <span className="fill-vertical absolute inset-x-0 bottom-0 h-full rounded-full transition-[height] duration-300 group-hover/canal:h-[calc(100%+14px)]" />
+          <span
+            className={`fill-vertical absolute inset-x-0 bottom-0 rounded-full transition-[height] duration-300 group-hover/canal:h-[calc(100%+14px)] ${
+              ligado ? 'h-[calc(100%+14px)]' : 'h-full'
+            }`}
+          />
         </m.span>
         <m.span
-          className="bg-knob border-knob-line glow-knob group-hover/canal:border-accent absolute left-1/2 h-3 w-[26px] -translate-x-1/2 translate-y-1/2 rounded-[3px] border transition-[translate,border-color] duration-300 group-hover/canal:-translate-y-2"
+          className={`bg-knob glow-knob group-hover/canal:border-accent absolute left-1/2 h-3 w-[26px] -translate-x-1/2 rounded-[3px] border transition-[translate,border-color] duration-300 group-hover/canal:-translate-y-2 ${
+            ligado ? 'border-accent -translate-y-2' : 'border-knob-line translate-y-1/2'
+          }`}
           style={prefersReducedMotion ? { bottom: fill } : undefined}
           {...(prefersReducedMotion
             ? {}
@@ -105,7 +125,11 @@ export function Fader({ termo, index }: FaderProps) {
        * (sugestão do dono), e o nome fica para o leitor de tela. De `lg` para
        * cima, nome e extensão.
        */}
-      <span className="text-ink-muted group-hover/canal:text-ink flex min-h-9 w-full flex-col items-center justify-start gap-0.5 text-center font-mono text-[11px] leading-[1.3] tracking-[0.04em] break-words uppercase transition-colors duration-300">
+      <span
+        className={`group-hover/canal:text-ink flex min-h-9 w-full flex-col items-center justify-start gap-0.5 text-center font-mono text-[11px] leading-[1.3] tracking-[0.04em] break-words uppercase transition-colors duration-300 ${
+          ligado ? 'text-ink' : 'text-ink-muted'
+        }`}
+      >
         <span className="sr-only lg:not-sr-only">{termo.label}</span>
         {extensao && (
           <span
@@ -116,6 +140,6 @@ export function Fader({ termo, index }: FaderProps) {
           </span>
         )}
       </span>
-    </div>
+    </button>
   )
 }

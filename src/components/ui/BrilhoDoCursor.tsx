@@ -28,10 +28,7 @@ const SPRING = { stiffness: 60, damping: 20, mass: 0.6 }
  * cobrem a luz igual cobriam antes.
  *
  * **Só responde a mouse e caneta.** No toque não existe `pointerleave`, então
- * a luz ficaria acesa e parada onde o dedo encostou pela última vez. O pulso
- * ambiente de cada seção (`animate-driftglow`) continua por seção, de
- * propósito: é ele que alterna de lado e impede a página de parecer o mesmo
- * quadro colado seis vezes.
+ * a luz ficaria acesa e parada onde o dedo encostou pela última vez.
  *
  * Como toda animação em JS, o kill switch CSS do `index.css` não a alcança —
  * por isso o componente checa `useReducedMotion()` e não renderiza nada.
