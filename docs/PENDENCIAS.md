@@ -634,7 +634,24 @@ a fazer antes e: destacar o que as tags ja dizem, ou o que elas nao dizem?
 
 ## Pendencias, em ordem
 
-### 1. DEPLOY NA VERCEL — PROJETO CRIADO (24/09), falta publicar o site
+### 1. DEPLOY NA VERCEL — PUBLICADO (24/09), falta abrir o dominio de producao
+
+**24/09, noite:** PR #33 (`develop` -> `main`) mesclado com o CI verde, e o
+deploy de producao (`e3ade5b`) ficou READY em
+`portfolio-ikeda7s-projects.vercel.app`.
+
+**Mas a protecao do projeto esta em `all_except_custom_domains`**: tudo que
+nao e dominio proprio pede login na Vercel — inclusive o endereco de producao
+`*.vercel.app`. O dono pediu para **nao abrir os previews**; a opcao que
+publica so a producao e "Standard Protection" (Settings -> Deployment
+Protection -> Vercel Authentication), que continua protegendo os previews.
+Aguardando a decisao dele. Com o `lucasikeda.dev` apontado, o dominio proprio
+ja fica aberto mesmo na configuracao atual.
+
+**Fluxo daqui para frente:** trabalho em `develop`; publicar e abrir PR
+`develop` -> `main` e mesclar com o CI verde (autorizado pelo dono em 24/09).
+
+#### Estado anterior (24/09, tarde)
 
 **Estado em 24/09:** o dono importou o repo na Vercel e o conector desta
 sessao passou a enxergar o projeto (`prj_8C4tIzs8YslCwKIPAU6Kc6DnMyqc`,
