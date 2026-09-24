@@ -23,8 +23,13 @@ interface MarqueeProps {
  * um alvo que se move é a definição de interface hostil — e volta a correr
  * quando o foco sai. Também pausa no hover e vira lista estática sob
  * `prefers-reduced-motion`.
+ *
+ * A volta leva 60s, não os 38s originais: a 38s o termo atravessava a tela
+ * rápido demais para ser lido e clicado, e as três saídas que já existiam
+ * (pausa no hover, pausa no foco, lista estática) só ajudam quem já decidiu
+ * mirar. Quem ainda está lendo precisa é de tempo.
  */
-export function Marquee({ items, duration = 38 }: MarqueeProps) {
+export function Marquee({ items, duration = 60 }: MarqueeProps) {
   const prefersReducedMotion = useReducedMotion()
   const { foco } = useFocoTecnico()
   const track = [...items, ...items]

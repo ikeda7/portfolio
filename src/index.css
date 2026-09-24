@@ -76,6 +76,30 @@
   }
 }
 
+/*
+ * LED da entrada atual da linha do tempo.
+ *
+ * Vive fora do `@theme` pelo mesmo motivo de `wavepulse` e `marquee`: quem
+ * referencia este keyframe e o `@utility glow-led-atual`, nao um utilitario
+ * `animate-*` gerado pelo Tailwind — sem isso ele sairia do bundle.
+ *
+ * So `transform` e `box-shadow` mudam; a cor sai de `--accent-rgb` como todo
+ * o resto, entao trocar o acento continua custando as duas variaveis do
+ * `:root`. O bloco `prefers-reduced-motion` no fim do arquivo desliga a
+ * animacao, e sobra o halo forte do utilitario — que e o estado de repouso.
+ */
+@keyframes ledpulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgb(var(--accent-rgb) / 0.7);
+  }
+  50% {
+    transform: scale(1.22);
+    box-shadow: 0 0 18px rgb(var(--accent-rgb) / 1);
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Glows — todos derivados de --accent-rgb.                            */
 /* Trocar a cor de acento = trocar apenas as duas variaveis abaixo.     */
@@ -126,6 +150,16 @@
 
 @utility glow-led {
   box-shadow: 0 0 8px rgb(var(--accent-rgb) / 0.65);
+}
+
+/*
+ * O LED da posicao atual, que pulsa. O halo parado e mais forte que o de
+ * `glow-led` de proposito: sob `prefers-reduced-motion` a animacao morre e
+ * este valor e tudo o que sobra para distinguir o atual do passado.
+ */
+@utility glow-led-atual {
+  box-shadow: 0 0 14px rgb(var(--accent-rgb) / 0.85);
+  animation: ledpulse 2.4s ease-in-out infinite;
 }
 
 @utility glow-input {

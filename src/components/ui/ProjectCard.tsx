@@ -58,40 +58,59 @@ export function ProjectCard({ track, title, description, tags, href, estado, rep
           <LabelCover track={track} estado={estado} repo={repo} />
         </div>
 
-        <div className="flex-1 p-4">
+        {/*
+         * Coluna flex para o rodape do card poder descer com `mt-auto`.
+         *
+         * O projeto 01 tem 3 linhas de descricao e os outros tem 2, entao as
+         * tags e o "Abrir" desciam um degrau e a fileira ficava desalinhada.
+         * Dar `min-h` a descricao resolveria este texto e quebraria no
+         * proximo; empurrar o rodape resolve para qualquer descricao futura.
+         */}
+        <div className="flex flex-1 flex-col p-4">
           <h3 className="text-ink group-hover:text-accent-text text-[17px] font-semibold tracking-[-0.01em] transition-colors duration-300">
             {title}
           </h3>
           <p className="text-ink-muted mt-2 text-[13px] leading-[1.6]">{description}</p>
 
-          <ul className="mt-2.5 flex flex-wrap gap-1.5">
-            {tags.map((tag) => (
-              <li
-                key={tag}
-                className="bg-panel-2 text-ink-faint rounded px-2 py-1 font-mono text-[11px] tracking-[0.12em]"
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
+          {/*
+           * Tags e "Abrir" descem juntos. Alinhar so o "Abrir" deixaria as
+           * tags na altura em que a descricao terminou, que e justamente o
+           * degrau que se quer tirar da fileira.
+           *
+           * Este `<div>` NAO pode ganhar `relative`: o `::after` do link se
+           * ancora no ancestral posicionado mais proximo, e a area clicavel
+           * encolheria do card inteiro para este bloco.
+           */}
+          <div className="mt-auto pt-2.5">
+            <ul className="flex flex-wrap gap-1.5">
+              {tags.map((tag) => (
+                <li
+                  key={tag}
+                  className="bg-panel-2 text-ink-faint rounded px-2 py-1 font-mono text-[11px] tracking-[0.12em]"
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
 
-          {href ? (
-            <a
-              href={href}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-ink-muted hover:text-accent-text group-hover:text-accent-text mt-3 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3 after:absolute after:inset-0 after:z-20 after:content-['']"
-              aria-label={`Abrir o projeto ${title} em uma nova aba`}
-            >
-              Abrir
-              <ArrowRight aria-hidden="true" className="size-3.5" />
-            </a>
-          ) : (
-            // Sem link publico — trabalho de cliente ou repositorio privado.
-            <span className="text-ink-faint mt-3 inline-flex font-mono text-[11px] tracking-[0.12em] uppercase">
-              Sem link público
-            </span>
-          )}
+            {href ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-ink-muted hover:text-accent-text group-hover:text-accent-text mt-3 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3 after:absolute after:inset-0 after:z-20 after:content-['']"
+                aria-label={`Abrir o projeto ${title} em uma nova aba`}
+              >
+                Abrir
+                <ArrowRight aria-hidden="true" className="size-3.5" />
+              </a>
+            ) : (
+              // Sem link publico — trabalho de cliente ou repositorio privado.
+              <span className="text-ink-faint mt-3 inline-flex font-mono text-[11px] tracking-[0.12em] uppercase">
+                Sem link público
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
