@@ -1,8 +1,6 @@
 import { ArrowRight } from 'lucide-react'
-import * as m from 'motion/react-m'
 
 import { LabelCover } from '@/components/ui/LabelCover'
-import { usePointerGlow } from '@/hooks/usePointerGlow'
 import type { Project } from '@/types/content'
 
 /**
@@ -18,21 +16,20 @@ import type { Project } from '@/types/content'
  * que ficava abaixo do mínimo de 24x24 da WCAG 2.5.8. O DOM continua com um
  * único link, rotulado com o nome do projeto.
  *
- * A ordem das camadas é frágil: o `::after` se ancora no ancestral posicionado
- * mais próximo, então o miolo do card NÃO pode ser `relative` — senão a área
- * clicável encolhe para o tamanho dele. Por isso o brilho vai por último no DOM
- * (pinta acima do conteúdo em fluxo, com `pointer-events-none`) e o `::after`
- * sobe para z-20, acima do brilho.
+ * O `::after` se ancora no ancestral posicionado mais próximo, então o miolo
+ * do card NÃO pode ser `relative` — senão a área clicável encolhe para o
+ * tamanho dele.
+ *
+ * **Sem brilho próprio desde 24/09.** O card tinha uma luz de cursor só dele,
+ * ancorada no `<article>` parado: quando o miolo subia no hover, a luz ficava
+ * 8px abaixo — um corte reto perto do topo e luz vazando embaixo do card
+ * (print do dono). Hoje a luz do cursor da página inteira passa por cima de
+ * tudo (ver BrilhoDoCursor), e o card é iluminado como qualquer outro
+ * elemento.
  */
 export function ProjectCard({ track, title, description, tags, href, estado, repo }: Project) {
-  const { bind, background } = usePointerGlow<HTMLElement>({
-    size: 260,
-    alpha: 0.16,
-    smooth: false,
-  })
-
   return (
-    <article {...bind} className="group relative h-full min-w-0">
+    <article className="group relative h-full min-w-0">
       <div className="bg-panel border-line group-hover:border-accent group-hover:glow-card group-focus-within:border-accent flex h-full flex-col overflow-hidden rounded-[14px] border transition-all duration-300 group-hover:-translate-y-2 group-focus-within:-translate-y-2">
         <div className="border-line relative aspect-[16/7] overflow-hidden border-b">
           <LabelCover track={track} estado={estado} repo={repo} />
@@ -103,20 +100,6 @@ export function ProjectCard({ track, title, description, tags, href, estado, rep
           </div>
         </div>
       </div>
-
-      {/*
-       * O brilho fica fora do miolo que se move, ancorado no `<article>`
-       * parado. Dentro dele, o `inset-0` continuaria medindo a partir do
-       * `<article>` enquanto o `overflow-hidden` recortaria no espaço já
-       * deslocado — sobrava uma faixa sem brilho no topo durante o hover.
-       */}
-      {background && (
-        <m.div
-          aria-hidden="true"
-          style={{ background }}
-          className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-[14px]"
-        />
-      )}
     </article>
   )
 }

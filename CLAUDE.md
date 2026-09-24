@@ -142,16 +142,15 @@ Camadas:
 - `components/sections/` — dona da `<section id>`, do container e do
   `aria-labelledby`.
 - `components/ui/` — primitivos sem conhecimento de conteúdo, tudo por props.
-- `hooks/` — `useActiveSection` (seção corrente, usada pelo header e pela régua)
-  e `usePointerGlow`.
+- `hooks/` — `useActiveSection` (seção corrente, usada pelo header e pela régua).
 
-**Duas luzes, e cada uma tem um dono diferente.** A que segue o cursor é
-**uma só para a página inteira**:
-[BrilhoDoCursor](src/components/ui/BrilhoDoCursor.tsx), `fixed` na raiz, em
-coordenada de viewport. Já foi uma por seção e o brilho se partia na fronteira —
-cada uma media relativo a si mesma e apagava no `onPointerLeave`. Não volte a
-pôr `usePointerGlow` numa `<section>`: o hook é para brilho **com dono** (um
-card), onde apagar ao sair é o certo. **Não há mais pulso ambiente nas
+**Uma luz de cursor só, por cima de tudo.**
+[BrilhoDoCursor](src/components/ui/BrilhoDoCursor.tsx) é `fixed`, em
+coordenada de viewport, em `z-[15]` (abaixo só do header) com
+`mix-blend-screen`: passa por painel, card, equipamento e texto, e só clareia.
+Já foi uma por seção (o brilho se partia na fronteira) e depois uma no fundo
+mais uma própria no card de projeto (desalinhava quando o card subia no
+hover). Não volte a dar luz própria a um elemento. **Não há mais pulso ambiente nas
 seções** (saiu em 24/09): uma mancha azul parada num canto, com a luz do
 cursor andando pela página, lia como defeito. Só o hero mantém o dele. O que
 decora o fundo agora é a [OndaDeFundo](src/components/ui/OndaDeFundo.tsx):
@@ -255,7 +254,7 @@ animações e transições CSS de uma vez.
   `duration` solto no componente.
 - O kill switch CSS **não** alcança animação em JS: todo componente com `motion`
   checa `useReducedMotion()` e renderiza a versão estática (ver
-  [Reveal.tsx](src/components/ui/Reveal.tsx); `usePointerGlow` devolve `null`).
+  [Reveal.tsx](src/components/ui/Reveal.tsx); `BrilhoDoCursor` não renderiza).
 
 ## Capas de projeto e Stack: dois contratos com intenção
 

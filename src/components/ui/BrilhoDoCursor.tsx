@@ -2,12 +2,19 @@ import { useEffect } from 'react'
 import { useMotionTemplate, useMotionValue, useReducedMotion, useSpring } from 'motion/react'
 import * as m from 'motion/react-m'
 
-/** Raio do brilho, em px. */
+/** Raio do halo largo e do miolo, em px. */
 const TAMANHO = 520
-/** Opacidade do centro. */
-const ALFA = 0.12
+const MIOLO = 260
+/** Opacidade do centro de cada um. */
+const ALFA = 0.08
+const ALFA_MIOLO = 0.14
 
-const SPRING = { stiffness: 60, damping: 20, mass: 0.6 }
+/*
+ * Mola curta: por cima do conteúdo, uma luz que chega atrasada lê como "não é
+ * onde está o meu cursor". A antiga (stiffness 60) só funcionava porque a luz
+ * ficava no fundo, meio escondida.
+ */
+const SPRING = { stiffness: 320, damping: 34, mass: 0.4 }
 
 /**
  * A luz que segue o cursor na página inteira — **uma só, na raiz**.
@@ -23,9 +30,16 @@ const SPRING = { stiffness: 60, damping: 20, mass: 0.6 }
  *
  * `fixed` e não `absolute` por dois motivos que andam juntos: a coordenada do
  * cursor já é de viewport, e o elemento precisa acompanhar a rolagem sem
- * recalcular nada. Fica em `z-0` e antes de todo o resto na árvore, então
- * qualquer conteúdo posicionado pinta por cima — os painéis com fundo próprio
- * cobrem a luz igual cobriam antes.
+ * recalcular nada.
+ *
+ * **Fica POR CIMA do conteúdo** (`z-[15]`, abaixo só do header), em
+ * `mix-blend-screen`, desde 24/09. Atrás de tudo ela só aparecia no fundo:
+ * painéis e cards têm fundo próprio e a cobriam, e só o card de projeto tinha
+ * um brilho próprio por cima. O dono pediu esse efeito do card no site
+ * inteiro. `screen` só clareia — nunca escurece nem tinge o que já é claro —,
+ * então a luz passa por painel, equipamento e texto sem sujar nada, e o
+ * brilho próprio do card (que ficava preso à posição de repouso do card e
+ * desalinhava quando ele subia no hover) deixou de existir.
  *
  * **Só responde a mouse e caneta.** No toque não existe `pointerleave`, então
  * a luz ficaria acesa e parada onde o dedo encostou pela última vez.
@@ -44,7 +58,7 @@ export function BrilhoDoCursor() {
   const y = useSpring(rawY, SPRING)
   const opacity = useSpring(rawOpacity, SPRING)
 
-  const background = useMotionTemplate`radial-gradient(${TAMANHO}px circle at ${x}px ${y}px, rgb(var(--accent-rgb) / calc(${ALFA} * ${opacity})), transparent 70%)`
+  const background = useMotionTemplate`radial-gradient(${MIOLO}px circle at ${x}px ${y}px, rgb(var(--accent-rgb) / calc(${ALFA_MIOLO} * ${opacity})), transparent 70%), radial-gradient(${TAMANHO}px circle at ${x}px ${y}px, rgb(var(--accent-rgb) / calc(${ALFA} * ${opacity})), transparent 70%)`
 
   useEffect(() => {
     if (prefersReducedMotion) return
@@ -78,7 +92,7 @@ export function BrilhoDoCursor() {
     <m.div
       aria-hidden="true"
       style={{ background }}
-      className="pointer-events-none fixed inset-0 z-0"
+      className="pointer-events-none fixed inset-0 z-[15] mix-blend-screen"
     />
   )
 }
