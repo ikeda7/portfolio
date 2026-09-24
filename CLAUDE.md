@@ -218,7 +218,11 @@ Tudo em [src/index.css](src/index.css):
   `border-line`, `font-mono`…).
 - Glows e gradientes são `@utility` (`glow-cta`, `glow-card`, `glow-panel`,
   `fill-vertical`…) derivados de `--accent-rgb` / `--accent-2-rgb` em `:root`.
-  **Trocar o acento = trocar essas duas variáveis.** Nunca escreva o `rgba()`
+  **Trocar o acento = trocar essas duas variáveis.** As três trilhas da
+  waveform (azul, roxo, vermelho) funcionam assim: o `Waveform` escreve
+  `data-trilha` no `<html>` e um bloco por cor troca as variáveis — cada cor
+  com o par UI/texto medido. Cor nova de trilha entra ali, com o par, e a
+  auditoria roda com ela como padrão antes do commit. Nunca escreva o `rgba()`
   literal — foi essa centralização que fez a troca de roxo para azul custar 5
   linhas.
 - Os keyframes `wavepulse` e `marquee` ficam **fora** do `@theme` de propósito:
