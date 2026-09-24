@@ -1,9 +1,10 @@
 # Pendências — portfólio Lucas Ikeda
 
-Última atualização: **23/09/2026**, madrugada. Da leva de 16 pontos do dono,
-**5 estão feitos** (2, 5, 13, 14 e a metade concreta do 16), o **11 caiu — não era
-erro, o nome da pós estava certo desde sempre** — e os outros 10
-continuam abertos — a seção logo antes de "Pendencias, em ordem" marca cada um.
+Última atualização: **24/09/2026**. Da leva de 16 pontos do dono, **7 estão
+feitos** (2, 5, 7, 8, 13, 14 e a metade concreta do 16), o **11 caiu — não era
+erro, o nome da pós estava certo desde sempre** — e os outros 8 continuam
+abertos, todos esperando uma resposta dele. Fora da leva, entrou o **vinil que
+gira enquanto o mouse está no card**, pedido dele em 24/09.
 Este arquivo existe para retomar o trabalho de outra máquina — leia a pendência
 1 antes de tentar o deploy.
 
@@ -46,7 +47,30 @@ todo PR. Zero PR aberto, zero branch orfa — so `main` e `develop`.
 - Zero texto abaixo de **11px** (era 10px) e zero falha de contraste
 - Estilo de texto mais justo em **1,2x** o minimo do AA (a auditoria agora
   reporta a margem, nao so passa/nao passa)
-- Bundle ~114 kB gzip (356,03 kB cru / 113,64 kB gzip)
+- Bundle ~116 kB gzip (360 kB cru / 115,8 kB gzip) — os +2 kB sao os tres
+  paths de marca do painel Canais
+- Auditoria limpa **nas tres trilhas** da waveform, nao so no azul: rodada com
+  cada uma como padrao. Margem mais justa: 1,2x (azul), 1,23x (roxo), 1,22x
+  (vermelho)
+
+### O que entrou em 24/09 — tudo o que nao dependia de pergunta
+
+Merges `--no-ff` direto em `develop`, um por assunto, cada um com os quatro
+portoes e a auditoria limpa antes.
+
+- **Vinil gira no hover (pedido novo)** — era uma `transition` de 38deg que
+  parava em ~1,2s. Agora e `@keyframes vinilgira` rodando sempre em `paused`,
+  e o `@utility vinil-gira` so troca o `animation-play-state` no hover e no
+  foco do card. Ao sair, o disco **congela onde estava** e o proximo hover
+  continua dali — trocar a animacao em si faria o disco voltar ao zero de
+  estalo. 8s por volta; medido: ~45deg/s no hover, parado fora.
+- **Ponto 7** — icone no lugar do LED no painel Canais, mesmo lugar e mesmo
+  tamanho, entao o painel nao encolheu. Paths **copiados dos SVGs do pacote**
+  `simple-icons`, nao escritos a mao: GitHub e Instagram do 16.32.0,
+  **LinkedIn do 13.21.0** — a marca saiu do pacote a partir da 14, a pedido
+  da propria LinkedIn. E-mail usa o `Mail` do `lucide-react`.
+  [IconeCanal](../src/components/ui/IconeCanal.tsx).
+- **Ponto 8** — as tres trilhas. Detalhe no proprio ponto, abaixo.
 
 ### O que entrou na madrugada de 23/09 — a leva comecou a sair
 
@@ -203,19 +227,19 @@ sessao seguinte liberou ("mete marcha"), e sairam os cinco que nao dependiam de
 decisao dele. Esta tudo aqui, na ordem em que ele falou, com o que eu ja sei
 sobre cada um — arquivo, causa provavel, e onde eu discordo.
 
-**FEITOS:** 2, 5, 13, 14 e a metade concreta do 16.
+**FEITOS:** 2, 5, 7, 8, 13, 14 e a metade concreta do 16.
 
 **CAIU:** o 11. Nao era erro — o nome da pos estava certo, e eu o quebrei. Ver
 o registro no proprio ponto, que ficou como aviso.
 
-**ABERTOS, e por que:** 1, 6 e 9 esperam ele dizer o que quer; 3, 12 e 15 sao
-decisao de posicionamento ou de gosto que eu nao devo tomar sozinho; 4, 7, 8,
-10 e a outra metade do 16 sao trabalho de verdade que ainda nao comecou.
+**ABERTOS, e por que:** todos os oito esperam o dono. 1, 6 e 9 esperam ele
+dizer o que quer; 3, 10, 12, 15 e a outra metade do 16 sao decisao de
+posicionamento, de conteudo ou de gosto; o 4 tem uma conta que precisa ir para
+ele antes de virar codigo (ver o ponto).
 
-> **Se for pegar um agora**, o unico que nao depende de pergunta nem de gosto e
-> o **7** — icone no lugar do LED no painel Canais, ja com TODO no componente.
-> Ele precisa dos SVGs do Simple Icons: **nao escreva os `path` de memoria**,
-> baixe do pacote ou do CDN. Inventar caminho de icone e inventar conteudo.
+> **Nao ha mais nada da leva que se resolva sem ele.** As perguntas, uma por
+> ponto, foram mandadas em 24/09 — a resposta de cada uma destrava o ponto
+> sozinho.
 
 ### 1. Footer precisa de atencao
 
@@ -247,7 +271,7 @@ a mesma discussao por outro angulo — resolver os dois juntos.
 
 `src/data/experience.ts`, `src/components/sections/Experience.tsx`.
 
-### 4. Stack: e se tudo fosse mesa de som?
+### 4. Stack: e se tudo fosse mesa de som? — A CONTA FOI PARA ELE
 
 Varias mesas, uma por agrupamento, em vez de uma mesa + quatro listas. E a
 resposta dele para a mesma coisa que eu registrei em "Ideias" — a mesa de
@@ -256,6 +280,23 @@ Linguagens virou oito faders identicos e nao carrega informacao nenhuma.
 **Cuidado com o que ja doeu:** rotulo horizontal precisa de largura, e 35
 termos em faders verticais e muita coluna. Um nicho de 9 termos numa mesa so
 pode nao caber em 320px. Testar em 320 antes de comprar a ideia.
+
+**A conta, feita em 24/09.** Em 320px a area util do painel tem ~236px. Nove
+faders verticais (Ferramentas) dao **~26px por coluna**, e "Levantamento de
+requisitos" em mono de 11px mede ~170px. Nao cabe nem quebrando palavra por
+palavra — "LEVANTAMENTO" sozinho tem ~80px. A mesa das Linguagens so funciona
+porque os oito nomes sao curtos e ela refluir para 4 colunas no celular.
+
+Saidas, para ele escolher:
+
+- **Faders deitados** (trilho horizontal, rotulo a esquerda): cabe em
+  qualquer largura. Mas e a lista de hoje com um trilho do lado, e o trilho
+  cheio ate a mesma marca em 35 linhas e decoracao sem informacao — o mesmo
+  problema da Ideia 1, multiplicado por cinco.
+- **Mesa so nos nichos de nomes curtos** (Linguagens, Front-end): quebra a
+  uniformidade que ele pediu.
+- **Esperar o nivel por tecnologia** (pendencia 8). Com nivel, fader vira
+  informacao e a mesa inteira passa a fazer sentido. **E a que eu recomendo.**
 
 ### 5. Fita muito rapida — FEITO (#27)
 
@@ -267,7 +308,7 @@ rapida (ou ficar lenta demais), e um numero so.
 Ver o ponto 16, que e concreto. Alem dele, ha uma ideia ja registrada mais
 abaixo: um projeto em destaque, maior que os outros cinco.
 
-### 7. Contato: painel de Canais grande demais
+### 7. Contato: painel de Canais grande demais — FEITO (24/09)
 
 Ele **nao quer** encolher e perder o alinhamento com o formulario ao lado —
 quer icone no lugar do LED redondo. Isso ja esta marcado como TODO no proprio
@@ -276,7 +317,13 @@ seria Simple Icons (SVG inline, 16px, `currentColor`).
 
 `src/components/ui/ContactChannels.tsx`.
 
-### 8. Waveform do hero: tres trilhas, tres cores
+**Saiu assim:** o icone ocupa o lugar e o tamanho do LED (16px,
+`text-accent-text`, cresce 10% no hover). Painel com a mesma altura e o mesmo
+alinhamento com o formulario, conferido em captura a 1400 e 390. De onde vem
+cada path esta no topo de `IconeCanal.tsx` — se um dia o `simple-icons` mudar
+um desenho, e la que se troca.
+
+### 8. Waveform do hero: tres trilhas, tres cores — FEITO (24/09)
 
 Trocar os canais atuais (PYTHON / TYPESCRIPT / IA APLICADA) por **
 Desenvolvimento Full Stack / Data Science / IA Aplicada**, e cada um muda a
@@ -293,6 +340,26 @@ usa `--color-accent-text`. Cada cor nova precisa do seu par, com o contraste
 conferido — a auditoria mede e hoje fecha em zero falha, com o estilo mais
 justo em 1,2x o minimo. Vermelho escuro sobre carvao e o caso mais provavel de
 reprovar.
+
+**Saiu assim.** O `Waveform` escreve `data-trilha` no `<html>` (roxo ou
+vermelho; azul e o padrao e nao escreve nada) e o `index.css` tem um bloco por
+cor trocando `--accent-rgb`, `--accent-2-rgb` e os tres `--color-accent*`. A
+pagina inteira troca junto — header, subtitulo, CTA, glows, brilho do cursor,
+regua lateral —, sem nenhum componente saber que a waveform existe.
+
+**O caso mais provavel de reprovar nao foi o que eu esperava.** O texto em
+acento passou folgado nas tres (7,5 a 9,2:1). O apertado foi o **branco sobre
+o botao de acento**: a primeira versao (#8b3dff / #e11d2e) passava com 4,99 e
+4,75, margem de 1,06x. As duas cores foram escurecidas ate o mesmo equilibrio
+do azul — roxo `#8035fa` (5,52:1) e vermelho `#d0142a` (5,50:1). A tabela esta
+no comentario do `index.css`.
+
+**Como auditar outra trilha**, porque a auditoria so ve o estado inicial:
+trocar o `useState(0)` do `Waveform` para 1 ou 2, `npm run build`, rodar,
+voltar para 0. Foi assim que as tres foram medidas.
+
+**Ficou em aberto de proposito:** a escolha nao persiste entre visitas. Ele
+nao pediu, e uma pagina que abre vermelha para quem clicou uma vez e surpresa.
 
 ### 9. A divisao em tres trilhas vale para o portfolio inteiro
 
@@ -640,10 +707,9 @@ resposta honesta.
   foi para a direita da coluna, longe do centro horizontal da janela. Em
   Projetos ele ainda passa por cima de card, o que e inerente a elemento
   `fixed`; o posicionamento central foi pedido explicito do dono.
-- **Dois botoes com a mesma palavra**: "TYPESCRIPT" na waveform do hero
-  redesenha as barras; na Stack acende a tecnologia na pagina. Avaliei unificar
-  e **nao recomendo**: Projetos fica ~4 telas abaixo, entao o efeito
-  aconteceria fora da tela.
+- ~~**Dois botoes com a mesma palavra**: "TYPESCRIPT" na waveform e na
+  Stack.~~ **Sumiu sozinho em 24/09**: a waveform agora tem trilhas (Full
+  Stack / Data Science / IA Aplicada), e nenhuma e nome de tecnologia.
 - **Sem runner de teste.** Ausencia deliberada desta fase.
 
 ### 10. Dependencias — `gsap` saiu (#28)

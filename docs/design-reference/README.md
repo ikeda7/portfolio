@@ -296,6 +296,8 @@ Nenhum asset binário. Tudo é CSS puro.
 - Placeholders a substituir por conteúdo real: foto da seção Sobre (quadrada,
   `object-fit: cover`) e capas dos 6 cards de projeto (16:10).
 - Ícones: **não há** no protótipo. Os botões sociais usam um LED redondo.
+  _(Implementação, 24/09: o LED virou o ícone de cada canal, no mesmo lugar e
+  tamanho, a pedido do dono. Ver `src/components/ui/IconeCanal.tsx`.)_
   Na implementação, trocar o LED por ícone de marca (Lucide / Simple Icons),
   tamanho 16px, `currentColor`.
 
