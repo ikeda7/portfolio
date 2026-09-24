@@ -832,7 +832,9 @@ _Account -> Security_, senao qualquer um gasta a cota.
 
 As tres vao como variaveis de ambiente na Vercel, nao no codigo.
 
-### 4. WhatsApp no Contato — decisao do dono
+### 4. WhatsApp no Contato — VETADO pelo dono (24/09)
+
+**Decidido: nao entra.** Nao reabrir.
 
 O telefone esta no curriculo. Ficou de fora porque `wa.me` expoe o numero para
 qualquer visitante, robo de spam incluso. Se ele aceitar o risco, entra como
@@ -862,7 +864,9 @@ dono ditou cargo, periodo e atividades, e fonte direta dele e fonte valida.
 O texto fica proximo do que ele disse, arrumado no registro das outras
 entradas — sem numero, sem alcance, sem resultado que nao foi dito.
 
-### 8. Nivel por tecnologia — DECISAO DO DONO
+### 8. Nivel por tecnologia — VETADO pelo dono (24/09)
+
+**Decidido: a Stack nao declara nivel.** A mesa reta fica. Nao reabrir.
 
 Os faders da Stack nao tem mais altura variavel. Cada canal tinha um `value` de
 0 a 100 que desenhava a altura; o numero nunca apareceu na tela, mas o desenho

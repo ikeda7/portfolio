@@ -83,6 +83,11 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
        * pronta, e numa placa de vídeo real os sulcos sumiam e o brilho virava
        * uma faixa de borda reta (print do dono, 24/09). O motivo completo está
        * junto do `@property`, em `index.css`.
+       *
+       * Sulcos a 9% de branco e 1,25px, e não 5% e 1px: desde que a luz do
+       * cursor passa POR CIMA do card (`mix-blend-screen`), ela clareia o
+       * fundo do disco e come o pouco contraste que os sulcos tinham — numa
+       * tela a 100% de escala eles sumiam de novo (dono, 24/09).
        */}
       <div
         aria-hidden="true"
@@ -90,7 +95,7 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
         style={{
           backgroundImage: [
             `conic-gradient(from var(--vinil-angulo), ${BRILHO})`,
-            'repeating-radial-gradient(circle, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4px)',
+            'repeating-radial-gradient(circle, rgb(255 255 255 / 0.09) 0 1.25px, transparent 1.25px 4px)',
             'radial-gradient(circle at 38% 32%, #232323, #141414 62%, #0f0f0f)',
           ].join(','),
         }}
