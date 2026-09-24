@@ -5,46 +5,59 @@ interface RackProps {
 }
 
 /**
- * Back-end & dados como rack de 19": cada tecnologia é um módulo de 1U.
+ * Back-end & dados como rack: cada tecnologia é um módulo de equipamento, com
+ * parafusos nos cantos, nome serigrafado e um medidor de atividade.
  *
  * É o equipamento que não se toca — servidor e banco ficam no rack, rodando.
- * Por isso a vida aqui é a atividade: três LEDs por módulo piscando em ritmos
- * diferentes (`@utility led-atividade` + atraso por índice), e o módulo acende
- * no hover. Os LEDs são CSS, então o `prefers-reduced-motion` os para.
+ * A vida é a atividade: cinco LEDs por módulo, piscando em ritmos diferentes
+ * (`@utility led-atividade` + atraso por índice), e o módulo acende no hover.
+ * Os LEDs são CSS, então o `prefers-reduced-motion` os para.
  *
- * Uma coluna, como a lista que o nicho já era: nome de tecnologia de back-end
- * é comprido ("Entity Framework", "Oracle Database"), e uma coluna não deixa
- * órfão em largura nenhuma.
+ * **Grade de blocos, não lista.** A primeira versão era uma coluna de linhas,
+ * e ao lado das pistas de DAW (também linhas) os dois painéis liam iguais.
+ * Em blocos 2x4 o rack tem outra silhueta. Uma coluna só no celular estreito.
  */
 export function Rack({ termos }: RackProps) {
   return (
-    <ul className="flex flex-1 flex-col gap-1.5 p-3">
+    <ul className="grid flex-1 auto-rows-fr gap-2 p-3 min-[420px]:grid-cols-2">
       {termos.map((termo, index) => (
         <li
           key={termo.label}
-          className="border-line hover:border-accent group/modulo flex flex-1 items-center gap-3 rounded-[4px] border bg-[linear-gradient(180deg,#1b1b1b,#141414)] px-3 py-2 transition-all duration-300 hover:bg-[rgb(var(--accent-rgb)/0.07)]"
+          className="border-line hover:border-accent group/modulo relative flex flex-col justify-between gap-3 rounded-[6px] border bg-[linear-gradient(180deg,#1d1d1d,#131313)] px-4 py-3 transition-all duration-300 hover:bg-[rgb(var(--accent-rgb)/0.07)]"
         >
-          {/* Parafusos das orelhas do rack. */}
-          <span aria-hidden="true" className="bg-knob-line size-1.5 shrink-0 rounded-full" />
+          {/* Parafusos dos quatro cantos. */}
+          {[
+            'top-1.5 left-1.5',
+            'top-1.5 right-1.5',
+            'bottom-1.5 left-1.5',
+            'bottom-1.5 right-1.5',
+          ].map((canto) => (
+            <span
+              key={canto}
+              aria-hidden="true"
+              className={`bg-knob-line absolute size-1 rounded-full ${canto}`}
+            />
+          ))}
 
-          <span className="text-ink group-hover/modulo:text-accent-text min-w-0 flex-1 font-mono text-[11px] tracking-[0.06em] transition-colors duration-300">
+          <span className="text-ink group-hover/modulo:text-accent-text font-mono text-[11px] tracking-[0.08em] uppercase transition-colors duration-300">
             {termo.label}
           </span>
 
-          <span aria-hidden="true" className="flex shrink-0 gap-1.5">
-            {[0, 1, 2].map((led) => (
+          <span aria-hidden="true" className="flex items-center gap-1.5">
+            <span className="text-ink-faint mr-1 font-mono text-[11px] leading-none">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            {[0, 1, 2, 3, 4].map((led) => (
               <span
                 key={led}
-                className="bg-accent led-atividade size-1.5 rounded-full"
+                className="bg-accent led-atividade h-1.5 w-3 rounded-[1px]"
                 style={{
-                  animationDuration: `${(0.9 + ((index * 3 + led) % 5) * 0.37).toFixed(2)}s`,
-                  animationDelay: `${(((index + led * 2) % 7) * 0.13).toFixed(2)}s`,
+                  animationDuration: `${(0.8 + ((index * 3 + led) % 5) * 0.33).toFixed(2)}s`,
+                  animationDelay: `${(((index + led * 2) % 7) * 0.12).toFixed(2)}s`,
                 }}
               />
             ))}
           </span>
-
-          <span aria-hidden="true" className="bg-knob-line size-1.5 shrink-0 rounded-full" />
         </li>
       ))}
     </ul>
