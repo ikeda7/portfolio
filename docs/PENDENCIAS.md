@@ -817,7 +817,13 @@ Se um dia fizer sentido voltar, o caminho honesto e um PDF **sem telefone**,
 gerado so para o site. Os arquivos originais continuam no historico do git
 (commit `6a5cbe7`), entao nada se perdeu.
 
-### 3. EmailJS — CONFIGURADO em 24/09, falta o teste do dono
+### 3. EmailJS — FUNCIONANDO (testado pelo dono em 24/09)
+
+O envio chegou no Gmail. So o corpo do template ainda era o padrao do EmailJS
+(usa `{{name}}` e nao mostra a mensagem): o dono vai trocar pelo corpo com
+`{{nome}}`, `{{email}}` e `{{mensagem}}`.
+
+#### Como ficou configurado
 
 As tres variaveis `VITE_EMAILJS_*` estao na Vercel (producao, preview e
 desenvolvimento), com o servico Gmail e o template do dono, e a producao foi
