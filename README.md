@@ -4,6 +4,8 @@ Landing page única com estética **Dark Studio & IA**: fundo carvão, acento az
 elétrico e metáforas de software de áudio (waveform, faders de mesa de som, rack
 de processamento, capas de vinil nos cards de projeto).
 
+**No ar:** https://portfolio-ikeda7s-projects.vercel.app
+
 ## Stack
 
 | Camada    | Ferramenta                                               |
