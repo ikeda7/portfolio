@@ -30,14 +30,21 @@ export function Timeline({ entries, headingLevel = 'h3', compact = false }: Time
            * escuro da pagina — hero, canais, PatchBay e Idiomas acendem todos —
            * e por isso lia como defeito, nao como "posicao anterior".
            *
-           * A distincao entre atual e passado continua existindo, mas so no
-           * brilho: o atual tem halo, o anterior nao. Quem carrega a informacao
-           * de verdade e a etiqueta "Em andamento", em texto, ao lado.
+           * A distincao entre atual e passado estava so no halo, e halo contra
+           * halo-um-pouco-menor nao le como diferenca nenhuma. Agora o atual
+           * pulsa: movimento e a unica diferenca que o olho pega sem comparar
+           * lado a lado, e os dois marcadores ficam longe um do outro.
+           *
+           * Quem carrega a informacao de verdade continua sendo a etiqueta
+           * "Em andamento", em texto, ao lado — o LED e `aria-hidden`.
+           *
+           * O keyframe e CSS, nao `motion`, entao o bloco
+           * `prefers-reduced-motion` do `index.css` ja o desliga sozinho.
            */}
           <span
             aria-hidden="true"
             className={`bg-accent absolute top-[7px] -left-7 size-2 rounded-full ${
-              entry.current ? 'glow-led' : 'opacity-70'
+              entry.current ? 'glow-led-atual' : 'opacity-70'
             }`}
           />
 
