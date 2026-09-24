@@ -54,11 +54,14 @@ export const site = {
        * sustentação): implantação não é o foco do portfólio, e as mesmas
        * tarefas estão na Experiência. O espaço foi para este parágrafo.
        *
-       * Ditado pelo Lucas em 24/09, e resumido de propósito: ele pediu que o
-       * pessoal não tirasse o foco do resto. É a explicação da estética do
-       * site inteiro (mesa, faders, vinil, setlist) e do tema do TCC.
+       * Os dois últimos parágrafos foram ditados pelo Lucas em 24/09. A
+       * primeira versão resumiu demais e ele pediu "mais carinho": as
+       * missões pela igreja, o estudo de produção e teoria, o vôlei como o
+       * esporte de hoje e as lives na Twitch. Nada além do que ele disse — a
+       * música é também a explicação da estética do site e do tema do TCC.
        */
-      'Fora do código, sou músico: multi-instrumentista, toco na igreja e estudei home studio e produção — é daí que vêm o tema do meu TCC e a estética deste site. No tempo livre, vôlei e jogos competitivos.',
+      'A música veio antes do código. Sou multi-instrumentista, toco na igreja e sirvo em missões por ela, o que já me levou a várias cidades; e estudo produção musical, teoria e home studio — é daí que vêm o tema do meu TCC e a estética deste site.',
+      'Fora da música, o esporte: sempre gostei de futsal e basquete, mas hoje o vôlei é o que mais jogo. E nos games, os competitivos — League of Legends, CS e Valorant —, que já renderam lives na Twitch.',
     ],
     photo: {
       src: retrato as string,
