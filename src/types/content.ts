@@ -62,7 +62,7 @@ export interface SkillNiche {
  * e misturar era justamente o problema.
  */
 export interface Project {
-  /** Numero da "faixa" impresso no selo (01…06). */
+  /** Numero da "faixa" impresso no selo (01…09). */
   readonly track: string
   readonly title: string
   readonly description: string

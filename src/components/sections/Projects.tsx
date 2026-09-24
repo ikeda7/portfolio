@@ -60,8 +60,16 @@ export function Projects() {
         viewport={VIEWPORT}
         variants={staggerVariants}
       >
-        {projects.map((project) => (
-          <RevealItem key={project.track} className="h-full">
+        {/*
+         * Nove cards: 3x3 a partir de `lg`. Em duas colunas o nono sobraria
+         * sozinho na ultima linha, entao ali o primeiro (o TCC) ocupa a linha
+         * inteira e a conta fecha em 1 + 4x2. Volta a uma coluna so em `lg`.
+         */}
+        {projects.map((project, index) => (
+          <RevealItem
+            key={project.track}
+            className={`h-full ${index === 0 && projects.length % 2 === 1 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
+          >
             <ProjectCard {...project} />
           </RevealItem>
         ))}
