@@ -1,6 +1,7 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 
+import { Trilhas } from '@/components/ui/Trilhas'
 import { Waveform } from '@/components/ui/Waveform'
 import { site } from '@/data/site'
 import { REVEAL_TRANSITION, VIEWPORT, revealVariants, staggerVariants } from '@/lib/motion'
@@ -62,7 +63,7 @@ export function Hero() {
           variants={revealVariants}
           className="text-accent-text mt-[18px] font-mono text-[clamp(12px,1.6vw,15px)] tracking-[0.18em] uppercase"
         >
-          {hero.subtitle}
+          <Trilhas texto={hero.subtitle} />
         </m.p>
 
         <m.p
