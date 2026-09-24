@@ -47,41 +47,108 @@ export function Experience() {
         </Reveal>
 
         {/*
-         * Formação estica até a base da coluna (`flex-1`) e distribui as duas
-         * entradas na altura dela. A coluna da esquerda é ~100px mais alta, e
-         * com `justify-between` entre os painéis essa diferença virava um vão
-         * solto entre Formação e Idiomas; agora ela vira trilho da linha do
-         * tempo, entre a pós e o bacharelado.
+         * A coluna da esquerda é ~100px mais alta que Formação + Idiomas. Essa
+         * diferença já foi um vão solto entre os dois painéis e, depois, um
+         * trilho esticado dentro da Formação — os dois liam como buraco.
+         * Agora ela vai para Idiomas, que tem o que mostrar com o espaço: o
+         * painel estica até a base (`flex-1`), as linhas se distribuem, e o
+         * inglês ganha a escala do Quadro Europeu da certificação dele.
          */}
         <Reveal delay={0.14} className="flex h-full flex-col gap-5">
+          <Panel title="Formação" code={contagem(education.length, 'curso', 'cursos')}>
+            <div className="px-[18px] py-[22px]">
+              <Timeline entries={education} compact />
+            </div>
+          </Panel>
+
           <div className="flex flex-1 flex-col">
-            <Panel title="Formação" code={contagem(education.length, 'curso', 'cursos')} fill>
-              <div className="flex-1 px-[18px] py-[22px]">
-                <Timeline entries={education} compact espalhar />
-              </div>
+            <Panel title="Idiomas" code={contagem(languages.length, 'idioma', 'idiomas')} fill>
+              <ul className="divide-line flex flex-1 flex-col divide-y">
+                {languages.map((idioma) => (
+                  <li
+                    key={idioma.nome}
+                    className="flex flex-1 flex-col justify-center gap-3 px-[18px] py-3"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-ink flex items-center gap-2.5 font-mono text-[11px] tracking-[0.06em]">
+                        <span
+                          aria-hidden="true"
+                          className="bg-accent glow-led size-1.5 rounded-full"
+                        />
+                        {idioma.nome}
+                      </span>
+                      <span className="text-ink-faint font-mono text-[11px] tracking-[0.1em] uppercase">
+                        {idioma.nivel}
+                      </span>
+                    </div>
+
+                    {idioma.cefr && (
+                      <EscalaCefr nivel={idioma.cefr} emissor={idioma.certificacao} />
+                    )}
+                  </li>
+                ))}
+              </ul>
             </Panel>
           </div>
-
-          <Panel title="Idiomas" code={contagem(languages.length, 'idioma', 'idiomas')}>
-            <ul className="divide-line divide-y">
-              {languages.map((idioma) => (
-                <li
-                  key={idioma.nome}
-                  className="flex items-center justify-between gap-3 px-[18px] py-3"
-                >
-                  <span className="text-ink flex items-center gap-2.5 font-mono text-[11px] tracking-[0.06em]">
-                    <span aria-hidden="true" className="bg-accent glow-led size-1.5 rounded-full" />
-                    {idioma.nome}
-                  </span>
-                  <span className="text-ink-faint font-mono text-[11px] tracking-[0.1em] uppercase">
-                    {idioma.nivel}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </Panel>
         </Reveal>
       </div>
     </Section>
+  )
+}
+
+const NIVEIS_CEFR = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const
+
+/**
+ * A escala do Quadro Europeu (A1 a C2) com o nível certificado aceso.
+ *
+ * É a régua pública em que o próprio certificado se expressa — não uma nota
+ * inventada: os seis degraus são os do CEFR, e só o que o Linguaskill deu
+ * (B2) acende, com os anteriores preenchidos para ler como posição na escala.
+ * Português ("nativo") e espanhol ("básico") não têm certificação, então não
+ * ganham régua: "básico" não diz se é A1 ou A2, e escolher seria inventar.
+ */
+function EscalaCefr({
+  nivel,
+  emissor,
+}: {
+  readonly nivel: (typeof NIVEIS_CEFR)[number]
+  readonly emissor: string | undefined
+}) {
+  const posicao = NIVEIS_CEFR.indexOf(nivel)
+
+  return (
+    <div>
+      <ol
+        aria-label={`Nível ${nivel} na escala do Quadro Europeu, de A1 a C2`}
+        className="grid grid-cols-6 gap-1"
+      >
+        {NIVEIS_CEFR.map((degrau, index) => (
+          <li key={degrau} className="flex flex-col gap-1">
+            <span
+              aria-hidden="true"
+              className={`h-1.5 rounded-full ${
+                index < posicao
+                  ? 'bg-[rgb(var(--accent-rgb)/0.45)]'
+                  : index === posicao
+                    ? 'bg-accent glow-led'
+                    : 'bg-panel-2'
+              }`}
+            />
+            <span
+              className={`text-center font-mono text-[11px] ${
+                index === posicao ? 'text-accent-text' : 'text-ink-faint'
+              }`}
+            >
+              {degrau}
+            </span>
+          </li>
+        ))}
+      </ol>
+      {emissor && (
+        <p className="text-ink-faint mt-2 font-mono text-[11px] tracking-[0.06em]">
+          {emissor} · Quadro Europeu (CEFR)
+        </p>
+      )}
+    </div>
   )
 }

@@ -114,8 +114,27 @@ export const education: readonly TimelineEntry[] = [
 ]
 
 /** Idiomas, do bloco final do currículo. */
-export const languages: readonly { readonly nome: string; readonly nivel: string }[] = [
+export interface Idioma {
+  readonly nome: string
+  readonly nivel: string
+  /**
+   * Nível na escala do Quadro Europeu (CEFR), só quando há certificação.
+   * O inglês tem: B2 no Linguaskill, exame da Cambridge English. As notas
+   * por habilidade (leitura, escuta, escrita, fala) não estão em nenhuma
+   * fonte deste repositório — se o dono mandar o relatório, entram aqui.
+   */
+  readonly cefr?: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+  /** Quem emite a certificação, para a legenda da escala. */
+  readonly certificacao?: string
+}
+
+export const languages: readonly Idioma[] = [
   { nome: 'Português', nivel: 'Nativo' },
-  { nome: 'Inglês', nivel: 'B2 · Linguaskill' },
+  {
+    nome: 'Inglês',
+    nivel: 'B2 · Linguaskill',
+    cefr: 'B2',
+    certificacao: 'Cambridge English',
+  },
   { nome: 'Espanhol', nivel: 'Básico' },
 ]
