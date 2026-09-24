@@ -96,7 +96,7 @@ export const experience: readonly TimelineEntry[] = [
 export const education: readonly TimelineEntry[] = [
   {
     period: 'Set/2026 — Atual',
-    title: 'Pós em Engenharia de Software em IA Aplicada',
+    title: 'Pós em Engenharia de IA Aplicada',
     org: 'UniPDS',
     current: true,
     bullets: [
