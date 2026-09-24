@@ -6,6 +6,12 @@ interface TimelineProps {
   readonly headingLevel?: 'h3' | 'h4'
   /** Texto menor e sem marcadores — usado na coluna de Formacao. */
   readonly compact?: boolean
+  /**
+   * Distribuir as entradas na altura do contêiner, em vez de empilhar do
+   * topo. Para a Formação, que estica até a base da coluna: o espaço que
+   * sobra vai para o trilho entre as entradas, e não para um vão embaixo.
+   */
+  readonly espalhar?: boolean
 }
 
 /**
@@ -16,11 +22,18 @@ interface TimelineProps {
  * do knob. O trilho é `aria-hidden` — quem usa leitor de tela recebe uma lista
  * ordenada comum, que já carrega a sequência.
  */
-export function Timeline({ entries, headingLevel = 'h3', compact = false }: TimelineProps) {
+export function Timeline({
+  entries,
+  headingLevel = 'h3',
+  compact = false,
+  espalhar = false,
+}: TimelineProps) {
   const Heading = headingLevel
 
   return (
-    <ol className="relative space-y-8 pl-7">
+    <ol
+      className={`relative pl-7 ${espalhar ? 'flex h-full flex-col justify-between gap-8' : 'space-y-8'}`}
+    >
       <span aria-hidden="true" className="bg-line absolute top-2 bottom-2 left-[3.5px] w-px" />
 
       {entries.map((entry) => (
@@ -77,8 +90,11 @@ export function Timeline({ entries, headingLevel = 'h3', compact = false }: Time
               {entry.bullets.map((bullet) => (
                 <li
                   key={bullet}
-                  className={`text-ink-muted texto-justo relative text-[13px] leading-[1.65] ${
-                    compact ? '' : 'pl-4'
+                  className={`text-ink-muted relative text-[13px] leading-[1.65] ${
+                    // Justificado so nas entregas, que sao frases. A ementa
+                    // compacta e lista de topicos curtos: justificada, uma
+                    // linha como "Agentes autonomos e" abria buracos enormes.
+                    compact ? '' : 'texto-justo pl-4'
                   }`}
                 >
                   {!compact && (
