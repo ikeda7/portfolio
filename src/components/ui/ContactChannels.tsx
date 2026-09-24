@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 
+import { IconeCanal } from '@/components/ui/IconeCanal'
 import { Panel } from '@/components/ui/Panel'
 import { socialChannels } from '@/data/social'
 
@@ -22,9 +23,12 @@ const LINHA_CLASS =
  * em silêncio uma decisão que o resto do arquivo documenta. As experiências
  * que o currículo carrega já estão na seção Experiência.
  *
- * O LED redondo vem do protótipo aprovado. TODO(design): trocar por ícones de
- * marca — `lucide-react@1` removeu Github/Linkedin/Instagram, então a fonte
- * será Simple Icons (SVG inline, 16px, `currentColor`).
+ * Cada linha abre com o ícone do canal. Era um LED redondo, o mesmo nas
+ * quatro, herdado do protótipo — e um LED igual em tudo não diferencia nada.
+ * O ícone troca o LED no mesmo lugar e no mesmo tamanho, de propósito: o
+ * pedido foi deixar o painel mais legível sem encolhê-lo e perder o
+ * alinhamento com o formulário. De onde vem cada desenho está em
+ * [IconeCanal](./IconeCanal.tsx).
  */
 export function ContactChannels() {
   return (
@@ -39,9 +43,15 @@ export function ContactChannels() {
               className={LINHA_CLASS}
               aria-label={`${channel.label}: ${channel.handle}`}
             >
-              <span
-                aria-hidden="true"
-                className="bg-accent glow-led size-2 shrink-0 rounded-full"
+              {/*
+               * O icone ocupa o lugar exato do LED (so a coluna da esquerda
+               * muda), entao a altura das linhas e o alinhamento com o
+               * formulario ao lado ficam onde estavam. `text-accent-text` e
+               * nao `text-accent`: o azul cheio reprova como traco fino.
+               */}
+              <IconeCanal
+                icon={channel.icon}
+                className="text-accent-text size-4 shrink-0 transition-all duration-300 group-hover/canal:scale-110"
               />
 
               {/*
