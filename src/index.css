@@ -314,6 +314,15 @@
   animation: rackpisca 1.4s ease-in-out infinite;
 }
 
+/*
+ * Carretel das fitas cassete (Bancos de dados). Reaproveita o keyframe do
+ * vinil; o componente troca `animation-play-state` inline, entao a fita para
+ * no angulo em que estava.
+ */
+@utility carretel {
+  animation: vinilgira 1.8s linear infinite paused;
+}
+
 @utility cabecote {
   animation: cabecote 6s linear infinite;
 }

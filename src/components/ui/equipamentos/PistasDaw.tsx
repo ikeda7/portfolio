@@ -15,14 +15,15 @@ const ONDA =
   'repeating-linear-gradient(90deg, rgb(var(--accent-rgb) / 0.55) 0 2px, transparent 2px 5px)'
 
 /**
- * Ferramentas & processos como a tela de arranjo de uma DAW: cada item é uma
- * pista, com M (mute), S (solo), o nome, e um clipe na linha do tempo que um
- * cursor de reprodução atravessa.
+ * Back-end como a tela de arranjo de uma DAW: cada tecnologia é uma pista,
+ * com M (mute), S (solo), o nome, e um clipe na linha do tempo que um cursor
+ * de reprodução atravessa. (Até 24/09 as pistas eram das Ferramentas; o dono
+ * inverteu com o rack.)
  *
  * M e S funcionam como numa DAW: M apaga a pista; S deixa só as pistas em solo
- * acesas. **Os botões ficam à esquerda do nome**, e o painel mora na coluna da
- * esquerda da grade: perto da borda direita eles disputavam o clique com a
- * régua de seções (ver SectionNav).
+ * acesas. **Os botões ficam à esquerda do nome**; perto da borda direita eles
+ * já disputaram o clique com a régua de seções — resolvido na própria régua
+ * (ver SectionNav), e à esquerda eles continuam mais longe dela.
  *
  * O cursor é um traço por pista, todos com a mesma animação (`@utility
  * cabecote`), então leem como uma linha só atravessando o arranjo. CSS, parado

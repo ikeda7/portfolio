@@ -4,16 +4,17 @@ import { Fader } from '@/components/ui/Fader'
 import { Panel } from '@/components/ui/Panel'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
+import { Fitas } from '@/components/ui/equipamentos/Fitas'
 import { Pedaleira } from '@/components/ui/equipamentos/Pedaleira'
 import { PistasDaw } from '@/components/ui/equipamentos/PistasDaw'
 import { Rack } from '@/components/ui/equipamentos/Rack'
 import { Sampler } from '@/components/ui/equipamentos/Sampler'
-import { backend, ferramentas, frontend, iaAplicada, linguagens } from '@/data/skills'
+import { bancos, backend, ferramentas, frontend, iaAplicada, linguagens } from '@/data/skills'
 import { contagem } from '@/lib/contagem'
 import type { SkillNiche } from '@/types/content'
 
 /**
- * Stack: os cinco nichos do currículo, **um equipamento por nicho**.
+ * Stack: os nichos do currículo e do perfil do GitHub, **um equipamento por nicho**.
  *
  * A taxonomia é a da seção "Competências técnicas" do currículo; ver
  * [skills.ts](src/data/skills.ts). O que mudou em 24/09 foi a forma: era uma
@@ -22,17 +23,18 @@ import type { SkillNiche } from '@/types/content'
  * é uma peça diferente de estúdio, e cada peça tem uma interação própria:
  *
  * - Linguagens → mesa de som: o fader sobe sob a mão.
- * - Front-end & mobile → pedaleira: pisar liga o pedal.
+ * - Front-end & mobile → pedaleira: pisar liga o pedal; os knobs giram.
  * - IA aplicada → sampler: o pad liga, fica aceso e toca uma nota.
- * - Back-end & dados → rack: os módulos rodam sozinhos, LEDs piscando.
- * - Ferramentas → arranjo de DAW: mute e solo funcionam.
+ * - Back-end → arranjo de DAW: mute e solo funcionam.
+ * - Bancos de dados → fitas cassete: a fita toca, os carretéis giram.
+ * - Ferramentas → rack: os módulos rodam sozinhos, LEDs piscando.
  *
  * Nenhuma interação diz nível nem filtra nada. Nível por tecnologia continua
  * sendo conteúdo do dono (ver docs/PENDENCIAS.md), e o foco técnico que
  * ligava a Stack aos Projetos saiu no mesmo dia.
  *
- * Na linha de cima, sampler e pedaleira têm dois andares de peças cada; na
- * de baixo, arranjo (9 pistas) e rack (4 andares de módulos) esticam juntos.
+ * Pares por altura: sampler e pedaleira têm dois andares de peças; fitas
+ * (2x2) e arranjo (6 pistas) também se equivalem.
  */
 export function Skills() {
   return (
@@ -58,13 +60,13 @@ export function Skills() {
         </Reveal>
 
         {/*
-         * Duas colunas com intenção: a da DIREITA é o full stack (front em
-         * cima, back embaixo), a da esquerda é IA e o dia a dia de
-         * ferramentas. A troca também tirou as pistas de DAW, com os botões
-         * M/S, de perto da borda direita, onde fica a régua de seções.
+         * As trilhas do portfólio viram as colunas da Stack: à direita o FULL
+         * STACK (front em cima, back embaixo), à esquerda DADOS & IA (IA em
+         * cima, bancos embaixo). Ferramentas servem às duas, então ficam numa
+         * faixa inteira embaixo.
          *
-         * Ordem no DOM = ordem de leitura no celular (uma coluna): IA,
-         * front, ferramentas, back. No `lg` a grade posiciona explicitamente.
+         * Ordem no DOM = ordem de leitura no celular (uma coluna); no `lg` a
+         * grade posiciona explicitamente.
          */}
         <div className="grid flex-1 items-stretch gap-5 lg:grid-cols-2">
           <Reveal delay={0.08} className="h-full lg:col-start-1 lg:row-start-1">
@@ -78,13 +80,18 @@ export function Skills() {
             </Painel>
           </Reveal>
           <Reveal delay={0.24} className="h-full lg:col-start-1 lg:row-start-2">
-            <Painel nicho={ferramentas} fill>
-              <PistasDaw termos={ferramentas.terms} />
+            <Painel nicho={bancos} fill>
+              <Fitas termos={bancos.terms} />
             </Painel>
           </Reveal>
           <Reveal delay={0.32} className="h-full lg:col-start-2 lg:row-start-2">
             <Painel nicho={backend} fill>
-              <Rack termos={backend.terms} />
+              <PistasDaw termos={backend.terms} />
+            </Painel>
+          </Reveal>
+          <Reveal delay={0.4} className="h-full lg:col-span-2 lg:row-start-3">
+            <Painel nicho={ferramentas} fill>
+              <Rack termos={ferramentas.terms} />
             </Painel>
           </Reveal>
         </div>
