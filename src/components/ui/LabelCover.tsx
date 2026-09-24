@@ -33,33 +33,34 @@ interface LabelCoverProps {
  * que se enxerga.
  */
 /*
- * O reflexo do disco, em X: dois feixes que atravessam o centro, cada um com
- * as duas pontas opostas acesas. Era uma cunha só de um lado, que lia como V.
+ * O reflexo do disco: dois borrões largos e opostos.
  *
- * O selo cobre quase toda a altura da capa, então o X só aparece nas laterais
- * — e a capa é larga (~2.3:1). Por isso os feixes cruzam a 47deg e não a 90:
- * parados, cada ponta aponta para um canto da capa (23.5deg acima e abaixo da
- * horizontal), e o par dos dois lados do selo lê como um X aberto. Em 90 as
- * pontas batiam no topo e na base, escondidas atrás do selo.
+ * A primeira versão era um borrão só — uma cunha larga de um lado do disco
+ * (a 210deg) e um eco fraco perto dela —, e a outra metade ficava apagada. A
+ * segunda trocou por um X de feixes estreitos, que acendia o disco todo mas
+ * virou "hastes" retas demais. Esta junta as duas: o mesmo borrão largo e
+ * macio do original, repetido do lado oposto, então o brilho cobre o vinil
+ * inteiro sem virar risco.
  *
- * `from 66.5deg`: o zero do conic é 12h, então 90 - 23.5 põe o primeiro feixe
- * no canto de cima à direita.
+ * Parte de 255deg, e não dos 210 do original: com dois borrões opostos, 210
+ * os punha em cima e embaixo, atrás do selo, que cobre quase toda a altura
+ * da capa. Em 255 eles nascem nas laterais, que é o que se vê do disco.
+ *
+ * Cada metade do círculo repete o desenho do original comprimido em 50%:
+ * pico forte, apaga, eco fraco, volta ao pico.
  */
-const FEIXE = 'rgb(var(--accent-rgb) / 0.22)'
-const BRILHO_EM_X = [
-  `${FEIXE} 0deg`,
-  'transparent 11deg',
-  'transparent 36deg',
-  `${FEIXE} 47deg`,
-  'transparent 58deg',
-  'transparent 169deg',
-  `${FEIXE} 180deg`,
-  'transparent 191deg',
-  'transparent 216deg',
-  `${FEIXE} 227deg`,
-  'transparent 238deg',
-  'transparent 349deg',
-  `${FEIXE} 360deg`,
+const FORTE = 'rgb(var(--accent-rgb) / 0.2)'
+const FRACO = 'rgb(var(--accent-rgb) / 0.12)'
+const BRILHO = [
+  `${FORTE} 0%`,
+  'transparent 11%',
+  'transparent 33%',
+  `${FRACO} 42%`,
+  `${FORTE} 50%`,
+  'transparent 61%',
+  'transparent 83%',
+  `${FRACO} 92%`,
+  `${FORTE} 100%`,
 ].join(', ')
 
 export function LabelCover({ track, estado, repo }: LabelCoverProps) {
@@ -72,7 +73,7 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
        *
        * O brilho é cônico porque sulco concêntrico é radialmente simétrico:
        * sem ele, a rotação no hover seria matematicamente real e visualmente
-       * invisível. O desenho do brilho está em `BRILHO_EM_X`, acima.
+       * invisível. O desenho do brilho está em `BRILHO`, acima.
        *
        * Gira sem parar enquanto o card está sob o mouse ou com foco, e congela
        * no ângulo em que estava quando sai — o próximo hover continua dali.
@@ -83,7 +84,7 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
         className="absolute aspect-square h-[240%] rounded-full ring-1 ring-white/[0.07] vinil-gira"
         style={{
           backgroundImage: [
-            `conic-gradient(from 66.5deg, ${BRILHO_EM_X})`,
+            `conic-gradient(from 255deg, ${BRILHO})`,
             'repeating-radial-gradient(circle, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4px)',
             'radial-gradient(circle at 38% 32%, #232323, #141414 62%, #0f0f0f)',
           ].join(','),
