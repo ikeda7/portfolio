@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { site } from '@/data/site'
@@ -6,6 +8,16 @@ const { about } = site
 
 /** Backstage: retrato e narrativa, lado a lado do `xl` para cima. */
 export function About() {
+  /*
+   * A foto entra sozinha quando termina de carregar. O `Reveal` anima o
+   * quadro, mas a imagem é `lazy`: no celular, com rede mais lenta, a
+   * animação acabava antes de o arquivo chegar e a foto só "piscava" na tela
+   * (dono, 24/09). Agora ela aparece com fade e um leve zoom de saída no
+   * momento em que chega, qualquer que seja a rede. Do cache, `complete` já
+   * vem verdadeiro e ela aparece direto.
+   */
+  const [fotoPronta, setFotoPronta] = useState(false)
+
   return (
     <Section id="sobre" index="01" label="Sobre" fill={false}>
       {/*
@@ -54,7 +66,13 @@ export function About() {
                 height={1000}
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-cover"
+                ref={(foto) => {
+                  if (foto?.complete) setFotoPronta(true)
+                }}
+                onLoad={() => setFotoPronta(true)}
+                className={`h-full w-full object-cover transition-[opacity,scale] duration-700 ease-out ${
+                  fotoPronta ? 'scale-100 opacity-100' : 'scale-[1.04] opacity-0'
+                }`}
               />
 
               {/*
