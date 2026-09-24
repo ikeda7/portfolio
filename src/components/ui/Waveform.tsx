@@ -38,6 +38,10 @@ function barrasDoCanal(canal: number): readonly number[] {
  * botões de verdade, com `aria-pressed`, navegáveis por teclado.
  *
  * Duração e delay da animação derivam do índice, reproduzindo o protótipo.
+ *
+ * Margem, padding e altura das barras escalam com a altura da janela (`vh`):
+ * é o maior bloco do hero, e com 120px fixos ele era o que empurrava o painel
+ * para fora da dobra num notebook. Ver o comentário da `<section>` no Hero.
  */
 export function Waveform({ meta, timecode, canais }: WaveformProps) {
   const [canalAtivo, setCanalAtivo] = useState(0)
@@ -60,13 +64,16 @@ export function Waveform({ meta, timecode, canais }: WaveformProps) {
   }, [tom])
 
   return (
-    <div className="border-line glow-panel mx-auto mt-18 w-full max-w-[880px] rounded-[14px] border bg-gradient-to-b from-[#141414] to-[#101010] p-[22px]">
+    <div className="border-line glow-panel mx-auto mt-[clamp(1.25rem,5vh,4.5rem)] w-full max-w-[880px] rounded-[14px] border bg-gradient-to-b from-[#141414] to-[#101010] p-[clamp(14px,2.6vh,22px)]">
       <div className="text-ink-faint flex items-center justify-between font-mono text-[11px] tracking-[0.14em] uppercase">
         <span>{meta}</span>
         <span>{timecode}</span>
       </div>
 
-      <div aria-hidden="true" className="mt-4 flex h-[120px] items-center gap-[3px]">
+      <div
+        aria-hidden="true"
+        className="mt-4 flex h-[clamp(48px,11vh,120px)] items-center gap-[3px]"
+      >
         {barras.map((height, index) => (
           <span
             key={index}
@@ -86,7 +93,7 @@ export function Waveform({ meta, timecode, canais }: WaveformProps) {
         // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
         role="group"
         aria-label="Canal da waveform"
-        className="border-line mt-4 flex flex-wrap gap-2 border-t pt-4"
+        className="border-line mt-[clamp(10px,2vh,16px)] flex flex-wrap gap-2 border-t pt-[clamp(10px,2vh,16px)]"
       >
         {canais.map((canal, index) => {
           const ativo = index === canalAtivo
