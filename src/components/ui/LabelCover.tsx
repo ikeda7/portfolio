@@ -67,7 +67,7 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
   return (
     <div className="bg-panel-sunken relative flex h-full w-full items-center justify-center overflow-hidden">
       {/*
-       * Os sulcos e o brilho ficam no disco, que gira — e o selo NÃO gira, é
+       * O brilho gira sobre o disco — e o selo NÃO gira, é
        * irmão dele. Num vinil de verdade o selo roda junto, mas aqui ele carrega
        * o número e o estado, e texto girando não se lê. Preferi a legibilidade.
        *
@@ -77,13 +77,19 @@ export function LabelCover({ track, estado, repo }: LabelCoverProps) {
        *
        * Gira sempre, em qualquer aparelho (no celular não existe hover, e o
        * disco ficava parado). Ver `@utility vinil-gira`, em `index.css`.
+       *
+       * **Não é o elemento que gira, é o ângulo do brilho** (`--vinil-angulo`).
+       * Girar o disco por `transform` fazia o navegador girá-lo como imagem
+       * pronta, e numa placa de vídeo real os sulcos sumiam e o brilho virava
+       * uma faixa de borda reta (print do dono, 24/09). O motivo completo está
+       * junto do `@property`, em `index.css`.
        */}
       <div
         aria-hidden="true"
-        className="absolute aspect-square h-[240%] rounded-full ring-1 ring-white/[0.07] vinil-gira"
+        className="vinil-gira absolute aspect-square h-[240%] rounded-full ring-1 ring-white/[0.07]"
         style={{
           backgroundImage: [
-            `conic-gradient(from 255deg, ${BRILHO})`,
+            `conic-gradient(from var(--vinil-angulo), ${BRILHO})`,
             'repeating-radial-gradient(circle, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4px)',
             'radial-gradient(circle at 38% 32%, #232323, #141414 62%, #0f0f0f)',
           ].join(','),

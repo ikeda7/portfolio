@@ -94,6 +94,32 @@
 }
 
 /*
+ * O vinil das capas NAO gira por `transform` (desde 24/09): o que anda e o
+ * angulo de partida do brilho conico, `--vinil-angulo`. Registrado como
+ * `<angle>` para o navegador saber interpolar.
+ *
+ * Girando o elemento, o navegador o promove a camada de composicao e passa a
+ * gira-lo como imagem pronta, redesenhada em blocos de resolucao menor
+ * durante a animacao. Numa placa de video de verdade isso apagava os sulcos
+ * de 1px e deixava o brilho como uma faixa azul de borda reta, pior ainda
+ * com o card subindo no hover (print do dono, 24/09). O Chrome sem GPU das
+ * capturas nao reproduz — la estava tudo certo. Animando o angulo, o disco
+ * e repintado a cada quadro na resolucao da tela: nada e reamostrado, e os
+ * sulcos, que sao iguais em qualquer angulo, nem precisam girar.
+ */
+@property --vinil-angulo {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 255deg;
+}
+
+@keyframes vinilbrilho {
+  to {
+    --vinil-angulo: 615deg;
+  }
+}
+
+/*
  * LEDs de atividade do rack (Back-end & dados) e medidor das pistas de DAW
  * (Ferramentas & processos). Fora do `@theme` pelo mesmo motivo dos outros:
  * quem os referencia e um `@utility`, com duracao e atraso inline por indice.
@@ -264,7 +290,7 @@
  * lidos girando, e nao so "mudando".
  */
 @utility vinil-gira {
-  animation: vinilgira 8s linear infinite;
+  animation: vinilbrilho 8s linear infinite;
 }
 
 /*

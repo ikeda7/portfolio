@@ -7,7 +7,7 @@ const { about } = site
 /** Backstage: retrato e narrativa, lado a lado do `xl` para cima. */
 export function About() {
   return (
-    <Section id="sobre" index="01" label="Sobre">
+    <Section id="sobre" index="01" label="Sobre" fill={false}>
       {/*
        * **A foto é quadrada e inteira, sempre**, e quem se ajusta é a
        * largura da coluna dela (`--foto`), medida para o quadrado ter a
@@ -23,17 +23,19 @@ export function About() {
        *   decidiu tirar: o texto já fecha a seção.
        * - Lado a lado só do `xl` para cima: abaixo disso o texto fica
        *   100–190px mais alto que qualquer foto que caiba ao lado.
-       * - `xl`: foto de até 500px e entrelinha um pouco menor (1.65); fecha
-       *   em 7px. `2xl`: o texto sobe para 17px — em tela larga ele ficava
-       *   baixo demais para a foto — e a foto vai a 520px; fecha em 1px.
-       *   Eram 540/580px com dois parágrafos de carreira; o segundo saiu em
-       *   24/09 e a foto encolheu junto, para não abrir vão embaixo do texto.
-       *
-       * `my-auto` centraliza o bloco na altura da seção. Mudou o texto do
-       * Sobre, remeça (base da foto contra a base do último parágrafo, em
-       * 1280, 1440 e 1920px).
+       * - **A seção tem a altura do conteúdo** (`fill={false}`), e não uma
+       *   tela no mínimo. Com a tela cheia e o bloco centralizado (`my-auto`),
+       *   sobrava vão em cima e embaixo que crescia com o monitor: ~190px e
+       *   ~220px a 1920x1080 (leitura do dono, 24/09).
+       * - **A foto segue a altura da janela**: `100svh` menos header e
+       *   respiros, limitada a 44% da largura. Assim o Sobre inteiro cabe
+       *   numa tela de 1280x720 a 1920x1080, sem sobra.
+       * - O texto acompanha: 15px com entrelinha 1.65 no `xl`, 18px no
+       *   `2xl`, onde a foto é mais alta. Base da foto contra a base do
+       *   último parágrafo: dentro de 15px em 1280x720, 1366x768, 1440x900,
+       *   1536x864, 1680x1050 e 1920x1080. Mudou o texto, remeça.
        */}
-      <div className="my-auto grid gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,1fr)_var(--foto)] xl:[--foto:min(500px,42%)] 2xl:[--foto:520px]">
+      <div className="grid gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,1fr)_var(--foto)] xl:[--foto:min(44%,calc(100svh-var(--header-h)-180px))]">
         <Reveal
           delay={0}
           className="relative mx-auto w-full max-w-[440px] self-start xl:col-start-2 xl:row-start-1 xl:max-w-none"
@@ -96,7 +98,7 @@ export function About() {
           {about.paragraphs.map((paragraph) => (
             <p
               key={paragraph}
-              className="text-ink-muted texto-justo mt-4 text-[15px] leading-[1.75] xl:mt-3 xl:leading-[1.65] 2xl:mt-4 2xl:text-[17px] 2xl:leading-[1.75]"
+              className="text-ink-muted texto-justo mt-4 text-[15px] leading-[1.75] xl:mt-3 xl:leading-[1.65] 2xl:mt-4 2xl:text-[18px] 2xl:leading-[1.75]"
             >
               {paragraph}
             </p>
