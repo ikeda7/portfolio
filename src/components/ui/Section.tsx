@@ -64,9 +64,18 @@ export function Section({ id, index, label, children, fill = true }: SectionProp
         fill ? 'min-h-[calc(100svh-var(--header-h))] py-[clamp(2.5rem,6vh,5rem)]' : 'py-12'
       }`}
     >
+      {/*
+       * O pulso nasce 220px ACIMA da seção, e a seção corta o que passa da
+       * borda (`overflow-hidden`). Sem a máscara, o corte caía perto do
+       * centro do brilho — a parte mais forte — e virava uma linha reta na
+       * fronteira com a seção de cima; o brilho do cursor, passando por ali,
+       * parecia mudar de intensidade (leitura do dono, 24/09). A máscara faz
+       * o pulso começar transparente exatamente na borda (220px) e chegar à
+       * força total 160px abaixo dela.
+       */}
       <div
         aria-hidden="true"
-        className={`animate-driftglow pointer-events-none absolute -top-[220px] h-[min(520px,62vw)] w-[min(860px,120%)] bg-[radial-gradient(ellipse_at_center,rgb(var(--accent-rgb)/0.16),rgb(13_13_13/0)_70%)] blur-[14px] ${
+        className={`animate-driftglow pointer-events-none absolute -top-[220px] [mask-image:linear-gradient(to_bottom,transparent_220px,#000_380px)] h-[min(520px,62vw)] w-[min(860px,120%)] bg-[radial-gradient(ellipse_at_center,rgb(var(--accent-rgb)/0.16),rgb(13_13_13/0)_70%)] blur-[14px] ${
           daEsquerda ? '-left-[12%]' : '-right-[12%]'
         }`}
       />
