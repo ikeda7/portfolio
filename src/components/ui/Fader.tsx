@@ -44,14 +44,15 @@ const UNIDADE = 72
  * O trilho, o preenchimento e o knob são decoração e `aria-hidden`: quem usa
  * leitor de tela recebe só o rótulo, que é a informação.
  *
- * No hover o knob sobe um pouco e acende — é a mão no fader. Volta ao sair:
- * a altura parada continua sendo a mesma para todos (ver `UNIDADE`).
+ * **O canal é um botão, e só o clique mexe no fader.** Clicar (ou tocar)
+ * sobe o knob, acende e toca o deslize; clicar de novo desce. Até 25/09 o
+ * knob também subia no hover, e aí o clique não fazia nada de visível — o
+ * som do deslize tocava com o fader parado (dono). No hover fica só o aviso
+ * de que dá para clicar: a borda do knob acende e o nome clareia.
  *
- * **E o canal é um botão.** Tocar (ou clicar) prende o knob em cima e acende,
- * e tocar de novo solta. Era um `<div>` que só respondia a hover — no
- * celular, sem mouse, a mesa inteira era de enfeite (achado do dono, 24/09).
- * Ligar um canal não diz nada sobre a linguagem: todos sobem a mesma altura,
- * como no hover.
+ * Era um `<div>` que só respondia a hover — no celular, sem mouse, a mesa
+ * inteira era de enfeite (24/09). Ligar um canal não diz nada sobre a
+ * linguagem: todos sobem a mesma altura (ver `UNIDADE`).
  */
 export function Fader({ termo, index }: FaderProps) {
   const prefersReducedMotion = useReducedMotion()
@@ -79,7 +80,7 @@ export function Fader({ termo, index }: FaderProps) {
         {/*
          * O preenchimento é uma peça só. O contêiner (`m.span`) tem a altura da
          * marca da unidade, animada pelo `motion`; o azul dentro dele é
-         * `absolute bottom-0` e, no hover, cresce 14px ACIMA do contêiner —
+         * `absolute bottom-0` e, ligado, cresce 14px ACIMA do contêiner —
          * os mesmos 14px que o knob sobe (de `translate-y-1/2` para
          * `-translate-y-2`). Era um segmento separado por cima, e a emenda dos
          * dois arredondados aparecia como um corte nas laterais.
@@ -97,13 +98,13 @@ export function Fader({ termo, index }: FaderProps) {
               })}
         >
           <span
-            className={`fill-vertical absolute inset-x-0 bottom-0 rounded-full transition-[height] duration-300 group-hover/canal:h-[calc(100%+14px)] ${
+            className={`fill-vertical absolute inset-x-0 bottom-0 rounded-full transition-[height] duration-300 ${
               ligado ? 'h-[calc(100%+14px)]' : 'h-full'
             }`}
           />
         </m.span>
         <m.span
-          className={`bg-knob glow-knob group-hover/canal:border-accent absolute left-1/2 h-3 w-[26px] -translate-x-1/2 rounded-[3px] border transition-[translate,border-color] duration-300 group-hover/canal:-translate-y-2 ${
+          className={`bg-knob glow-knob group-hover/canal:border-accent absolute left-1/2 h-3 w-[26px] -translate-x-1/2 rounded-[3px] border transition-[translate,border-color] duration-300 ${
             ligado ? 'border-accent -translate-y-2' : 'border-knob-line translate-y-1/2'
           }`}
           style={prefersReducedMotion ? { bottom: fill } : undefined}
