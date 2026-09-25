@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { somFita } from '@/lib/som'
 import type { SkillTerm } from '@/types/content'
 
 interface FitasProps {
@@ -28,6 +29,7 @@ export function Fitas({ termos }: FitasProps) {
   const [tocando, setTocando] = useState<ReadonlySet<string>>(new Set())
 
   function alternar(label: string) {
+    somFita(!tocando.has(label))
     setTocando((atual) => {
       const novo = new Set(atual)
       if (novo.has(label)) novo.delete(label)

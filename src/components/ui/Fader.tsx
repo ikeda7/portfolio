@@ -4,6 +4,7 @@ import * as m from 'motion/react-m'
 
 import { selo } from '@/data/skills'
 import { FILL_TRANSITION, STAGGER_STEP, VIEWPORT } from '@/lib/motion'
+import { somFader } from '@/lib/som'
 import type { SkillTerm } from '@/types/content'
 
 interface FaderProps {
@@ -65,7 +66,10 @@ export function Fader({ termo, index }: FaderProps) {
     <button
       type="button"
       aria-pressed={ligado}
-      onClick={() => setLigado((atual) => !atual)}
+      onClick={() => {
+        somFader(!ligado)
+        setLigado((atual) => !atual)
+      }}
       className="group/canal flex min-w-0 cursor-pointer flex-col items-center gap-2.5"
     >
       <div
