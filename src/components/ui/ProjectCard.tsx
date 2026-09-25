@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 
 import { LabelCover } from '@/components/ui/LabelCover'
+import { somScratch } from '@/lib/som'
 import type { Project } from '@/types/content'
 
 /**
@@ -85,6 +86,7 @@ export function ProjectCard({ track, title, description, tags, href, estado, rep
                 href={href}
                 target="_blank"
                 rel="noreferrer noopener"
+                onClick={somScratch}
                 className="text-ink-muted hover:text-accent-text group-hover:text-accent-text mt-3 inline-flex items-center gap-[7px] font-mono text-[11px] tracking-[0.12em] uppercase transition-all duration-300 group-hover:gap-3 after:absolute after:inset-0 after:z-20 after:content-['']"
                 aria-label={`Abrir o projeto ${title} em uma nova aba`}
               >

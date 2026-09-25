@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { somMuteSolo } from '@/lib/som'
 import type { SkillTerm } from '@/types/content'
 
 interface PistasDawProps {
@@ -37,6 +38,8 @@ export function PistasDaw({ termos }: PistasDawProps) {
     set: (f: (atual: ReadonlySet<string>) => ReadonlySet<string>) => void,
     label: string,
   ) {
+    const tipo = set === setSolos ? 'solo' : 'mute'
+    somMuteSolo(tipo, !(tipo === 'solo' ? solos : mudas).has(label))
     set((atual) => {
       const novo = new Set(atual)
       if (novo.has(label)) novo.delete(label)
