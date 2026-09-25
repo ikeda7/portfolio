@@ -1,6 +1,7 @@
 import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import { BotaoSom } from '@/components/ui/BotaoSom'
 import { Marca } from '@/components/ui/Marca'
 import { ScrollProgress } from '@/components/ui/ScrollProgress'
 import { navLinks } from '@/data/site'
@@ -50,42 +51,51 @@ export function Header() {
       <div className="mx-auto flex w-full max-w-[1200px] items-center justify-between gap-6 px-6 py-2 sm:py-3.5">
         <Marca className="py-1.5 sm:py-1" />
 
-        <button
-          type="button"
-          aria-expanded={aberto}
-          aria-controls="menu-principal"
-          onClick={() => setAberto((atual) => !atual)}
-          className="border-line text-ink-muted hover:text-ink hover:border-accent flex min-h-11 items-center gap-2 rounded-md border px-3 font-mono text-[11px] tracking-[0.1em] uppercase transition-all duration-300 sm:hidden"
-        >
-          {aberto ? (
-            <X aria-hidden="true" className="size-4" />
-          ) : (
-            <Menu aria-hidden="true" className="size-4" />
-          )}
-          Menu
-        </button>
+        {/*
+         * À direita: a navegação (desktop), o som e o menu (celular). O botão
+         * de som fica fora do menu de propósito — calar a página não pode
+         * exigir abrir nada.
+         */}
+        <div className="flex items-center gap-2 lg:gap-3">
+          <button
+            type="button"
+            aria-expanded={aberto}
+            aria-controls="menu-principal"
+            onClick={() => setAberto((atual) => !atual)}
+            className="border-line text-ink-muted hover:text-ink hover:border-accent flex min-h-11 items-center gap-2 rounded-md border px-3 font-mono text-[11px] tracking-[0.1em] uppercase transition-all duration-300 sm:hidden"
+          >
+            {aberto ? (
+              <X aria-hidden="true" className="size-4" />
+            ) : (
+              <Menu aria-hidden="true" className="size-4" />
+            )}
+            Menu
+          </button>
 
-        <nav aria-label="Navegação principal" className="hidden sm:block">
-          <ul className="flex flex-wrap justify-center gap-1">
-            {navLinks.map((link) => {
-              const isActive = activeId === link.href.slice(1)
+          <nav aria-label="Navegação principal" className="hidden sm:block">
+            <ul className="flex flex-wrap justify-center gap-1">
+              {navLinks.map((link) => {
+                const isActive = activeId === link.href.slice(1)
 
-              return (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    aria-current={isActive ? 'true' : undefined}
-                    className={`hover:bg-panel-2 hover:text-ink flex items-center rounded-md px-3 py-2 font-mono text-[11px] whitespace-nowrap tracking-[0.1em] uppercase transition-all duration-300 ${
-                      isActive ? 'text-accent-text' : 'text-ink-muted'
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
+                return (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      aria-current={isActive ? 'true' : undefined}
+                      className={`hover:bg-panel-2 hover:text-ink flex items-center rounded-md px-2 py-2 font-mono lg:px-3 text-[11px] whitespace-nowrap tracking-[0.1em] uppercase transition-all duration-300 ${
+                        isActive ? 'text-accent-text' : 'text-ink-muted'
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+
+          <BotaoSom />
+        </div>
       </div>
 
       {/* O menu do celular: abre embaixo da barra, por cima do conteúdo. */}

@@ -1065,6 +1065,13 @@ mute e solo (clique digital, solo mais agudo), fader (deslize), pad (nota
 pentatônica) e scratch de DJ ao abrir um projeto. O rack de Ferramentas não
 tem som porque não é clicável.
 
+Depois, também em 25/09: **botão de som no header** (liga/desliga tudo, nasce
+ligado e fica lembrado no navegador — `BotaoSom`), **"tape stop"** ao trocar
+de trilha no hero e **rack clicável**: cada módulo de Ferramentas liga e
+desliga com o estalo de um relé (desligado, LEDs apagados e nome escuro). O
+header continua com 62px no desktop: com o botão, os links passaram a `px-2`
+até o `lg`, senão quebravam em duas linhas a 640px.
+
 **Foto do Sobre (25/09)** só entra carregada e com 40% à vista, em 1,4s. Com o
 reveal padrão (64px à vista), no celular ela terminava de entrar fora da tela.
 

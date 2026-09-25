@@ -21,8 +21,47 @@
 let contexto: AudioContext | null = null
 let ruidoBranco: AudioBuffer | null = null
 
+/*
+ * Som ligado ou desligado, escolhido no botão do header (25/09). Nasce
+ * ligado e fica lembrado no navegador de quem visita. `localStorage` pode
+ * não existir ou negar acesso (janela anônima, dados bloqueados): aí vale o
+ * padrão e a escolha dura só a visita.
+ */
+const CHAVE = 'portfolio:som'
+let ligado = lerPreferencia()
+const ouvintes = new Set<() => void>()
+
+function lerPreferencia(): boolean {
+  try {
+    return localStorage.getItem(CHAVE) !== 'desligado'
+  } catch {
+    return true
+  }
+}
+
+/** Para `useSyncExternalStore`: o header redesenha quando a escolha muda. */
+export function assinarSom(ouvinte: () => void): () => void {
+  ouvintes.add(ouvinte)
+  return () => ouvintes.delete(ouvinte)
+}
+
+export function somLigado(): boolean {
+  return ligado
+}
+
+export function definirSom(valor: boolean) {
+  ligado = valor
+  try {
+    localStorage.setItem(CHAVE, valor ? 'ligado' : 'desligado')
+  } catch {
+    // Sem armazenamento: a escolha vale até fechar a aba.
+  }
+  for (const ouvinte of ouvintes) ouvinte()
+}
+
 /** Garante o contexto rodando e entrega o instante de agora para agendar. */
 async function tocar(desenhar: (ctx: AudioContext, t: number) => void): Promise<void> {
+  if (!ligado) return
   try {
     const sessao = (navigator as Navigator & { audioSession?: { type: string } }).audioSession
     if (sessao) sessao.type = 'playback'
@@ -240,5 +279,42 @@ export function somScratch() {
     osc.start(t)
     osc.stop(t + 0.34)
     estalo(ctx, t, 1800, 0.05, 0.3)
+  })
+}
+
+/**
+ * Troca de trilha no hero: um "tape stop" — a fita freando até parar, com a
+ * altura despencando — e a nova trilha voltando à velocidade logo em
+ * seguida.
+ */
+export function somTrilha() {
+  void tocar((ctx, t) => {
+    const trecho = (inicio: number, de: number, ate: number, duracao: number, pico: number) => {
+      const osc = ctx.createOscillator()
+      osc.type = 'sawtooth'
+      osc.frequency.setValueAtTime(de, t + inicio)
+      osc.frequency.exponentialRampToValueAtTime(ate, t + inicio + duracao)
+      const filtro = ctx.createBiquadFilter()
+      filtro.type = 'lowpass'
+      filtro.frequency.setValueAtTime(1800, t + inicio)
+      filtro.frequency.exponentialRampToValueAtTime(300, t + inicio + duracao)
+      osc.connect(filtro).connect(envelope(ctx, t + inicio, pico, duracao, 0.01))
+      osc.start(t + inicio)
+      osc.stop(t + inicio + duracao + 0.02)
+    }
+    trecho(0, 220, 45, 0.32, 0.06)
+    trecho(0.34, 60, 220, 0.2, 0.045)
+  })
+}
+
+/**
+ * Módulo do rack (Ferramentas): o relé — dois estalos secos quase juntos. Ao
+ * ligar, soma o zumbido baixo da fonte do equipamento acordando.
+ */
+export function somRele(ligar: boolean) {
+  void tocar((ctx, t) => {
+    estalo(ctx, t, 3400, 0.16, 0.012)
+    estalo(ctx, t + 0.018, 2200, 0.1, 0.014)
+    if (ligar) tom(ctx, t + 0.02, 'sine', 60, 60, 0.05, 0.25, 0.03)
   })
 }
