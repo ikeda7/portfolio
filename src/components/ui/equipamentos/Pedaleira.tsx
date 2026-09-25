@@ -86,13 +86,36 @@ export function Pedaleira({ termos }: PedaleiraProps) {
                     aria-label={`Girar o knob ${k + 1} do pedal ${termo.label}`}
                     className="group/knob flex size-6 items-center justify-center rounded-full"
                   >
-                    <span
-                      aria-hidden="true"
-                      className="bg-knob border-knob-line group-hover/knob:border-accent relative size-4 rounded-full border transition-[rotate,border-color] duration-300"
-                      style={{ rotate: `${angulos[chave] ?? 0}deg` }}
-                    >
-                      <span className="bg-ink absolute top-0.5 left-1/2 h-1.5 w-px -translate-x-1/2" />
-                    </span>
+                    {/*
+                     * O knob é SVG, e só o ponteiro gira, dentro do desenho.
+                     * Era um <span> girado por CSS com um risco de 1px dentro:
+                     * com placa de vídeo o navegador girava aquilo como imagem
+                     * pronta, e o risco se desfazia na reamostragem — os knobs
+                     * ficavam sem ponteiro (dono, 25/09), o mesmo defeito dos
+                     * sulcos do vinil. Traço vetorial de 1,5px, ponta redonda.
+                     */}
+                    <svg aria-hidden="true" viewBox="0 0 16 16" className="size-4">
+                      <circle
+                        cx="8"
+                        cy="8"
+                        r="7.5"
+                        strokeWidth="1"
+                        className="fill-knob stroke-knob-line group-hover/knob:stroke-accent transition-[stroke] duration-300"
+                      />
+                      <line
+                        x1="8"
+                        y1="2.5"
+                        x2="8"
+                        y2="7"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        className="stroke-ink transition-transform duration-300"
+                        style={{
+                          transform: `rotate(${angulos[chave] ?? 0}deg)`,
+                          transformOrigin: '8px 8px',
+                        }}
+                      />
+                    </svg>
                   </button>
                 )
               })}
