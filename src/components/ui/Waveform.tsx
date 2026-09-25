@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { waveformHeights } from '@/data/site'
+import { somTrilha } from '@/lib/som'
 
 interface WaveformProps {
   /** Os canais. O escolhido redesenha as barras e pinta a página. */
@@ -98,7 +99,10 @@ export function Waveform({ canais }: WaveformProps) {
               key={canal.label}
               type="button"
               aria-pressed={ativo}
-              onClick={() => setCanalAtivo(index)}
+              onClick={() => {
+                if (index !== canalAtivo) somTrilha()
+                setCanalAtivo(index)
+              }}
               className={`min-h-6 rounded px-[10px] py-[5px] font-mono text-[11px] transition-all duration-300 ${
                 ativo
                   ? 'text-ink border border-[rgb(var(--accent-rgb)/0.4)] bg-[rgb(var(--accent-rgb)/0.14)] hover:border-[rgb(var(--accent-rgb)/0.75)] hover:bg-[rgb(var(--accent-rgb)/0.24)]'
