@@ -873,8 +873,8 @@ Vercel, e `.dev` so abre com HTTPS:
 
 `VITE_SITE_URL` de producao virou `https://lucasikeda.dev` (os previews
 continuam com a URL da Vercel). O endereco antigo da Vercel segue servindo o
-mesmo site. **Falta so o dono** incluir `lucasikeda.dev` na allowlist do
-EmailJS, senao o formulario nao envia no dominio novo.
+mesmo site. A allowlist do EmailJS inclui `lucasikeda.dev` (feito pelo dono
+em 25/09). Nada pendente.
 
 ### 6. Versao em ingles — CANCELADA
 
