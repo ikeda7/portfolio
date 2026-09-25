@@ -650,8 +650,9 @@ a fazer antes e: destacar o que as tags ja dizem, ou o que elas nao dizem?
 
 ### 1. DEPLOY NA VERCEL — NO AR E PUBLICO (24/09)
 
-**Estado atual:** o site esta publico em
-**https://portfolio-ikeda7s-projects.vercel.app**. A protecao do projeto foi
+**Estado atual:** o site esta publico em **https://lucasikeda.dev** (desde
+25/09; antes, **https://portfolio-ikeda7s-projects.vercel.app**, que continua
+no ar). A protecao do projeto foi
 para **Standard** (`ssoProtection.deploymentType =
 prod_deployment_urls_and_all_previews`), a pedido do dono: o dominio de
 producao abre para qualquer pessoa; os previews de `develop` e as URLs de
@@ -857,10 +858,23 @@ O telefone esta no curriculo. Ficou de fora porque `wa.me` expoe o numero para
 qualquer visitante, robo de spam incluso. Se ele aceitar o risco, entra como
 canal.
 
-### 5. Dominio .br — nao trava nada
+### 5. Dominio — CONCLUIDO em 25/09: **lucasikeda.dev**
 
-Ele vai registrar. Quando existir, e so trocar `VITE_SITE_URL` e apontar o
-dominio na Vercel.
+Comprado pelo dono na Cloudflare (`ikeda.dev` ja tinha dono). Na Vercel o
+projeto tem `lucasikeda.dev` (producao) e `www.lucasikeda.dev` (redireciona
+308 para o apex). Na Cloudflare, dois registros com a nuvem **cinza** ("DNS
+only") — com a laranja o proxy da Cloudflare atrapalha o certificado da
+Vercel, e `.dev` so abre com HTTPS:
+
+| Tipo  | Nome  | Valor                  |
+| ----- | ----- | ---------------------- |
+| A     | `@`   | `76.76.21.21`          |
+| CNAME | `www` | `cname.vercel-dns.com` |
+
+`VITE_SITE_URL` de producao virou `https://lucasikeda.dev` (os previews
+continuam com a URL da Vercel). O endereco antigo da Vercel segue servindo o
+mesmo site. **Falta so o dono** incluir `lucasikeda.dev` na allowlist do
+EmailJS, senao o formulario nao envia no dominio novo.
 
 ### 6. Versao em ingles — CANCELADA
 
