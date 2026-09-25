@@ -1058,6 +1058,16 @@ entao um parser que falha nao estoura — ele reporta silencio.
 
 Nenhuma é irreversível; estão aqui para não serem refeitas por engano.
 
+**Efeitos sonoros (25/09).** Todos em `lib/som.ts`, sintetizados na hora (sem
+arquivo de áudio) e só em resposta a clique: pedal (footswitch + zumbido ao
+ligar), knob (tique), fita (tecla + chiado com o motor subindo ou descendo),
+mute e solo (clique digital, solo mais agudo), fader (deslize), pad (nota
+pentatônica) e scratch de DJ ao abrir um projeto. O rack de Ferramentas não
+tem som porque não é clicável.
+
+**Foto do Sobre (25/09)** só entra carregada e com 40% à vista, em 1,4s. Com o
+reveal padrão (64px à vista), no celular ela terminava de entrar fora da tela.
+
 **Repositório (24/09).** O dono preencheu a descrição, o site e os tópicos.
 **Proteção de branch: decidido não fazer** — ele não achou necessário. A
 `develop` continua sendo apagada pelo GitHub a cada merge de PR

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useInView } from 'motion/react'
+import { useRef, useState } from 'react'
 
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
@@ -12,11 +13,20 @@ export function About() {
    * A foto entra sozinha quando termina de carregar. O `Reveal` anima o
    * quadro, mas a imagem é `lazy`: no celular, com rede mais lenta, a
    * animação acabava antes de o arquivo chegar e a foto só "piscava" na tela
-   * (dono, 24/09). Agora ela aparece com fade e um leve zoom de saída no
-   * momento em que chega, qualquer que seja a rede. Do cache, `complete` já
-   * vem verdadeiro e ela aparece direto.
+   * (dono, 24/09).
+   *
+   * E mesmo carregada ela entrava fora da vista: o reveal dispara quando só
+   * a beirada do bloco (64px) entra na tela, e no celular a animação acabava
+   * com quase toda a foto ainda abaixo da dobra — ao rolar até ela, já
+   * estava lá, "do nada" (dono, 25/09). Agora a foto só entra quando está
+   * carregada E com 40% à vista, numa entrada longa (1,4s): fade, um zoom
+   * de saída e um desfoque que se desfaz. Sem movimento, o kill switch do
+   * `index.css` corta a transição e ela aparece direto.
    */
+  const quadroDaFoto = useRef<HTMLDivElement>(null)
+  const fotoNaTela = useInView(quadroDaFoto, { once: true, amount: 0.4 })
   const [fotoPronta, setFotoPronta] = useState(false)
+  const mostrarFoto = fotoNaTela && fotoPronta
 
   return (
     <Section id="sobre" index="01" label="Sobre" fill={false}>
@@ -58,7 +68,10 @@ export function About() {
           />
 
           {about.photo.src ? (
-            <div className="border-line glow-photo relative aspect-square w-full overflow-hidden rounded-2xl border">
+            <div
+              ref={quadroDaFoto}
+              className="border-line glow-photo relative aspect-square w-full overflow-hidden rounded-2xl border"
+            >
               <img
                 src={about.photo.src}
                 alt={about.photo.alt}
@@ -70,8 +83,8 @@ export function About() {
                   if (foto?.complete) setFotoPronta(true)
                 }}
                 onLoad={() => setFotoPronta(true)}
-                className={`h-full w-full object-cover transition-[opacity,scale] duration-700 ease-out ${
-                  fotoPronta ? 'scale-100 opacity-100' : 'scale-[1.04] opacity-0'
+                className={`h-full w-full object-cover transition-[opacity,scale,filter] duration-[1400ms] ease-out ${
+                  mostrarFoto ? 'scale-100 opacity-100 blur-none' : 'scale-[1.08] opacity-0 blur-md'
                 }`}
               />
 

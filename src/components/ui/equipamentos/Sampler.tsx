@@ -1,16 +1,11 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
+import { somPad } from '@/lib/som'
 import type { SkillTerm } from '@/types/content'
 
 interface SamplerProps {
   readonly termos: readonly SkillTerm[]
 }
-
-/*
- * Uma nota por pad, da escala pentatônica de lá menor (A3 a E5): em qualquer
- * combinação de pads ligados, nada soa errado junto.
- */
-const NOTAS = [220, 261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25]
 
 /**
  * IA aplicada como sampler de pads (a grade de uma MPC): cada técnica é um pad.
@@ -32,48 +27,9 @@ const NOTAS = [220, 261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25]
  */
 export function Sampler({ termos }: SamplerProps) {
   const [ligados, setLigados] = useState<ReadonlySet<string>>(new Set())
-  const audio = useRef<AudioContext | null>(null)
-
-  /*
-   * No celular o som precisa de dois cuidados (os pads ficavam mudos no
-   * celular do dono, 24/09):
-   *
-   * - O `AudioContext` pode nascer `suspended`, e só volta com `resume()`
-   *   chamado DENTRO do toque. O `resume()` sai aqui antes de qualquer
-   *   `await`, ainda no gesto, e a nota só é agendada depois dele.
-   * - No iPhone, a Web Audio respeita a chave de silencioso, como som de
-   *   notificação. `navigator.audioSession.type = 'playback'` (Safari 16.4+)
-   *   a trata como mídia, igual a um vídeo, que toca com a chave ligada.
-   */
-  async function tocar(index: number, ligar: boolean) {
-    try {
-      const sessao = (navigator as Navigator & { audioSession?: { type: string } }).audioSession
-      if (sessao) sessao.type = 'playback'
-      audio.current ??= new AudioContext()
-      const ctx = audio.current
-      if (ctx.state !== 'running') await ctx.resume()
-      const agora = ctx.currentTime
-      const osc = ctx.createOscillator()
-      const ganho = ctx.createGain()
-      osc.type = 'triangle'
-      const nota = NOTAS[index % NOTAS.length] ?? 440
-      // Ligar: a nota sustentada. Desligar: a nota descendo uma oitava.
-      const duracao = ligar ? 0.6 : 0.3
-      osc.frequency.setValueAtTime(nota, agora)
-      if (!ligar) osc.frequency.exponentialRampToValueAtTime(nota / 2, agora + duracao)
-      ganho.gain.setValueAtTime(0.0001, agora)
-      ganho.gain.exponentialRampToValueAtTime(ligar ? 0.09 : 0.06, agora + 0.01)
-      ganho.gain.exponentialRampToValueAtTime(0.0001, agora + duracao)
-      osc.connect(ganho).connect(ctx.destination)
-      osc.start(agora)
-      osc.stop(agora + duracao + 0.05)
-    } catch {
-      // Sem Web Audio (navegador antigo, politica do sistema): o pad liga mudo.
-    }
-  }
 
   function alternar(label: string, index: number) {
-    void tocar(index, !ligados.has(label))
+    somPad(index, !ligados.has(label))
     setLigados((atual) => {
       const novo = new Set(atual)
       if (novo.has(label)) novo.delete(label)

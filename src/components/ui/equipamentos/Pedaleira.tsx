@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { somKnob, somPedal } from '@/lib/som'
 import type { SkillTerm } from '@/types/content'
 
 interface PedaleiraProps {
@@ -44,6 +45,7 @@ export function Pedaleira({ termos }: PedaleiraProps) {
   )
 
   function alternar(label: string) {
+    somPedal(!ligados.has(label))
     setLigados((atual) => {
       const novo = new Set(atual)
       if (novo.has(label)) novo.delete(label)
@@ -53,6 +55,7 @@ export function Pedaleira({ termos }: PedaleiraProps) {
   }
 
   function girar(chave: string) {
+    somKnob()
     setAngulos((atual) => {
       const agora = atual[chave] ?? 0
       return { ...atual, [chave]: agora + PASSO > MAX ? MIN : agora + PASSO }
